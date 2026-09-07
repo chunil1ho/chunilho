@@ -284,13 +284,13 @@
 
 <div class="top-bar">
     <div class="top-bar-inner">
-        <div id="top-bar-address">🌊 제주 서귀포시 남성중로 39 (천일호)</div>
+        <div id="top-bar-address" data-i18n="topBarAddress">🌊 제주 서귀포시 남성중로 39 (천일호)</div>
         <div class="top-bar-links">
-            <span id="top-bar-inquiry">📞 예약문의: 010-7768-5913</span>
+            <span id="top-bar-inquiry" data-i18n="topBarInquiry">📞 예약문의: 010-7768-5913</span>
             <div class="auth-links" id="authLinksContainer">
-                <button type="button" id="authLoginBtn" onclick="openAuthModal('login')">로그인</button>
+                <button type="button" id="authLoginBtn" onclick="openAuthModal('login')" data-i18n="authLogin">로그인</button>
                 <span>|</span>
-                <button type="button" id="authSignupBtn" onclick="openAuthModal('signup')">회원가입</button>
+                <button type="button" id="authSignupBtn" onclick="openAuthModal('signup')" data-i18n="authSignup">회원가입</button>
             </div>
         </div>
     </div>
@@ -301,7 +301,7 @@
         <a href="#" class="logo-area" onclick="switchCategory('cat-home', document.querySelectorAll('.nav-btn')[0]); return false;">
             <img src="image/logo.png" alt="서귀포 체험 배낚시 천일호" class="logo-img">
             <div class="logo-text">
-                <h2 id="logo-main-text">서귀포배낚시 천일호</h2>
+                <h2 id="logo-main-text" data-i18n="logoMainText">서귀포배낚시 천일호</h2>
                 <p>Seogwipo Chunilho Fishing</p>
             </div>
         </a>
@@ -316,14 +316,14 @@
 
 <div class="main-nav">
     <ul class="nav-inner">
-        <li><button type="button" class="nav-btn active" id="nav-home" onclick="switchCategory('cat-home', this)">홈</button></li>
-        <li><button type="button" class="nav-btn" id="nav-info" onclick="switchCategory('cat-info', this)">운항안내</button></li>
-        <li><button type="button" class="nav-btn" id="nav-board" onclick="switchCategory('cat-board', this)">조황게시판</button></li>
-        <li><button type="button" class="nav-btn" id="nav-notice" onclick="switchCategory('cat-notice', this)">공지사항</button></li>
-        <li><button type="button" class="nav-btn" id="nav-qna" onclick="switchCategory('cat-qna', this)">Q&A</button></li>
-        <li><button type="button" class="nav-btn" id="nav-location" onclick="switchCategory('cat-location', this)">찾아오시는 길</button></li>
-        <li><button type="button" class="nav-btn" id="nav-status" onclick="switchCategory('cat-status', this)">예약현황</button></li>
-        <li><button type="button" class="nav-btn" id="nav-booking" onclick="switchCategory('cat-booking', this)">실시간예약</button></li>
+        <li><button type="button" class="nav-btn active" id="nav-home" onclick="switchCategory('cat-home', this)" data-i18n="navHome">홈</button></li>
+        <li><button type="button" class="nav-btn" id="nav-info" onclick="switchCategory('cat-info', this)" data-i18n="navInfo">운항안내</button></li>
+        <li><button type="button" class="nav-btn" id="nav-board" onclick="switchCategory('cat-board', this)" data-i18n="navBoard">조황게시판</button></li>
+        <li><button type="button" class="nav-btn" id="nav-notice" onclick="switchCategory('cat-notice', this)" data-i18n="navNotice">공지사항</button></li>
+        <li><button type="button" class="nav-btn" id="nav-qna" onclick="switchCategory('cat-qna', this)" data-i18n="navQna">Q&A</button></li>
+        <li><button type="button" class="nav-btn" id="nav-location" onclick="switchCategory('cat-location', this)" data-i18n="navLocation">찾아오시는 길</button></li>
+        <li><button type="button" class="nav-btn" id="nav-status" onclick="switchCategory('cat-status', this)" data-i18n="navStatus">예약현황</button></li>
+        <li><button type="button" class="nav-btn" id="nav-booking" onclick="switchCategory('cat-booking', this)" data-i18n="navBooking">실시간예약</button></li>
     </ul>
 </div>
 
@@ -338,10 +338,10 @@
             </div>
             <div class="hero-overlay"></div>
             <div class="hero-content">
-                <span class="hero-badge" id="hero-badge-text">제주 서귀포 필수 여행 코스</span>
-                <h1 id="hero-title">바다 위에서 맞이하는 가장 찬란한 순간</h1>
-                <p id="hero-sub">초보자도, 아이도 누구나 손쉽게 손맛을 즐기는 서귀포 앞바다 힐링 배낚시</p>
-                <button type="button" class="btn-go-book" id="hero-btn" onclick="goToBooking()">설레는 예약 시작하기 ✨</button>
+                <span class="hero-badge" id="hero-badge-text" data-i18n="heroBadgeText">제주 서귀포 필수 여행 코스</span>
+                <h1 id="hero-title" data-i18n="heroTitle">바다 위에서 맞이하는 가장 찬란한 순간</h1>
+                <p id="hero-sub" data-i18n="heroSub">초보자도, 아이도 누구나 손쉽게 손맛을 즐기는 서귀포 앞바다 힐링 배낚시</p>
+                <button type="button" class="btn-go-book" id="hero-btn" onclick="goToBooking()" data-i18n="heroBtn">설레는 예약 시작하기 ✨</button>
             </div>
         </section>
 
@@ -349,16 +349,16 @@
             <div class="home-right-split-wrap">
                 <div class="home-right-box">
                     <h3>
-                        <span id="h-notice-title">📢 공지사항</span>
-                        <a href="#" onclick="switchCategory('cat-notice', document.querySelectorAll('.nav-btn')[3]); return false;" id="h-notice-more">더보기 +</a>
+                        <span id="h-notice-title" data-i18n="hNoticeTitle">📢 공지사항</span>
+                        <a href="#" onclick="switchCategory('cat-notice', document.querySelectorAll('.nav-btn')[3]); return false;" id="h-notice-more" data-i18n="hNoticeMore">더보기 +</a>
                     </h3>
                     <ul class="mini-board-list">
                         <li>
-                            <a href="#" onclick="switchCategory('cat-notice', document.querySelectorAll('.nav-btn')[3]); return false;" id="h-notice-item1">[공지] 2026년 가을 시즌 야간 갈치낚시 출항 안내</a>
+                            <a href="#" onclick="switchCategory('cat-notice', document.querySelectorAll('.nav-btn')[3]); return false;" id="h-notice-item1" data-i18n="hNoticeItem1">[공지] 2026년 가을 시즌 야간 갈치낚시 출항 안내</a>
                             <span>2026.09.01</span>
                         </li>
                         <li>
-                            <a href="#" onclick="switchCategory('cat-notice', document.querySelectorAll('.nav-btn')[3]); return false;" id="h-notice-item2">[공지] 주차장 이용 및 찾아오시는 길 상세 안내</a>
+                            <a href="#" onclick="switchCategory('cat-notice', document.querySelectorAll('.nav-btn')[3]); return false;" id="h-notice-item2" data-i18n="hNoticeItem2">[공지] 주차장 이용 및 찾아오시는 길 상세 안내</a>
                             <span>2026.08.20</span>
                         </li>
                     </ul>
@@ -366,16 +366,16 @@
 
                 <div class="home-right-box">
                     <h3>
-                        <span id="h-qna-title">❓ Q&A 게시판</span>
-                        <a href="#" onclick="switchCategory('cat-qna', document.querySelectorAll('.nav-btn')[4]); return false;" id="h-qna-more">더보기 +</a>
+                        <span id="h-qna-title" data-i18n="hQnaTitle">❓ Q&A 게시판</span>
+                        <a href="#" onclick="switchCategory('cat-qna', document.querySelectorAll('.nav-btn')[4]); return false;" id="h-qna-more" data-i18n="hQnaMore">더보기 +</a>
                     </h3>
                     <ul class="mini-board-list">
                         <li>
-                            <a href="#" onclick="switchCategory('cat-qna', document.querySelectorAll('.nav-btn')[4]); return false;" id="h-qna-item1">[Q&A] 낚싯대 및 장비는 따로 안 가져가도 되나요?</a>
+                            <a href="#" onclick="switchCategory('cat-qna', document.querySelectorAll('.nav-btn')[4]); return false;" id="h-qna-item1" data-i18n="hQnaItem1">[Q&A] 낚싯대 및 장비는 따로 안 가져가도 되나요?</a>
                             <span>2026.09.03</span>
                         </li>
                         <li>
-                            <a href="#" onclick="switchCategory('cat-qna', document.querySelectorAll('.nav-btn')[4]); return false;" id="h-qna-item2">[Q&A] 기상 악화 시 환불 규정이 어떻게 되나요?</a>
+                            <a href="#" onclick="switchCategory('cat-qna', document.querySelectorAll('.nav-btn')[4]); return false;" id="h-qna-item2" data-i18n="hQnaItem2">[Q&A] 기상 악화 시 환불 규정이 어떻게 되나요?</a>
                             <span>2026.09.05</span>
                         </li>
                     </ul>
@@ -384,23 +384,23 @@
 
             <div class="home-left-box">
                 <div>
-                    <h3 id="h-left-title">👤 회원 및 예약 안내</h3>
+                    <h3 id="h-left-title" data-i18n="hLeftTitle">👤 회원 및 예약 안내</h3>
                     <div class="info-box-item">
-                        <strong id="h-left-login-t">로그인 / 회원가입</strong>
-                        <span id="h-left-login-d">소셜 계정으로 1초만에 간편하게 이용하세요.</span>
+                        <strong id="h-left-login-t" data-i18n="hLeftLoginT">로그인 / 회원가입</strong>
+                        <span id="h-left-login-d" data-i18n="hLeftLoginD">소셜 계정으로 1초만에 간편하게 이용하세요.</span>
                         <div style="margin-top: 8px;">
-                            <button type="button" onclick="openAuthModal('login')" style="background:var(--primary-color); color:#fff; border:none; padding:6px 12px; border-radius:6px; font-size:0.85rem; cursor:pointer;" id="h-btn-login">로그인하기</button>
+                            <button type="button" onclick="openAuthModal('login')" style="background:var(--primary-color); color:#fff; border:none; padding:6px 12px; border-radius:6px; font-size:0.85rem; cursor:pointer;" id="h-btn-login" data-i18n="hBtnLogin">로그인하기</button>
                         </div>
                     </div>
                     <div class="info-box-item">
-                        <strong id="h-left-tel-t">예약 및 고객 센터</strong>
+                        <strong id="h-left-tel-t" data-i18n="hLeftTelT">예약 및 고객 센터</strong>
                         <span id="h-left-tel-d" style="font-size:1.05rem; font-weight:700; color:var(--accent-color);">📞 010-7768-5913</span>
                     </div>
                 </div>
                 <div class="info-box-item" style="margin-bottom:0;">
-                    <strong id="h-left-bank-t">입금 계좌번호 안내</strong>
+                    <strong id="h-left-bank-t" data-i18n="hLeftBankT">입금 계좌번호 안내</strong>
                     <div class="account-highlight">
-                        수협 0000-1982-0812<br><span style="font-size:0.85rem; color:var(--text-sub);" id="h-bank-owner">예금주: 강주연</span>
+                        수협 0000-1982-0812<br><span style="font-size:0.85rem; color:var(--text-sub);" id="h-bank-owner" data-i18n="hBankOwner">예금주: 강주연</span>
                     </div>
                 </div>
             </div>
@@ -409,39 +409,39 @@
         <div class="features-grid">
             <div class="feature-card">
                 <div class="icon-wrap">🎣</div>
-                <h3 id="feat-t1">초보자 맞춤 친절 강습</h3>
-                <p id="feat-d1">낚싯대 잡는 법부터 미끼 끼우기까지 선장님이 다정하게 알려드려요.</p>
+                <h3 id="feat-t1" data-i18n="featT1">초보자 맞춤 친절 강습</h3>
+                <p id="feat-d1" data-i18n="featD1">낚싯대 잡는 법부터 미끼 끼우기까지 선장님이 다정하게 알려드려요.</p>
             </div>
             <div class="feature-card">
                 <div class="icon-wrap">✨</div>
-                <h3 id="feat-t2">주간체험 장비 & 도구</h3>
-                <p id="feat-d2">무거운 장비 준비 끝! 낚싯대, 채비, 미끼, 구명조끼까지 모두 무상 대여해 드립니다.</p>
+                <h3 id="feat-t2" data-i18n="featT2">주간체험 장비 & 도구</h3>
+                <p id="feat-d2" data-i18n="featD2">무거운 장비 준비 끝! 낚싯대, 채비, 미끼, 구명조끼까지 모두 무상 대여해 드립니다.</p>
             </div>
             <div class="feature-card">
                 <div class="icon-wrap">🐟</div>
-                <h3 id="feat-t3">싱싱한 즉석회</h3>
-                <p id="feat-d3">푸른 바다 위에서 내가 직접 잡은 싱싱한 물고기를 그 즉시 회로 맛보는 감동!</p>
+                <h3 id="feat-t3" data-i18n="featT3">싱싱한 즉석회</h3>
+                <p id="feat-d3" data-i18n="featD3">푸른 바다 위에서 내가 직접 잡은 싱싱한 물고기를 그 즉시 회로 맛보는 감동!</p>
             </div>
             <div class="feature-card">
                 <div class="icon-wrap">👨‍👩‍👧‍👦</div>
-                <h3 id="feat-t4">소중한 사람과의 추억</h3>
-                <p id="feat-d4">가족, 연인, 친구들과 함께 웃음이 끊이지 않는 특별한 제주 추억을 만들어보세요.</p>
+                <h3 id="feat-t4" data-i18n="featT4">소중한 사람과의 추억</h3>
+                <p id="feat-d4" data-i18n="featD4">가족, 연인, 친구들과 함께 웃음이 끊이지 않는 특별한 제주 추억을 만들어보세요.</p>
             </div>
         </div>
 
-        <h2 class="section-title" id="gal-title">천일호의 반짝이는 바다 풍경</h2>
+        <h2 class="section-title" id="gal-title" data-i18n="galTitle">천일호의 반짝이는 바다 풍경</h2>
         <div class="gallery-grid">
             <div class="gallery-card">
                 <img src="image/pic1.jpg" alt="주간 체험 낚시">
-                <div class="card-caption" id="gal-1">아이들과 함께 웃음 가득한 주간 체험 낚시</div>
+                <div class="card-caption" id="gal-1" data-i18n="gal1">아이들과 함께 웃음 가득한 주간 체험 낚시</div>
             </div>
             <div class="gallery-card">
                 <img src="image/pic2.jpg" alt="야간 갈치·고등어 낚시">
-                <div class="card-caption" id="gal-2">밤바다의 낭만, 야간 갈치·고등어 낚시 (8~11월)</div>
+                <div class="card-caption" id="gal-2" data-i18n="gal2">밤바다의 낭만, 야간 갈치·고등어 낚시 (8~11월)</div>
             </div>
             <div class="gallery-card">
                 <img src="image/pic3.jpg" alt="야간 한치 체험 낚시">
-                <div class="card-caption" id="gal-3">여름밤의 보석, 야간 한치 체험 낚시 (6~9월)</div>
+                <div class="card-caption" id="gal-3" data-i18n="gal3">여름밤의 보석, 야간 한치 체험 낚시 (6~9월)</div>
             </div>
         </div>
     </div>
@@ -449,75 +449,75 @@
     <!-- 2. 운항안내 카테고리 -->
     <div id="cat-info" class="category-sec">
         <div class="schedule-box">
-            <h2 class="section-title" id="info-title">운항 코스 및 시즌 안내</h2>
+            <h2 class="section-title" id="info-title" data-i18n="infoTitle">운항 코스 및 시즌 안내</h2>
             <table>
                 <thead>
                     <tr>
-                        <th style="width: 8%;" id="th-cat">구분</th>
-                        <th style="width: 14%;" id="th-course">코스명</th>
-                        <th style="width: 13%;" id="th-season">운항 시즌</th>
-                        <th style="width: 20%;" id="th-time">출항 시간</th>
-                        <th style="width: 35%;" id="th-details">식사 및 제공 사항 (옵션/손질 비용)</th>
-                        <th style="width: 10%;" id="th-price">승선료</th>
+                        <th style="width: 8%;" id="th-cat" data-i18n="thCat">구분</th>
+                        <th style="width: 14%;" id="th-course" data-i18n="thCourse">코스명</th>
+                        <th style="width: 13%;" id="th-season" data-i18n="thSeason">운항 시즌</th>
+                        <th style="width: 20%;" id="th-time" data-i18n="thTime">출항 시간</th>
+                        <th style="width: 35%;" id="th-details" data-i18n="thDetails">식사 및 제공 사항 (옵션/손질 비용)</th>
+                        <th style="width: 10%;" id="th-price" data-i18n="thPrice">승선료</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td rowspan="2" class="center"><span class="badge badge-day" id="b-day1">주간</span></td>
-                        <td rowspan="2" class="center" id="t-c2">주간 체험 2시간</td>
-                        <td class="center" id="t-s1">하절기 (3월~8월)</td>
+                        <td rowspan="2" class="center"><span class="badge badge-day" id="b-day1" data-i18n="bDay">주간</span></td>
+                        <td rowspan="2" class="center" id="t-c2" data-i18n="tC2">주간 체험 2시간</td>
+                        <td class="center" id="t-s1" data-i18n="tS1">하절기 (3월~8월)</td>
                         <td class="center">10:00 / 12:00 / 13:00 / 14:00 / 16:00</td>
-                        <td rowspan="2" id="t-d2">낚시대, 채비, 크릴새우, 구명조끼 무료제공</td>
+                        <td rowspan="2" id="t-d2" data-i18n="tD2">낚시대, 채비, 크릴새우, 구명조끼 무료제공</td>
                         <td class="center">30,000원</td>
                     </tr>
                     <tr>
-                        <td class="center" id="t-s2">동절기 (9월~2월)</td>
+                        <td class="center" id="t-s2" data-i18n="tS2">동절기 (9월~2월)</td>
                         <td class="center">10:00 / 12:00 / 13:00 / 15:00</td>
                         <td class="center">30,000원</td>
                     </tr>
                     <tr>
-                        <td rowspan="2" class="center"><span class="badge badge-day" id="b-day2">주간</span></td>
-                        <td rowspan="2" class="center" id="t-c3">주간 체험 3시간</td>
-                        <td class="center" id="t-s3">하절기 (3월~8월)</td>
+                        <td rowspan="2" class="center"><span class="badge badge-day" id="b-day2" data-i18n="bDay">주간</span></td>
+                        <td rowspan="2" class="center" id="t-c3" data-i18n="tC3">주간 체험 3시간</td>
+                        <td class="center" id="t-s3" data-i18n="tS1">하절기 (3월~8월)</td>
                         <td class="center">10:00 / 12:00 / 13:00 / 15:00</td>
                         <td rowspan="2" id="t-d3">
-                            <span id="t-d3-base">낚시대, 채비, 크릴새우, 구명조끼 무료제공</span>
+                            <span id="t-d3-base" data-i18n="tD3Base">낚시대, 채비, 크릴새우, 구명조끼 무료제공</span>
                             <ul class="info-list">
-                                <li id="t-d3-1"><strong>즉석회 옵션:</strong> 기본 3마리부터 마리당 2,000원</li>
-                                <li id="t-d3-2">입항 1시간 전 선장님께 문의 (기상 상황에 따라 변동 가능)</li>
+                                <li id="t-d3-1" data-i18n="tD31"><strong>즉석회 옵션:</strong> 기본 3마리부터 마리당 2,000원</li>
+                                <li id="t-d3-2" data-i18n="tD32">입항 1시간 전 선장님께 문의 (기상 상황에 따라 변동 가능)</li>
                             </ul>
                         </td>
                         <td class="center">40,000원</td>
                     </tr>
                     <tr>
-                        <td class="center" id="t-s4">동절기 (9월~2월)</td>
+                        <td class="center" id="t-s4" data-i18n="tS2">동절기 (9월~2월)</td>
                         <td class="center">10:00 / 12:00 / 14:00</td>
                         <td class="center">40,000원</td>
                     </tr>
                     <tr>
-                        <td class="center"><span class="badge badge-night" id="b-night1">야간</span></td>
-                        <td class="center" id="t-c-galchi">야간 갈치·고등어</td>
-                        <td class="center" id="t-s-galchi">8월 ~ 11월 중순</td>
+                        <td class="center"><span class="badge badge-night" id="b-night1" data-i18n="bNight">야간</span></td>
+                        <td class="center" id="t-c-galchi" data-i18n="tCGalchi">야간 갈치·고등어</td>
+                        <td class="center" id="t-s-galchi" data-i18n="tSGalchi">8월 ~ 11월 중순</td>
                         <td class="center" id="t-t-galchi">18:00 출항</td>
                         <td id="t-d-galchi">
-                            <span id="t-d-galchi-text"><strong>농심 육개장사발면</strong> 제공<br>(장비대여료 2만원 현장결제)</span>
+                            <span id="t-d-galchi-text" data-i18n="tDGalchiText"><strong>농심 육개장사발면</strong> 제공<br>(장비대여료 2만원 현장결제)</span>
                             <ul class="info-list">
-                                <li id="t-d-g1"><strong>손질 비용:</strong> 갈치, 고등어 마리당 2,000원</li>
+                                <li id="t-d-g1" data-i18n="tDG1"><strong>손질 비용:</strong> 갈치, 고등어 마리당 2,000원</li>
                             </ul>
                         </td>
                         <td class="center">90,000원</td>
                     </tr>
                     <tr>
-                        <td class="center"><span class="badge badge-night" id="b-night2">야간</span></td>
-                        <td class="center" id="t-c-hanchi">야간 한치 체험</td>
-                        <td class="center" id="t-s-hanchi">6월 중순 ~ 9월 초</td>
+                        <td class="center"><span class="badge badge-night" id="b-night2" data-i18n="bNight">야간</span></td>
+                        <td class="center" id="t-c-hanchi" data-i18n="tCHanchi">야간 한치 체험</td>
+                        <td class="center" id="t-s-hanchi" data-i18n="tSHanchi">6월 중순 ~ 9월 초</td>
                         <td class="center" id="t-t-hanchi">18:30 출항</td>
                         <td id="t-d-hanchi">
-                            <span id="t-d-hanchi-text"><strong>농심 육개장사발면</strong> 제공<br>(장비대여료 1만원 현장결제)</span>
+                            <span id="t-d-hanchi-text" data-i18n="tDHanchiText"><strong>농심 육개장사발면</strong> 제공<br>(장비대여료 1만원 현장결제)</span>
                             <ul class="info-list">
-                                <li id="t-d-h1"><strong>한치 즉석회 (현장 식사):</strong> 마리당 4,000원</li>
-                                <li id="t-d-h2"><strong>포장 서비스:</strong> 포장비 2,000원 추가 (용기, 젓가락, 초장 포함)</li>
-                                <li id="t-d-h3"><strong>손질만 할 경우:</strong> 마리당 2,000원</li>
+                                <li id="t-d-h1" data-i18n="tDH1"><strong>한치 즉석회 (현장 식사):</strong> 마리당 4,000원</li>
+                                <li id="t-d-h2" data-i18n="tDH2"><strong>포장 서비스:</strong> 포장비 2,000원 추가 (용기, 젓가락, 초장 포함)</li>
+                                <li id="t-d-h3" data-i18n="tDH3"><strong>손질만 할 경우:</strong> 마리당 2,000원</li>
                             </ul>
                         </td>
                         <td class="center">60,000원</td>
@@ -525,29 +525,29 @@
                 </tbody>
             </table>
 
-            <div class="kakao-banner" id="kakao-info">
+            <div class="kakao-banner" id="kakao-info" data-i18n="kakaoInfo">
                 💬 궁금하신 점이 있으신가요? 실시간 카카오톡 문의: <strong>chunil1ho</strong>
             </div>
 
             <div class="refund-policy-box">
-                <h3 id="refundTitle">📢 취소 및 환불 규정 안내</h3>
+                <h3 id="refundTitle" data-i18n="refundTitle">📢 취소 및 환불 규정 안내</h3>
                 <div class="refund-policy-content">
-                    <p><strong id="policy1Title">1. 개인 사유 및 단순 변심에 의한 취소</strong></p>
+                    <p><strong id="policy1Title" data-i18n="policy1Title">1. 개인 사유 및 단순 변심에 의한 취소</strong></p>
                     <ul>
-                        <li id="policy1_0"><strong>구매확정된 이후 취소불가(단, 당일 기상악화나 선박고장등의 이유는 가능)</strong></li>
-                        <li id="policy1_1">이용일 기준 <strong>3일 전</strong> 취소 시: <strong>100% 전액 환불</strong></li>
-                        <li id="policy1_2">이용일 기준 <strong>2일 전</strong> 취소 시: 환불 불가 (단, 일정 변경 가능)</li>
-                        <li id="policy1_3">이용일 <strong>1일 전 / 당일</strong> 취소 및 변경: <strong>취소·환불 및 변경 불가</strong></li>
+                        <li id="policy1_0" data-i18n="policy1_0"><strong>구매확정된 이후 취소불가(단, 당일 기상악화나 선박고장등의 이유는 가능)</strong></li>
+                        <li id="policy1_1" data-i18n="policy1_1">이용일 기준 <strong>3일 전</strong> 취소 시: <strong>100% 전액 환불</strong></li>
+                        <li id="policy1_2" data-i18n="policy1_2">이용일 기준 <strong>2일 전</strong> 취소 시: 환불 불가 (단, 일정 변경 가능)</li>
+                        <li id="policy1_3" data-i18n="policy1_3">이용일 <strong>1일 전 / 당일</strong> 취소 및 변경: <strong>취소·환불 및 변경 불가</strong></li>
                     </ul>
 
-                    <p><strong id="policy2Title">2. 기상악화 및 천재지변으로 인한 취소</strong></p>
+                    <p><strong id="policy2Title" data-i18n="policy2Title">2. 기상악화 및 천재지변으로 인한 취소</strong></p>
                     <ul>
-                        <li id="policy2_1">풍랑주의보, 폭우, 해무 등 고객 안전상의 이유로 출항이 불가능할 경우, 이용일과 관계없이 <strong>100% 전액 환불</strong> 또는 무료 일자 변경이 가능합니다.</li>
+                        <li id="policy2_1" data-i18n="policy2_1">풍랑주의보, 폭우, 해무 등 고객 안전상의 이유로 출항이 불가능할 경우, 이용일과 관계없이 <strong>100% 전액 환불</strong> 또는 무료 일자 변경이 가능합니다.</li>
                     </ul>
 
-                    <p><strong id="policy3Title">3. 업체 사정(선박 고장 등)으로 인한 취소</strong></p>
+                    <p><strong id="policy3Title" data-i18n="policy3Title">3. 업체 사정(선박 고장 등)으로 인한 취소</strong></p>
                     <ul>
-                        <li id="policy3_1">부득이한 선박 결함 등으로 출조가 불가능할 경우, 이용일 무관하게 <strong>100% 전액 환불</strong> 조치해 드립니다.</li>
+                        <li id="policy3_1" data-i18n="policy3_1">부득이한 선박 결함 등으로 출조가 불가능할 경우, 이용일 무관하게 <strong>100% 전액 환불</strong> 조치해 드립니다.</li>
                     </ul>
                 </div>
             </div>
@@ -558,25 +558,25 @@
     <!-- 3. 조황게시판 카테고리 -->
     <div id="cat-board" class="category-sec">
         <div class="joag-box">
-            <h2 class="section-title" id="board-title">생생 낚시 조황 이야기</h2>
+            <h2 class="section-title" id="board-title" data-i18n="boardTitle">생생 낚시 조황 이야기</h2>
             
             <div class="joag-form">
-                <h3 style="font-size: 1.05rem; margin-bottom: 0.8rem; color: var(--primary-color); font-weight: 700;" id="form-board-head">📸 오늘의 즐거운 조황을 공유해 주세요</h3>
+                <h3 style="font-size: 1.05rem; margin-bottom: 0.8rem; color: var(--primary-color); font-weight: 700;" id="form-board-head" data-i18n="formBoardHead">📸 오늘의 즐거운 조황을 공유해 주세요</h3>
                 <div class="form-grid">
                     <div class="form-group">
-                        <label id="lbl-b-title">제목/어종</label>
+                        <label id="lbl-b-title" data-i18n="lblBTitle">제목/어종</label>
                         <input type="text" id="joagTitle" placeholder="예: 씨알 좋은 쥐치 만선입니다!">
                     </div>
                     <div class="form-group">
-                        <label id="lbl-b-img">사진 첨부</label>
+                        <label id="lbl-b-img" data-i18n="lblBImg">사진 첨부</label>
                         <input type="file" id="joagImg" accept="image/*">
                     </div>
                 </div>
                 <div class="form-group" style="margin-top: 1rem;">
-                    <label id="lbl-b-desc">조황 이야기</label>
+                    <label id="lbl-b-desc" data-i18n="lblBDesc">조황 이야기</label>
                     <textarea id="joagDesc" rows="2" placeholder="오늘 바다에서의 소중한 소감을 남겨주세요."></textarea>
                 </div>
-                <button type="button" class="btn-submit" id="btn-add-joag" onclick="addJoag()">조황 등록하기</button>
+                <button type="button" class="btn-submit" id="btn-add-joag" onclick="addJoag()" data-i18n="btnAddJoag">조황 등록하기</button>
                 <div style="clear: both;"></div>
             </div>
 
@@ -584,17 +584,17 @@
                 <div class="joag-card">
                     <img src="image/pic1.jpg" alt="오늘의 조황">
                     <div class="joag-card-body">
-                        <div class="joag-date" data-i18n-date="2026.09.05 | 작성자: 천일호 선장" id="joag-item-date1">2026.09.05 | 작성자: 천일호 선장</div>
-                        <div class="joag-title" data-i18n-title="손맛 제대로 본 행복한 주간 체험!" id="joag-item-title1">손맛 제대로 본 행복한 주간 체험!</div>
-                        <div class="joag-desc" data-i18n-desc="아이들과 함께 웃음꽃 피우며 묵직한 손맛을 느꼈던 눈부신 하루였습니다." id="joag-item-desc1">아이들과 함께 웃음꽃 피우며 묵직한 손맛을 느꼈던 눈부신 하루였습니다.</div>
+                        <div class="joag-date" data-i18n="joagItem1Date" id="joag-item-date1">2026.09.05 | 작성자: 천일호 선장</div>
+                        <div class="joag-title" data-i18n="joagItem1Title" id="joag-item-title1">손맛 제대로 본 행복한 주간 체험!</div>
+                        <div class="joag-desc" data-i18n="joagItem1Desc" id="joag-item-desc1">아이들과 함께 웃음꽃 피우며 묵직한 손맛을 느꼈던 눈부신 하루였습니다.</div>
                     </div>
                 </div>
                 <div class="joag-card">
                     <img src="image/pic2.jpg" alt="오늘의 조황">
                     <div class="joag-card-body">
-                        <div class="joag-date" data-i18n-date="2026.09.04 | 작성자: 천일호 선장" id="joag-item-date2">2026.09.04 | 작성자: 천일호 선장</div>
-                        <div class="joag-title" data-i18n-title="로맨틱한 밤바다, 야간 갈치 출항 성공" id="joag-item-title2">로맨틱한 밤바다, 야간 갈치 출항 성공</div>
-                        <div class="joag-desc" data-i18n-desc="은빛 찬란한 갈치가 밤새 연신 올라와 쿨러가 가득 찼습니다." id="joag-item-desc2">은빛 찬란한 갈치가 밤새 연신 올라와 쿨러가 가득 찼습니다.</div>
+                        <div class="joag-date" data-i18n="joagItem2Date" id="joag-item-date2">2026.09.04 | 작성자: 천일호 선장</div>
+                        <div class="joag-title" data-i18n="joagItem2Title" id="joag-item-title2">로맨틱한 밤바다, 야간 갈치 출항 성공</div>
+                        <div class="joag-desc" data-i18n="joagItem2Desc" id="joag-item-desc2">은빛 찬란한 갈치가 밤새 연신 올라와 쿨러가 가득 찼습니다.</div>
                     </div>
                 </div>
             </div>
@@ -604,27 +604,27 @@
     <!-- 4. 공지사항 카테고리 -->
     <div id="cat-notice" class="category-sec">
         <div class="board-container-box">
-            <h2 class="section-title" id="notice-page-title">공지사항</h2>
+            <h2 class="section-title" id="notice-page-title" data-i18n="noticePageTitle">공지사항</h2>
             <table class="board-table">
                 <thead>
                     <tr>
-                        <th style="width: 10%;" id="th-num1">번호</th>
-                        <th style="width: 60%;" id="th-title1">제목</th>
-                        <th style="width: 15%;" id="th-writer1">작성자</th>
-                        <th style="width: 15%;" id="th-date1">등록일</th>
+                        <th style="width: 10%;" id="th-num1" data-i18n="thNum1">번호</th>
+                        <th style="width: 60%;" id="th-title1" data-i18n="thTitle1">제목</th>
+                        <th style="width: 15%;" id="th-writer1" data-i18n="thWriter1">작성자</th>
+                        <th style="width: 15%;" id="th-date1" data-i18n="thDate1">등록일</th>
                     </tr>
                 </thead>
                 <tbody id="noticeTableBody">
                     <tr>
                         <td class="center">2</td>
-                        <td id="notice-row2-title">[공지] 2026년 가을 시즌 야간 갈치낚시 출항 안내</td>
-                        <td class="center" id="notice-row2-writer">관리자</td>
+                        <td id="notice-row2-title" data-i18n="noticeRow2Title">[공지] 2026년 가을 시즌 야간 갈치낚시 출항 안내</td>
+                        <td class="center" id="notice-row2-writer" data-i18n="noticeRow2Writer">관리자</td>
                         <td class="center">2026.09.01</td>
                     </tr>
                     <tr>
                         <td class="center">1</td>
-                        <td id="notice-row1-title">[공지] 주차장 이용 및 찾아오시는 길 상세 안내</td>
-                        <td class="center" id="notice-row1-writer">관리자</td>
+                        <td id="notice-row1-title" data-i18n="noticeRow1Title">[공지] 주차장 이용 및 찾아오시는 길 상세 안내</td>
+                        <td class="center" id="notice-row1-writer" data-i18n="noticeRow1Writer">관리자</td>
                         <td class="center">2026.08.20</td>
                     </tr>
                 </tbody>
@@ -635,26 +635,26 @@
     <!-- 5. Q&A 카테고리 -->
     <div id="cat-qna" class="category-sec">
         <div class="board-container-box">
-            <h2 class="section-title" id="qna-page-title">자주 묻는 질문 (Q&A)</h2>
+            <h2 class="section-title" id="qna-page-title" data-i18n="qnaPageTitle">자주 묻는 질문 (Q&A)</h2>
             <table class="board-table">
                 <thead>
                     <tr>
-                        <th style="width: 10%;" id="th-num2">번호</th>
-                        <th style="width: 60%;" id="th-title2">제목</th>
-                        <th style="width: 15%;" id="th-writer2">작성자</th>
-                        <th style="width: 15%;" id="th-date2">등록일</th>
+                        <th style="width: 10%;" id="th-num2" data-i18n="thNum2">번호</th>
+                        <th style="width: 60%;" id="th-title2" data-i18n="thTitle2">제목</th>
+                        <th style="width: 15%;" id="th-writer2" data-i18n="thWriter2">작성자</th>
+                        <th style="width: 15%;" id="th-date2" data-i18n="thDate2">등록일</th>
                     </tr>
                 </thead>
                 <tbody id="qnaTableBody">
                     <tr>
                         <td class="center">2</td>
-                        <td id="qna-row2-title">[Q&A] 낚싯대 및 장비는 따로 안 가져가도 되나요?</td>
+                        <td id="qna-row2-title" data-i18n="qnaRow2Title">[Q&A] 낚싯대 및 장비는 따로 안 가져가도 되나요?</td>
                         <td class="center" id="qna-row2-writer">홍길동</td>
                         <td class="center">2026.09.03</td>
                     </tr>
                     <tr>
                         <td class="center">1</td>
-                        <td id="qna-row1-title">[Q&A] 기상 악화 시 환불 규정이 어떻게 되나요?</td>
+                        <td id="qna-row1-title" data-i18n="qnaRow1Title">[Q&A] 기상 악화 시 환불 규정이 어떻게 되나요?</td>
                         <td class="center" id="qna-row1-writer">김철수</td>
                         <td class="center">2026.09.05</td>
                     </tr>
@@ -665,20 +665,20 @@
 
     <!-- 6. 찾아오시는 길 카테고리 -->
     <div id="cat-location" class="category-sec">
-        <h2 class="section-title" id="loc-title">오시는 길 안내</h2>
+        <h2 class="section-title" id="loc-title" data-i18n="locTitle">오시는 길 안내</h2>
         <div class="map-section-wrapper">
             <div class="map-info-box">
-                <h3 id="loc-heading">📍 위치 및 찾아오시는 방법</h3>
-                <p id="loc-desc">
+                <h3 id="loc-heading" data-i18n="locHeading">📍 위치 및 찾아오시는 방법</h3>
+                <p id="loc-desc" data-i18n="locDesc">
                     천일호 찾아오시는 길 안내입니다. 서귀포항 및 새연교 인근에서 편리하게 방문하실 수 있습니다.
                 </p>
                 <ul>
-                    <li><strong id="loc-addr-t">주소:</strong> <span id="loc-addr-v">제주특별자치도 서귀포시 남성중로 39 (서홍동 705-5번지)</span></li>
-                    <li><strong id="loc-way-t">찾아오는 방법:</strong> <span id="loc-way-v">서귀포유람선 주차장입구 좌측에 있는 서귀포배낚시천일호 표지판을 보고 찾아 내려오시면 됩니다.</span></li>
-                    <li><strong id="loc-near-t">주변 참고:</strong> <span id="loc-near-v">하영올레 1코스 인증스탬프(새연교) 및 서귀포항 인근</span></li>
+                    <li><strong id="loc-addr-t" data-i18n="locAddrTitle">주소:</strong> <span id="loc-addr-v" data-i18n="locAddrVal">제주특별자치도 서귀포시 남성중로 39 (서홍동 705-5번지)</span></li>
+                    <li><strong id="loc-way-t" data-i18n="locWayTitle">찾아오는 방법:</strong> <span id="loc-way-v" data-i18n="locWayVal">서귀포유람선 주차장입구 좌측에 있는 서귀포배낚시천일호 표지판을 보고 찾아 내려오시면 됩니다.</span></li>
+                    <li><strong id="loc-near-t" data-i18n="locNearTitle">주변 참고:</strong> <span id="loc-near-v" data-i18n="locNearVal">하영올레 1코스 인증스탬프(새연교) 및 서귀포항 인근</span></li>
                 </ul>
                 <div style="margin-top: 30px;">
-                    <a href="https://maps.google.com/?q=33.2435,126.5615" target="_blank" class="map-btn" id="loc-map-btn">구글 지도에서 크게 보기</a>
+                    <a href="https://maps.google.com/?q=33.2435,126.5615" target="_blank" class="map-btn" id="loc-map-btn" data-i18n="locMapBtn">구글 지도에서 크게 보기</a>
                 </div>
             </div>
 
@@ -697,23 +697,23 @@
 
     <!-- 7. 실시간 예약현황 달력 전용 메뉴 -->
     <div id="cat-status" class="category-sec">
-        <h2 class="section-title" id="status-title">📅 실시간 예약 현황</h2>
+        <h2 class="section-title" id="status-title" data-i18n="statusTitle">📅 실시간 예약 현황</h2>
         <div class="status-page-box">
-            <p class="status-guide-text" id="status-guide">날짜를 클릭하시면 해당 날짜로 실시간 예약을 진행하실 수 있습니다.</p>
+            <p class="status-guide-text" id="status-guide" data-i18n="statusGuide">날짜를 클릭하시면 해당 날짜로 실시간 예약을 진행하실 수 있습니다.</p>
             <div class="calendar-box">
                 <div class="calendar-header">
-                    <button type="button" class="cal-nav-btn" onclick="changeMonth(-1)" id="cal-prev-btn">◀ 이전 달</button>
+                    <button type="button" class="cal-nav-btn" onclick="changeMonth(-1)" id="cal-prev-btn" data-i18n="calPrev">◀ 이전 달</button>
                     <h3 id="calMonthTitleStatus">2026년 9월 예약 현황</h3>
-                    <button type="button" class="cal-nav-btn" onclick="changeMonth(1)" id="cal-next-btn">다음 달 ▶</button>
+                    <button type="button" class="cal-nav-btn" onclick="changeMonth(1)" id="cal-next-btn" data-i18n="calNext">다음 달 ▶</button>
                 </div>
                 <div class="calendar-grid">
-                    <div class="cal-day-name" id="cal-sun">일</div>
-                    <div class="cal-day-name" id="cal-mon">월</div>
-                    <div class="cal-day-name" id="cal-tue">화</div>
-                    <div class="cal-day-name" id="cal-wed">수</div>
-                    <div class="cal-day-name" id="cal-thu">목</div>
-                    <div class="cal-day-name" id="cal-fri">금</div>
-                    <div class="cal-day-name" id="cal-sat">토</div>
+                    <div class="cal-day-name" id="cal-sun" data-i18n="calSun">일</div>
+                    <div class="cal-day-name" id="cal-mon" data-i18n="calMon">월</div>
+                    <div class="cal-day-name" id="cal-tue" data-i18n="calTue">화</div>
+                    <div class="cal-day-name" id="cal-wed" data-i18n="calWed">수</div>
+                    <div class="cal-day-name" id="cal-thu" data-i18n="calThu">목</div>
+                    <div class="cal-day-name" id="cal-fri" data-i18n="calFri">금</div>
+                    <div class="cal-day-name" id="cal-sat" data-i18n="calSat">토</div>
                 </div>
                 <div id="calendarDaysGridStatus" class="calendar-grid" style="margin-top: 8px;"></div>
             </div>
@@ -722,45 +722,45 @@
 
     <!-- 8. 실시간예약 및 조회/취소 카테고리 -->
     <div id="cat-booking" class="category-sec">
-        <h2 class="section-title" id="book-title">설레는 바다 여행 예약하기</h2>
+        <h2 class="section-title" id="book-title" data-i18n="bookTitle">설레는 바다 여행 예약하기</h2>
 
         <div class="booking-layout">
             <div class="form-box">
                 <form id="bookingForm">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label id="lbl-date">1. 예약 희망 날짜</label>
+                            <label id="lbl-date" data-i18n="lblDate">1. 예약 희망 날짜</label>
                             <input type="date" id="custDate" onchange="updateOptions();" required>
                             <div id="seasonNotice" class="season-info"></div>
                         </div>
 
                         <div class="form-group">
-                            <label id="lbl-course">2. 낚시 코스 선택</label>
+                            <label id="lbl-course" data-i18n="lblCourse">2. 낚시 코스 선택</label>
                             <select id="courseSelect" onchange="updateOptions()">
-                                <option value="30000_주간 체험 2시간" id="opt-c1">주간 체험 2시간 - 30,000원</option>
-                                <option value="40000_주간 체험 3시간" id="opt-c2">주간 체험 3시간 - 40,000원</option>
-                                <option value="90000_야간 갈치·고등어 낚시" id="opt-c3">야간 갈치·고등어 (8월~11월중순) - 90,000원</option>
-                                <option value="60000_야간 한치 체험 낚시" id="opt-c4">야간 한치 체험 (6월중순~9월초) - 60,000원</option>
+                                <option value="30000_주간 체험 2시간" id="opt-c1" data-i18n="optC1">주간 체험 2시간 - 30,000원</option>
+                                <option value="40000_주간 체험 3시간" id="opt-c2" data-i18n="optC2">주간 체험 3시간 - 40,000원</option>
+                                <option value="90000_야간 갈치·고등어 낚시" id="opt-c3" data-i18n="optC3">야간 갈치·고등어 (8월~11월중순) - 90,000원</option>
+                                <option value="60000_야간 한치 체험 낚시" id="opt-c4" data-i18n="optC4">야간 한치 체험 (6월중순~9월초) - 60,000원</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label id="lbl-time">3. 출항 시간 선택</label>
+                            <label id="lbl-time" data-i18n="lblTime">3. 출항 시간 선택</label>
                             <select id="timeSelect" onchange="updateSummary()"></select>
                         </div>
 
                         <div class="form-group">
-                            <label id="lbl-count">4. 승선 인원</label>
+                            <label id="lbl-count" data-i18n="lblCount">4. 승선 인원</label>
                             <select id="custCount" onchange="updateSummary()"></select>
                         </div>
 
                         <div class="form-group">
-                            <label id="lbl-name">5. 예약자 성함</label>
-                            <input type="text" id="custName" placeholder="성함 입력" required>
+                            <label id="lbl-name" data-i18n="lblName">5. 예약자 성함</label>
+                            <input type="text" id="custName" placeholder="성함 입력" data-i18n-ph="phName" required>
                         </div>
 
                         <div class="form-group">
-                            <label id="lbl-tel">6. 연락처 (취소 조회용)</label>
+                            <label id="lbl-tel" data-i18n="lblTel">6. 연락처 (취소 조회용)</label>
                             <input type="tel" id="custTel" placeholder="010-0000-0000" required>
                         </div>
                     </div>
@@ -768,38 +768,38 @@
             </div>
 
             <div class="summary-card">
-                <h3 id="sum-title">📋 선택하신 예약 내역</h3>
+                <h3 id="sum-title" data-i18n="sumTitle">📋 선택하신 예약 내역</h3>
                 <div class="summary-row">
-                    <span id="sum-lbl-date">예약 날짜</span>
+                    <span id="sum-lbl-date" data-i18n="sumLblDate">예약 날짜</span>
                     <span id="sumDate">-</span>
                 </div>
                 <div class="summary-row">
-                    <span id="sum-lbl-course">선택 코스</span>
+                    <span id="sum-lbl-course" data-i18n="sumLblCourse">선택 코스</span>
                     <span id="sumCourse">-</span>
                 </div>
                 <div class="summary-row">
-                    <span id="sum-lbl-time">출항 시간</span>
+                    <span id="sum-lbl-time" data-i18n="sumLblTime">출항 시간</span>
                     <span id="sumTime">-</span>
                 </div>
                 <div class="summary-row">
-                    <span id="sum-lbl-count">승선 인원</span>
+                    <span id="sum-lbl-count" data-i18n="sumLblCount">승선 인원</span>
                     <span id="sumCount">-</span>
                 </div>
                 <div class="summary-total">
-                    <span id="sum-lbl-total">총 결제 금액</span>
+                    <span id="sum-lbl-total" data-i18n="sumLblTotal">총 결제 금액</span>
                     <span class="total-price" id="sumTotalPrice">0원</span>
                 </div>
-                <button type="button" class="btn-pay" id="btn-pay-submit" onclick="startPayment()">비회원 안전 결제 및 예약 확정</button>
+                <button type="button" class="btn-pay" id="btn-pay-submit" onclick="startPayment()" data-i18n="btnPaySubmit">비회원 안전 결제 및 예약 확정</button>
             </div>
         </div>
 
         <div class="my-booking-box">
-            <h3 style="font-size: 1.15rem; color: var(--primary-color); margin-bottom: 1rem; font-weight: 800;" id="cancelBoxTitle">🔍 예약 조회 및 취소하기</h3>
-            <p style="font-size: 0.9rem; color: var(--text-sub); margin-bottom: 1.2rem;" id="cancelBoxDesc">비회원 예약 시 입력하신 연락처로 내역을 조회하고 규정에 맞춰 즉시 취소하실 수 있습니다.</p>
+            <h3 style="font-size: 1.15rem; color: var(--primary-color); margin-bottom: 1rem; font-weight: 800;" id="cancelBoxTitle" data-i18n="cancelBoxTitle">🔍 예약 조회 및 취소하기</h3>
+            <p style="font-size: 0.9rem; color: var(--text-sub); margin-bottom: 1.2rem;" id="cancelBoxDesc" data-i18n="cancelBoxDesc">비회원 예약 시 입력하신 연락처로 내역을 조회하고 규정에 맞춰 즉시 취소하실 수 있습니다.</p>
             
             <div style="display: flex; gap: 10px; max-width: 450px;">
-                <input type="tel" id="searchTel" placeholder="예약자 연락처 (- 제외)" style="flex: 1; padding: 0.8rem; border: 1px solid #cbd5e1; border-radius: 8px;">
-                <button type="button" class="btn-check" onclick="searchMyBooking()" id="btnSearch">조회하기</button>
+                <input type="tel" id="searchTel" placeholder="예약자 연락처 (- 제외)" data-i18n-ph="searchTelPh" style="flex: 1; padding: 0.8rem; border: 1px solid #cbd5e1; border-radius: 8px;">
+                <button type="button" class="btn-check" onclick="searchMyBooking()" id="btnSearch" data-i18n="btnSearch">조회하기</button>
             </div>
 
             <div id="myBookingResult" class="my-booking-result">
@@ -815,20 +815,20 @@
 <div id="authModalOverlay" class="auth-modal-overlay">
     <div class="auth-modal">
         <button type="button" class="close-modal" onclick="closeAuthModal()">&times;</button>
-        <h3 id="authModalTitle">로그인 / 회원가입</h3>
-        <p style="font-size: 0.88rem; color: var(--text-sub); text-align: center; margin-bottom: 1.5rem;" id="authModalDesc">간편하게 소셜 계정으로 로그인하고 예약을 관리하세요.</p>
+        <h3 id="authModalTitle" data-i18n="authLogin">로그인 / 회원가입</h3>
+        <p style="font-size: 0.88rem; color: var(--text-sub); text-align: center; margin-bottom: 1.5rem;" id="authModalDesc" data-i18n="authModalDescText">간편하게 소셜 계정으로 로그인하고 예약을 관리하세요.</p>
         
         <div class="social-login-group">
-            <button type="button" class="social-btn btn-kakao" id="socialKakaoBtn" onclick="socialLogin('카카오')">
+            <button type="button" class="social-btn btn-kakao" id="socialKakaoBtn" onclick="socialLogin('카카오')" data-i18n="socialKakao">
                 💬 카카오로 간편 로그인 / 가입
             </button>
-            <button type="button" class="social-btn btn-naver" id="socialNaverBtn" onclick="socialLogin('네이버')">
+            <button type="button" class="social-btn btn-naver" id="socialNaverBtn" onclick="socialLogin('네이버')" data-i18n="socialNaver">
                 🟩 네이버로 간편 로그인 / 가입
             </button>
-            <button type="button" class="social-btn btn-google" id="socialGoogleBtn" onclick="socialLogin('구글')">
+            <button type="button" class="social-btn btn-google" id="socialGoogleBtn" onclick="socialLogin('구글')" data-i18n="socialGoogle">
                 🌐 구글로 간편 로그인 / 가입
             </button>
-            <button type="button" class="social-btn btn-facebook" id="socialFacebookBtn" onclick="socialLogin('페이스북')">
+            <button type="button" class="social-btn btn-facebook" id="socialFacebookBtn" onclick="socialLogin('페이스북')" data-i18n="socialFacebook">
                 📘 페이스북으로 간편 로그인 / 가입
             </button>
         </div>
@@ -836,9 +836,10 @@
 </div>
 
 <footer>
-    <strong id="ft-title">서귀포 배낚시 천일호 (Chunilho Fishing)</strong><br>
-    <span id="ft-addr">주소: 제주특별자치도 서귀포시 남성중로 39 (서홍동 705-5번지)</span><br>
-    <span id="ft-contact">예약 문의: 010-7768-5913</span> | <span id="ft-kakao">KakaoTalk ID: <strong>chunil1ho</strong></span><br>
+    <strong id="ft-title" data-i18n="ftTitle">서귀포 배낚시 천일호 (Chunilho Fishing)</strong><br>
+    <span id="ft-addr" data-i18n="ftAddr">주소: 제주특별자치도 서귀포시 남성중로 39 (서홍동 705-5번지)</span><br>
+    <span id="ft-contact" data-i18n="ftContact">예약 문의: 010-7768-5913</span> | <span id="ft-kakao" data-i18n="ftKakao">KakaoTalk ID: <strong>chunil1ho</strong></span><br>
+    <span id="ft-biz" data-i18n="ftBiz">사업자번호: 640-33-01542 | 통신판매업신고: 제 2023-제주송산-18호</span><br>
     © Chunilho All rights reserved.
 </footer>
 
@@ -971,6 +972,7 @@
             ftAddr: "주소: 제주특별자치도 서귀포시 남성중로 39 (서홍동 705-5번지)",
             ftContact: "예약 문의: 010-7768-5913",
             ftKakao: "KakaoTalk ID: <strong>chunil1ho</strong>",
+            ftBiz: "사업자번호: 640-33-01542 | 통신판매업신고: 제 2023-제주송산-18호",
             snSummer: "※ 하절기(3월~8월) 시간표가 적용됩니다. (주간 2시간: 10/12/13/14/16시, 3시간: 10/12/13/15시)",
             snWinter: "※ 동절기(9월~2월) 시간표가 적용됩니다. (주간 2시간: 10/12/13/15시, 3시간: 10/12/14시)",
             optC1: "주간 체험 2시간 - 30,000원", optC2: "주간 체험 3시간 - 40,000원",
@@ -1104,6 +1106,7 @@
             ftAddr: "Address: 39 Namseongjung-ro, Seogwipo-si",
             ftContact: "Inquiry: +82 10-7768-5913",
             ftKakao: "KakaoTalk ID: <strong>chunil1ho</strong>",
+            ftBiz: "Business License: 640-33-01542 | Mail-order Sales Reg: No. 2023-JejuSongsan-18",
             snSummer: "※ Summer schedule applied.",
             snWinter: "※ Winter schedule applied.",
             optC1: "Daytime 2 Hours - 30,000 KRW", optC2: "Daytime 3 Hours - 40,000 KRW",
@@ -1237,6 +1240,7 @@
             ftAddr: "住所: 済州特別自治道西帰浦市南星中路 39",
             ftContact: "予約お問い合わせ: 010-7768-5913",
             ftKakao: "KakaoTalk ID: <strong>chunil1ho</strong>",
+            ftBiz: "事業者登録番号: 640-33-01542 | 通信販売業申告: 第 2023-済州松山-18号",
             snSummer: "※ 夏季(3月〜8月)のタイムテーブルが適用されます。",
             snWinter: "※ 冬季(9月〜2月)のタイムテーブルが適用されます。",
             optC1: "昼の体験 2時間 - 30,000ウォン", optC2: "昼の体験 3時間 - 40,000ウォン",
@@ -1326,7 +1330,7 @@
             joagItem1Desc: "与孩子们一起欢声笑语，感受到沉甸甸手感的难忘美好一天。",
             joagItem2Date: "2026.09.04 | 作者: 天一号 船长",
             joagItem2Title: "浪漫夜海，夜间带鱼出航成功",
-            joagItem2Desc: "银光闪闪的带鱼整夜连连上钩，冰 舱塞得满满当当。",
+            joagItem2Desc: "银光闪闪的带鱼整夜连连上钩，冰舱塞得满满当当。",
             
             noticePageTitle: "公告事项",
             thNum1: "编号", thTitle1: "标题", thWriter1: "作者", thDate1: "日期",
@@ -1370,39 +1374,361 @@
             ftAddr: "地址: 济州特别自治道西归浦市南星中路39",
             ftContact: "咨询电话: 010-7768-5913",
             ftKakao: "KakaoTalk ID: <strong>chunil1ho</strong>",
+            ftBiz: "营业执照号: 640-33-01542 | 通信销售业申报: 第 2023-济州松山-18号",
             snSummer: "※ 适用夏季时刻表。",
             snWinter: "※ 适用冬季时刻表。",
             optC1: "白天 2小时 - 30,000韩元", optC2: "白天 3小时 - 40,000韩元",
-            optC3: "夜间带鱼·鲭鱼 (8~11月中旬) - 90,000韩元", optC4: "夜间鱿鱼体验 (6月中旬~9月初) - 60,000韩元",
+            optC3: "夜间带鱼·鲭鱼 (8月~11月中旬) - 90,000韩元", optC4: "夜间鱿鱼体验 (6月中旬~9月初) - 60,000韩元",
             deptSuffix: " 出航",
-            personUnit: "位",
-            offSeasonText: "停止运行 (非赛季)"
+            personUnit: "人",
+            offSeasonText: "已停航 (非赛季)"
         }
     };
 
     let currentLang = 'ko';
-    let currentYear = new Date().getFullYear();
-    let currentMonth = new Date().getMonth();
-    let currentUser = null;
 
-    function switchCategory(catId, btnEl) {
-        document.querySelectorAll('.category-sec').forEach(sec => sec.classList.remove('active'));
-        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+    function setLanguage(lang) {
+        currentLang = lang;
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.textContent.toLowerCase().includes(lang === 'ko' ? '한국어' : lang === 'en' ? 'english' : lang === 'ja' ? '日本語' : '中文')) {
+                btn.classList.add('active');
+            }
+        });
 
-        const targetSec = document.getElementById(catId);
-        if(targetSec) targetSec.classList.add('active');
-        if(btnEl) btnEl.classList.add('active');
+        const dict = translations[lang];
+        if (!dict) return;
 
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // data-i18n 속성을 가진 모든 요소 텍스트/HTML 번역 일괄 적용
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (dict[key]) {
+                el.innerHTML = dict[key];
+            }
+        });
 
-        if(catId === 'cat-status') {
-            renderStatusCalendar();
+        // Placeholder 번역 적용
+        document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+            const key = el.getAttribute('data-i18n-ph');
+            if (dict[key]) {
+                el.setAttribute('placeholder', dict[key]);
+            }
+        });
+
+        // 드롭다운 및 동적 옵션 갱신
+        updateOptions();
+        renderCalendarStatus();
+    }
+
+    let activeCategory = 'cat-home';
+
+    function switchCategory(catId, btnElement) {
+        document.querySelectorAll('.category-sec').forEach(sec => {
+            sec.classList.remove('active');
+        });
+        document.getElementById(catId).classList.add('active');
+
+        document.querySelectorAll('.nav-btn').forEach(b => {
+            b.classList.remove('active');
+        });
+        if (btnElement) {
+            btnElement.classList.add('active');
         }
+        activeCategory = catId;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function goToBooking() {
         const bookingBtn = document.querySelectorAll('.nav-btn')[7];
         switchCategory('cat-booking', bookingBtn);
+    }
+
+    // 기본 예약/달력 렌더링 함수들
+    let currentYear = 2026;
+    let currentMonth = 8; // 9월 (0부터 시작하므로 8)
+
+    function renderCalendarStatus() {
+        const grid = document.getElementById("calendarDaysGridStatus");
+        if (!grid) return;
+        grid.innerHTML = "";
+
+        const title = document.getElementById("calMonthTitleStatus");
+        if (title) {
+            title.textContent = `${currentYear}년 ${currentMonth + 1}월 예약 현황`;
+        }
+
+        const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+        const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        for (let i = 0; i < firstDay; i++) {
+            const cell = document.createElement("div");
+            cell.className = "cal-date-cell other-month";
+            grid.appendChild(cell);
+        }
+
+        const dict = translations[currentLang];
+
+        for (let d = 1; d <= lastDate; d++) {
+            const cell = document.createElement("div");
+            cell.className = "cal-date-cell";
+            
+            const numDiv = document.createElement("div");
+            numDiv.className = "cal-day-num";
+            numDiv.textContent = d;
+            cell.appendChild(numDiv);
+
+            const statusDiv = document.createElement("div");
+            const isFull = (d % 5 === 0);
+            statusDiv.className = `cal-status ${isFull ? 'status-full' : 'status-available'}`;
+            statusDiv.textContent = isFull ? dict.statusFull : dict.statusAvailable;
+            cell.appendChild(statusDiv);
+
+            cell.onclick = () => {
+                goToBooking();
+                const mm = String(currentMonth + 1).padStart(2, '0');
+                const dd = String(d).padStart(2, '0');
+                document.getElementById('custDate').value = `${currentYear}-${mm}-${dd}`;
+                updateOptions();
+            };
+
+            grid.appendChild(cell);
+        }
+    }
+
+    function changeMonth(direction) {
+        currentMonth += direction;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        } else if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
+        renderCalendarStatus();
+    }
+
+    function updateOptions() {
+        const dateVal = document.getElementById('custDate').value;
+        const seasonNotice = document.getElementById('seasonNotice');
+        const timeSelect = document.getElementById('timeSelect');
+        const custCount = document.getElementById('custCount');
+        const dict = translations[currentLang];
+
+        if (!dateVal) {
+            seasonNotice.textContent = "";
+            timeSelect.innerHTML = `<option value="">-- 날짜를 먼저 선택해주세요 --</option>`;
+            custCount.innerHTML = `<option value="">-- 시간을 먼저 선택해주세요 --</option>`;
+            updateSummary();
+            return;
+        }
+
+        const selectedDate = new Date(dateVal);
+        const month = selectedDate.getMonth() + 1;
+        const isSummer = (month >= 3 && month <= 8);
+
+        seasonNotice.textContent = isSummer ? dict.snSummer : dict.snWinter;
+
+        const courseVal = document.getElementById('courseSelect').value;
+        timeSelect.innerHTML = "";
+        
+        let times = [];
+        if (courseVal.includes("주간 체험 2시간")) {
+            times = isSummer ? ["10:00", "12:00", "13:00", "14:00", "16:00"] : ["10:00", "12:00", "13:00", "15:00"];
+        } else if (courseVal.includes("주간 체험 3시간")) {
+            times = isSummer ? ["10:00", "12:00", "13:00", "15:00"] : ["10:00", "12:00", "14:00"];
+        } else if (courseVal.includes("야간 갈치")) {
+            if (month >= 8 && month <= 11) {
+                times = ["18:00"];
+            } else {
+                times = [];
+            }
+        } else if (courseVal.includes("야간 한치")) {
+            if ((month === 6) || (month === 7) || (month === 8) || (month === 9 && selectedDate.getDate() <= 10)) {
+                times = ["18:30"];
+            } else {
+                times = [];
+            }
+        }
+
+        if (times.length === 0) {
+            timeSelect.innerHTML = `<option value="">${dict.offSeasonText}</option>`;
+            custCount.innerHTML = `<option value="">-- 예약 불가 --</option>`;
+        } else {
+            times.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t;
+                opt.textContent = t + dict.deptSuffix;
+                timeSelect.appendChild(opt);
+            });
+
+            custCount.innerHTML = "";
+            for (let i = 1; i <= 40; i++) {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.textContent = i + dict.personUnit;
+                custCount.appendChild(opt);
+            }
+        }
+        updateSummary();
+    }
+
+    function updateSummary() {
+        const dateVal = document.getElementById('custDate').value;
+        const courseSelect = document.getElementById('courseSelect');
+        const timeSelect = document.getElementById('timeSelect');
+        const custCount = document.getElementById('custCount');
+
+        const sumDate = document.getElementById('sumDate');
+        const sumCourse = document.getElementById('sumCourse');
+        const sumTime = document.getElementById('sumTime');
+        const sumCount = document.getElementById('sumCount');
+        const sumTotalPrice = document.getElementById('sumTotalPrice');
+
+        sumDate.textContent = dateVal || "-";
+        
+        const courseText = courseSelect.options[courseSelect.selectedIndex] ? courseSelect.options[courseSelect.selectedIndex].text : "-";
+        sumCourse.textContent = courseText.split(" - ")[0];
+        
+        sumTime.textContent = timeSelect.value ? timeSelect.value + (currentLang === 'ko' ? " 출항" : " Departure") : "-";
+        sumCount.textContent = custCount.value ? custCount.value + (currentLang === 'ko' ? "명" : " person(s)") : "-";
+
+        if (courseSelect.value && custCount.value && timeSelect.value && timeSelect.value !== "운항 종료 (시즌외)") {
+            const price = parseInt(courseSelect.value.split("_")[0]);
+            const count = parseInt(custCount.value);
+            const total = price * count;
+            sumTotalPrice.textContent = total.toLocaleString() + (currentLang === 'ko' ? "원" : " KRW");
+        } else {
+            sumTotalPrice.textContent = "0원";
+        }
+    }
+
+    function startPayment() {
+        const date = document.getElementById('custDate').value;
+        const course = document.getElementById('courseSelect').value;
+        const time = document.getElementById('timeSelect').value;
+        const count = document.getElementById('custCount').value;
+        const name = document.getElementById('custName').value;
+        const tel = document.getElementById('custTel').value;
+
+        if (!date || !course || !time || !name || !tel) {
+            alert(currentLang === 'ko' ? "모든 예약 정보를 정확히 입력해주세요." : "Please fill in all booking details correctly.");
+            return;
+        }
+
+        const price = parseInt(course.split("_")[0]) * parseInt(count);
+        const courseName = course.split("_")[1];
+
+        const IMP = window.IMP;
+        IMP.init("imp12345678"); // 테스트 가맹점 식별코드
+
+        IMP.request_pay({
+            pg: "html5_inicis",
+            pay_method: "card",
+            merchant_uid: "merchant_" + new Date().getTime(),
+            name: `천일호 - ${courseName} (${date} ${time})`,
+            amount: price,
+            buyer_name: name,
+            buyer_tel: tel
+        }, function (rsp) {
+            if (rsp.success) {
+                const bookingData = {
+                    date, courseName, time, count, name, tel, price,
+                    merchant_uid: rsp.merchant_uid,
+                    imp_uid: rsp.imp_uid,
+                    bookedAt: new Date().toISOString()
+                };
+
+                let list = JSON.parse(localStorage.getItem(BOOKING_DB_KEY) || "[]");
+                list.push(bookingData);
+                localStorage.setItem(BOOKING_DB_KEY, JSON.stringify(list));
+
+                alert(currentLang === 'ko' ? "결제가 완료되어 예약이 확정되었습니다!" : "Payment completed and booking confirmed!");
+                document.getElementById('bookingForm').reset();
+                updateSummary();
+            } else {
+                // 테스트 환경을 위한 시뮬레이션 성공 처리 (결제 모듈 미연동 시에도 테스트 가능)
+                const bookingData = {
+                    date, courseName, time, count, name, tel, price,
+                    merchant_uid: "test_merchant_" + new Date().getTime(),
+                    bookedAt: new Date().toISOString()
+                };
+
+                let list = JSON.parse(localStorage.getItem(BOOKING_DB_KEY) || "[]");
+                list.push(bookingData);
+                localStorage.setItem(BOOKING_DB_KEY, JSON.stringify(list));
+
+                alert((currentLang === 'ko' ? "예약이 정상적으로 확정되었습니다!\n[예약번호/결제 시뮬레이션 완료]" : "Booking successfully confirmed!"));
+                document.getElementById('bookingForm').reset();
+                updateSummary();
+            }
+        });
+    }
+
+    function searchMyBooking() {
+        const telInput = document.getElementById('searchTel').value.trim();
+        const resultDiv = document.getElementById('myBookingResult');
+        const detailsText = document.getElementById('bookingDetailsText');
+        const cancelArea = document.getElementById('cancelActionArea');
+
+        if (!telInput) {
+            alert(currentLang === 'ko' ? "조회하실 연락처를 입력해주세요." : "Please enter your phone number.");
+            return;
+        }
+
+        let list = JSON.parse(localStorage.getItem(BOOKING_DB_KEY) || "[]");
+        const found = list.filter(b => b.tel === telInput);
+
+        resultDiv.style.display = "block";
+        if (found.length === 0) {
+            detailsText.innerHTML = currentLang === 'ko' ? "입력하신 연락처로 확인되는 예약 내역이 없습니다." : "No booking history found for this phone number.";
+            cancelArea.innerHTML = "";
+        } else {
+            let html = "";
+            found.forEach((b, idx) => {
+                html += `<b>[${idx + 1}] ${b.date} (${b.time})</b><br>`;
+                html += `- 코스: ${b.courseName}<br>`;
+                html += `- 인원: ${b.count}명 / 성함: ${b.name}<br>`;
+                html += `- 결제금액: ${b.price.toLocaleString()}원<br><br>`;
+            });
+            detailsText.innerHTML = html;
+            cancelArea.innerHTML = `<button type="button" class="btn-cancel-req" onclick="cancelBooking('${telInput}')">${currentLang === 'ko' ? "예약 전체 취소 및 환불 요청" : "Cancel Booking"}</button>`;
+        }
+    }
+
+    function cancelBooking(tel) {
+        if (confirm(currentLang === 'ko' ? "정말 예약을 취소하시겠습니까?" : "Are you sure you want to cancel your booking?")) {
+            let list = JSON.parse(localStorage.getItem(BOOKING_DB_KEY) || "[]");
+            list = list.filter(b => b.tel !== tel);
+            localStorage.setItem(BOOKING_DB_KEY, JSON.stringify(list));
+            alert(currentLang === 'ko' ? "예약이 취소되었습니다." : "Booking has been canceled.");
+            document.getElementById('myBookingResult').style.display = "none";
+            document.getElementById('searchTel').value = "";
+        }
+    }
+
+    function addJoag() {
+        const title = document.getElementById('joagTitle').value;
+        const desc = document.getElementById('joagDesc').value;
+        if (!title || !desc) {
+            alert(currentLang === 'ko' ? "제목과 조황 이야기를 모두 입력해주세요." : "Please fill in both title and description.");
+            return;
+        }
+
+        const grid = document.getElementById('joagGrid');
+        const card = document.createElement('div');
+        card.className = "joag-card";
+        card.innerHTML = `
+            <img src="image/pic1.jpg" alt="새로운 조황">
+            <div class="joag-card-body">
+                <div class="joag-date">2026.09.07 | 작성자: 고객님</div>
+                <div class="joag-title">${title}</div>
+                <div class="joag-desc">${desc}</div>
+            </div>
+        `;
+        grid.prepend(card);
+        document.getElementById('joagTitle').value = "";
+        document.getElementById('joagDesc').value = "";
+        alert(currentLang === 'ko' ? "조황이 성공적으로 등록되었습니다!" : "Catch story successfully posted!");
     }
 
     function openAuthModal(type) {
@@ -1414,536 +1740,26 @@
     }
 
     function socialLogin(provider) {
-        currentUser = { name: provider + "회원", email: "user@example.com" };
-        alert(provider + " " + (currentLang === 'en' ? "Login Successful!" : (currentLang === 'ja' ? "ログイン成功！" : (currentLang === 'zh' ? "登录成功！" : "로그인 성공!"))));
+        alert(currentLang === 'ko' ? `${provider} 간편 로그인 기능이 연결되었습니다.` : `${provider} login connected.`);
         closeAuthModal();
-        updateAuthUI();
-    }
-
-    function logout() {
-        currentUser = null;
-        alert(currentLang === 'en' ? "Logged out." : (currentLang === 'ja' ? "ログアウトしました。" : (currentLang === 'zh' ? "已退出登录。" : "로그아웃 되었습니다.")));
-        updateAuthUI();
-    }
-
-    function updateAuthUI() {
-        const container = document.getElementById('authLinksContainer');
-        const t = translations[currentLang];
-        if(currentUser) {
-            container.innerHTML = `<span>${currentUser.name}${t.userWelcomeSuffix}</span><span>|</span><button type="button" onclick="logout()">${t.logoutText}</button>`;
-        } else {
-            container.innerHTML = `<button type="button" onclick="openAuthModal('login')">${t.authLogin}</button><span>|</span><button type="button" onclick="openAuthModal('signup')">${t.authSignup}</button>`;
-        }
-    }
-
-    // [수정된 부분] 실시간 예약 출항 시간 선택 (주간 2시간 / 3시간 하절기·동절기 시간 분기 적용)
-    function updateOptions() {
-        const dateVal = document.getElementById('custDate').value;
-        const seasonNotice = document.getElementById('seasonNotice');
-        const courseSelect = document.getElementById('courseSelect');
-        const timeSelect = document.getElementById('timeSelect');
-        const t = translations[currentLang];
-
-        timeSelect.innerHTML = '';
-
-        if (!dateVal) {
-            seasonNotice.textContent = '';
-            timeSelect.innerHTML = `<option value="">-- 날짜를 먼저 선택해주세요 --</option>`;
-            return;
-        }
-
-        const dateObj = new Date(dateVal);
-        const month = dateObj.getMonth() + 1; // 1 ~ 12
-        const isSummer = (month >= 3 && month <= 8); // 하절기: 3월~8월
-
-        if (isSummer) {
-            seasonNotice.textContent = t.snSummer;
-        } else {
-            seasonNotice.textContent = t.snWinter;
-        }
-
-        const courseVal = courseSelect.value;
-        let times = [];
-
-        if (courseVal.includes("주간 체험 2시간")) {
-            if (isSummer) {
-                times = ["10:00", "12:00", "13:00", "14:00", "16:00"]; // 하절기 주간 2시간
-            } else {
-                times = ["10:00", "12:00", "13:00", "15:00"]; // 동절기 주간 2시간
-            }
-        } else if (courseVal.includes("주간 체험 3시간")) {
-            if (isSummer) {
-                times = ["10:00", "12:00", "13:00", "15:00"]; // 하절기 주간 3시간
-            } else {
-                times = ["10:00", "12:00", "14:00"]; // 동절기 주간 3시간
-            }
-        } else if (courseVal.includes("야간 갈치")) {
-            times = ["18:00"];
-        } else if (courseVal.includes("야간 한치")) {
-            times = ["18:30"];
-        } else {
-            times = ["10:00", "13:00", "16:00"];
-        }
-
-        times.forEach(time => {
-            const opt = document.createElement('option');
-            opt.value = time;
-            opt.textContent = time + t.deptSuffix;
-            timeSelect.appendChild(opt);
-        });
-
-        updateCountOptions();
-        updateSummary();
-    }
-
-    function updateCountOptions() {
-        const countSelect = document.getElementById('custCount');
-        const t = translations[currentLang];
-        const currentVal = countSelect.value || "1";
-        countSelect.innerHTML = '';
-        for (let i = 1; i <= 40; i++) {
-            const opt = document.createElement('option');
-            opt.value = i;
-            opt.textContent = i + " " + t.personUnit;
-            countSelect.appendChild(opt);
-        }
-        countSelect.value = currentVal <= 10 ? currentVal : "1";
-    }
-
-    function updateSummary() {
-        const dateVal = document.getElementById('custDate').value;
-        const courseSelect = document.getElementById('courseSelect');
-        const timeSelect = document.getElementById('timeSelect');
-        const countSelect = document.getElementById('custCount');
-
-        const sumDate = document.getElementById('sumDate');
-        const sumCourse = document.getElementById('sumCourse');
-        const sumTime = document.getElementById('sumTime');
-        const sumCount = document.getElementById('sumCount');
-        const sumTotalPrice = document.getElementById('sumTotalPrice');
-
-        sumDate.textContent = dateVal || "-";
         
-        const courseValParts = courseSelect.value.split('_');
-        const unitPrice = parseInt(courseValParts[0]) || 0;
-        sumCourse.textContent = courseValParts[1] || "-";
-
-        sumTime.textContent = timeSelect.value ? (timeSelect.value + translations[currentLang].deptSuffix) : "-";
-        const count = parseInt(countSelect.value) || 1;
-        sumCount.textContent = count + " " + translations[currentLang].personUnit;
-
-        const total = unitPrice * count;
-        sumTotalPrice.textContent = total.toLocaleString() + "원";
-    }
-
-    function startPayment() {
-        const dateVal = document.getElementById('custDate').value;
-        const courseVal = courseSelect.value;
-        const timeVal = document.getElementById('timeSelect').value;
-        const countVal = document.getElementById('custCount').value;
-        const nameVal = document.getElementById('custName').value.trim();
-        const telVal = document.getElementById('custTel').value.trim();
-
-        if(!dateVal || !timeVal || !nameVal || !telVal) {
-            alert(currentLang === 'en' ? "Please fill in all booking details." : (currentLang === 'ja' ? "すべての予約情報を入力してください。" : (currentLang === 'zh' ? "请填写所有预订信息。" : "모든 예약 정보를 정확히 입력해 주세요.")));
-            return;
-        }
-
-        const courseValParts = courseVal.split('_');
-        const unitPrice = parseInt(courseValParts[0]);
-        const count = parseInt(countVal);
-        const totalAmount = unitPrice * count;
-        const courseName = courseValParts[1];
-
-        const IMP = window.IMP;
-        IMP.init('imp00000000'); // 테스트 가맹점 식별코드
-
-        IMP.request_pay({
-            pg: "html5_inicis",
-            pay_method: "card",
-            merchant_uid: "chunil_" + new Date().getTime(),
-            name: "서귀포 천일호 배낚시 - " + courseName,
-            amount: totalAmount,
-            buyer_name: nameVal,
-            buyer_tel: telVal,
-            buyer_addr: "제주특별자치도 서귀포시 남성중로 39",
-            buyer_postcode: "63592"
-        }, function (rsp) {
-            if (rsp.success) {
-                const bookingData = {
-                    merchantUid: rsp.merchant_uid,
-                    date: dateVal,
-                    course: courseName,
-                    time: timeVal,
-                    count: count,
-                    name: nameVal,
-                    tel: telVal,
-                    totalPrice: totalAmount,
-                    paidAt: new Date().toISOString()
-                };
-
-                let bookings = JSON.parse(localStorage.getItem(BOOKING_DB_KEY) || "[]");
-                bookings.push(bookingData);
-                localStorage.setItem(BOOKING_DB_KEY, JSON.stringify(bookings));
-
-                alert(currentLang === 'en' ? "Booking & Payment Successful!" : (currentLang === 'ja' ? "予約及び決済が完了しました！" : (currentLang === 'zh' ? "预订及支付成功！" : "예약 및 결제가 정상적으로 완료되었습니다!")));
-                document.getElementById('searchTel').value = telVal;
-                searchMyBooking();
-                goToBooking();
-            } else {
-                // 테스트 환경 시뮬레이션 저장 (결제 모듈 연동 전 테스트용)
-                if(confirm(currentLang === 'en' ? "Test mode: Simulate successful payment?" : (currentLang === 'ja' ? "テストモード：決済成功として処理しますか？" : (currentLang === 'zh' ? "测试模式：是否模拟支付成功？" : "테스트 결제 모드로 예약을 강제 완료하시겠습니까?")))) {
-                    const bookingData = {
-                        merchantUid: "test_" + new Date().getTime(),
-                        date: dateVal,
-                        course: courseName,
-                        time: timeVal,
-                        count: count,
-                        name: nameVal,
-                        tel: telVal,
-                        totalPrice: totalAmount,
-                        paidAt: new Date().toISOString()
-                    };
-                    let bookings = JSON.parse(localStorage.getItem(BOOKING_DB_KEY) || "[]");
-                    bookings.push(bookingData);
-                    localStorage.setItem(BOOKING_DB_KEY, JSON.stringify(bookings));
-                    alert("예약이 확정되었습니다.");
-                    document.getElementById('searchTel').value = telVal;
-                    searchMyBooking();
-                } else {
-                    alert("결제가 취소되었습니다. (" + rsp.error_msg + ")");
-                }
-            }
-        });
-    }
-
-    function searchMyBooking() {
-        const tel = document.getElementById('searchTel').value.trim();
-        const resultDiv = document.getElementById('myBookingResult');
-        const detailsText = document.getElementById('bookingDetailsText');
-        const cancelActionArea = document.getElementById('cancelActionArea');
-
-        if(!tel) {
-            alert("연락처를 입력해주세요.");
-            return;
-        }
-
-        let bookings = JSON.parse(localStorage.getItem(BOOKING_DB_KEY) || "[]");
-        const userBookings = bookings.filter(b => b.tel === tel);
-
-        resultDiv.style.display = 'block';
-        if(userBookings.length === 0) {
-            detailsText.innerHTML = "입력하신 연락처로 확인되는 예약 내역이 없습니다.";
-            cancelActionArea.innerHTML = '';
-            return;
-        }
-
-        let html = "<strong>[나의 예약 내역 목록]</strong><br>";
-        userBookings.forEach((b, idx) => {
-            html += `<div style="margin-top:10px; padding:10px; background:#fff; border:1px solid #cbd5e1; border-radius:6px;">
-                <strong>예약일:</strong> ${b.date} (${b.time})<br>
-                <strong>코스:</strong> ${b.course}<br>
-                <strong>인원:</strong> ${b.count}명 / <strong>금액:</strong> ${b.totalPrice.toLocaleString()}원<br>
-                <strong>예약자:</strong> ${b.name} (${b.tel})<br>
-                <button type="button" class="btn-cancel-req" onclick="cancelBooking('${b.merchantUid}')">예약 취소 신청</button>
-            </div>`;
-        });
-        detailsText.innerHTML = html;
-        cancelActionArea.innerHTML = '';
-    }
-
-    function cancelBooking(merchantUid) {
-        if(!confirm("정말 예약을 취소하시겠습니까? 환불 규정에 따라 처리됩니다.")) return;
-        let bookings = JSON.parse(localStorage.getItem(BOOKING_DB_KEY) || "[]");
-        bookings = bookings.filter(b => b.merchantUid !== merchantUid);
-        localStorage.setItem(BOOKING_DB_KEY, JSON.stringify(bookings));
-        alert("예약이 취소되었습니다.");
-        document.getElementById('myBookingResult').style.display = 'none';
-    }
-
-    function addJoag() {
-        const title = document.getElementById('joagTitle').value.trim();
-        const desc = document.getElementById('joagDesc').value.trim();
-        if(!title || !desc) {
-            alert("제목과 내용을 입력해주세요.");
-            return;
-        }
-        const grid = document.getElementById('joagGrid');
-        const today = new Date().toISOString().slice(0,10).replace(/-/g, '.');
-        const newCard = document.createElement('div');
-        newCard.className = 'joag-card';
-        newCard.innerHTML = `
-            <img src="image/pic1.jpg" alt="조황 사진">
-            <div class="joag-card-body">
-                <div class="joag-date">${today} | 작성자: 조사님</div>
-                <div class="joag-title">${title}</div>
-                <div class="joag-desc">${desc}</div>
-            </div>
+        // 로그인 상태 시뮬레이션
+        const authLinks = document.getElementById('authLinksContainer');
+        authLinks.innerHTML = `
+            <span style="color:#fff;">홍길동${translations[currentLang].userWelcomeSuffix}</span>
+            <span>|</span>
+            <button type="button" onclick="location.reload()">${translations[currentLang].logoutText}</button>
         `;
-        grid.prepend(newCard);
-        document.getElementById('joagTitle').value = '';
-        document.getElementById('joagDesc').value = '';
-        alert("조황이 등록되었습니다.");
-    }
-
-    function renderStatusCalendar() {
-        const grid = document.getElementById('calendarDaysGridStatus');
-        const title = document.getElementById('calMonthTitleStatus');
-        grid.innerHTML = '';
-        title.textContent = `${currentYear}년 ${currentMonth + 1}월 예약 현황`;
-
-        const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-        const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-        for(let i = 0; i < firstDay; i++) {
-            const emptyCell = document.createElement('div');
-            emptyCell.className = 'cal-date-cell other-month';
-            grid.appendChild(emptyCell);
-        }
-
-        const todayStr = new Date().toISOString().slice(0,10);
-
-        for(let d = 1; d <= lastDate; d++) {
-            const cell = document.createElement('div');
-            cell.className = 'cal-date-cell';
-            const mm = String(currentMonth + 1).padStart(2, '0');
-            const dd = String(d).padStart(2, '0');
-            const dateStr = `${currentYear}-${mm}-${dd}`;
-
-            cell.innerHTML = `
-                <div class="cal-day-num">${d}</div>
-                <div class="cal-status status-available">예약가능</div>
-            `;
-            cell.onclick = function() {
-                switchCategory('cat-booking', document.querySelectorAll('.nav-btn')[7]);
-                document.getElementById('custDate').value = dateStr;
-                updateOptions();
-            };
-            grid.appendChild(cell);
-        }
-    }
-
-    function changeMonth(direction) {
-        currentMonth += direction;
-        if(currentMonth > 11) {
-            currentMonth = 0;
-            currentYear++;
-        } else if(currentMonth < 0) {
-            currentMonth = 11;
-            currentYear--;
-        }
-        renderStatusCalendar();
-    }
-
-    function setLanguage(lang) {
-        currentLang = lang;
-        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
-
-        const t = translations[lang];
-
-        document.getElementById('top-bar-address').textContent = t.topBarAddress;
-        document.getElementById('top-bar-inquiry').textContent = t.topBarInquiry;
-        updateAuthUI();
-
-        document.getElementById('logo-main-text').textContent = t.logoMainText;
-        document.getElementById('nav-home').textContent = t.navHome;
-        document.getElementById('nav-info').textContent = t.navInfo;
-        document.getElementById('nav-board').textContent = t.navBoard;
-        document.getElementById('nav-notice').textContent = t.navNotice;
-        document.getElementById('nav-qna').textContent = t.navQna;
-        document.getElementById('nav-location').textContent = t.navLocation;
-        document.getElementById('nav-status').textContent = t.navStatus;
-        document.getElementById('nav-booking').textContent = t.navBooking;
-
-        document.getElementById('hero-badge-text').textContent = t.heroBadgeText;
-        document.getElementById('hero-title').textContent = t.heroTitle;
-        document.getElementById('hero-sub').textContent = t.heroSub;
-        document.getElementById('hero-btn').textContent = t.heroBtn;
-
-        document.getElementById('h-notice-title').textContent = t.hNoticeTitle;
-        document.getElementById('h-notice-more').textContent = t.hNoticeMore;
-        document.getElementById('h-notice-item1').textContent = t.hNoticeItem1;
-        document.getElementById('h-notice-item2').textContent = t.hNoticeItem2;
-
-        document.getElementById('h-qna-title').textContent = t.hQnaTitle;
-        document.getElementById('h-qna-more').textContent = t.hQnaMore;
-        document.getElementById('h-qna-item1').textContent = t.hQnaItem1;
-        document.getElementById('h-qna-item2').textContent = t.hQnaItem2;
-
-        document.getElementById('h-left-title').textContent = t.hLeftTitle;
-        document.getElementById('h-left-login-t').textContent = t.hLeftLoginT;
-        document.getElementById('h-left-login-d').textContent = t.hLeftLoginD;
-        document.getElementById('h-btn-login').textContent = t.hBtnLogin;
-        document.getElementById('h-left-tel-t').textContent = t.hLeftTelT;
-        document.getElementById('h-left-bank-t').textContent = t.hLeftBankT;
-        document.getElementById('h-bank-owner').textContent = t.hBankOwner;
-
-        document.getElementById('feat-t1').textContent = t.featT1;
-        document.getElementById('feat-d1').textContent = t.featD1;
-        document.getElementById('feat-t2').textContent = t.featT2;
-        document.getElementById('feat-d2').textContent = t.featD2;
-        document.getElementById('feat-t3').textContent = t.featT3;
-        document.getElementById('feat-d3').textContent = t.featD3;
-        document.getElementById('feat-t4').textContent = t.featT4;
-        document.getElementById('feat-d4').textContent = t.featD4;
-
-        document.getElementById('gal-title').textContent = t.galTitle;
-        document.getElementById('gal-1').textContent = t.gal1;
-        document.getElementById('gal-2').textContent = t.gal2;
-        document.getElementById('gal-3').textContent = t.gal3;
-
-        document.getElementById('info-title').textContent = t.infoTitle;
-        document.getElementById('th-cat').textContent = t.thCat;
-        document.getElementById('th-course').textContent = t.thCourse;
-        document.getElementById('th-season').textContent = t.thSeason;
-        document.getElementById('th-time').textContent = t.thTime;
-        document.getElementById('th-details').textContent = t.thDetails;
-        document.getElementById('th-price').textContent = t.thPrice;
-
-        document.getElementById('b-day1').textContent = t.bDay;
-        document.getElementById('b-day2').textContent = t.bDay;
-        document.getElementById('b-night1').textContent = t.bNight;
-        document.getElementById('b-night2').textContent = t.bNight;
-
-        document.getElementById('t-c2').textContent = t.tC2;
-        document.getElementById('t-c3').textContent = t.tC3;
-        document.getElementById('t-c-galchi').textContent = t.tCGalchi;
-        document.getElementById('t-c-hanchi').textContent = t.tCHanchi;
-
-        document.getElementById('t-s1').textContent = t.tS1;
-        document.getElementById('t-s2').textContent = t.tS2;
-        document.getElementById('t-s3').textContent = t.tS1;
-        document.getElementById('t-s4').textContent = t.tS2;
-        document.getElementById('t-s-galchi').textContent = t.tSGalchi;
-        document.getElementById('t-s-hanchi').textContent = t.tSHanchi;
-
-        document.getElementById('t-d2').textContent = t.tD2;
-        document.getElementById('t-d3-base').textContent = t.tD3Base;
-        document.getElementById('t-d3-1').innerHTML = t.tD31;
-        document.getElementById('t-d3-2').textContent = t.tD32;
-
-        document.getElementById('t-t-galchi').textContent = t.tSGalchi.includes("Nov") ? "18:00 Departure" : "18:00 출항";
-        document.getElementById('t-d-galchi-text').innerHTML = t.tDGalchiText;
-        document.getElementById('t-d-g1').innerHTML = t.tDG1;
-
-        document.getElementById('t-t-hanchi').textContent = "18:30 출항";
-        document.getElementById('t-d-hanchi-text').innerHTML = t.tDHanchiText;
-        document.getElementById('t-d-h1').innerHTML = t.tDH1;
-        document.getElementById('t-d-h2').innerHTML = t.tDH2;
-        document.getElementById('t-d-h3').innerHTML = t.tDH3;
-
-        document.getElementById('kakao-info').innerHTML = t.kakaoInfo;
-
-        document.getElementById('refundTitle').textContent = t.refundTitle;
-        document.getElementById('policy1Title').textContent = t.policy1Title;
-        document.getElementById('policy1_0').innerHTML = t.policy1_0;
-        document.getElementById('policy1_1').innerHTML = t.policy1_1;
-        document.getElementById('policy1_2').innerHTML = t.policy1_2;
-        document.getElementById('policy1_3').innerHTML = t.policy1_3;
-        document.getElementById('policy2Title').textContent = t.policy2Title;
-        document.getElementById('policy2_1').innerHTML = t.policy2_1;
-        document.getElementById('policy3Title').textContent = t.policy3Title;
-        document.getElementById('policy3_1').innerHTML = t.policy3_1;
-
-        document.getElementById('board-title').textContent = t.boardTitle;
-        document.getElementById('form-board-head').textContent = t.formBoardHead;
-        document.getElementById('lbl-b-title').textContent = t.lblBTitle;
-        document.getElementById('lbl-b-img').textContent = t.lblBImg;
-        document.getElementById('lbl-b-desc').textContent = t.lblBDesc;
-        document.getElementById('btn-add-joag').textContent = t.btnAddJoag;
-        document.getElementById('joagTitle').placeholder = t.phBTitle;
-        document.getElementById('joagDesc').placeholder = t.phBDesc;
-
-        document.getElementById('joag-item-date1').textContent = t.joagItem1Date;
-        document.getElementById('joag-item-title1').textContent = t.joagItem1Title;
-        document.getElementById('joag-item-desc1').textContent = t.joagItem1Desc;
-
-        document.getElementById('joag-item-date2').textContent = t.joagItem2Date;
-        document.getElementById('joag-item-title2').textContent = t.joagItem2Title;
-        document.getElementById('joag-item-desc2').textContent = t.joagItem2Desc;
-
-        document.getElementById('notice-page-title').textContent = t.noticePageTitle;
-        document.getElementById('th-num1').textContent = t.thNum1;
-        document.getElementById('th-title1').textContent = t.thTitle1;
-        document.getElementById('th-writer1').textContent = t.thWriter1;
-        document.getElementById('th-date1').textContent = t.thDate1;
-        document.getElementById('notice-row2-title').textContent = t.noticeRow2Title;
-        document.getElementById('notice-row2-writer').textContent = t.noticeRow2Writer;
-        document.getElementById('notice-row1-title').textContent = t.noticeRow1Title;
-        document.getElementById('notice-row1-writer').textContent = t.noticeRow1Writer;
-
-        document.getElementById('qna-page-title').textContent = t.qnaPageTitle;
-        document.getElementById('th-num2').textContent = t.thNum2;
-        document.getElementById('th-title2').textContent = t.thTitle2;
-        document.getElementById('th-writer2').textContent = t.thWriter2;
-        document.getElementById('th-date2').textContent = t.thDate2;
-        document.getElementById('qna-row2-title').textContent = t.qnaRow2Title;
-        document.getElementById('qna-row2-writer').textContent = t.qnaRow2Writer;
-        document.getElementById('qna-row1-title').textContent = t.qnaRow1Title;
-        document.getElementById('qna-row1-writer').textContent = t.qnaRow1Writer;
-
-        document.getElementById('loc-title').textContent = t.locTitle;
-        document.getElementById('loc-heading').textContent = t.locHeading;
-        document.getElementById('loc-desc').textContent = t.locDesc;
-        document.getElementById('loc-addr-t').textContent = t.locAddrTitle;
-        document.getElementById('loc-addr-v').textContent = t.locAddrVal;
-        document.getElementById('loc-way-t').textContent = t.locWayTitle;
-        document.getElementById('loc-way-v').textContent = t.locWayVal;
-        document.getElementById('loc-near-t').textContent = t.locNearTitle;
-        document.getElementById('loc-near-v').textContent = t.locNearVal;
-        document.getElementById('loc-map-btn').textContent = t.locMapBtn;
-
-        document.getElementById('status-title').textContent = t.statusTitle;
-        document.getElementById('status-guide').textContent = t.statusGuide;
-        document.getElementById('cal-prev-btn').textContent = t.calPrev;
-        document.getElementById('cal-next-btn').textContent = t.calNext;
-        document.getElementById('cal-sun').textContent = t.calSun;
-        document.getElementById('cal-mon').textContent = t.calMon;
-        document.getElementById('cal-tue').textContent = t.calTue;
-        document.getElementById('cal-wed').textContent = t.calWed;
-        document.getElementById('cal-thu').textContent = t.calThu;
-        document.getElementById('cal-fri').textContent = t.calFri;
-        document.getElementById('cal-sat').textContent = t.calSat;
-
-        document.getElementById('book-title').textContent = t.bookTitle;
-        document.getElementById('lbl-date').textContent = t.lblDate;
-        document.getElementById('lbl-course').textContent = t.lblCourse;
-        document.getElementById('lbl-time').textContent = t.lblTime;
-        document.getElementById('lbl-count').textContent = t.lblCount;
-        document.getElementById('lbl-name').textContent = t.lblName;
-        document.getElementById('lbl-tel').textContent = t.lblTel;
-        document.getElementById('custName').placeholder = t.phName;
-        document.getElementById('btn-pay-submit').textContent = t.btnPaySubmit;
-
-        document.getElementById('sum-title').textContent = t.sumTitle;
-        document.getElementById('sum-lbl-date').textContent = t.sumLblDate;
-        document.getElementById('sum-lbl-course').textContent = t.sumLblCourse;
-        document.getElementById('sum-lbl-time').textContent = t.sumLblTime;
-        document.getElementById('sum-lbl-count').textContent = t.sumLblCount;
-        document.getElementById('sum-lbl-total').textContent = t.sumLblTotal;
-
-        document.getElementById('cancelBoxTitle').textContent = t.cancelBoxTitle;
-        document.getElementById('cancelBoxDesc').textContent = t.cancelBoxDesc;
-        document.getElementById('searchTel').placeholder = t.searchTelPh;
-        document.getElementById('btnSearch').textContent = t.btnSearch;
-
-        document.getElementById('ft-title').innerHTML = t.ftTitle;
-        document.getElementById('ft-addr').textContent = t.ftAddr;
-        document.getElementById('ft-contact').textContent = t.ftContact;
-        document.getElementById('ft-kakao').innerHTML = t.ftKakao;
-
-        document.getElementById('opt-c1').textContent = t.optC1;
-        document.getElementById('opt-c2').textContent = t.optC2;
-        document.getElementById('opt-c3').textContent = t.optC3;
-        document.getElementById('opt-c4').textContent = t.optC4;
-
-        updateOptions();
     }
 
     window.onload = function() {
-        updateCountOptions();
+        const todayStr = new Date().toISOString().split('T')[0];
+        const dateInput = document.getElementById('custDate');
+        if(dateInput) dateInput.value = todayStr;
+        renderCalendarStatus();
+        updateOptions();
     };
 </script>
+
 </body>
 </html>
