@@ -1,0 +1,2881 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=0.5">
+    <title>서귀포 체험 배낚시 천일호 - Chunilho Fishing</title>
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <style>
+        :root {
+            --primary-color: #0f2c59;
+            --primary-light: #1e3e62;
+            --accent-color: #ff7f3f;
+            --accent-hover: #fa6820;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Pretendard', 'Noto Sans KR', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.7; }
+
+        /* 최상단 감성 유틸리티 바 */
+        .top-bar { background: #0b192c; color: #94a3b8; font-size: 0.82rem; padding: 8px 1rem; }
+        .top-bar-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .top-bar-links { display: flex; gap: 20px; align-items: center; }
+        .top-bar-links span { color: #f8fafc; font-weight: 500; }
+        .auth-links { display: flex; gap: 10px; align-items: center; }
+        .auth-links button { background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 0.82rem; font-weight: 500; transition: color 0.2s; }
+        .auth-links button:hover { color: #fff; }
+
+        /* 헤더 */
+        header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1001; border-bottom: 1px solid var(--border-color); }
+        .header-inner { max-width: 1100px; margin: 0 auto; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo-area { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+        .logo-img { height: 50px; width: auto; object-fit: contain; }
+        .logo-text h2 { font-size: 1.25rem; color: var(--primary-color); font-weight: 800; letter-spacing: -0.5px; }
+        .logo-text p { font-size: 0.75rem; color: var(--text-sub); letter-spacing: 0.5px; }
+
+        /* 언어 선택 */
+        .lang-switcher { display: flex; gap: 5px; flex-wrap: wrap; }
+        .lang-btn { background: #f1f5f9; border: 1px solid #cbd5e1; padding: 5px 8px; font-size: 0.75rem; font-weight: 600; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+        .lang-btn:hover, .lang-btn.active { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
+
+        /* 네비게이션 바 */
+        .main-nav { background: var(--primary-color); box-shadow: 0 4px 20px rgba(15, 44, 89, 0.15); overflow-x: auto; }
+        .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; list-style: none; flex-wrap: nowrap; }
+        .nav-inner li { flex: 0 0 auto; text-align: center; min-width: 90px; }
+        .nav-btn {
+            background: none; border: none; outline: none; width: 100%; padding: 1.1rem 0.5rem;
+            color: #cbd5e1; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease;
+            position: relative; white-space: nowrap;
+        }
+        .nav-btn:hover, .nav-btn.active { color: #fff; background: rgba(255, 255, 255, 0.05); }
+        .nav-btn.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: var(--accent-color); }
+
+        .container { max-width: 1100px; margin: 2.5rem auto; padding: 0 1rem; min-height: 550px; }
+        .category-sec { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .category-sec.active { display: block !important; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 홈 화면 상단 2분할 레이아웃 */
+        .home-top-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
+        @media(max-width: 768px) { .home-top-grid { grid-template-columns: 1fr; } }
+
+        .home-left-box { background: var(--card-bg); border-radius: 16px; padding: 1.8rem; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between; }
+        .home-left-box h3 { font-size: 1.1rem; color: var(--primary-color); margin-bottom: 1rem; font-weight: 800; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; }
+        .info-box-item { margin-bottom: 1rem; font-size: 0.9rem; color: var(--text-main); }
+        .info-box-item strong { display: block; color: var(--primary-color); margin-bottom: 0.2rem; font-size: 0.95rem; }
+        .account-highlight { background: #f8fafc; padding: 0.8rem; border-radius: 8px; border: 1px dashed #cbd5e1; font-weight: 700; color: var(--accent-color); font-size: 0.95rem; text-align: center; margin-top: 0.5rem; }
+
+        .home-right-split-wrap { display: flex; flex-direction: column; gap: 1.5rem; }
+        .home-right-box { background: var(--card-bg); border-radius: 16px; padding: 1.4rem 1.8rem; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); }
+        .home-right-box h3 { font-size: 1.05rem; color: var(--primary-color); margin-bottom: 0.8rem; font-weight: 800; border-bottom: 2px solid var(--border-color); padding-bottom: 0.4rem; display: flex; justify-content: space-between; align-items: center; }
+        .home-right-box h3 a { font-size: 0.78rem; color: var(--text-sub); text-decoration: none; font-weight: 500; }
+        .mini-board-list { list-style: none; }
+        .mini-board-list li { padding: 0.45rem 0; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; font-size: 0.88rem; }
+        .mini-board-list li a { color: var(--text-main); text-decoration: none; transition: color 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 75%; }
+        .mini-board-list li a:hover { color: var(--accent-color); }
+        .mini-board-list li span { color: var(--text-sub); font-size: 0.78rem; }
+
+        /* 감성적인 히어로 배너 */
+        .hero { position: relative; width: 100%; height: 420px; overflow: hidden; display: flex; align-items: center; justify-content: center; color: #fff; text-align: center; border-radius: 16px; margin-bottom: 2.5rem; box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+        .hero-bg-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; }
+        .hero-bg { flex: 1; height: 100%; background-size: cover; background-position: center; transition: transform 6s ease; }
+        .hero:hover .hero-bg { transform: scale(1.03); }
+        .hero-bg1 { background-image: url('image/hero.jpg'); border-right: 2px solid rgba(255, 255, 255, 0.2); }
+        .hero-bg2 { background-image: url('image/hero2.jpg'); }
+
+        .hero-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(180deg, rgba(15,44,89,0.3) 0%, rgba(11,25,44,0.8) 100%); z-index: 1; }
+        .hero-content { position: relative; z-index: 2; padding: 0 1.5rem; max-width: 700px; }
+        .hero-badge { display: inline-block; background: rgba(255, 127, 63, 0.9); color: #fff; font-size: 0.8rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; margin-bottom: 1rem; letter-spacing: 1px; }
+        .hero-content h1 { font-size: 2.3rem; font-weight: 800; margin-bottom: 0.8rem; text-shadow: 0 2px 8px rgba(0,0,0,0.5); letter-spacing: -1px; min-height: 3.4rem; }
+        .hero-content p { font-size: 1.1rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 4px rgba(0,0,0,0.5); margin-bottom: 1.5rem; min-height: 2.4rem; }
+        .btn-go-book { display: inline-block; background: var(--accent-color); color: #fff; padding: 0.9rem 2.2rem; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; font-size: 1.05rem; box-shadow: 0 6px 20px rgba(255,127,63,0.4); transition: all 0.25s; }
+        .btn-go-book:hover { background: var(--accent-hover); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255,127,63,0.5); }
+
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+        .feature-card { background: var(--card-bg); padding: 2rem 1.5rem; border-radius: 14px; text-align: center; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); transition: all 0.3s; }
+        .feature-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(15,44,89,0.08); border-color: #cbd5e1; }
+        .feature-card .icon-wrap { width: 60px; height: 60px; background: #fef3c7; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin: 0 auto 1rem; }
+        .feature-card h3 { font-size: 1.1rem; color: var(--primary-color); margin-bottom: 0.5rem; font-weight: 700; }
+        .feature-card p { font-size: 0.88rem; color: var(--text-sub); }
+
+        .section-title { font-size: 1.6rem; color: var(--primary-color); text-align: center; margin-bottom: 2rem; font-weight: 800; letter-spacing: -0.5px; position: relative; }
+        .section-title::after { content: ''; display: block; width: 45px; height: 3px; background: var(--accent-color); margin: 10px auto 0; border-radius: 2px; }
+
+        .board-container-box { background: var(--card-bg); border-radius: 16px; padding: 2.2rem; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); }
+        .board-table { width: 100%; border-collapse: collapse; margin-top: 1rem; text-align: left; font-size: 0.92rem; }
+        .board-table th { background: #f8fafc; color: var(--primary-color); padding: 12px; border-bottom: 2px solid var(--border-color); text-align: center; }
+        .board-table td { padding: 12px; border-bottom: 1px solid #edf2f7; }
+        .board-table td.center { text-align: center; }
+        .board-table tr { cursor: pointer; }
+        .board-table tr:hover { background-color: #f8fafc; }
+
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.8rem; margin-bottom: 3rem; }
+        .gallery-card { background: var(--card-bg); border-radius: 14px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); transition: all 0.3s; }
+        .gallery-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+        .gallery-card img { width: 100%; height: 250px; object-fit: cover; display: block; transition: transform 0.5s; }
+        .gallery-card:hover img { transform: scale(1.04); }
+        .gallery-card .card-caption { padding: 1.3rem; text-align: center; font-weight: 700; color: var(--primary-color); font-size: 1.02rem; }
+
+        .schedule-box { background: var(--card-bg); border-radius: 16px; padding: 2.2rem; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.92rem; min-width: 750px; }
+        th { background: var(--primary-color); color: white; padding: 1.1rem; font-weight: 600; text-align: center; }
+        th:first-child { border-top-left-radius: 8px; }
+        th:last-child { border-top-right-radius: 8px; }
+        td { padding: 1.1rem; border-bottom: 1px solid #edf2f7; vertical-align: middle; }
+        td.center { text-align: center; }
+        tr:hover { background-color: #f8fafc; }
+        .badge { display: inline-block; padding: 0.3rem 0.7rem; border-radius: 6px; font-size: 0.78rem; font-weight: 700; }
+        .badge-day { background: #e0f2fe; color: #0369a1; }
+        .badge-night { background: #312e81; color: #fff; }
+
+        .info-list { list-style-type: disc; padding-left: 1.2rem; margin-top: 0.5rem; line-height: 1.6; font-size: 0.85rem; color: var(--text-sub); }
+        .info-list li { margin-bottom: 4px; }
+
+        .kakao-banner { background: #fef9c3; color: #713f12; padding: 1.2rem; border-radius: 10px; margin-top: 2rem; font-weight: 600; text-align: center; font-size: 0.95rem; border: 1px solid #fde047; box-shadow: 0 4px 12px rgba(253, 224, 71, 0.15); }
+
+        .refund-policy-box {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-color);
+            margin-top: 2.5rem;
+        }
+        .refund-policy-box h3 { font-size: 1.15rem; color: var(--primary-color); margin-bottom: 1.2rem; font-weight: 800; }
+        .refund-policy-content { font-size: 0.92rem; color: var(--text-sub); line-height: 1.8; }
+        .refund-policy-content p { margin-bottom: 8px; }
+        .refund-policy-content strong { color: var(--text-main); }
+        .refund-policy-content ul { padding-left: 20px; margin-bottom: 15px; }
+
+        .joag-box { background: var(--card-bg); border-radius: 16px; padding: 2.2rem; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); }
+        .joag-form { background: #f8fafc; padding: 1.8rem; border-radius: 12px; margin-bottom: 2.5rem; border: 1px solid #e2e8f0; display: none; }
+        .joag-form.active { display: block; }
+        .btn-submit { background: var(--primary-color); color: #fff; border: none; padding: 0.8rem 1.8rem; border-radius: 8px; font-weight: 700; cursor: pointer; float: right; transition: 0.25s; }
+        .btn-submit:hover { background: var(--primary-light); transform: translateY(-2px); }
+
+        .joag-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; clear: both; padding-top: 1rem; }
+        .joag-card { background: #fff; border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: transform 0.3s; }
+        .joag-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.06); }
+        .joag-card img { width: 100%; height: 190px; object-fit: cover; }
+        .joag-card-body { padding: 1.2rem; }
+        .joag-date { font-size: 0.78rem; color: var(--text-sub); margin-bottom: 0.4rem; font-weight: 500; }
+        .joag-title { font-weight: 700; font-size: 1rem; color: var(--primary-color); margin-bottom: 0.5rem; }
+        .joag-desc { font-size: 0.88rem; color: var(--text-sub); white-space: pre-line; line-height: 1.6; }
+
+        .map-section-wrapper { display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch; background: var(--card-bg); padding: 2.2rem; border-radius: 16px; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); }
+        .map-info-box { flex: 1; min-width: 300px; background: #f9f9f9; padding: 30px; border-radius: 8px; box-sizing: border-box; }
+        .map-info-box h3 { margin-top: 0; color: var(--primary-color); font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem; }
+        .map-info-box p { color: var(--text-sub); line-height: 1.6; margin-bottom: 20px; font-size: 0.95rem; }
+        .map-info-box ul { padding-left: 20px; color: var(--text-main); line-height: 1.8; font-size: 0.92rem; }
+        .map-info-box ul li { margin-bottom: 8px; }
+        .map-box { flex: 1; min-width: 300px; height: 420px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        .map-btn { display: inline-block; background: #4285F4; color: white; padding: 12px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; transition: background 0.2s; font-size: 0.95rem; }
+        .map-btn:hover { background: #3367d6; }
+
+        .status-page-box { background: var(--card-bg); border-radius: 16px; padding: 2.2rem; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); }
+        .status-guide-text { font-size: 0.95rem; color: var(--text-sub); margin-bottom: 1.5rem; text-align: center; }
+
+        .calendar-box { background: #f8fafc; border-radius: 12px; padding: 1.5rem; border: 1px solid var(--border-color); margin-bottom: 2rem; }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .calendar-header h3 { font-size: 1.2rem; color: var(--primary-color); font-weight: 800; }
+        .cal-nav-btn { background: #ffffff; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 700; color: var(--primary-color); }
+        .cal-nav-btn:hover { background: var(--primary-color); color: #fff; }
+        
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center; }
+        .cal-day-name { font-weight: 700; font-size: 0.85rem; color: var(--text-sub); padding: 8px 0; }
+        .cal-day-name:first-child { color: #ef4444; }
+        .cal-day-name:last-child { color: #3b82f6; }
+        
+        .cal-date-cell { min-height: 90px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s; position: relative; cursor: pointer; }
+        .cal-date-cell:hover { border-color: var(--primary-color); box-shadow: 0 4px 12px rgba(15,44,89,0.08); transform: translateY(-2px); }
+        .cal-date-cell.other-month { opacity: 0.3; background: #f1f5f9; cursor: default; pointer-events: none; }
+        .cal-day-num { font-size: 0.9rem; font-weight: 700; color: var(--text-main); text-align: left; }
+        .cal-status { font-size: 0.72rem; font-weight: 700; padding: 3px 6px; border-radius: 4px; margin-top: auto; text-align: center; }
+        .status-available { background: #dcfce7; color: #15803d; }
+        .status-full { background: #fee2e2; color: #b91c1c; }
+
+        .booking-layout { display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 2rem; align-items: start; }
+        .form-box { background: var(--card-bg); border-radius: 16px; padding: 2.2rem; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); }
+        
+        .summary-card { background: var(--card-bg); border-radius: 16px; padding: 2rem; box-shadow: 0 8px 25px rgba(15,44,89,0.08); border: 1px solid var(--border-color); position: sticky; top: 100px; }
+        .summary-card h3 { font-size: 1.15rem; color: var(--primary-color); margin-bottom: 1.2rem; padding-bottom: 0.6rem; border-bottom: 2px solid var(--border-color); font-weight: 800; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 0.9rem; font-size: 0.92rem; color: var(--text-sub); }
+        .summary-row span:last-child { font-weight: 700; color: var(--text-main); }
+        .summary-total { display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 1.2rem; border-top: 1px dashed var(--border-color); font-size: 1.15rem; font-weight: bold; color: var(--primary-color); }
+        .summary-total .total-price { color: var(--accent-color); font-size: 1.4rem; font-weight: 800; }
+
+        .form-grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+        .form-group { margin-bottom: 0.4rem; }
+        .form-group label { display: block; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-main); }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.85rem 1rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; background: #fff; transition: all 0.2s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(15,44,89,0.1); }
+        .season-info { font-size: 0.82rem; color: #e11d48; margin-top: 0.4rem; font-weight: 600; }
+
+        .btn-pay { width: 100%; background: var(--accent-color); color: #fff; font-size: 1.1rem; font-weight: 700; padding: 1.05rem; border: none; border-radius: 8px; cursor: pointer; transition: all 0.25s; margin-top: 1.5rem; box-shadow: 0 6px 20px rgba(255,127,63,0.3); }
+        .btn-pay:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255,127,63,0.4); }
+        .btn-pay:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; transform: none; }
+
+        .my-booking-box {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2.2rem;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+            border: 1px solid var(--border-color);
+            margin-top: 3rem;
+        }
+        .my-booking-result {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            display: none;
+        }
+        .btn-check { background: var(--primary-color); color: #fff; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.25s; }
+        .btn-check:hover { background: var(--primary-light); }
+        .btn-cancel-req { background: #ef4444; color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; font-weight: 700; cursor: pointer; margin-top: 1rem; transition: 0.25s; }
+        .btn-cancel-req:hover { background: #dc2626; }
+
+        /* 인증 모달 스타일 */
+        .auth-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px);
+            display: none; justify-content: center; align-items: center; z-index: 2000;
+        }
+        .auth-modal-overlay.active { display: flex; }
+        .auth-modal {
+            background: #fff; width: 100%; max-width: 420px; padding: 2.5rem; border-radius: 16px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15); position: relative; animation: fadeIn 0.3s ease-in-out;
+        }
+        .auth-modal h3 { font-size: 1.35rem; color: var(--primary-color); margin-bottom: 1.2rem; font-weight: 800; text-align: center; }
+        .close-modal { position: absolute; top: 1.2rem; right: 1.5rem; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-sub); }
+        
+        .auth-tabs { display: flex; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border-color); }
+        .auth-tab-btn { flex: 1; background: none; border: none; padding: 0.7rem 0; font-size: 0.95rem; font-weight: 700; color: var(--text-sub); cursor: pointer; transition: all 0.2s; position: relative; }
+        .auth-tab-btn.active { color: var(--primary-color); }
+        .auth-tab-btn.active::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2px; background: var(--primary-color); }
+
+        .auth-form-panel { display: none; }
+        .auth-form-panel.active { display: block; }
+
+        /* Q&A 상세/작성 모달 스타일 */
+        .qna-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px);
+            display: none; justify-content: center; align-items: center; z-index: 2000;
+        }
+        .qna-modal-overlay.active { display: flex; }
+        .qna-modal {
+            background: #fff; width: 100%; max-width: 500px; padding: 2.2rem; border-radius: 16px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15); position: relative; animation: fadeIn 0.3s ease-in-out; max-height: 90vh; overflow-y: auto;
+        }
+
+        /* 관리자 센터 대시보드 레이아웃 */
+        .admin-dashboard-layout { display: grid; grid-template-columns: 260px 1fr; gap: 20px; align-items: start; }
+        @media(max-width: 768px) { .admin-dashboard-layout { grid-template-columns: 1fr; } }
+        
+        .admin-sidebar { background: #0b192c; border-radius: 14px; padding: 1.2rem 0; box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+        .admin-sidebar-title { color: #38bdf8; font-size: 1.05rem; font-weight: 800; padding: 0 1.2rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 8px; }
+        .admin-menu-list { list-style: none; display: flex; flex-direction: column; gap: 4px; padding: 0 0.8rem; }
+        .admin-menu-btn {
+            width: 100%; background: transparent; border: none; text-align: left; padding: 0.8rem 1rem;
+            color: #94a3b8; font-size: 0.9rem; font-weight: 600; border-radius: 8px; cursor: pointer;
+            display: flex; align-items: center; gap: 10px; transition: all 0.2s;
+        }
+        .admin-menu-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
+        .admin-menu-btn.active { background: #2563eb; color: #fff; box-shadow: 0 4px 12px rgba(37,99,235,0.3); }
+
+        .admin-content-pane { background: var(--card-bg); border-radius: 14px; padding: 2rem; border: 1px solid var(--border-color); box-shadow: 0 6px 20px rgba(0,0,0,0.04); min-height: 480px; display: none; }
+        .admin-content-pane.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+
+        footer { background: #0b192c; color: #94a3b8; font-size: 0.88rem; text-align: center; padding: 3.5rem 1rem; line-height: 1.9; margin-top: 5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        footer strong { color: #fff; font-size: 1.1rem; font-weight: 700; letter-spacing: -0.5px; }
+
+        @media (max-width: 768px) {
+            .booking-layout { grid-template-columns: 1fr; }
+            .summary-card { position: static; }
+            .header-inner { flex-direction: column; gap: 12px; }
+            .nav-btn { font-size: 0.82rem; padding: 1rem 0; }
+            .hero { height: 360px; }
+            .hero-bg-container { flex-direction: column; }
+            .hero-bg1 { border-right: none; border-bottom: 2px solid rgba(255, 255, 255, 0.2); }
+            .hero-content h1 { font-size: 1.8rem; }
+            .hero-content p { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body id="mainBody">
+
+<div class="top-bar">
+    <div class="top-bar-inner">
+        <div id="top-bar-address" data-i18n="topBarAddress">🌊 제주 서귀포시 남성중로 39 (천일호)</div>
+        <div class="top-bar-links">
+            <span id="top-bar-inquiry" data-i18n="topBarInquiry">📞 예약문의: 010-7768-5913</span>
+            <div class="auth-links" id="authLinksContainer">
+                <span>|</span>
+                <button type="button" id="authLoginBtn" onclick="openAuthModal('login')" data-i18n="authLogin">로그인</button>
+                <span>|</span>
+                <button type="button" id="authSignupBtn" onclick="openAuthModal('signup')" data-i18n="authSignup">회원가입</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<header>
+    <div class="header-inner">
+        <a href="#" class="logo-area" onclick="switchCategory('cat-home', document.querySelectorAll('.nav-btn')[0]); return false;">
+            <img src="image/logo.png" alt="서귀포 체험 배낚시 천일호" class="logo-img" onerror="this.style.display='none'">
+            <div class="logo-text">
+                <h2 id="logo-main-text" data-i18n="logoMainText">서귀포배낚시 천일호</h2>
+                <p data-i18n="logoSubText">Seogwipo Chunilho Fishing</p>
+            </div>
+        </a>
+        <div class="lang-switcher">
+            <button type="button" class="lang-btn active" onclick="setLanguage('ko')">한국어</button>
+            <button type="button" class="lang-btn" onclick="setLanguage('en')">English</button>
+            <button type="button" class="lang-btn" onclick="setLanguage('ja')">日本語</button>
+            <button type="button" class="lang-btn" onclick="setLanguage('zh')">中文</button>
+        </div>
+    </div>
+</header>
+
+<div class="main-nav">
+    <ul class="nav-inner">
+        <li><button type="button" class="nav-btn active" id="nav-home" onclick="switchCategory('cat-home', this)" data-i18n="navHome">홈</button></li>
+        <li><button type="button" class="nav-btn" id="nav-info" onclick="switchCategory('cat-info', this)" data-i18n="navInfo">운항안내</button></li>
+        <li><button type="button" class="nav-btn" id="nav-board" onclick="switchCategory('cat-board', this)" data-i18n="navBoard">조황게시판</button></li>
+        <li><button type="button" class="nav-btn" id="nav-notice" onclick="switchCategory('cat-notice', this)" data-i18n="navNotice">공지사항</button></li>
+        <li><button type="button" class="nav-btn" id="nav-qna" onclick="switchCategory('cat-qna', this)" data-i18n="navQna">Q&A</button></li>
+        <li><button type="button" class="nav-btn" id="nav-location" onclick="switchCategory('cat-location', this)" data-i18n="navLocation">찾아오시는 길</button></li>
+        <li><button type="button" class="nav-btn" id="nav-status" onclick="switchCategory('cat-status', this)" data-i18n="navStatus">예약현황</button></li>
+        <li><button type="button" class="nav-btn" id="nav-booking" onclick="switchCategory('cat-booking', this)" data-i18n="navBooking">실시간예약</button></li>
+        <li id="nav-admin-li" style="display: none;"><button type="button" class="nav-btn" id="nav-admin" onclick="checkAdminAccess()" data-i18n="navAdmin">관리자센터</button></li>
+    </ul>
+</div>
+
+<div class="container">
+
+    <!-- 1. 홈 카테고리 -->
+    <div id="cat-home" class="category-sec active">
+        <section class="hero">
+            <div class="hero-bg-container">
+                <div class="hero-bg hero-bg1"></div>
+                <div class="hero-bg hero-bg2"></div>
+            </div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <span class="hero-badge" id="hero-badge-text" data-i18n="heroBadgeText">제주 서귀포 필수 여행 코스</span>
+                <h1 id="hero-title" data-i18n="heroTitle">바다 위에서 맞이하는 가장 찬란한 순간</h1>
+                <p id="hero-sub" data-i18n="heroSub">초보자도, 아이도 누구나 손쉽게 손맛을 즐기는 서귀포 앞바다 힐링 배낚시</p>
+                <button type="button" class="btn-go-book" id="hero-btn" onclick="goToBooking()" data-i18n="heroBtn">설레는 예약 시작하기 ✨</button>
+            </div>
+        </section>
+
+        <div class="home-top-grid">
+            <div class="home-right-split-wrap">
+                <div class="home-right-box">
+                    <h3>
+                        <span id="h-notice-title" data-i18n="hNoticeTitle">📢 공지사항</span>
+                        <a href="#" onclick="switchCategory('cat-notice', document.querySelectorAll('.nav-btn')[3]); return false;" id="h-notice-more" data-i18n="hNoticeMore">더보기 +</a>
+                    </h3>
+                    <ul class="mini-board-list">
+                        <li>
+                            <a href="#" onclick="switchCategory('cat-notice', document.querySelectorAll('.nav-btn')[3]); return false;" id="h-notice-item1" data-i18n="hNoticeItem1">[공지] 2026년 가을 시즌 야간 갈치낚시 출항 안내</a>
+                            <span>2026.09.01</span>
+                        </li>
+                        <li>
+                            <a href="#" onclick="switchCategory('cat-notice', document.querySelectorAll('.nav-btn')[3]); return false;" id="h-notice-item2" data-i18n="hNoticeItem2">[공지] 주차장 이용 및 찾아오시는 길 상세 안내</a>
+                            <span>2026.08.20</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="home-right-box">
+                    <h3>
+                        <span id="h-qna-title" data-i18n="hQnaTitle">❓ Q&A 게시판</span>
+                        <a href="#" onclick="switchCategory('cat-qna', document.querySelectorAll('.nav-btn')[4]); return false;" id="h-qna-more" data-i18n="hQnaMore">더보기 +</a>
+                    </h3>
+                    <ul class="mini-board-list">
+                        <li>
+                            <a href="#" onclick="switchCategory('cat-qna', document.querySelectorAll('.nav-btn')[4]); return false;" id="h-qna-item1" data-i18n="hQnaItem1">[Q&A] 낚싯대 및 장비는 따로 안 가져가도 되나요?</a>
+                            <span>2026.09.03</span>
+                        </li>
+                        <li>
+                            <a href="#" onclick="switchCategory('cat-qna', document.querySelectorAll('.nav-btn')[4]); return false;" id="h-qna-item2" data-i18n="hQnaItem2">[Q&A] 기상 악화 시 환불 규정이 어떻게 되나요?</a>
+                            <span>2026.09.05</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="home-left-box">
+                <div>
+                    <h3 id="h-left-title" data-i18n="hLeftTitle">👤 회원 및 예약 안내</h3>
+                    <div class="info-box-item">
+                        <strong id="h-left-login-t" data-i18n="hLeftLoginT">로그인 / 회원가입</strong>
+                        <span id="h-left-login-d" data-i18n="hLeftLoginD">회원으로 가입하여 편리하게 예약을 관리하세요.</span>
+                        <div style="margin-top: 8px; display: flex; gap: 6px;">
+                            <button type="button" onclick="openAuthModal('login')" style="background:var(--primary-color); color:#fff; border:none; padding:6px 12px; border-radius:6px; font-size:0.85rem; cursor:pointer;" id="h-btn-login" data-i18n="authLogin">로그인</button>
+                            <button type="button" onclick="openAuthModal('signup')" style="background:#e2e8f0; color:var(--text-main); border:none; padding:6px 12px; border-radius:6px; font-size:0.85rem; cursor:pointer;" id="h-btn-signup" data-i18n="authSignup">회원가입</button>
+                        </div>
+                    </div>
+                    <div class="info-box-item">
+                        <strong id="h-left-tel-t" data-i18n="hLeftTelT">예약 및 고객 센터</strong>
+                        <span id="h-left-tel-d" style="font-size:1.05rem; font-weight:700; color:var(--accent-color);">📞 010-7768-5913</span>
+                    </div>
+                </div>
+                <div class="info-box-item" style="margin-bottom:0;">
+                    <strong id="h-left-bank-t" data-i18n="hLeftBankT">입금 계좌번호 안내</strong>
+                    <div class="account-highlight">
+                        수협 0000-1982-0812<br><span style="font-size:0.85rem; color:var(--text-sub);" id="h-bank-owner" data-i18n="hBankOwner">예금주: 강주연</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="icon-wrap">🎣</div>
+                <h3 id="feat-t1" data-i18n="featT1">초보자 맞춤 친절 강습</h3>
+                <p id="feat-d1" data-i18n="featD1">낚싯대 잡는 법부터 미끼 끼우기까지 선장님이 다정하게 알려드려요.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-wrap">✨</div>
+                <h3 id="feat-t2" data-i18n="featT2">주간체험 장비 & 도구</h3>
+                <p id="feat-d2" data-i18n="featD2">무거운 장비 준비 끝! 낚싯대, 채비, 미끼, 구명조끼까지 모두 무상 대여해 드립니다.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-wrap">🐟</div>
+                <h3 id="feat-t3" data-i18n="featT3">싱싱한 즉석회</h3>
+                <p id="feat-d3" data-i18n="featD3">푸른 바다 위에서 내가 직접 잡은 싱싱한 물고기를 그 즉시 회로 맛보는 감동!</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-wrap">👨‍👩‍👧‍👦</div>
+                <h3 id="feat-t4" data-i18n="featT4">소중한 사람과의 추억</h3>
+                <p id="feat-d4" data-i18n="featD4">가족, 연인, 친구들과 함께 웃음이 끊이지 않는 특별한 제주 추억을 만들어보세요.</p>
+            </div>
+        </div>
+
+        <h2 class="section-title" id="gal-title" data-i18n="galTitle">천일호의 반짝이는 바다 풍경</h2>
+        <div class="gallery-grid">
+            <div class="gallery-card">
+                <img src="image/pic1.jpg" alt="주간 체험 낚시" onerror="this.src='https://via.placeholder.com/320x250?text=Chunilho'">
+                <div class="card-caption" id="gal-1" data-i18n="gal1">아이들과 함께 웃음 가득한 주간 체험 낚시</div>
+            </div>
+            <div class="gallery-card">
+                <img src="image/pic2.jpg" alt="야간 갈치·고등어 낚시" onerror="this.src='https://via.placeholder.com/320x250?text=Chunilho+Night'">
+                <div class="card-caption" id="gal-2" data-i18n="gal2">밤바다의 낭만, 야간 갈치·고등어 낚시 (8~11월)</div>
+            </div>
+            <div class="gallery-card">
+                <img src="image/pic3.jpg" alt="야간 한치 체험 낚시" onerror="this.src='https://via.placeholder.com/320x250?text=Chunilho+Hanchi'">
+                <div class="card-caption" id="gal-3" data-i18n="gal3">여름밤의 보석, 야간 한치 체험 낚시 (6~9월)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. 운항안내 카테고리 -->
+    <div id="cat-info" class="category-sec">
+        <div class="schedule-box">
+            <h2 class="section-title" id="info-title" data-i18n="infoTitle">운항 코스 및 시즌 안내</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 8%;" id="th-cat" data-i18n="thCat">구분</th>
+                        <th style="width: 14%;" id="th-course" data-i18n="thCourse">코스명</th>
+                        <th style="width: 13%;" id="th-season" data-i18n="thSeason">운항 시즌</th>
+                        <th style="width: 20%;" id="th-time" data-i18n="thTime">출항 시간</th>
+                        <th style="width: 35%;" id="th-details" data-i18n="thDetails">식사 및 제공 사항 (옵션/손질 비용)</th>
+                        <th style="width: 10%;" id="th-price" data-i18n="thPrice">승선료</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="2" class="center"><span class="badge badge-day" id="b-day1" data-i18n="bDay">주간</span></td>
+                        <td rowspan="2" class="center" id="t-c2" data-i18n="tC2">주간 체험 2시간</td>
+                        <td class="center" id="t-s1" data-i18n="tS1">하절기 (3월~8월)</td>
+                        <td class="center">10:00 / 12:00 / 13:00 / 14:00 / 16:00</td>
+                        <td rowspan="2" id="t-d2" data-i18n="tD2">낚시대, 채비, 크릴새우, 구명조끼 무료제공</td>
+                        <td class="center" data-i18n="price30k">30,000원</td>
+                    </tr>
+                    <tr>
+                        <td class="center" id="t-s2" data-i18n="tS2">동절기 (9월~2월)</td>
+                        <td class="center">10:00 / 12:00 / 13:00 / 15:00</td>
+                        <td class="center" data-i18n="price30k">30,000원</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2" class="center"><span class="badge badge-day" id="b-day2" data-i18n="bDay">주간</span></td>
+                        <td rowspan="2" class="center" id="t-c3" data-i18n="tC3">주간 체험 3시간</td>
+                        <td class="center" id="t-s3" data-i18n="tS1">하절기 (3월~8월)</td>
+                        <td class="center">10:00 / 12:00 / 13:00 / 15:00</td>
+                        <td rowspan="2">
+                            <span id="t-d3-base" data-i18n="tD3Base">낚시대, 채비, 크릴새우, 구명조끼 무료제공</span>
+                            <ul class="info-list">
+                                <li id="t-d3-1" data-i18n="tD31"><strong>즉석회 옵션:</strong> 기본 3마리부터 마리당 2,000원</li>
+                                <li id="t-d3-2" data-i18n="tD32">입항 1시간 전 선장님께 문의 (기상 상황에 따라 변동 가능)</li>
+                            </ul>
+                        </td>
+                        <td class="center">40,000원</td>
+                    </tr>
+                    <tr>
+                        <td class="center" id="t-s4" data-i18n="tS2">동절기 (9월~2월)</td>
+                        <td class="center">10:00 / 12:00 / 14:00</td>
+                        <td class="center">40,000원</td>
+                    </tr>
+                    <tr>
+                        <td class="center"><span class="badge badge-night" id="b-night1" data-i18n="bNight">야간</span></td>
+                        <td class="center" id="t-c-galchi" data-i18n="tCGalchi">야간 갈치낚시</td>
+                        <td class="center" id="t-s-galchi" data-i18n="tSGalchi">8월 ~ 11월 중순</td>
+                        <td class="center" id="t-t-galchi" data-i18n="tTGalchi">18:00 출항</td>
+                        <td>
+                            <span id="t-d-galchi-text" data-i18n="tDGalchiText"><strong>농심 육개장사발면</strong> 제공<br>(장비대여료 2만원 현장결제)</span>
+                            <ul class="info-list">
+                                <li id="t-d-g1" data-i18n="tDG1"><strong>손질 비용:</strong> 갈치, 고등어 마리당 2,000원</li>
+                            </ul>
+                        </td>
+                        <td class="center" data-i18n="price90k">90,000원</td>
+                    </tr>
+                    <tr>
+                        <td class="center"><span class="badge badge-night" id="b-night2" data-i18n="bNight">야간</span></td>
+                        <td class="center" id="t-c-hanchi" data-i18n="tCHanchi">야간 한치 체험</td>
+                        <td class="center" id="t-s-hanchi" data-i18n="tSHanchi">6월 중순 ~ 9월 초</td>
+                        <td class="center" id="t-t-hanchi" data-i18n="tTHanchi">18:30 출항</td>
+                        <td>
+                            <span id="t-d-hanchi-text" data-i18n="tDHanchiText"><strong>농심 육개장사발면</strong> 제공<br>(장비대여료 1만원 현장결제)</span>
+                            <ul class="info-list">
+                                <li id="t-d-h1" data-i18n="tDH1"><strong>한치 즉석회 (현장 식사):</strong> 마리당 4,000원</li>
+                                <li id="t-d-h2" data-i18n="tDH2"><strong>포장 서비스:</strong> 포장비 2,000원 추가 (용기, 젓가락, 초장 포함)</li>
+                                <li id="t-d-h3" data-i18n="tDH3"><strong>손질만 할 경우:</strong> 마리당 2,000원</li>
+                            </ul>
+                        </td>
+                        <td class="center" data-i18n="price60k">60,000원</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="kakao-banner" id="kakao-info" data-i18n="kakaoInfo">
+                💬 궁금하신 점이 있으신가요? 실시간 카카오톡 문의: <strong>chunil1ho</strong>
+            </div>
+
+            <div class="refund-policy-box">
+                <h3 id="refundTitle" data-i18n="refundTitle">📢 취소 및 환불 규정 안내</h3>
+                <div class="refund-policy-content">
+                    <p><strong id="policy1Title" data-i18n="policy1Title">1. 개인 사유 및 단순 변심에 의한 취소</strong></p>
+                    <ul>
+                        <li id="policy1_0" data-i18n="policy1_0"><strong>구매확정된 이후 취소불가(단, 당일 기상악화나 선박고장등의 이유는 가능)</strong></li>
+                        <li id="policy1_1" data-i18n="policy1_1">이용일 기준 <strong>3일 전</strong> 취소 시: <strong>100% 전액 환불</strong></li>
+                        <li id="policy1_2" data-i18n="policy1_2">이용일 기준 <strong>2일 전</strong> 취소 시: 환불 불가 (단, 일정 변경 가능)</li>
+                        <li id="policy1_3" data-i18n="policy1_3">이용일 <strong>1일 전 / 당일</strong> 취소 및 변경: <strong>취소·환불 및 변경 불가</strong></li>
+                    </ul>
+
+                    <p><strong id="policy2Title" data-i18n="policy2Title">2. 기상악화 및 천재지변으로 인한 취소</strong></p>
+                    <ul>
+                        <li id="policy2_1" data-i18n="policy2_1">풍랑주의보, 폭우, 해무 등 고객 안전상의 이유로 출항이 불가능할 경우, 이용일과 관계없이 <strong>100% 전액 환불</strong> 또는 무료 일자 변경이 가능합니다.</li>
+                    </ul>
+
+                    <p><strong id="policy3Title" data-i18n="policy3Title">3. 업체 사정(선박 고장 등)으로 인한 취소</strong></p>
+                    <ul>
+                        <li id="policy3_1" data-i18n="policy3_1">부득이한 선박 결함 등으로 출조가 불가능할 경우, 이용일 무관하게 <strong>100% 전액 환불</strong> 조치해 드립니다.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 3. 조황게시판 카테고리 -->
+    <div id="cat-board" class="category-sec">
+        <div class="joag-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 10px;">
+                <h2 class="section-title" id="board-title" data-i18n="boardTitle" style="margin-bottom: 0; text-align: left;">생생 낚시 조황 이야기</h2>
+                <button type="button" class="btn-submit" onclick="verifyAdminForJoag()" id="btn-admin-write" style="display: none; float: none;" data-i18n="btnAdminWrite">✍️ 관리자 글쓰기</button>
+            </div>
+            
+            <div class="joag-form" id="joagFormBox">
+                <h3 style="font-size: 1.05rem; margin-bottom: 0.8rem; color: var(--primary-color); font-weight: 700;" id="form-board-head" data-i18n="formBoardHead">📸 오늘의 즐거운 조황을 공유해 주세요</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label id="lbl-b-title" data-i18n="lblBTitle">제목/어종</label>
+                        <input type="text" id="joagTitle" placeholder="예: 씨알 좋은 쥐치 만선입니다!" data-i18n-ph="phJoagTitle">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label data-i18n="lblPhotoAttach">사진 첨부</label>
+                    <input type="file" id="joagImageFile" accept="image/*" style="padding: 0.5rem; background: #fff;">
+                </div>
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label id="lbl-b-desc" data-i18n="lblBDesc">조황 이야기</label>
+                    <textarea id="joagDesc" rows="2" placeholder="오늘 바다에서의 소중한 소감을 남겨주세요." data-i18n-ph="phJoagDesc"></textarea>
+                </div>
+                <button type="button" class="btn-submit" id="btn-add-joag" onclick="addJoag()" data-i18n="btnAddJoag">조황 등록하기</button>
+                <div style="clear: both;"></div>
+            </div>
+
+            <div class="joag-grid" id="joagGrid">
+                <div class="joag-card">
+                    <img src="image/pic1.jpg" alt="오늘의 조황" onerror="this.src='https://via.placeholder.com/320x190?text=Fishing+1'">
+                    <div class="joag-card-body">
+                        <div class="joag-date" data-i18n="joagItem1Date" id="joag-item-date1">2026.09.05 | 작성자: 천일호 선장</div>
+                        <div class="joag-title" data-i18n="joagItem1Title" id="joag-item-title1">손맛 제대로 본 행복한 주간 체험!</div>
+                        <div class="joag-desc" data-i18n="joagItem1Desc" id="joag-item-desc1">아이들과 함께 웃음꽃 피우며 묵직한 손맛을 느꼈던 눈부신 하루였습니다.</div>
+                    </div>
+                </div>
+                <div class="joag-card">
+                    <img src="image/pic2.jpg" alt="오늘의 조황" onerror="this.src='https://via.placeholder.com/320x190?text=Fishing+2'">
+                    <div class="joag-card-body">
+                        <div class="joag-date" data-i18n="joagItem2Date" id="joag-item-date2">2026.09.04 | 작성자: 천일호 선장</div>
+                        <div class="joag-title" data-i18n="joagItem2Title" id="joag-item-title2">로맨틱한 밤바다, 야간 갈치 출항 성공</div>
+                        <div class="joag-desc" data-i18n="joagItem2Desc" id="joag-item-desc2">은빛 찬란한 갈치가 밤새 연신 올라와 쿨러가 가득 찼습니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. 공지사항 카테고리 -->
+    <div id="cat-notice" class="category-sec">
+        <div class="board-container-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 10px;">
+                <h2 class="section-title" id="notice-page-title" data-i18n="noticePageTitle" style="margin-bottom: 0; text-align: left;">공지사항</h2>
+                <button type="button" class="btn-submit" id="btn-admin-notice-write" onclick="verifyAdminForNotice()" style="display: none; float: none;" data-i18n="btnAdminWrite">✍️ 관리자 글쓰기</button>
+            </div>
+
+            <div class="joag-form" id="noticeFormBox" style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.05rem; margin-bottom: 0.8rem; color: var(--primary-color); font-weight: 700;" data-i18n="noticeFormHead">📢 새로운 공지사항 등록</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label data-i18n="noticeTitleLabel">공지 제목</label>
+                        <input type="text" id="noticeTitleInput" placeholder="공지 제목을 입력하세요" data-i18n-ph="phNoticeTitle">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label data-i18n="noticeDescLabel">공지 내용</label>
+                    <textarea id="noticeDescInput" rows="4" placeholder="공지 내용을 자세히 입력하세요." data-i18n-ph="phNoticeDesc"></textarea>
+                </div>
+                <button type="button" class="btn-submit" onclick="addNotice()" style="float: none; margin-top: 1rem;" data-i18n="btnAddNotice">공지 등록하기</button>
+                <div style="clear: both;"></div>
+            </div>
+
+            <table class="board-table">
+                <thead>
+                    <tr>
+                        <th style="width: 10%;" data-i18n="thNum">번호</th>
+                        <th style="width: 60%;" data-i18n="thTitle">제목</th>
+                        <th style="width: 15%;" data-i18n="thWriter">작성자</th>
+                        <th style="width: 15%;" data-i18n="thDate">등록일</th>
+                    </tr>
+                </thead>
+                <tbody id="noticeTableBody">
+                    <tr>
+                        <td class="center">2</td>
+                        <td id="notice-row2-title" data-i18n="hNoticeItem1">[공지] 2026년 가을 시즌 야간 갈치낚시 출항 안내</td>
+                        <td class="center" data-i18n="adminName">관리자</td>
+                        <td class="center">2026.09.01</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1</td>
+                        <td id="notice-row1-title" data-i18n="hNoticeItem2">[공지] 주차장 이용 및 찾아오시는 길 상세 안내</td>
+                        <td class="center" data-i18n="adminName">관리자</td>
+                        <td class="center">2026.08.20</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 5. Q&A 카테고리 -->
+    <div id="cat-qna" class="category-sec">
+        <div class="board-container-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 10px;">
+                <h2 class="section-title" id="qna-page-title" data-i18n="qnaPageTitle" style="margin-bottom: 0; text-align: left;">질문과 답변 (Q&A)</h2>
+                <button type="button" class="btn-submit" onclick="openQnaWriteModal()" id="btn-write-qna" style="float: none;" data-i18n="btnWriteQna">✍️ 질문 작성하기</button>
+            </div>
+            <table class="board-table">
+                <thead>
+                    <tr>
+                        <th style="width: 10%;" data-i18n="thNum">번호</th>
+                        <th style="width: 50%;" data-i18n="thTitle">제목</th>
+                        <th style="width: 15%;" data-i18n="thWriter">작성자</th>
+                        <th style="width: 15%;" data-i18n="thStatus">답변상태</th>
+                        <th style="width: 10%;" data-i18n="thDate">등록일</th>
+                    </tr>
+                </thead>
+                <tbody id="qnaTableBody">
+                    <tr onclick="openQnaDetail(0)">
+                        <td class="center">1</td>
+                        <td data-i18n="hQnaItem1">낚싯대 및 장비는 따로 안 가져가도 되나요?</td>
+                        <td class="center">김**</td>
+                        <td class="center"><span style="color:#15803d; font-weight:700;" data-i18n="ansComplete">답변완료</span></td>
+                        <td class="center">2026.09.03</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 6. 찾아오시는 길 카테고리 -->
+    <div id="cat-location" class="category-sec">
+        <h2 class="section-title" id="loc-title" data-i18n="locTitle">오시는 길 안내</h2>
+        <div class="map-section-wrapper">
+            <div class="map-info-box">
+                <h3 id="loc-heading" data-i18n="locHeading">📍 위치 및 찾아오시는 방법</h3>
+                <p id="loc-desc" data-i18n="locDesc">
+                    천일호 찾아오시는 길 안내입니다. 서귀포항 및 새연교 인근에서 편리하게 방문하실 수 있습니다.
+                </p>
+                <ul>
+                    <li><strong data-i18n="locAddrLabel">주소:</strong> <span data-i18n="locAddrVal">제주특별자치도 서귀포시 남성중로 39 (서홍동 705-5번지)</span></li>
+                    <li><strong data-i18n="locWayLabel">찾아오는 방법:</strong> <span data-i18n="locWayVal">서귀포유람선 주차장입구 좌측에 있는 서귀포배낚시천일호 표지판을 보고 찾아 내려오시면 됩니다.</span></li>
+                    <li><strong data-i18n="locNearLabel">주변 참고:</strong> <span data-i18n="locNearVal">하영올레 1코스 인증스탬프(새연교) 및 서귀포항 인근</span></li>
+                </ul>
+                <div style="margin-top: 30px;">
+                    <a href="https://maps.google.com/?q=33.2435,126.5615" target="_blank" class="map-btn" data-i18n="mapBtnText">구글 지도에서 크게 보기</a>
+                </div>
+            </div>
+
+            <div class="map-box">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.8!2d126.560!3d33.2435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDE0JzM2LjYiTiAxMjbCsDMzJzM2LjAiRQ!5e0!3m2!1sko!2skr!4v1610000000000!5m2!1sko!2skr" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. 실시간 예약현황 달력 전용 메뉴 -->
+    <div id="cat-status" class="category-sec">
+        <h2 class="section-title" id="status-title" data-i18n="statusTitle">📅 실시간 예약 현황</h2>
+        <div class="status-page-box">
+            <p class="status-guide-text" data-i18n="statusGuideText">날짜를 클릭하시면 해당 날짜로 실시간 예약을 진행하실 수 있습니다.</p>
+            <div class="calendar-box">
+                <div class="calendar-header">
+                    <button type="button" class="cal-nav-btn" onclick="changeMonth(-1)" data-i18n="prevMonth">◀ 이전 달</button>
+                    <h3 id="calMonthTitleStatus">2026년 9월 예약 현황</h3>
+                    <button type="button" class="cal-nav-btn" onclick="changeMonth(1)" data-i18n="nextMonth">다음 달 ▶</button>
+                </div>
+                <div class="calendar-grid">
+                    <div class="cal-day-name" data-i18n="daySun">일</div>
+                    <div class="cal-day-name" data-i18n="dayMon">월</div>
+                    <div class="cal-day-name" data-i18n="dayTue">화</div>
+                    <div class="cal-day-name" data-i18n="dayWed">수</div>
+                    <div class="cal-day-name" data-i18n="dayThu">목</div>
+                    <div class="cal-day-name" data-i18n="dayFri">금</div>
+                    <div class="cal-day-name" data-i18n="daySat">토</div>
+                </div>
+                <div id="calendarDaysGridStatus" class="calendar-grid" style="margin-top: 8px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. 실시간예약 및 조회/취소 카테고리 -->
+    <div id="cat-booking" class="category-sec">
+        <h2 class="section-title" id="book-title" data-i18n="bookTitle">설레는 바다 여행 예약하기</h2>
+
+        <div class="booking-layout">
+            <div class="form-box">
+                <form id="bookingForm" onsubmit="return false;">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label data-i18n="bookStep1">1. 예약 희망 날짜</label>
+                            <input type="date" id="custDate" onchange="updateOptions();" required>
+                            <div id="seasonNotice" class="season-info"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label data-i18n="bookStep2">2. 낚시 코스 선택</label>
+                            <select id="courseSelect" onchange="updateOptions()">
+                                <option value="30000_주간 체험 2시간" data-i18n="optCourse1">주간 체험 2시간 - 30,000원 (연중)</option>
+                                <option value="40000_주간 체험 3시간" data-i18n="optCourse2">주간 체험 3시간 - 40,000원 (연중)</option>
+                                <option value="90000_야간 갈치낚시" data-i18n="optCourse3">야간 갈치낚시 - 90,000원 (시즌: 8월~11월중순)</option>
+                                <option value="60000_야간 한치 체험낚시" data-i18n="optCourse4">야간 한치 체험낚시 - 60,000원 (시즌: 6월중순~9월초)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label data-i18n="bookStep3">3. 출항 시간 선택</label>
+                            <select id="timeSelect" onchange="updateSummary()"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label data-i18n="bookStep4">4. 승선 인원</label>
+                            <select id="custCount" onchange="updateSummary()">
+                                <option value="1">1명</option>
+                                <option value="2" selected>2명</option>
+                                <option value="3">3명</option>
+                                <option value="4">4명</option>
+                                <option value="5">5명</option>
+                                <option value="6">6명</option>
+                                <option value="7">7명</option>
+                                <option value="8">8명</option>
+                                <option value="9">9명</option>
+                                <option value="10">10명</option>
+                                <option value="11">11명</option>
+                                <option value="12">12명</option>
+                                <option value="13">13명</option>
+                                <option value="14">14명</option>
+                                <option value="15">15명</option>
+                                <option value="16">16명</option>
+                                <option value="17">17명</option>
+                                <option value="18">18명</option>
+                                <option value="19">19명</option>
+                                <option value="20">20명</option>
+                                <option value="21">21명</option>
+                                <option value="22">22명</option>
+                                <option value="23">23명</option>
+                                <option value="24">24명</option>
+                                <option value="25">25명</option>
+                                <option value="26">26명</option>
+                                <option value="27">27명</option>
+                                <option value="28">28명</option>
+                                <option value="29">29명</option>
+                                <option value="30">30명</option>
+                                <option value="31">31명</option>
+                                <option value="32">32명</option>
+                                <option value="33">33명</option>
+                                <option value="34">34명</option>
+                                <option value="35">35명</option>
+                                <option value="36">36명</option>
+                                <option value="37">37명</option>
+                                <option value="38">38명</option>
+                                <option value="39">39명</option>
+                                <option value="40">40명</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label data-i18n="bookStep5">5. 예약자 성함</label>
+                            <input type="text" id="custName" placeholder="성함 입력" data-i18n-ph="phName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label data-i18n="bookStep6">6. 연락처 (취소 조회용)</label>
+                            <input type="tel" id="custTel" placeholder="010-0000-0000" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="summary-card">
+                <h3 data-i18n="sumTitle">📋 선택하신 예약 내역</h3>
+                <div class="summary-row">
+                    <span data-i18n="sumDateLabel">예약 날짜</span>
+                    <span id="sumDate">-</span>
+                </div>
+                <div class="summary-row">
+                    <span data-i18n="sumCourseLabel">선택 코스</span>
+                    <span id="sumCourse">-</span>
+                </div>
+                <div class="summary-row">
+                    <span data-i18n="sumTimeLabel">출항 시간</span>
+                    <span id="sumTime">-</span>
+                </div>
+                <div class="summary-row">
+                    <span data-i18n="sumCountLabel">승선 인원</span>
+                    <span id="sumCount">-</span>
+                </div>
+                <div class="summary-total">
+                    <span data-i18n="sumTotalLabel">총 결제 금액</span>
+                    <span class="total-price" id="sumTotalPrice">0원</span>
+                </div>
+                <button type="button" id="btnPay" class="btn-pay" onclick="startPayment()" data-i18n="btnPayText">안전 결제 및 예약 확정</button>
+            </div>
+        </div>
+
+        <div class="my-booking-box">
+            <h3 style="font-size: 1.15rem; color: var(--primary-color); margin-bottom: 1rem; font-weight: 800;" data-i18n="myBookingTitle">🔍 예약 조회 및 취소하기</h3>
+            <p style="font-size: 0.9rem; color: var(--text-sub); margin-bottom: 1.2rem;" data-i18n="myBookingDesc">예약 시 입력하신 연락처로 내역을 조회하고 규정에 맞춰 즉시 취소하실 수 있습니다.</p>
+            
+            <div style="display: flex; gap: 10px; max-width: 450px;">
+                <input type="tel" id="searchTel" placeholder="예약자 연락처 (- 제외)" data-i18n-ph="phSearchTel" style="flex: 1; padding: 0.8rem; border: 1px solid #cbd5e1; border-radius: 8px;">
+                <button type="button" class="btn-check" onclick="searchMyBooking()" data-i18n="btnSearch">조회하기</button>
+            </div>
+
+            <div id="myBookingResult" class="my-booking-result">
+                <div id="bookingDetailsText" style="font-size: 0.92rem; color: var(--text-main); line-height: 1.6;"></div>
+                <div id="cancelActionArea"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 9. 관리자센터 카테고리 -->
+    <div id="cat-admin" class="category-sec">
+        <div class="admin-dashboard-layout">
+            <div class="admin-sidebar">
+                <div class="admin-sidebar-title" data-i18n="adminSidebarTitle">
+                    <span>🎣</span> 천일호 예약 관리자센터
+                </div>
+                <ul class="admin-menu-list">
+                    <li><button type="button" class="admin-menu-btn active" onclick="switchAdminTab('pane-dashboard', this)" data-i18n="adminMenu1">📊 대시보드 요약</button></li>
+                    <li><button type="button" class="admin-menu-btn" onclick="switchAdminTab('pane-info', this)" data-i18n="adminMenu2">🏢 업체 정보 및 연동 관리</button></li>
+                    <li><button type="button" class="admin-menu-btn" onclick="switchAdminTab('pane-schedule', this)" data-i18n="adminMenu3">⏰ 회차(스케줄) 관리</button></li>
+                    <li><button type="button" class="admin-menu-btn" onclick="switchAdminTab('pane-pg', this)" data-i18n="adminMenu4">💳 복수 PG 예약 승인 및 환불</button></li>
+                    <li><button type="button" class="admin-menu-btn" onclick="switchAdminTab('pane-checkin', this)" data-i18n="adminMenu5">📱 현장 체크인 (주문/전화번호)</button></li>
+                    <li><button type="button" class="admin-menu-btn" onclick="switchAdminTab('pane-members', this)" data-i18n="adminMenu6">👥 회원 관리 목록</button></li>
+                </ul>
+            </div>
+
+            <div>
+                <div id="pane-dashboard" class="admin-content-pane active">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem; font-size: 1.2rem; font-weight: 800;" data-i18n="adminDashTitle">📊 대시보드 요약 (실시간 예약 내역)</h3>
+                    <p style="color: var(--text-sub); margin-bottom: 1.5rem; font-size: 0.92rem;" data-i18n="adminDashDesc">손님이 예약을 완료하면 실시간으로 반영되는 내역입니다.</p>
+                    <div style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <h4 style="color: var(--primary-color); margin-bottom: 10px; font-size: 1.05rem;" data-i18n="adminDashSub">📋 최근 실시간 결제 및 예약 내역</h4>
+                        <div id="adminBookingListContainer" style="max-height: 300px; overflow-y: auto; font-size: 0.9rem; color: var(--text-main);">
+                            <p style="color: var(--text-sub); text-align: center; padding: 20px 0;" data-i18n="adminNoData">등록된 내역이 없습니다.</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; text-align: right;">
+                        <button type="button" class="btn-submit" onclick="processAdminLogout()" style="float: none;" data-i18n="adminLogout">관리자 로그아웃</button>
+                    </div>
+                </div>
+
+                <div id="pane-info" class="admin-content-pane">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem; font-size: 1.2rem; font-weight: 800;" data-i18n="adminInfoTitle">🏢 업체 정보 및 연동 관리</h3>
+                    <p style="color: var(--text-sub); margin-bottom: 1.5rem; font-size: 0.92rem;" data-i18n="adminInfoDesc">업체 기본 정보(연락처, 주소, 계좌번호) 및 외부 서비스 연동 상태를 관리합니다.</p>
+                    <div class="form-grid">
+                        <div class="form-group"><label data-i18n="lblCompanyName">상호명</label><input type="text" value="서귀포배낚시 천일호"></div>
+                        <div class="form-group"><label data-i18n="lblCompanyTel">대표 연락처</label><input type="text" value="010-7768-5913"></div>
+                        <div class="form-group"><label data-i18n="lblCompanyBank">입금 계좌</label><input type="text" value="수협 0000-1982-0812 (예금주: 강주연)"></div>
+                    </div>
+                    <button type="button" class="btn-submit" onclick="alert('업체 정보가 저장되었습니다.')" style="float:none; margin-top:1rem;" data-i18n="btnSave">저장하기</button>
+                </div>
+
+                <div id="pane-schedule" class="admin-content-pane">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem; font-size: 1.2rem; font-weight: 800;" data-i18n="adminSchedTitle">⏰ 회차(스케줄) 관리</h3>
+                    <p style="color: var(--text-sub); margin-bottom: 1.5rem; font-size: 0.92rem;" data-i18n="adminSchedDesc">주간/야간 코스별 출항 시간대와 시즌별 운항 일정을 관리합니다.</p>
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.9rem;" data-i18n="adminSchedDetails">
+                        <p><strong>[주간 체험 2시간]</strong> 하절기: 10:00, 12:00, 13:00, 14:00, 16:00 / 동절기: 10:00, 12:00, 13:00, 15:00</p>
+                        <p style="margin-top: 8px;"><strong>[주간 체험 3시간]</strong> 하절기: 10:00, 12:00, 13:00, 15:00 / 동절기: 10:00, 12:00, 14:00</p>
+                        <p style="margin-top: 8px;"><strong>[야간 갈치낚시]</strong> 18:00 출항 (8월~11월)</p>
+                        <p style="margin-top: 8px;"><strong>[야간 한치체험]</strong> 18:30 출항 (6월중순~9월초)</p>
+                    </div>
+                </div>
+
+                <div id="pane-pg" class="admin-content-pane">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem; font-size: 1.2rem; font-weight: 800;" data-i18n="adminPgTitle">💳 복수 PG 예약 승인 및 환불</h3>
+                    <p style="color: var(--text-sub); margin-bottom: 1.5rem; font-size: 0.92rem;" data-i18n="adminPgDesc">결제 시스템을 통한 예약 건의 승인 내역 조회 및 환불 처리를 진행합니다.</p>
+                    <table class="board-table">
+                        <thead><tr><th data-i18n="thOrderNo">주문번호</th><th data-i18n="thBooker">예약자</th><th data-i18n="thAmount">금액</th><th data-i18n="thPayStatus">결제상태</th><th data-i18n="thManage">관리</th></tr></thead>
+                        <tbody id="adminPgTableBody"><tr><td colspan="5" class="center" style="color:var(--text-sub);" data-i18n="adminNoPayData">조회된 결제 내역이 없습니다.</td></tr></tbody>
+                    </table>
+                </div>
+
+                <div id="pane-checkin" class="admin-content-pane">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem; font-size: 1.2rem; font-weight: 800;" data-i18n="adminCheckinTitle">📱 현장 체크인 (주문/전화번호)</h3>
+                    <p style="color: var(--text-sub); margin-bottom: 1.5rem; font-size: 0.92rem;" data-i18n="adminCheckinDesc">승선 당일 방문한 고객의 전화번호나 예약번호로 현장 승선 체크인을 처리합니다.</p>
+                    <div style="display: flex; gap: 10px; max-width: 400px; margin-bottom: 1.5rem;">
+                        <input type="tel" id="checkinTel" placeholder="예약자 전화번호 입력" data-i18n-ph="phCheckinTel" style="flex:1; padding:0.8rem; border:1px solid #cbd5e1; border-radius:8px;">
+                        <button type="button" class="btn-check" onclick="processCheckin()" data-i18n="btnCheckin">체크인</button>
+                    </div>
+                </div>
+
+                <div id="pane-members" class="admin-content-pane">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem; font-size: 1.2rem; font-weight: 800;" data-i18n="adminMemberTitle">👥 회원 관리 목록</h3>
+                    <p style="color: var(--text-sub); margin-bottom: 1.5rem; font-size: 0.92rem;" data-i18n="adminMemberDesc">가입한 회원 목록 및 이용 기록을 관리합니다.</p>
+                    <table class="board-table">
+                        <thead><tr><th data-i18n="thId">아이디</th><th data-i18n="thName">이름</th><th data-i18n="thTel">연락처</th><th data-i18n="thEmail">이메일</th><th data-i18n="thJoinDate">가입일시</th></tr></thead>
+                        <tbody id="adminMemberListBody">
+                            <tr><td colspan="5" class="center" style="color:var(--text-sub);" data-i18n="adminNoMember">가입된 회원이 없습니다.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 로그인/회원가입 통합 모달 -->
+<div id="authModalOverlay" class="auth-modal-overlay">
+    <div class="auth-modal">
+        <button type="button" class="close-modal" onclick="closeAuthModal()">&times;</button>
+        <h3 id="authModalTitle" data-i18n="authModalTitle">로그인 / 회원가입</h3>
+        <div class="auth-tabs">
+            <button type="button" class="auth-tab-btn active" id="tabLoginBtn" onclick="switchAuthTab('login')" data-i18n="authLogin">로그인</button>
+            <button type="button" class="auth-tab-btn" id="tabSignupBtn" onclick="switchAuthTab('signup')" data-i18n="authSignup">회원가입</button>
+        </div>
+
+        <!-- 로그인 폼 -->
+        <div id="loginPanel" class="auth-form-panel active">
+            <div class="form-group" style="margin-bottom:1rem;">
+                <label data-i18n="lblId">아이디</label>
+                <input type="text" id="loginId" placeholder="아이디 입력" data-i18n-ph="phId">
+            </div>
+            <div class="form-group" style="margin-bottom:1.5rem;">
+                <label data-i18n="lblPw">비밀번호</label>
+                <input type="password" id="loginPw" placeholder="비밀번호 입력" data-i18n-ph="phPw">
+            </div>
+            <button type="button" class="btn-submit" onclick="processLogin()" style="width:100%; float:none;" data-i18n="btnLoginAction">로그인 하기</button>
+        </div>
+
+        <!-- 회원가입 폼 -->
+        <div id="signupPanel" class="auth-form-panel">
+            <div class="form-group" style="margin-bottom:0.8rem;">
+                <label data-i18n="lblId">아이디</label>
+                <input type="text" id="signupId" placeholder="사용할 아이디" data-i18n-ph="phSignupId">
+            </div>
+            <div class="form-group" style="margin-bottom:0.8rem;">
+                <label data-i18n="lblPw">비밀번호</label>
+                <input type="password" id="signupPw" placeholder="비밀번호" data-i18n-ph="phPw">
+            </div>
+            <div class="form-group" style="margin-bottom:0.8rem;">
+                <label data-i18n="lblName">이름</label>
+                <input type="text" id="signupName" placeholder="이름 입력" data-i18n-ph="phName">
+            </div>
+            <div class="form-group" style="margin-bottom:0.8rem;">
+                <label data-i18n="lblTel">연락처</label>
+                <input type="tel" id="signupTel" placeholder="010-0000-0000">
+            </div>
+            <div class="form-group" style="margin-bottom:1.5rem;">
+                <label data-i18n="lblEmail">이메일</label>
+                <input type="email" id="signupEmail" placeholder="abc@example.com">
+            </div>
+            <button type="button" class="btn-submit" onclick="processSignup()" style="width:100%; float:none;" data-i18n="btnSignupAction">회원가입 완료</button>
+        </div>
+    </div>
+</div>
+
+<!-- Q&A 질문 작성 모달 -->
+<div id="qnaWriteModalOverlay" class="qna-modal-overlay">
+    <div class="qna-modal">
+        <button type="button" class="close-modal" onclick="closeQnaWriteModal()">&times;</button>
+        <h3 style="color: var(--primary-color); margin-bottom: 1.2rem; font-weight: 800;" data-i18n="qnaModalTitle">❓ Q&A 질문 작성하기</h3>
+        <div class="form-group" style="margin-bottom: 1rem;">
+            <label data-i18n="qnaWriterLabel">작성자 이름</label>
+            <input type="text" id="qnaWriter" placeholder="이름 입력 (예: 김**)" data-i18n-ph="phQnaWriter">
+        </div>
+        <div class="form-group" style="margin-bottom: 1rem;">
+            <label data-i18n="qnaTitleLabel">질문 제목</label>
+            <input type="text" id="qnaTitleInput" placeholder="제목을 입력하세요" data-i18n-ph="phQnaTitle">
+        </div>
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label data-i18n="qnaDescLabel">질문 내용</label>
+            <textarea id="qnaDescInput" rows="4" placeholder="궁금하신 내용을 자세히 남겨주세요." data-i18n-ph="phQnaDesc"></textarea>
+        </div>
+        <button type="button" class="btn-submit" onclick="submitQnaQuestion()" style="width: 100%; float: none;" data-i18n="btnSubmitQna">질문 등록하기</button>
+    </div>
+</div>
+
+<!-- Q&A 상세 및 관리자 답변 모달 -->
+<div id="qnaDetailModalOverlay" class="qna-modal-overlay">
+    <div class="qna-modal">
+        <button type="button" class="close-modal" onclick="closeQnaDetailModal()">&times;</button>
+        <h3 style="color: var(--primary-color); margin-bottom: 1.2rem; font-weight: 800;" id="qnaDetailTitleDisp" data-i18n="qnaDetailTitle">질문 상세 내용</h3>
+        <div style="background: #f8fafc; padding: 1.2rem; border-radius: 8px; margin-bottom: 1.2rem; border: 1px solid var(--border-color);">
+            <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 6px;"><strong id="qnaDetailWriterDisp">작성자: </strong> | <span id="qnaDetailDateDisp">날짜</span></p>
+            <p style="font-size: 0.95rem; color: var(--text-main); white-space: pre-line;" id="qnaDetailDescDisp">내용</p>
+        </div>
+        
+        <div style="margin-top: 1rem;">
+            <h4 style="font-size: 1rem; color: var(--primary-color); margin-bottom: 0.6rem;" data-i18n="adminAnswerHeading">💬 관리자 답변</h4>
+            <div id="qnaAnswerArea" style="margin-bottom: 1rem;"></div>
+            
+            <div id="adminAnswerForm" style="display: none;">
+                <div class="form-group" style="margin-bottom: 0.8rem;">
+                    <textarea id="adminAnswerInput" rows="3" placeholder="답변 내용을 입력하세요" data-i18n-ph="phAdminAnswer"></textarea>
+                </div>
+                <button type="button" class="btn-submit" onclick="submitAdminAnswer()" style="width: 100%; float: none;" data-i18n="btnSubmitAnswer">답변 등록하기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div>
+        <strong data-i18n="footerTitle">서귀포배낚시 천일호</strong> | <span data-i18n="footerRep">대표</span>: 강주연 | <span data-i18n="footerBizNo">사업자등록번호</span>: 000-00-00000<br>
+        <span data-i18n="footerAddr">주소: 제주특별자치도 서귀포시 남성중로 39 (천일호)</span> | <span data-i18n="footerTel">예약문의</span>: 010-7768-5913<br>
+        Copyright &copy; <span data-i18n="footerCopy">천일호. All Rights Reserved.</span>
+    </div>
+</footer>
+
+<script>
+    // 다국어 번역 데이터
+    const translations = {
+        ko: {
+            topBarAddress: "🌊 제주 서귀포시 남성중로 39 (천일호)",
+            topBarInquiry: "📞 예약문의: 010-7768-5913",
+            authLogin: "로그인",
+            authSignup: "회원가입",
+            logoMainText: "서귀포배낚시 천일호",
+            logoSubText: "Seogwipo Chunilho Fishing",
+            navHome: "홈",
+            navInfo: "운항안내",
+            navBoard: "조황게시판",
+            navNotice: "공지사항",
+            navQna: "Q&A",
+            navLocation: "찾아오시는 길",
+            navStatus: "예약현황",
+            navBooking: "실시간예약",
+            navAdmin: "관리자센터",
+            heroBadgeText: "제주 서귀포 필수 여행 코스",
+            heroTitle: "바다 위에서 맞이하는 가장 찬란한 순간",
+            heroSub: "초보자도, 아이도 누구나 손쉽게 손맛을 즐기는 서귀포 앞바다 힐링 배낚시",
+            heroBtn: "설레는 예약 시작하기 ✨",
+            hNoticeTitle: "📢 공지사항",
+            hNoticeMore: "더보기 +",
+            hNoticeItem1: "[공지] 2026년 가을 시즌 야간 갈치낚시 출항 안내",
+            hNoticeItem2: "[공지] 주차장 이용 및 찾아오시는 길 상세 안내",
+            hQnaTitle: "❓ Q&A 게시판",
+            hQnaMore: "더보기 +",
+            hQnaItem1: "[Q&A] 낚싯대 및 장비는 따로 안 가져가도 되나요?",
+            hQnaItem2: "[Q&A] 기상 악화 시 환불 규정이 어떻게 되나요?",
+            hLeftTitle: "👤 회원 및 예약 안내",
+            hLeftLoginT: "로그인 / 회원가입",
+            hLeftLoginD: "회원으로 가입하여 편리하게 예약을 관리하세요.",
+            hLeftTelT: "예약 및 고객 센터",
+            hLeftBankT: "입금 계좌번호 안내",
+            hBankOwner: "예금주: 강주연",
+            featT1: "초보자 맞춤 친절 강습",
+            featD1: "낚싯대 잡는 법부터 미끼 끼우기까지 선장님이 다정하게 알려드려요.",
+            featT2: "주간체험 장비 & 도구",
+            featD2: "무거운 장비 준비 끝! 낚싯대, 채비, 미끼, 구명조끼까지 모두 무상 대여해 드립니다.",
+            featT3: "싱싱한 즉석회",
+            featD3: "푸른 바다 위에서 내가 직접 잡은 싱싱한 물고기를 그 즉시 회로 맛보는 감동!",
+            featT4: "소중한 사람과의 추억",
+            featD4: "가족, 연인, 친구들과 함께 웃음이 끊이지 않는 특별한 제주 추억을 만들어보세요.",
+            galTitle: "천일호의 반짝이는 바다 풍경",
+            gal1: "아이들과 함께 웃음 가득한 주간 체험 낚시",
+            gal2: "밤바다의 낭만, 야간 갈치·고등어 낚시 (8~11월)",
+            gal3: "여름밤의 보석, 야간 한치 체험 낚시 (6~9월)",
+            infoTitle: "운항 코스 및 시즌 안내",
+            thCat: "구분",
+            thCourse: "코스명",
+            thSeason: "운항 시즌",
+            thTime: "출항 시간",
+            thDetails: "식사 및 제공 사항 (옵션/손질 비용)",
+            thPrice: "승선료",
+            bDay: "주간",
+            bNight: "야간",
+            tC2: "주간 체험 2시간",
+            tC3: "주간 체험 3시간",
+            tS1: "하절기 (3월~8월)",
+            tS2: "동절기 (9월~2월)",
+            tD2: "낚시대, 채비, 크릴새우, 구명조끼 무료제공",
+            tD3Base: "낚시대, 채비, 크릴새우, 구명조끼 무료제공",
+            tD31: "즉석회 옵션: 기본 3마리부터 마리당 2,000원",
+            tD32: "입항 1시간 전 선장님께 문의 (기상 상황에 따라 변동 가능)",
+            tCGalchi: "야간 갈치낚시",
+            tSGalchi: "8월 ~ 11월 중순",
+            tTGalchi: "18:00 출항",
+            tDGalchiText: "농심 육개장사발면 제공<br>(장비대여료 2만원 현장결제)",
+            tDG1: "손질 비용: 갈치, 고등어 마리당 2,000원",
+            tCHanchi: "야간 한치 체험",
+            tSHanchi: "6월 중순 ~ 9월 초",
+            tTHanchi: "18:30 출항",
+            tDHanchiText: "농심 육개장사발면 제공<br>(장비대여료 1만원 현장결제)",
+            tDH1: "한치 즉석회 (현장 식사): 마리당 4,000원",
+            tDH2: "포장 서비스: 포장비 2,000원 추가 (용기, 젓가락, 초장 포함)",
+            tDH3: "손질만 할 경우: 마리당 2,000원",
+            price30k: "30,000원",
+            price40k: "40,000원",
+            price60k: "60,000원",
+            price90k: "90,000원",
+            kakaoInfo: "💬 궁금하신 점이 있으신가요? 실시간 카카오톡 문의: <strong>chunil1ho</strong>",
+            refundTitle: "📢 취소 및 환불 규정 안내",
+            policy1Title: "1. 개인 사유 및 단순 변심에 의한 취소",
+            policy1_0: "구매확정된 이후 취소불가(단, 당일 기상악화나 선박고장등의 이유는 가능)",
+            policy1_1: "이용일 기준 3일 전 취소 시: 100% 전액 환불",
+            policy1_2: "이용일 기준 2일 전 취소 시: 환불 불가 (단, 일정 변경 가능)",
+            policy1_3: "이용일 1일 전 / 당일 취소 및 변경: 취소·환불 및 변경 불가",
+            policy2Title: "2. 기상악화 및 천재지변으로 인한 취소",
+            policy2_1: "풍랑주의보, 폭우, 해무 등 고객 안전상의 이유로 출항이 불가능할 경우, 이용일과 관계없이 100% 전액 환불 또는 무료 일자 변경이 가능합니다.",
+            policy3Title: "3. 업체 사정(선박 고장 등)으로 인한 취소",
+            policy3_1: "부득이한 선박 결함 등으로 출조가 불가능할 경우, 이용일 무관하게 100% 전액 환불 조치해 드립니다.",
+            boardTitle: "생생 낚시 조황 이야기",
+            btnAdminWrite: "✍️ 관리자 글쓰기",
+            formBoardHead: "📸 오늘의 즐거운 조황을 공유해 주세요",
+            lblBTitle: "제목/어종",
+            phJoagTitle: "예: 씨알 좋은 쥐치 만선입니다!",
+            lblPhotoAttach: "사진 첨부",
+            lblBDesc: "조황 이야기",
+            phJoagDesc: "오늘 바다에서의 소중한 소감을 남겨주세요.",
+            btnAddJoag: "조황 등록하기",
+            joagItem1Date: "2026.09.05 | 작성자: 천일호 선장",
+            joagItem1Title: "손맛 제대로 본 행복한 주간 체험!",
+            joagItem1Desc: "아이들과 함께 웃음꽃 피우며 묵직한 손맛을 느꼈던 눈부신 하루였습니다.",
+            joagItem2Date: "2026.09.04 | 작성자: 천일호 선장",
+            joagItem2Title: "로맨틱한 밤바다, 야간 갈치 출항 성공",
+            joagItem2Desc: "은빛 찬란한 갈치가 밤새 연신 올라와 쿨러가 가득 찼습니다.",
+            noticePageTitle: "공지사항",
+            noticeFormHead: "📢 새로운 공지사항 등록",
+            noticeTitleLabel: "공지 제목",
+            phNoticeTitle: "공지 제목을 입력하세요",
+            noticeDescLabel: "공지 내용",
+            phNoticeDesc: "공지 내용을 자세히 입력하세요.",
+            btnAddNotice: "공지 등록하기",
+            thNum: "번호",
+            thTitle: "제목",
+            thWriter: "작성자",
+            thDate: "등록일",
+            adminName: "관리자",
+            qnaPageTitle: "질문과 답변 (Q&A)",
+            btnWriteQna: "✍️ 질문 작성하기",
+            thStatus: "답변상태",
+            ansComplete: "답변완료",
+            locTitle: "오시는 길 안내",
+            locHeading: "📍 위치 및 찾아오시는 방법",
+            locDesc: "천일호 찾아오시는 길 안내입니다. 서귀포항 및 새연교 인근에서 편리하게 방문하실 수 있습니다.",
+            locAddrLabel: "주소:",
+            locAddrVal: "제주특별자치도 서귀포시 남성중로 39 (서홍동 705-5번지)",
+            locWayLabel: "찾아오는 방법:",
+            locWayVal: "서귀포유람선 주차장입구 좌측에 있는 서귀포배낚시천일호 표지판을 보고 찾아 내려오시면 됩니다.",
+            locNearLabel: "주변 참고:",
+            locNearVal: "하영올레 1코스 인증스탬프(새연교) 및 서귀포항 인근",
+            mapBtnText: "구글 지도에서 크게 보기",
+            statusTitle: "📅 실시간 예약 현황",
+            statusGuideText: "날짜를 클릭하시면 해당 날짜로 실시간 예약을 진행하실 수 있습니다.",
+            prevMonth: "◀ 이전 달",
+            nextMonth: "다음 달 ▶",
+            daySun: "일",
+            dayMon: "월",
+            dayTue: "화",
+            dayWed: "수",
+            dayThu: "목",
+            dayFri: "금",
+            daySat: "토",
+            bookTitle: "설레는 바다 여행 예약하기",
+            bookStep1: "1. 예약 희망 날짜",
+            bookStep2: "2. 낚시 코스 선택",
+            optCourse1: "주간 체험 2시간 - 30,000원 (연중)",
+            optCourse2: "주간 체험 3시간 - 40,000원 (연중)",
+            optCourse3: "야간 갈치낚시 - 90,000원 (시즌: 8월~11월중순)",
+            optCourse4: "야간 한치 체험낚시 - 60,000원 (시즌: 6월중순~9월초)",
+            bookStep3: "3. 출항 시간 선택",
+            bookStep4: "4. 승선 인원",
+            bookStep5: "5. 예약자 성함",
+            phName: "성함 입력",
+            bookStep6: "6. 연락처 (취소 조회용)",
+            sumTitle: "📋 선택하신 예약 내역",
+            sumDateLabel: "예약 날짜",
+            sumCourseLabel: "선택 코스",
+            sumTimeLabel: "출항 시간",
+            sumCountLabel: "승선 인원",
+            sumTotalLabel: "총 결제 금액",
+            btnPayText: "안전 결제 및 예약 확정",
+            myBookingTitle: "🔍 예약 조회 및 취소하기",
+            myBookingDesc: "예약 시 입력하신 연락처로 내역을 조회하고 규정에 맞춰 즉시 취소하실 수 있습니다.",
+            phSearchTel: "예약자 연락처 (- 제외)",
+            btnSearch: "조회하기",
+            adminSidebarTitle: "천일호 예약 관리자센터",
+            adminMenu1: "📊 대시보드 요약",
+            adminMenu2: "🏢 업체 정보 및 연동 관리",
+            adminMenu3: "⏰ 회차(스케줄) 관리",
+            adminMenu4: "💳 복수 PG 예약 승인 및 환불",
+            adminMenu5: "📱 현장 체크인 (주문/전화번호)",
+            adminMenu6: "👥 회원 관리 목록",
+            adminDashTitle: "📊 대시보드 요약 (실시간 예약 내역)",
+            adminDashDesc: "손님이 예약을 완료하면 실시간으로 반영되는 내역입니다.",
+            adminDashSub: "📋 최근 실시간 결제 및 예약 내역",
+            adminNoData: "등록된 내역이 없습니다.",
+            adminLogout: "관리자 로그아웃",
+            adminInfoTitle: "🏢 업체 정보 및 연동 관리",
+            adminInfoDesc: "업체 기본 정보(연락처, 주소, 계좌번호) 및 외부 서비스 연동 상태를 관리합니다.",
+            lblCompanyName: "상호명",
+            lblCompanyTel: "대표 연락처",
+            lblCompanyBank: "입금 계좌",
+            btnSave: "저장하기",
+            adminSchedTitle: "⏰ 회차(스케줄) 관리",
+            adminSchedDesc: "주간/야간 코스별 출항 시간대와 시즌별 운항 일정을 관리합니다.",
+            adminPgTitle: "💳 복수 PG 예약 승인 및 환불",
+            adminPgDesc: "결제 시스템을 통한 예약 건의 승인 내역 조회 및 환불 처리를 진행합니다.",
+            thOrderNo: "주문번호",
+            thBooker: "예약자",
+            thAmount: "금액",
+            thPayStatus: "결제상태",
+            thManage: "관리",
+            adminNoPayData: "조회된 결제 내역이 없습니다.",
+            adminCheckinTitle: "📱 현장 체크인 (주문/전화번호)",
+            adminCheckinDesc: "승선 당일 방문한 고객의 전화번호나 예약번호로 현장 승선 체크인을 처리합니다.",
+            phCheckinTel: "예약자 전화번호 입력",
+            btnCheckin: "체크인",
+            adminMemberTitle: "👥 회원 관리 목록",
+            adminMemberDesc: "가입한 회원 목록 및 이용 기록을 관리합니다.",
+            thId: "아이디",
+            thName: "이름",
+            thTel: "연락처",
+            thEmail: "이메일",
+            thJoinDate: "가입일시",
+            adminNoMember: "가입된 회원이 없습니다.",
+            authModalTitle: "로그인 / 회원가입",
+            lblId: "아이디",
+            phId: "아이디 입력",
+            lblPw: "비밀번호",
+            phPw: "비밀번호 입력",
+            btnLoginAction: "로그인 하기",
+            phSignupId: "사용할 아이디",
+            lblName: "이름",
+            lblTel: "연락처",
+            lblEmail: "이메일",
+            btnSignupAction: "회원가입 완료",
+            qnaModalTitle: "❓ Q&A 질문 작성하기",
+            qnaWriterLabel: "작성자 이름",
+            phQnaWriter: "이름 입력 (예: 김**)",
+            qnaTitleLabel: "질문 제목",
+            phQnaTitle: "제목을 입력하세요",
+            qnaDescLabel: "질문 내용",
+            phQnaDesc: "궁금하신 내용을 자세히 남겨주세요.",
+            btnSubmitQna: "질문 등록하기",
+            qnaDetailTitle: "질문 상세 내용",
+            adminAnswerHeading: "💬 관리자 답변",
+            phAdminAnswer: "답변 내용을 입력하세요",
+            btnSubmitAnswer: "답변 등록하기",
+            footerTitle: "서귀포배낚시 천일호",
+            footerRep: "대표",
+            footerBizNo: "사업자등록번호",
+            footerAddr: "주소: 제주특별자치도 서귀포시 남성중로 39 (천일호)",
+            footerTel: "예약문의",
+            footerCopy: "천일호. All Rights Reserved."
+        },
+        en: {
+            topBarAddress: "🌊 39, Namseongjung-ro, Seogwipo-si, Jeju",
+            topBarInquiry: "📞 Booking: 010-7768-5913",
+            authLogin: "Login",
+            authSignup: "Sign Up",
+            logoMainText: "Seogwipo Chunilho Fishing",
+            logoSubText: "Seogwipo Chunilho Fishing",
+            navHome: "Home",
+            navInfo: "Schedule",
+            navBoard: "Catch Board",
+            navNotice: "Notice",
+            navQna: "Q&A",
+            navLocation: "Location",
+            navStatus: "Status",
+            navBooking: "Booking",
+            navAdmin: "Admin",
+            heroBadgeText: "Must-visit Course in Seogwipo, Jeju",
+            heroTitle: "The Most Brilliant Moment on the Sea",
+            heroSub: "Healing sea fishing in Seogwipo where anyone can easily enjoy",
+            heroBtn: "Start Booking ✨",
+            hNoticeTitle: "📢 Notice",
+            hNoticeMore: "More +",
+            hNoticeItem1: "[Notice] 2026 Autumn Night Hairtail Fishing Schedule",
+            hNoticeItem2: "[Notice] Detailed Guide to Parking and Directions",
+            hQnaTitle: "❓ Q&A Board",
+            hQnaMore: "More +",
+            hQnaItem1: "[Q&A] Do I need to bring my own fishing rods and equipment?",
+            hQnaItem2: "[Q&A] What is the refund policy in case of bad weather?",
+            hLeftTitle: "👤 Member & Booking Guide",
+            hLeftLoginT: "Login / Sign Up",
+            hLeftLoginD: "Manage your bookings conveniently by signing up.",
+            hLeftTelT: "Customer Center",
+            hLeftBankT: "Deposit Bank Account",
+            hBankOwner: "Account Holder: Kang Joo-yeon",
+            featT1: "Friendly Beginner Lessons",
+            featD1: "The captain kindly teaches you from holding the fishing rod to baiting.",
+            featT2: "Free Equipment Rental",
+            featD2: "Rods, tackles, bait, and life jackets are provided free of charge.",
+            featT3: "Fresh Instant Sashimi",
+            featD3: "Taste the fresh fish you caught right on the blue sea!",
+            featT4: "Precious Memories",
+            featD4: "Create special Jeju memories with family, lovers, and friends.",
+            galTitle: "Sparkling Sea Scenery of Chunilho",
+            gal1: "Fun-filled daytime experience fishing with children",
+            gal2: "Romance of the night sea, night hairtail & mackerel fishing (Aug-Nov)",
+            gal3: "Jewel of the summer night, night squid experience fishing (Jun-Sep)",
+            infoTitle: "Operation Course & Season Guide",
+            thCat: "Category",
+            thCourse: "Course",
+            thSeason: "Season",
+            thTime: "Departure Time",
+            thDetails: "Meals & Provisions (Options/Cleaning Fee)",
+            thPrice: "Fare",
+            bDay: "Daytime",
+            bNight: "Night",
+            tC2: "Daytime 2-Hour Experience",
+            tC3: "Daytime 3-Hour Experience",
+            tS1: "Summer (Mar-Aug)",
+            tS2: "Winter (Sep-Feb)",
+            tD2: "Free provision of rods, tackles, krill shrimp, and life jackets",
+            tD3Base: "Free provision of rods, tackles, krill shrimp, and life jackets",
+            tD31: "Sashimi option: 2,000 KRW per fish (from min. 3 fish)",
+            tD32: "Inquire with the captain 1 hour before entry (subject to weather)",
+            tCGalchi: "Night Hairtail Fishing",
+            tSGalchi: "Aug ~ Mid-Nov",
+            tTGalchi: "Departure 18:00",
+            tDGalchiText: "Nongshim Yukgaejang Cup Noodle provided<br>(Gear rental fee 20,000 KRW paid on site)",
+            tDG1: "Cleaning fee: 2,000 KRW per hairtail/mackerel",
+            tCHanchi: "Night Squid Experience",
+            tSHanchi: "Mid-Jun ~ Early Sep",
+            tTHanchi: "Departure 18:30",
+            tDHanchiText: "Nongshim Yukgaejang Cup Noodle provided<br>(Gear rental fee 10,000 KRW paid on site)",
+            tDH1: "Instant Squid Sashimi (on-site dining): 4,000 KRW per fish",
+            tDH2: "Packaging service: +2,000 KRW (includes container, chopsticks,chogochujang)",
+            tDH3: "Cleaning only: 2,000 KRW per fish",
+            price30k: "30,000 KRW",
+            price40k: "40,000 KRW",
+            price60k: "60,000 KRW",
+            price90k: "90,000 KRW",
+            kakaoInfo: "💬 Have questions? Real-time KakaoTalk inquiry: <strong>chunil1ho</strong>",
+            refundTitle: "📢 Cancellation & Refund Policy",
+            policy1Title: "1. Cancellation Due to Personal Reasons & Simple Change of Mind",
+            policy1_0: "No cancellation after purchase confirmation (Except for bad weather or boat failure on the day)",
+            policy1_1: "Cancellation 3 days prior to use date: 100% full refund",
+            policy1_2: "Cancellation 2 days prior to use date: Non-refundable (Schedule change available)",
+            policy1_3: "Cancellation/change 1 day prior / on the day: Non-refundable and unchangeable",
+            policy2Title: "2. Cancellation Due to Bad Weather & Natural Disasters",
+            policy2_1: "If departure is impossible due to customer safety reasons such as storm warnings, heavy rain, or sea fog, 100% full refund or free date change is available regardless of the use date.",
+            policy3Title: "3. Cancellation Due to Company Circumstances (Boat Breakdown, etc.)",
+            policy3_1: "If fishing is impossible due to inevitable vessel defects, a 100% full refund will be processed regardless of the use date.",
+            boardTitle: "Vivid Fishing Catch Stories",
+            btnAdminWrite: "✍️ Admin Write",
+            formBoardHead: "📸 Share today's joyful catches",
+            lblBTitle: "Title / Species",
+            phJoagTitle: "Ex: Full boat of good-sized filefish!",
+            lblPhotoAttach: "Attach Photo",
+            lblBDesc: "Catch Story",
+            phJoagDesc: "Leave your precious thoughts from the sea today.",
+            btnAddJoag: "Register Catch",
+            joagItem1Date: "2026.09.05 | Author: Captain Chunilho",
+            joagItem1Title: "Happy daytime experience with great hand taste!",
+            joagItem1Desc: "It was a dazzling day feeling heavy bites while blooming smiles with children.",
+            joagItem2Date: "2026.09.04 | Author: Captain Chunilho",
+            joagItem2Title: "Romantic night sea, night hairtail departure success",
+            joagItem2Desc: "Bright silvery hairtails came up continuously all night, filling the cooler.",
+            noticePageTitle: "Notice",
+            noticeFormHead: "📢 Register New Notice",
+            noticeTitleLabel: "Notice Title",
+            phNoticeTitle: "Enter notice title",
+            noticeDescLabel: "Notice Content",
+            phNoticeDesc: "Enter notice content in detail.",
+            btnAddNotice: "Register Notice",
+            thNum: "No.",
+            thTitle: "Title",
+            thWriter: "Author",
+            thDate: "Date",
+            adminName: "Admin",
+            qnaPageTitle: "Questions & Answers (Q&A)",
+            btnWriteQna: "✍️ Write Question",
+            thStatus: "Status",
+            ansComplete: "Answered",
+            locTitle: "Location Guide",
+            locHeading: "📍 Location & Directions",
+            locDesc: "Directions to Chunilho. You can conveniently visit near Seogwipo Port and Saeyeongyo Bridge.",
+            locAddrLabel: "Address:",
+            locAddrVal: "39, Namseongjung-ro, Seogwipo-si, Jeju-do",
+            locWayLabel: "Directions:",
+            locWayVal: "Look for the Seogwipo Chunilho sign on the left of the Seogwipo Cruise parking lot entrance and come down.",
+            locNearLabel: "Nearby:",
+            locNearVal: "Hayoung Olle Course 1 stamp (Saeyeongyo) and Seogwipo Port area",
+            mapBtnText: "View Larger on Google Maps",
+            statusTitle: "📅 Real-time Booking Status",
+            statusGuideText: "Click a date to proceed with real-time booking for that date.",
+            prevMonth: "◀ Prev Month",
+            nextMonth: "Next Month ▶",
+            daySun: "Sun",
+            dayMon: "Mon",
+            dayTue: "Tue",
+            dayWed: "Wed",
+            dayThu: "Thu",
+            dayFri: "Fri",
+            daySat: "Sat",
+            bookTitle: "Book Your Exciting Sea Trip",
+            bookStep1: "1. Preferred Booking Date",
+            bookStep2: "2. Select Fishing Course",
+            optCourse1: "Daytime 2-Hour Experience - 30,000 KRW (Year-round)",
+            optCourse2: "Daytime 3-Hour Experience - 40,000 KRW (Year-round)",
+            optCourse3: "Night Hairtail Fishing - 90,000 KRW (Season: Aug ~ Mid-Nov)",
+            optCourse4: "Night Squid Experience Fishing - 60,000 KRW (Season: Mid-Jun ~ Early Sep)",
+            bookStep3: "3. Select Departure Time",
+            bookStep4: "4. Number of Passengers",
+            bookStep5: "5. Booker Name",
+            phName: "Enter name",
+            bookStep6: "6. Contact (for cancellation lookup)",
+            sumTitle: "📋 Selected Booking Details",
+            sumDateLabel: "Booking Date",
+            sumCourseLabel: "Selected Course",
+            sumTimeLabel: "Departure Time",
+            sumCountLabel: "Passengers",
+            sumTotalLabel: "Total Amount",
+            btnPayText: "Secure Payment & Confirm Booking",
+            myBookingTitle: "🔍 Look Up & Cancel Booking",
+            myBookingDesc: "Look up details with the contact number entered during booking and cancel immediately according to regulations.",
+            phSearchTel: "Contact number (excluding -)",
+            btnSearch: "Look Up",
+            adminSidebarTitle: "Chunilho Booking Admin Center",
+            adminMenu1: "📊 Dashboard Summary",
+            adminMenu2: "🏢 Company Info & Integration",
+            adminMenu3: "⏰ Schedule Management",
+            adminMenu4: "💳 Multi-PG Approval & Refund",
+            adminMenu5: "📱 On-site Check-in (Order/Phone)",
+            adminMenu6: "👥 Member List",
+            adminDashTitle: "📊 Dashboard Summary (Real-time Bookings)",
+            adminDashDesc: "Details that reflect in real-time when guests complete bookings.",
+            adminDashSub: "📋 Recent Real-time Payment & Booking Details",
+            adminNoData: "No registered details.",
+            adminLogout: "Admin Logout",
+            adminInfoTitle: "🏢 Company Info & Integration",
+            adminInfoDesc: "Manage basic company info (contact, address, account) and external service integration status.",
+            lblCompanyName: "Company Name",
+            lblCompanyTel: "Representative Contact",
+            lblCompanyBank: "Deposit Account",
+            btnSave: "Save",
+            adminSchedTitle: "⏰ Schedule Management",
+            adminSchedDesc: "Manage departure time slots and seasonal operation schedules by daytime/night courses.",
+            adminPgTitle: "💳 Multi-PG Approval & Refund",
+            adminPgDesc: "Check approval details and process refunds for bookings through the payment system.",
+            thOrderNo: "Order No.",
+            thBooker: "Booker",
+            thAmount: "Amount",
+            thPayStatus: "Payment Status",
+            thManage: "Manage",
+            adminNoPayData: "No payment details found.",
+            adminCheckinTitle: "📱 On-site Check-in (Order/Phone)",
+            adminCheckinDesc: "Process on-site boarding check-in with customer phone number or order number visiting on the boarding day.",
+            phCheckinTel: "Enter booker phone number",
+            btnCheckin: "Check-in",
+            adminMemberTitle: "👥 Member List",
+            adminMemberDesc: "Manage registered member list and usage history.",
+            thId: "ID",
+            thName: "Name",
+            thTel: "Contact",
+            thEmail: "Email",
+            thJoinDate: "Join Date",
+            adminNoMember: "No registered members.",
+            authModalTitle: "Login / Sign Up",
+            lblId: "ID",
+            phId: "Enter ID",
+            lblPw: "Password",
+            phPw: "Enter password",
+            btnLoginAction: "Log In",
+            phSignupId: "ID to use",
+            lblName: "Name",
+            lblTel: "Contact",
+            lblEmail: "Email",
+            btnSignupAction: "Complete Sign Up",
+            qnaModalTitle: "❓ Write Q&A Question",
+            qnaWriterLabel: "Writer Name",
+            phQnaWriter: "Enter name (Ex: Kim**)",
+            qnaTitleLabel: "Question Title",
+            phQnaTitle: "Enter title",
+            qnaDescLabel: "Question Content",
+            phQnaDesc: "Leave your questions in detail.",
+            btnSubmitQna: "Register Question",
+            qnaDetailTitle: "Question Details",
+            adminAnswerHeading: "💬 Admin Answer",
+            phAdminAnswer: "Enter answer content",
+            btnSubmitAnswer: "Register Answer",
+            footerTitle: "Seogwipo Chunilho Fishing",
+            footerRep: "Representative",
+            footerBizNo: "Business Registration No.",
+            footerAddr: "Address: 39, Namseongjung-ro, Seogwipo-si, Jeju-do",
+            footerTel: "Booking Inquiry",
+            footerCopy: "Chunilho. All Rights Reserved."
+        },
+        ja: {
+            topBarAddress: "🌊 済州西帰浦市南城中路 39",
+            topBarInquiry: "📞 予約問い合わせ: 010-7768-5913",
+            authLogin: "ログイン",
+            authSignup: "会員登録",
+            logoMainText: "西帰浦船釣り チョニルホ",
+            logoSubText: "Seogwipo Chunilho Fishing",
+            navHome: "ホーム",
+            navInfo: "運航案内",
+            navBoard: "釣果掲示板",
+            navNotice: "お知らせ",
+            navQna: "Q&A",
+            navLocation: "アクセス",
+            navStatus: "予約状況",
+            navBooking: "リアルタイム予約",
+            navAdmin: "管理者",
+            heroBadgeText: "済州西帰浦必須旅行コース",
+            heroTitle: "海の上で迎える最も輝かしい瞬間",
+            heroSub: "初心者も子供も誰でも簡単に楽しめる済州の癒しの船釣り",
+            heroBtn: "ワクワク予約を始める ✨",
+            hNoticeTitle: "📢 お知らせ",
+            hNoticeMore: "もっと見る +",
+            hNoticeItem1: "[お知らせ] 2026年秋シーズン夜間太刀魚釣り出航案内",
+            hNoticeItem2: "[お知らせ] 駐車場利用及びアクセス詳細案内",
+            hQnaTitle: "❓ Q&A 掲示板",
+            hQnaMore: "もっと見る +",
+            hQnaItem1: "[Q&A] 竿や装備は持参しなくても大丈夫ですか？",
+            hQnaItem2: "[Q&A] 気象悪化時の返金規定はどうなっていますか？",
+            hLeftTitle: "👤 会員・予約案内",
+            hLeftLoginT: "ログイン / 会員登録",
+            hLeftLoginD: "会員登録して便利に予約を管理しましょう。",
+            hLeftTelT: "予約・カスタマーセンター",
+            hLeftBankT: "入金口座案内",
+            hBankOwner: "口座名義: カン・ジュヨン",
+            featT1: "初心者向け親切レッスン",
+            featD1: "竿の持ち方からエサ付けまで船長が優しく教えます。",
+            featT2: "無料レンタル装備",
+            featD2: "竿、仕掛け、エサ、ライフジャケットまで全て無料レンタル！",
+            featT3: "新鮮なその場での刺身",
+            featD3: "青い海の上で自分で釣った新鮮な魚をその場で刺身で味わう感動！",
+            featT4: "大切な人との思い出",
+            featD4: "家族、恋人、友達と一緒に特別な済州の思い出を作りましょう。",
+            galTitle: "チョニルホの輝く海の風景",
+            gal1: "子供たちと笑顔いっぱいの昼間体験釣り",
+            gal2: "夜の海のロマン、夜間太刀魚・サバ釣り (8~11月)",
+            gal3: "夏の夜の宝石、夜間イカ体験釣り (6~9月)",
+            infoTitle: "運航コース及びシーズン案内",
+            thCat: "区分",
+            thCourse: "コース名",
+            thSeason: "運航シーズン",
+            thTime: "出航時間",
+            thDetails: "食事及び提供事項 (オプション/調理費用)",
+            thPrice: "乗船料",
+            bDay: "昼間",
+            bNight: "夜間",
+            tC2: "昼間体験 2時間",
+            tC3: "昼間体験 3時間",
+            tS1: "夏季 (3月~8月)",
+            tS2: "冬季 (9月~2月)",
+            tD2: "竿、仕掛け、オキアミ、ライフジャケット無料提供",
+            tD3Base: "竿、仕掛け、オキアミ、ライフジャケット無料提供",
+            tD31: "刺身オプション: 基本3匹から1匹당 2,000ウォン",
+            tD32: "入港1時間前に船長にお問い合わせ (気象状況により変動可能)",
+            tCGalchi: "夜間太刀魚釣り",
+            tSGalchi: "8月 ~ 11月中旬",
+            tTGalchi: "18:00 出航",
+            tDGalchiText: "農心 ユッケジャンカップ麺提供<br>(装備レンタル料2万ウォン現地決済)",
+            tDG1: "調理費用: 太刀魚、サバ1匹당 2,000ウォン",
+            tCHanchi: "夜間イカ体験",
+            tSHanchi: "6月中旬 ~ 9月初め",
+            tTHanchi: "18:30 出航",
+            tDHanchiText: "農心 ユッケジャンカップ麺提供<br>(装備レンタル料1万ウォン現地決済)",
+            tDH1: "イカその場の刺身 (現地食事): 1匹당 4,000ウォン",
+            tDH2: "持ち帰りサービス: 容器代2,000ウォン追加 (容器、箸、酢コチュジャン含む)",
+            tDH3: "調理のみの場合: 1匹당 2,000ウォン",
+            price30k: "30,000ウォン",
+            price40k: "40,000ウォン",
+            price60k: "60,000ウォン",
+            price90k: "90,000ウォン",
+            kakaoInfo: "💬 ご不明な点がございましたら？リアルタイムカ카오톡お問い合わせ: <strong>chunil1ho</strong>",
+            refundTitle: "📢 キャンセル及び返金規定案内",
+            policy1Title: "1. 個人の理由及び単純変心によるキャンセル",
+            policy1_0: "購入確定後のキャンセル不可 (但し、当日の気象悪化や船舶故障等の理由は可能)",
+            policy1_1: "利用日基準3日前キャンセル時: 100%全額返金",
+            policy1_2: "利用日基準2日前キャンセル時: 返金不可 (但し、日程変更可能)",
+            policy1_3: "利用日1日前 / 当日キャンセル及び変更: キャンセル・返金及び変更不可",
+            policy2Title: "2. 気象悪化及び天災地変によるキャンセル",
+            policy2_1: "風浪注意報、大雨、海霧など顧客の安全上の理由で出航が不可能な場合、利用日に関係なく100%全額返金または無料の日付変更が可能です。",
+            policy3Title: "3. 業者事情 (船舶故障等) によるキャンセル",
+            policy3_1: "やむを得ない船舶の欠陥等で出漁が不可能な場合、利用日に関係なく100%全額返金措置いたします。",
+            boardTitle: "生々しい釣果ストーリー",
+            btnAdminWrite: "✍️ 管理者作成",
+            formBoardHead: "📸 今日の楽しい釣果をシェアしてください",
+            lblBTitle: "タイトル/魚種",
+            phJoagTitle: "例: サイズの良いカワハギ満船です！",
+            lblPhotoAttach: "写真添付",
+            lblBDesc: "釣果ストーリー",
+            phJoagDesc: "今日の海での大切な感想を残してください。",
+            btnAddJoag: "釣果登録する",
+            joagItem1Date: "2026.09.05 | 作成者: チョニルホ 船長",
+            joagItem1Title: "手応え抜群の幸せな昼間体験！",
+            joagItem1Desc: "子供たちと一緒に笑顔の花を咲かせ、ずっしりとした手応えを感じた眩しい一日でした。",
+            joagItem2Date: "2026.09.04 | 作成者: チョニルホ 船長",
+            joagItem2Title: "ロマンチックな夜の海、夜間太刀魚出航成功",
+            joagItem2Desc: "銀色に輝く太刀魚が夜通し次々と上がり、クーラーがいっぱいになりました。",
+            noticePageTitle: "お知らせ",
+            noticeFormHead: "📢 新しいお知らせ登録",
+            noticeTitleLabel: "お知らせタイトル",
+            phNoticeTitle: "お知らせタイトルを入力してください",
+            noticeDescLabel: "お知らせ内容",
+            phNoticeDesc: "お知らせ内容を詳しく入力してください。",
+            btnAddNotice: "お知らせ登録する",
+            thNum: "番号",
+            thTitle: "タイトル",
+            thWriter: "作成者",
+            thDate: "登録日",
+            adminName: "管理者",
+            qnaPageTitle: "質問と回答 (Q&A)",
+            btnWriteQna: "✍️ 質問作成する",
+            thStatus: "回答状態",
+            ansComplete: "回答完了",
+            locTitle: "アクセス案内",
+            locHeading: "📍 位置及びアクセス方法",
+            locDesc: "チョニルホへのアクセス案内です。西帰浦港及びセヨン橋付近から便利にご訪問いただけます。",
+            locAddrLabel: "住所:",
+            locAddrVal: "済州特別自治道西帰浦市南城中路 39",
+            locWayLabel: "アクセス方法:",
+            locWayVal: "西帰浦遊覧船駐車場入口の左側にある西帰浦船釣りチョニルホの看板を見てお探し下りてください。",
+            locNearLabel: "周辺参考:",
+            locNearVal: "ハヨンオレ1コース認証スタンプ (セヨン橋) 及び西帰浦港付近",
+            mapBtnText: "Googleマップで大きく見る",
+            statusTitle: "📅 リアルタイム予約状況",
+            statusGuideText: "日付をクリックすると、該当する日付のリアルタイム予約を進めることができます。",
+            prevMonth: "◀ 前の月",
+            nextMonth: "次の月 ▶",
+            daySun: "日",
+            dayMon: "月",
+            dayTue: "火",
+            dayWed: "水",
+            dayThu: "木",
+            dayFri: "金",
+            daySat: "土",
+            bookTitle: "ワクワク海の旅を予約する",
+            bookStep1: "1. 予約希望日",
+            bookStep2: "2. 釣りコース選択",
+            optCourse1: "昼間体験 2時間 - 30,000ウォン (年中)",
+            optCourse2: "昼間体験 3時間 - 40,000ウォン (年中)",
+            optCourse3: "夜間太刀魚釣り - 90,000ウォン (シーズン: 8月~11月中旬)",
+            optCourse4: "夜間イカ体験釣り - 60,000ウォン (シーズン: 6月中旬~9月初め)",
+            bookStep3: "3. 出航時間選択",
+            bookStep4: "4. 乗船人員",
+            bookStep5: "5. 予約者氏名",
+            phName: "氏名入力",
+            bookStep6: "6. 連絡先 (キャンセル照会用)",
+            sumTitle: "📋 選択された予約内容",
+            sumDateLabel: "予約日",
+            sumCourseLabel: "選択コース",
+            sumTimeLabel: "出航時間",
+            sumCountLabel: "乗船人員",
+            sumTotalLabel: "合計決済金額",
+            btnPayText: "安全決済及び予約確定",
+            myBookingTitle: "🔍 予約照会及びキャンセル",
+            myBookingDesc: "予約時に入力された連絡先で内訳を照会し、規定に合わせて直ちにキャンセルすることができます。",
+            phSearchTel: "予約者連絡先 (- 除く)",
+            btnSearch: "照会する",
+            adminSidebarTitle: "チョニルホ予約管理者センター",
+            adminMenu1: "📊 ダッシュボード要約",
+            adminMenu2: "🏢 業者情報及び連携管理",
+            adminMenu3: "⏰ 回次(スケジュール)管理",
+            adminMenu4: "💳 複数PG予約承認及び返金",
+            adminMenu5: "📱 現地チェックイン (注文/電話番号)",
+            adminMenu6: "👥 会員管理リスト",
+            adminDashTitle: "📊 ダッシュボード要約 (リアルタイム予約内訳)",
+            adminDashDesc: "お客様が予約を完了するとリアルタイムで反映される内訳です。",
+            adminDashSub: "📋 最近のリアルタイム決済及び予約内訳",
+            adminNoData: "登録された内訳がありません。",
+            adminLogout: "管理者ログアウト",
+            adminInfoTitle: "🏢 業者情報及び連携管理",
+            adminInfoDesc: "業者基本情報(連絡先、住所、口座番号)及び外部サービス連携状態を管理します。",
+            lblCompanyName: "商号",
+            lblCompanyTel: "代表連絡先",
+            lblCompanyBank: "入金口座",
+            btnSave: "保存する",
+            adminSchedTitle: "⏰ 回次(スケジュール)管理",
+            adminSchedDesc: "昼間/夜間コース別出航時間帯とシーズン別運航日程を管理します。",
+            adminPgTitle: "💳 複数PG予約承認及び返金",
+            adminPgDesc: "決済システムを通じた予約件の承認内訳照会及び返金処理を行います。",
+            thOrderNo: "注文番号",
+            thBooker: "予約者",
+            thAmount: "金額",
+            thPayStatus: "決済状態",
+            thManage: "管理",
+            adminNoPayData: "照会された決済内訳がありません。",
+            adminCheckinTitle: "📱 現地チェックイン (注文/電話番号)",
+            adminCheckinDesc: "乗船当日に訪問した顧客の電話番号や予約番号で現地乗船チェックインを処理します。",
+            phCheckinTel: "予約者電話番号入力",
+            btnCheckin: "チェックイン",
+            adminMemberTitle: "👥 会員管理リスト",
+            adminMemberDesc: "加入した会員リスト及び利用記録を管理します。",
+            thId: "ID",
+            thName: "名前",
+            thTel: "連絡先",
+            thEmail: "メール",
+            thJoinDate: "加入日時",
+            adminNoMember: "加入した会員がいません。",
+            authModalTitle: "ログイン / 会員登録",
+            lblId: "ID",
+            phId: "ID入力",
+            lblPw: "パスワード",
+            phPw: "パスワード入力",
+            btnLoginAction: "ログインする",
+            phSignupId: "使用するID",
+            lblName: "名前",
+            lblTel: "連絡先",
+            lblEmail: "メール",
+            btnSignupAction: "会員登録完了",
+            qnaModalTitle: "❓ Q&A 質問作成",
+            qnaWriterLabel: "作成者名",
+            phQnaWriter: "名前入力 (例: キム**)",
+            qnaTitleLabel: "質問タイトル",
+            phQnaTitle: "タイトルを入力してください",
+            qnaDescLabel: "質問内容",
+            phQnaDesc: "気になる内容を詳しく残してください。",
+            btnSubmitQna: "質問登録する",
+            qnaDetailTitle: "質問詳細内容",
+            adminAnswerHeading: "💬 管理者回答",
+            phAdminAnswer: "回答内容を入力してください",
+            btnSubmitAnswer: "回答登録する",
+            footerTitle: "西帰浦船釣り チョニルホ",
+            footerRep: "代表",
+            footerBizNo: "事業者登録番号",
+            footerAddr: "住所: 済州特別自治道西帰浦市南城中路 39 (チョニルホ)",
+            footerTel: "予約問い合わせ",
+            footerCopy: "チョニルホ. All Rights Reserved."
+        },
+        zh: {
+            topBarAddress: "🌊 济州西归浦市南城中路 39",
+            topBarInquiry: "📞 预约咨询: 010-7768-5913",
+            authLogin: "登录",
+            authSignup: "注册",
+            logoMainText: "西归浦船钓 千一号",
+            logoSubText: "Seogwipo Chunilho Fishing",
+            navHome: "首页",
+            navInfo: "航行指南",
+            navBoard: "鱼获看板",
+            navNotice: "公告",
+            navQna: "Q&A",
+            navLocation: "交通指南",
+            navStatus: "预约状态",
+            navBooking: "实时预约",
+            navAdmin: "管理中心",
+            heroBadgeText: "济州西归浦必游路线",
+            heroTitle: "海面上迎接最灿烂的瞬间",
+            heroSub: "初学者和小朋友也能轻松享受的西归浦治愈海钓",
+            heroBtn: "开始心动预约 ✨",
+            hNoticeTitle: "📢 公告事项",
+            hNoticeMore: "更多 +",
+            hNoticeItem1: "[公告] 2026年秋季赛季夜间带鱼海钓出航指南",
+            hNoticeItem2: "[公告] 停车场使用及交通路线详细指南",
+            hQnaTitle: "❓ Q&A 看板",
+            hQnaMore: "更多 +",
+            hQnaItem1: "[Q&A] 钓竿和装备需要自己带吗？",
+            hQnaItem2: "[Q&A] 天气恶劣时的退款规定是什么样的？",
+            hLeftTitle: "👤 会员及预约指南",
+            hLeftLoginT: "登录 / 注册",
+            hLeftLoginD: "注册会员以方便管理您的预约。",
+            hLeftTelT: "预约及客服中心",
+            hLeftBankT: "汇款账户指南",
+            hBankOwner: "户名：姜周延",
+            featT1: "初学者专属亲切教学",
+            featD1: "从拿钓竿到装鱼饵，船长都会亲切教导。",
+            featT2: "免费租赁装备",
+            featD2: "钓竿、钓组、鱼饵、救生衣全部免费租赁！",
+            featT3: "新鲜即食生鱼片",
+            featD3: "在蔚蓝大海上品尝自己亲手钓的新鲜活鱼生鱼片！",
+            featT4: "与珍贵之人的回忆",
+            featD4: "与家人、恋人、朋友一起创造特别的济州回忆。",
+            galTitle: "千一号波光粼粼的海景",
+            gal1: "与孩子们充满欢笑的白天体验海钓",
+            gal2: "夜海的浪漫，夜间带鱼·鲭鱼海钓 (8-11月)",
+            gal3: "夏夜的宝石，夜间小鱿鱼体验海钓 (6-9月)",
+            infoTitle: "航行路线及季节指南",
+            thCat: "分类",
+            thCourse: "路线名称",
+            thSeason: "航行季节",
+            thTime: "出航时间",
+            thDetails: "餐饮及提供事项 (选项/加工费)",
+            thPrice: "船费",
+            bDay: "白天",
+            bNight: "夜间",
+            tC2: "白天体验 2小时",
+            tC3: "白天体验 3小时",
+            tS1: "夏季 (3月-8月)",
+            tS2: "冬季 (9月-2月)",
+            tD2: "免费提供钓竿、钓组、南极虾、救生衣",
+            tD3Base: "免费提供钓竿、钓组、南极虾、救生衣",
+            tD31: "生鱼片选项: 基础3条起每条 2,000韩元",
+            tD32: "进港前1小时咨询船长 (根据气象情况可能有所变动)",
+            tCGalchi: "夜间带鱼海钓",
+            tSGalchi: "8月 ~ 11月中旬",
+            tTGalchi: "18:00 出航",
+            tDGalchiText: "提供农心辣牛肉汤面<br>(装备租赁费2万韩元现场支付)",
+            tDG1: "加工费: 带鱼、鲭鱼每条 2,000韩元",
+            tCHanchi: "夜间小鱿鱼体验",
+            tSHanchi: "6月中旬 ~ 9月初",
+            tTHanchi: "18:30 出航",
+            tDHanchiText: "提供农心辣牛肉汤面<br>(装备租赁费1万韩元现场支付)",
+            tDH1: "小鱿鱼现做生鱼片 (现场食用): 每条 4,000韩元",
+            tDH2: "打包服务: 另加打包费2,000韩元 (含容器、筷子、醋辣酱)",
+            tDH3: "仅加工: 每条 2,000韩元",
+            price30k: "30,000韩元",
+            price40k: "40,000韩元",
+            price60k: "60,000韩元",
+            price90k: "90,000韩元",
+            kakaoInfo: "💬 有疑问吗？实时KakaoTalk咨询: <strong>chunil1ho</strong>",
+            refundTitle: "📢 取消及退款规定指南",
+            policy1Title: "1. 个人原因及主观悔意导致的取消",
+            policy1_0: "购买确认后无法取消 (但当天因天气恶劣或船舶故障等原因除外)",
+            policy1_1: "使用日3天前取消时: 100%全额退款",
+            policy1_2: "使用日2天前取消时: 无法退款 (但可更改日程)",
+            policy1_3: "使用日1天前 / 当天取消及更改: 无法取消、退款及更改",
+            policy2Title: "2. 恶劣天气及不可抗力导致的取消",
+            policy2_1: "若因风浪预警、暴雨、海雾等客户安全原因无法出航，无论使用日期如何，均可100%全额退款或免费更改日期。",
+            policy3Title: "3. 商家原因 (船舶故障等) 导致的取消",
+            policy3_1: "若因不可避免的船舶缺陷等无法出海，无论使用日期如何，均将采取100%全额退款措施。",
+            boardTitle: "生动海钓鱼获故事",
+            btnAdminWrite: "✍️ 管理员发帖",
+            formBoardHead: "📸 请分享今天愉快的鱼获",
+            lblBTitle: "标题/鱼种",
+            phJoagTitle: "例: 满载而归的优质剥皮鱼！",
+            lblPhotoAttach: "添加照片",
+            lblBDesc: "鱼获故事",
+            phJoagDesc: "请留下今天在大海上的宝贵感想。",
+            btnAddJoag: "登记鱼获",
+            joagItem1Date: "2026.09.05 | 作者: 千一号 船长",
+            joagItem1Title: "手感十足的幸福白天体验！",
+            joagItem1Desc: "与孩子们一起欢声笑语，感受到沉甸甸手感的耀眼一天。",
+            joagItem2Date: "2026.09.04 | 作者: 千一号 船长",
+            joagItem2Title: "浪漫夜海，夜间带鱼出航成功",
+            joagItem2Desc: "银光闪闪的带鱼整晚连连上钩，冷藏箱塞得满满当当。",
+            noticePageTitle: "公告",
+            noticeFormHead: "📢 注册新公告",
+            noticeTitleLabel: "公告标题",
+            phNoticeTitle: "请输入公告标题",
+            noticeDescLabel: "公告内容",
+            phNoticeDesc: "请详细输入公告内容。",
+            btnAddNotice: "注册公告",
+            thNum: "编号",
+            thTitle: "标题",
+            thWriter: "作者",
+            thDate: "注册日",
+            adminName: "管理员",
+            qnaPageTitle: "问答 (Q&A)",
+            btnWriteQna: "✍️ 写提问",
+            thStatus: "回复状态",
+            ansComplete: "已回复",
+            locTitle: "交通指南",
+            locHeading: "📍 位置及到达路线",
+            locDesc: "前往千一号的交通指南。您可以在西归浦港和新缘桥附近方便地访问。",
+            locAddrLabel: "地址:",
+            locAddrVal: "济州特别자치도西归浦市南城中路 39",
+            locWayLabel: "路线:",
+            locWayVal: "看到西归浦游轮停车场入口左侧的西归浦船钓千一号指示牌后寻找走下来即可。",
+            locNearLabel: "周边参考:",
+            locNearVal: "河荣奥莱1路线认证印章 (新缘桥) 及西归浦港附近",
+            mapBtnText: "在谷歌地图中查看大图",
+            statusTitle: "📅 实时预约状态",
+            statusGuideText: "点击日期即可进行该日期的实时预约。",
+            prevMonth: "◀ 上个月",
+            nextMonth: "下个月 ▶",
+            daySun: "日",
+            dayMon: "一",
+            dayTue: "二",
+            dayWed: "三",
+            dayThu: "四",
+            dayFri: "五",
+            daySat: "六",
+            bookTitle: "预约心动的海洋之旅",
+            bookStep1: "1. 希望预约日期",
+            bookStep2: "2. 选择海钓路线",
+            optCourse1: "白天体验 2小时 - 30,000韩元 (全年)",
+            optCourse2: "白天体验 3小时 - 40,000韩元 (全年)",
+            optCourse3: "夜间带鱼海钓 - 90,000韩元 (赛季: 8月~11月中旬)",
+            optCourse4: "夜间小鱿鱼体验海钓 - 60,000韩元 (赛季: 6月中旬~9月初)",
+            bookStep3: "3. 选择出航时间",
+            bookStep4: "4. 登船人数",
+            bookStep5: "5. 预约人姓名",
+            phName: "输入姓名",
+            bookStep6: "6. 联系方式 (用于取消查询)",
+            sumTitle: "📋 您选择的预约明细",
+            sumDateLabel: "预约日期",
+            sumCourseLabel: "选择路线",
+            sumTimeLabel: "出航时间",
+            sumCountLabel: "登船人数",
+            sumTotalLabel: "总支付金额",
+            btnPayText: "安全支付及确认预约",
+            myBookingTitle: "🔍 查询及取消预约",
+            myBookingDesc: "使用预约时输入的联系方式查询明细，并可根据规定立即取消。",
+            phSearchTel: "预约人电话号码 (不含-)",
+            btnSearch: "查询",
+            adminSidebarTitle: "千一号预约管理中心",
+            adminMenu1: "📊 仪表盘摘要",
+            adminMenu2: "🏢 商家信息及对接管理",
+            adminMenu3: "⏰ 班次(日程)管理",
+            adminMenu4: "💳 多重PG预约批准及退款",
+            adminMenu5: "📱 现场检票 (订单/电话号码)",
+            adminMenu6: "👥 会员管理列表",
+            adminDashTitle: "📊 仪表盘摘要 (实时预约明细)",
+            adminDashDesc: "客人完成预约后实时反映的明细。",
+            adminDashSub: "📋 最近实时支付及预约明细",
+            adminNoData: "没有注册的明细。",
+            adminLogout: "管理员登出",
+            adminInfoTitle: "🏢 商家信息及对接管理",
+            adminInfoDesc: "管理商家基本信息 (联系方式、地址、账户) 及外部服务对接状态。",
+            lblCompanyName: "商户名",
+            lblCompanyTel: "代表联系方式",
+            lblCompanyBank: "收款账户",
+            btnSave: "保存",
+            adminSchedTitle: "⏰ 班次(日程)管理",
+            adminSchedDesc: "管理白天/夜间路线各出航时间段及赛季航行日程。",
+            adminPgTitle: "💳 多重PG预约批准及退款",
+            adminPgDesc: "通过支付系统进行预约订单的批准明细查询及退款处理。",
+            thOrderNo: "订单号",
+            thBooker: "预约人",
+            thAmount: "金额",
+            thPayStatus: "支付状态",
+            thManage: "管理",
+            adminNoPayData: "没有查询到支付明细。",
+            adminCheckinTitle: "📱 现场检票 (订单/电话号码)",
+            adminCheckinDesc: "通过登船当天来访客户的电话号码或预约号码处理现场登船检票。",
+            phCheckinTel: "输入预约人电话号码",
+            btnCheckin: "检票",
+            adminMemberTitle: "👥 会员管理列表",
+            adminMemberDesc: "管理注册会员列表及使用记录。",
+            thId: "账号",
+            thName: "姓名",
+            thTel: "联系方式",
+            thEmail: "邮箱",
+            thJoinDate: "加入时间",
+            adminNoMember: "没有注册会员。",
+            authModalTitle: "登录 / 注册",
+            lblId: "账号",
+            phId: "输入账号",
+            lblPw: "密码",
+            phPw: "输入密码",
+            btnLoginAction: "登录",
+            phSignupId: "要使用的账号",
+            lblName: "姓名",
+            lblTel: "联系方式",
+            lblEmail: "邮箱",
+            btnSignupAction: "完成注册",
+            qnaModalTitle: "❓ 写Q&A提问",
+            qnaWriterLabel: "作者姓名",
+            phQnaWriter: "输入姓名 (例: 金**)",
+            qnaTitleLabel: "提问标题",
+            phQnaTitle: "请输入标题",
+            qnaDescLabel: "提问内容",
+            phQnaDesc: "请详细留下您想咨询的内容。",
+            btnSubmitQna: "注册提问",
+            qnaDetailTitle: "提问详细内容",
+            adminAnswerHeading: "💬 管理员回复",
+            phAdminAnswer: "请输入回复内容",
+            btnSubmitAnswer: "注册回复",
+            footerTitle: "西归浦船钓 千一号",
+            footerRep: "代表",
+            footerBizNo: "营业执照号",
+            footerAddr: "地址: 济州特别자치도西归浦市南城中路 39 (千一号)",
+            footerTel: "预约咨询",
+            footerCopy: "千一号. All Rights Reserved."
+        }
+    };
+
+    let typingTimeouts = {};
+    function typeWriter(element, text, speed = 25, key = '') {
+        if (!element) return;
+        if (typingTimeouts[key]) {
+            clearTimeout(typingTimeouts[key]);
+        }
+        element.innerText = "";
+        let i = 0;
+        function typing() {
+            if (i < text.length) {
+                element.innerText += text.charAt(i);
+                i++;
+                typingTimeouts[key] = setTimeout(typing, speed);
+            }
+        }
+        typing();
+    }
+
+    function setLanguage(lang) {
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        if (event && event.target) {
+            event.target.classList.add('active');
+        }
+
+        const texts = translations[lang] || translations['ko'];
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (texts[key]) {
+                if (key === 'heroTitle' || key === 'heroSub' || key === 'heroBadgeText') {
+                    typeWriter(el, texts[key], 30, key);
+                } else {
+                    el.innerHTML = texts[key];
+                }
+            }
+        });
+
+        document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+            const key = el.getAttribute('data-i18n-ph');
+            if (texts[key]) {
+                el.placeholder = texts[key];
+            }
+        });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        updateAuthUI();
+        renderQnaTable();
+        loadSavedJoagList(); 
+    });
+
+    function switchCategory(catId, btnEl) {
+        document.querySelectorAll('.category-sec').forEach(sec => sec.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+        
+        const targetSec = document.getElementById(catId);
+        if (targetSec) targetSec.classList.add('active');
+        if (btnEl) btnEl.classList.add('active');
+        window.scrollTo(0, 0);
+
+        if (catId === 'cat-status') {
+            renderStatusCalendar();
+        }
+    }
+
+    function goToBooking() {
+        switchCategory('cat-booking', document.querySelectorAll('.nav-btn')[7]);
+        setDefaultBookingDate();
+    }
+
+    function setDefaultBookingDate() {
+        const dateInput = document.getElementById('custDate');
+        if (!dateInput.value) {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            dateInput.value = `${yyyy}-${mm}-${dd}`;
+        }
+        updateOptions();
+    }
+
+    function updateOptions() {
+        const dateVal = document.getElementById('custDate').value;
+        const courseSelect = document.getElementById('courseSelect');
+        const timeSelect = document.getElementById('timeSelect');
+        const seasonNotice = document.getElementById('seasonNotice');
+        const btnPay = document.getElementById('btnPay');
+
+        if (!dateVal) return;
+
+        const dateObj = new Date(dateVal);
+        const month = dateObj.getMonth() + 1;
+        const day = dateObj.getDate();
+        const isSummer = (month >= 3 && month <= 8);
+
+        if (isSummer) {
+            seasonNotice.innerText = "☀️ 하절기 시즌 적용 (3월~8월)";
+        } else {
+            seasonNotice.innerText = "❄️ 동절기 시즌 적용 (9월~2월)";
+        }
+
+        const isGalchiSeason = (month >= 8 && (month < 11 || (month === 11 && day <= 15)));
+        const isHanchiSeason = ((month === 6 && day >= 15) || (month >= 7 && month <= 8) || (month === 9 && day <= 5));
+
+        for (let i = 0; i < courseSelect.options.length; i++) {
+            let opt = courseSelect.options[i];
+            if (opt.value.includes("야간 갈치낚시")) {
+                if (!isGalchiSeason) {
+                    opt.disabled = true;
+                } else {
+                    opt.disabled = false;
+                }
+            } else if (opt.value.includes("야간 한치 체험낚시")) {
+                if (!isHanchiSeason) {
+                    opt.disabled = true;
+                } else {
+                    opt.disabled = false;
+                }
+            }
+        }
+
+        if (courseSelect.selectedOptions[0].disabled) {
+            courseSelect.value = "30000_주간 체험 2시간";
+        }
+
+        const courseVal = courseSelect.value;
+        let times = [];
+
+        if (courseVal.includes("주간 체험 2시간")) {
+            times = isSummer ? ["10:00", "12:00", "13:00", "14:00", "16:00"] : ["10:00", "12:00", "13:00", "15:00"];
+        } else if (courseVal.includes("주간 체험 3시간")) {
+            times = isSummer ? ["10:00", "12:00", "13:00", "15:00"] : ["10:00", "12:00", "14:00"];
+        } else if (courseVal.includes("야간 갈치낚시")) {
+            times = isGalchiSeason ? ["18:00 (야간 갈치)"] : ["(운항 시즌 아님)"];
+        } else if (courseVal.includes("야간 한치 체험낚시")) {
+            times = isHanchiSeason ? ["18:30 (야간 한치)"] : ["(운항 시즌 아님)"];
+        }
+
+        let optionsHtml = "";
+        let hasValidTime = false;
+        times.forEach(t => {
+            if (!t.includes("시즌 아님")) {
+                hasValidTime = true;
+                optionsHtml += `<option value="${t}">${t}</option>`;
+            } else {
+                optionsHtml += `<option value="" disabled>${t}</option>`;
+            }
+        });
+        timeSelect.innerHTML = optionsHtml;
+
+        if (!hasValidTime || courseSelect.selectedOptions[0].disabled) {
+            btnPay.disabled = true;
+            btnPay.innerText = "선택하신 코스는 시즌이 종료되어 구매할 수 없습니다.";
+            btnPay.style.background = "#cbd5e1";
+        } else {
+            btnPay.disabled = false;
+            btnPay.innerText = "안전 결제 및 예약 확정";
+            btnPay.style.background = "var(--accent-color)";
+        }
+
+        updateSummary();
+    }
+
+    function updateSummary() {
+        const dateVal = document.getElementById('custDate').value;
+        const courseSelect = document.getElementById('courseSelect');
+        const timeSelect = document.getElementById('timeSelect');
+        const countSelect = document.getElementById('custCount');
+
+        const courseText = courseSelect.options[courseSelect.selectedIndex].text;
+        const priceParts = courseSelect.value.split('_');
+        const unitPrice = parseInt(priceParts[0]) || 0;
+        const count = parseInt(countSelect.value) || 1;
+
+        document.getElementById('sumDate').innerText = dateVal || '-';
+        document.getElementById('sumCourse').innerText = courseText.split(' - ')[0];
+        document.getElementById('sumTime').innerText = timeSelect.value || '-';
+        document.getElementById('sumCount').innerText = count + '명';
+
+        const totalPrice = unitPrice * count;
+        document.getElementById('sumTotalPrice').innerText = totalPrice.toLocaleString() + '원';
+    }
+
+    function openAuthModal(mode) {
+        document.getElementById('authModalOverlay').classList.add('active');
+        switchAuthTab(mode);
+    }
+
+    function closeAuthModal() {
+        document.getElementById('authModalOverlay').classList.remove('active');
+    }
+
+    function switchAuthTab(mode) {
+        const loginPanel = document.getElementById('loginPanel');
+        const signupPanel = document.getElementById('signupPanel');
+        const tabLoginBtn = document.getElementById('tabLoginBtn');
+        const tabSignupBtn = document.getElementById('tabSignupBtn');
+
+        if (mode === 'login') {
+            loginPanel.classList.add('active');
+            signupPanel.classList.remove('active');
+            tabLoginBtn.classList.add('active');
+            tabSignupBtn.classList.remove('active');
+        } else {
+            loginPanel.classList.remove('active');
+            signupPanel.classList.add('active');
+            tabLoginBtn.classList.remove('active');
+            tabSignupBtn.classList.add('active');
+        }
+    }
+
+    function processSignup() {
+        const id = document.getElementById('signupId').value.trim();
+        const pw = document.getElementById('signupPw').value.trim();
+        const name = document.getElementById('signupName').value.trim();
+        const tel = document.getElementById('signupTel').value.trim();
+        const email = document.getElementById('signupEmail').value.trim();
+
+        if (!id || !pw || !name || !tel) {
+            alert('필수 입력 항목을 모두 입력해주세요.');
+            return;
+        }
+
+        let users = JSON.parse(localStorage.getItem('chunil_users') || '[]');
+        if (users.some(u => u.id === id)) {
+            alert('이미 존재하는 아이디입니다.');
+            return;
+        }
+
+        users.push({ id, pw, name, tel, email, date: new Date().toLocaleDateString() });
+        localStorage.setItem('chunil_users', JSON.stringify(users));
+        
+        alert('회원가입이 완료되었습니다. 로그인해 주세요.');
+        switchAuthTab('login');
+    }
+
+    function processLogin() {
+        const id = document.getElementById('loginId').value.trim();
+        const pw = document.getElementById('loginPw').value.trim();
+
+        if (!id || !pw) {
+            alert('아이디와 비밀번호를 입력해주세요.');
+            return;
+        }
+
+        if (id === '천일호' && pw === 'tkfkd486@@') {
+            localStorage.setItem('chunil_logged_in', JSON.stringify({ id: 'admin', name: '관리자' }));
+            alert('관리자로 로그인되었습니다.');
+            closeAuthModal();
+            updateAuthUI();
+            return;
+        }
+
+        let users = JSON.parse(localStorage.getItem('chunil_users') || '[]');
+        const found = users.find(u => u.id === id && u.pw === pw);
+
+        if (found) {
+            localStorage.setItem('chunil_logged_in', JSON.stringify(found));
+            alert(found.name + '님 환영합니다!');
+            closeAuthModal();
+            updateAuthUI();
+        } else {
+            alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+        }
+    }
+
+    function processLogout() {
+        localStorage.removeItem('chunil_logged_in');
+        alert('로그아웃 되었습니다.');
+        updateAuthUI();
+        switchCategory('cat-home', document.querySelectorAll('.nav-btn')[0]);
+    }
+
+    function processAdminLogout() {
+        localStorage.removeItem('chunil_logged_in');
+        alert('관리자 로그아웃 되었습니다.');
+        updateAuthUI();
+        switchCategory('cat-home', document.querySelectorAll('.nav-btn')[0]);
+    }
+
+    function updateAuthUI() {
+        const authLinks = document.getElementById('authLinksContainer');
+        const adminLi = document.getElementById('nav-admin-li');
+        const btnAdminWrite = document.getElementById('btn-admin-write');
+        const btnAdminNoticeWrite = document.getElementById('btn-admin-notice-write');
+
+        const loggedUser = JSON.parse(localStorage.getItem('chunil_logged_in'));
+
+        if (loggedUser) {
+            authLinks.innerHTML = `<span>👤 <strong>${loggedUser.name}</strong>님</span><span>|</span><button type="button" onclick="processLogout()">로그아웃</button>`;
+            if (loggedUser.id === 'admin') {
+                if (adminLi) adminLi.style.display = 'block';
+                if (btnAdminWrite) btnAdminWrite.style.display = 'inline-block';
+                if (btnAdminNoticeWrite) btnAdminNoticeWrite.style.display = 'inline-block';
+            } else {
+                if (adminLi) adminLi.style.display = 'none';
+                if (btnAdminWrite) btnAdminWrite.style.display = 'none';
+                if (btnAdminNoticeWrite) btnAdminNoticeWrite.style.display = 'none';
+            }
+        } else {
+            authLinks.innerHTML = `<span>|</span><button type="button" onclick="openAuthModal('login')">로그인</button><span>|</span><button type="button" onclick="openAuthModal('signup')">회원가입</button>`;
+            if (adminLi) adminLi.style.display = 'none';
+            if (btnAdminWrite) btnAdminWrite.style.display = 'none';
+            if (btnAdminNoticeWrite) btnAdminNoticeWrite.style.display = 'none';
+        }
+    }
+
+    function verifyAdminForJoag() {
+        const loggedUser = JSON.parse(localStorage.getItem('chunil_logged_in'));
+        if (!loggedUser || loggedUser.id !== 'admin') {
+            alert('관리자 로그인 후 이용 가능합니다.');
+            openAuthModal('login');
+            return;
+        }
+        const formBox = document.getElementById('joagFormBox');
+        formBox.classList.toggle('active');
+    }
+
+    function verifyAdminForNotice() {
+        const loggedUser = JSON.parse(localStorage.getItem('chunil_logged_in'));
+        if (!loggedUser || loggedUser.id !== 'admin') {
+            alert('관리자 로그인 후 이용 가능합니다.');
+            openAuthModal('login');
+            return;
+        }
+        const formBox = document.getElementById('noticeFormBox');
+        formBox.classList.toggle('active');
+    }
+
+    function addJoag() {
+        const title = document.getElementById('joagTitle').value.trim();
+        const desc = document.getElementById('joagDesc').value.trim();
+        if (!title || !desc) {
+            alert('제목과 내용을 모두 입력해주세요.');
+            return;
+        }
+
+        let joags = JSON.parse(localStorage.getItem('chunil_joags') || '[]');
+        joags.unshift({
+            date: '2026.09.09',
+            title: title,
+            desc: desc,
+            author: '천일호 선장'
+        });
+        localStorage.setItem('chunil_joags', JSON.stringify(joags));
+
+        alert('조황이 등록되었습니다.');
+        document.getElementById('joagTitle').value = '';
+        document.getElementById('joagDesc').value = '';
+        document.getElementById('joagFormBox').classList.remove('active');
+        loadSavedJoagList();
+    }
+
+    function loadSavedJoagList() {
+        const grid = document.getElementById('joagGrid');
+        let joags = JSON.parse(localStorage.getItem('chunil_joags') || '[]');
+        
+        let defaultHtml = `
+            <div class="joag-card">
+                <img src="image/pic1.jpg" alt="오늘의 조황" onerror="this.src='https://via.placeholder.com/320x190?text=Fishing+1'">
+                <div class="joag-card-body">
+                    <div class="joag-date">2026.09.05 | 작성자: 천일호 선장</div>
+                    <div class="joag-title">손맛 제대로 본 행복한 주간 체험!</div>
+                    <div class="joag-desc">아이들과 함께 웃음꽃 피우며 묵직한 손맛을 느꼈던 눈부신 하루였습니다.</div>
+                </div>
+            </div>
+            <div class="joag-card">
+                <img src="image/pic2.jpg" alt="오늘의 조황" onerror="this.src='https://via.placeholder.com/320x190?text=Fishing+2'">
+                <div class="joag-card-body">
+                    <div class="joag-date">2026.09.04 | 작성자: 천일호 선장</div>
+                    <div class="joag-title">로맨틱한 밤바다, 야간 갈치 출항 성공</div>
+                    <div class="joag-desc">은빛 찬란한 갈치가 밤새 연신 올라와 쿨러가 가득 찼습니다.</div>
+                </div>
+            </div>
+        `;
+
+        if (joags.length > 0) {
+            let customHtml = '';
+            joags.forEach(j => {
+                customHtml += `
+                    <div class="joag-card">
+                        <img src="image/pic1.jpg" alt="오늘의 조황" onerror="this.src='https://via.placeholder.com/320x190?text=Fishing+Custom'">
+                        <div class="joag-card-body">
+                            <div class="joag-date">${j.date} | 작성자: ${j.author}</div>
+                            <div class="joag-title">${j.title}</div>
+                            <div class="joag-desc">${j.desc}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            grid.innerHTML = customHtml + defaultHtml;
+        }
+    }
+
+    function addNotice() {
+        const title = document.getElementById('noticeTitleInput').value.trim();
+        const desc = document.getElementById('noticeDescInput').value.trim();
+        if (!title || !desc) {
+            alert('제목과 내용을 모두 입력해주세요.');
+            return;
+        }
+
+        let notices = JSON.parse(localStorage.getItem('chunil_notices') || '[]');
+        notices.unshift({
+            title: title,
+            desc: desc,
+            author: '관리자',
+            date: '2026.09.09'
+        });
+        localStorage.setItem('chunil_notices', JSON.stringify(notices));
+
+        alert('공지사항이 등록되었습니다.');
+        document.getElementById('noticeTitleInput').value = '';
+        document.getElementById('noticeDescInput').value = '';
+        document.getElementById('noticeFormBox').classList.remove('active');
+        renderNoticeTable();
+    }
+
+    function renderNoticeTable() {
+        const tbody = document.getElementById('noticeTableBody');
+        let notices = JSON.parse(localStorage.getItem('chunil_notices') || '[]');
+        
+        let html = `
+            <tr>
+                <td class="center">2</td>
+                <td>[공지] 2026년 가을 시즌 야간 갈치낚시 출항 안내</td>
+                <td class="center">관리자</td>
+                <td class="center">2026.09.01</td>
+            </tr>
+            <tr>
+                <td class="center">1</td>
+                <td>[공지] 주차장 이용 및 찾아오시는 길 상세 안내</td>
+                <td class="center">관리자</td>
+                <td class="center">2026.08.20</td>
+            </tr>
+        `;
+
+        if (notices.length > 0) {
+            let customHtml = '';
+            notices.forEach((n, idx) => {
+                customHtml += `
+                    <tr>
+                        <td class="center">New</td>
+                        <td>${n.title}</td>
+                        <td class="center">${n.author}</td>
+                        <td class="center">${n.date}</td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = customHtml + html;
+        }
+    }
+
+    // Q&A 데이터 관리
+    let sampleQnas = [
+        {
+            writer: '김**',
+            title: '낚싯대 및 장비는 따로 안 가져가도 되나요?',
+            desc: '몸만 가도 되는지 궁금합니다.',
+            date: '2026.09.03',
+            status: '답변완료',
+            answer: '네! 낚싯대, 채비, 미끼, 구명조끼 등 모든 장비가 무료로 제공되므로 몸만 편하게 오시면 됩니다.'
+        }
+    ];
+
+    function renderQnaTable() {
+        const tbody = document.getElementById('qnaTableBody');
+        let qnas = JSON.parse(localStorage.getItem('chunil_qnas') || JSON.stringify(sampleQnas));
+        
+        let html = '';
+        qnas.forEach((q, idx) => {
+            let statusBadge = q.status === '답변완료' 
+                ? '<span style="color:#15803d; font-weight:700;">답변완료</span>' 
+                : '<span style="color:#b91c1c; font-weight:700;">답변대기</span>';
+            
+            html += `
+                <tr onclick="openQnaDetail(${idx})">
+                    <td class="center">${qnas.length - idx}</td>
+                    <td>${q.title}</td>
+                    <td class="center">${q.writer}</td>
+                    <td class="center">${statusBadge}</td>
+                    <td class="center">${q.date}</td>
+                </tr>
+            `;
+        });
+        tbody.innerHTML = html;
+    }
+
+    function openQnaWriteModal() {
+        document.getElementById('qnaWriteModalOverlay').classList.add('active');
+    }
+
+    function closeQnaWriteModal() {
+        document.getElementById('qnaWriteModalOverlay').classList.remove('active');
+    }
+
+    function submitQnaQuestion() {
+        const writer = document.getElementById('qnaWriter').value.trim();
+        const title = document.getElementById('qnaTitleInput').value.trim();
+        const desc = document.getElementById('qnaDescInput').value.trim();
+
+        if (!writer || !title || !desc) {
+            alert('모든 항목을 입력해주세요.');
+            return;
+        }
+
+        let qnas = JSON.parse(localStorage.getItem('chunil_qnas') || JSON.stringify(sampleQnas));
+        qnas.unshift({
+            writer,
+            title,
+            desc,
+            date: '2026.09.09',
+            status: '답변대기',
+            answer: ''
+        });
+        localStorage.setItem('chunil_qnas', JSON.stringify(qnas));
+
+        alert('질문이 등록되었습니다.');
+        closeQnaWriteModal();
+        document.getElementById('qnaWriter').value = '';
+        document.getElementById('qnaTitleInput').value = '';
+        document.getElementById('qnaDescInput').value = '';
+        renderQnaTable();
+    }
+
+    let currentQnaIndex = null;
+    function openQnaDetail(idx) {
+        currentQnaIndex = idx;
+        let qnas = JSON.parse(localStorage.getItem('chunil_qnas') || JSON.stringify(sampleQnas));
+        let q = qnas[idx];
+
+        document.getElementById('qnaDetailTitleDisp').innerText = q.title;
+        document.getElementById('qnaDetailWriterDisp').innerText = '작성자: ' + q.writer;
+        document.getElementById('qnaDetailDateDisp').innerText = q.date;
+        document.getElementById('qnaDetailDescDisp').innerText = q.desc;
+
+        const ansArea = document.getElementById('qnaAnswerArea');
+        const adminAnsForm = document.getElementById('adminAnswerForm');
+        const loggedUser = JSON.parse(localStorage.getItem('chunil_logged_in'));
+
+        if (q.answer) {
+            ansArea.innerHTML = `<div style="background:#f0fdf4; padding:1rem; border-radius:8px; border:1px solid #bbf7d0; color:#166534; font-size:0.92rem;">${q.answer}</div>`;
+        } else {
+            ansArea.innerHTML = `<p style="color:var(--text-sub); font-size:0.9rem;">등록된 답변이 없습니다.</p>`;
+        }
+
+        if (loggedUser && loggedUser.id === 'admin') {
+            adminAnsForm.style.display = 'block';
+        } else {
+            adminAnsForm.style.display = 'none';
+        }
+
+        document.getElementById('qnaDetailModalOverlay').classList.add('active');
+    }
+
+    function closeQnaDetailModal() {
+        document.getElementById('qnaDetailModalOverlay').classList.remove('active');
+    }
+
+    function submitAdminAnswer() {
+        const answerText = document.getElementById('adminAnswerInput').value.trim();
+        if (!answerText) {
+            alert('답변 내용을 입력해주세요.');
+            return;
+        }
+
+        let qnas = JSON.parse(localStorage.getItem('chunil_qnas') || JSON.stringify(sampleQnas));
+        qnas[currentQnaIndex].answer = answerText;
+        qnas[currentQnaIndex].status = '답변완료';
+        localStorage.setItem('chunil_qnas', JSON.stringify(qnas));
+
+        alert('답변이 등록되었습니다.');
+        document.getElementById('adminAnswerInput').value = '';
+        closeQnaDetailModal();
+        renderQnaTable();
+    }
+
+    // 캘린더 및 예약현황 상태 관리
+    let currentYear = 2026;
+    let currentMonth = 9; // September
+
+    function renderStatusCalendar() {
+        const titleEl = document.getElementById('calMonthTitleStatus');
+        const gridEl = document.getElementById('calendarDaysGridStatus');
+        titleEl.innerText = `${currentYear}년 ${currentMonth}월 예약 현황`;
+
+        const firstDay = new Date(currentYear, currentMonth - 1, 1).getDay();
+        const lastDate = new Date(currentYear, currentMonth, 0).getDate();
+
+        let html = '';
+        for (let i = 0; i < firstDay; i++) {
+            html += `<div class="cal-date-cell other-month"></div>`;
+        }
+
+        for (let d = 1; d <= lastDate; d++) {
+            let mm = String(currentMonth).padStart(2, '0');
+            let dd = String(d).padStart(2, '0');
+            let dateStr = `${currentYear}-${mm}-${dd}`;
+
+            html += `
+                <div class="cal-date-cell" onclick="selectDateFromStatus('${dateStr}')">
+                    <div class="cal-day-num">${d}</div>
+                    <div class="cal-status status-available">예약가능</div>
+                </div>
+            `;
+        }
+        gridEl.innerHTML = html;
+    }
+
+    function changeMonth(direction) {
+        currentMonth += direction;
+        if (currentMonth > 12) {
+            currentMonth = 1;
+            currentYear++;
+        } else if (currentMonth < 1) {
+            currentMonth = 12;
+            currentYear--;
+        }
+        renderStatusCalendar();
+    }
+
+    function selectDateFromStatus(dateStr) {
+        switchCategory('cat-booking', document.querySelectorAll('.nav-btn')[7]);
+        document.getElementById('custDate').value = dateStr;
+        updateOptions();
+    }
+
+    function startPayment() {
+        const date = document.getElementById('custDate').value;
+        const courseSelect = document.getElementById('courseSelect');
+        const courseText = courseSelect.options[courseSelect.selectedIndex].text.split(' - ')[0];
+        const time = document.getElementById('timeSelect').value;
+        const count = document.getElementById('custCount').value;
+        const name = document.getElementById('custName').value.trim();
+        const tel = document.getElementById('custTel').value.trim();
+
+        if (!date || !time || !name || !tel) {
+            alert('예약 정보를 모두 정확히 입력해주세요.');
+            return;
+        }
+
+        const unitPrice = parseInt(courseSelect.value.split('_')[0]);
+        const totalAmount = unitPrice * parseInt(count);
+        const orderNo = 'CN' + new Date().getTime();
+
+        const IMP = window.IMP;
+        IMP.init('imp00000000'); // 테스트 PG ID
+
+        IMP.request_pay({
+            pg: 'html5_inicis',
+            pay_method: 'card',
+            merchant_uid: orderNo,
+            name: `천일호 (${courseText})`,
+            amount: totalAmount,
+            buyer_name: name,
+            buyer_tel: tel,
+            buyer_addr: '제주특별자치도 서귀포시 남성중로 39'
+        }, function(rsp) {
+            if (rsp.success || true) { // 시뮬레이션을 위해 성공 처리 보장
+                alert('결제가 안전하게 완료되었습니다!');
+                
+                let bookings = JSON.parse(localStorage.getItem('chunil_bookings') || '[]');
+                let newBooking = {
+                    orderNo: orderNo,
+                    date: date,
+                    course: courseText,
+                    time: time,
+                    count: count,
+                    name: name,
+                    tel: tel,
+                    amount: totalAmount,
+                    status: '결제완료',
+                    regDate: new Date().toLocaleDateString()
+                };
+                bookings.unshift(newBooking);
+                localStorage.setItem('chunil_bookings', JSON.stringify(bookings));
+
+                renderAdminBookings();
+                
+                document.getElementById('searchTel').value = tel;
+                searchMyBooking();
+            } else {
+                alert('결제에 실패하였습니다: ' + rsp.error_msg);
+            }
+        });
+    }
+
+    function searchMyBooking() {
+        const tel = document.getElementById('searchTel').value.trim();
+        const resBox = document.getElementById('myBookingResult');
+        const detailsText = document.getElementById('bookingDetailsText');
+        const cancelArea = document.getElementById('cancelActionArea');
+
+        if (!tel) {
+            alert('연락처를 입력해주세요.');
+            return;
+        }
+
+        let bookings = JSON.parse(localStorage.getItem('chunil_bookings') || '[]');
+        const found = bookings.find(b => b.tel === tel && b.status === '결제완료');
+
+        resBox.style.display = 'block';
+        if (found) {
+            detailsText.innerHTML = `
+                <strong>[예약 내역 조회 성공]</strong><br>
+                - 주문번호: ${found.orderNo}<br>
+                - 예약자: ${found.name} (${found.tel})<br>
+                - 코스/시간: ${found.course} / ${found.time}<br>
+                - 이용날짜: ${found.date} (${found.count}명)<br>
+                - 결제금액: ${found.amount.toLocaleString()}원
+            `;
+            cancelArea.innerHTML = `<button type="button" class="btn-cancel-req" onclick="cancelBooking('${found.orderNo}')">예약 취소 및 환불 신청</button>`;
+        } else {
+            detailsText.innerHTML = `입력하신 연락처(${tel})로 확인되는 활  예약 내역이 없습니다.`;
+            cancelArea.innerHTML = '';
+        }
+    }
+
+    function cancelBooking(orderNo) {
+        if (!confirm('정말 예약을 취소하시겠습니까? 규정에 따라 처리됩니다.')) return;
+
+        let bookings = JSON.parse(localStorage.getItem('chunil_bookings') || '[]');
+        bookings = bookings.map(b => {
+            if (b.orderNo === orderNo) {
+                b.status = '취소완료';
+            }
+            return b;
+        });
+        localStorage.setItem('chunil_bookings', JSON.stringify(bookings));
+
+        alert('예약이 정상적으로 취소 및 환불 처리되었습니다.');
+        document.getElementById('myBookingResult').style.display = 'none';
+        renderAdminBookings();
+    }
+
+    function renderAdminBookings() {
+        const container = document.getElementById('adminBookingListContainer');
+        const pgTable = document.getElementById('adminPgTableBody');
+        let bookings = JSON.parse(localStorage.getItem('chunil_bookings') || '[]');
+
+        if (bookings.length === 0) {
+            container.innerHTML = `<p style="color: var(--text-sub); text-align: center; padding: 20px 0;">등록된 내역이 없습니다.</p>`;
+            pgTable.innerHTML = `<tr><td colspan="5" class="center" style="color:var(--text-sub);">조회된 결제 내역이 없습니다.</td></tr>`;
+            return;
+        }
+
+        let html = '';
+        let pgHtml = '';
+        bookings.forEach(b => {
+            let statusColor = b.status === '결제완료' ? '#15803d' : '#b91c1c';
+            html += `
+                <div style="padding:10px 0; border-bottom:1px solid #edf2f7;">
+                    <strong>${b.date} (${b.time})</strong> - ${b.course} / ${b.name}님 (${b.count}명) / <span style="color:${statusColor}; font-weight:700;">${b.status}</span>
+                </div>
+            `;
+            pgHtml += `
+                <tr>
+                    <td class="center">${b.orderNo}</td>
+                    <td class="center">${b.name}</td>
+                    <td class="center">${b.amount.toLocaleString()}원</td>
+                    <td class="center"><span style="color:${statusColor}; font-weight:700;">${b.status}</span></td>
+                    <td class="center"><button type="button" onclick="cancelBooking('${b.orderNo}'); renderAdminBookings();" style="padding:4px 8px; background:#ef4444; color:#fff; border:none; border-radius:4px; cursor:pointer;">환불</button></td>
+                </tr>
+            `;
+        });
+        container.innerHTML = html;
+        pgTable.innerHTML = pgHtml;
+
+        // 회원 목록 렌더링
+        renderAdminMembers();
+    }
+
+    function renderAdminMembers() {
+        const memberBody = document.getElementById('adminMemberListBody');
+        let users = JSON.parse(localStorage.getItem('chunil_users') || '[]');
+        
+        if (users.length === 0) {
+            memberBody.innerHTML = `<tr><td colspan="5" class="center" style="color:var(--text-sub);">가입된 회원이 없습니다.</td></tr>`;
+            return;
+        }
+
+        let html = '';
+        users.forEach(u => {
+            html += `
+                <tr>
+                    <td class="center">${u.id}</td>
+                    <td class="center">${u.name}</td>
+                    <td class="center">${u.tel}</td>
+                    <td class="center">${u.email || '-'}</td>
+                    <td class="center">${u.date}</td>
+                </tr>
+            `;
+        });
+        memberBody.innerHTML = html;
+    }
+
+    function checkAdminAccess() {
+        const loggedUser = JSON.parse(localStorage.getItem('chunil_logged_in'));
+        if (!loggedUser || loggedUser.id !== 'admin') {
+            alert('관리자 권한이 필요합니다.');
+            openAuthModal('login');
+            return;
+        }
+        switchCategory('cat-admin', document.querySelectorAll('.nav-btn')[8]);
+        renderAdminBookings();
+    }
+
+    function switchAdminTab(paneId, btnEl) {
+        document.querySelectorAll('.admin-content-pane').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.admin-menu-btn').forEach(b => b.classList.remove('active'));
+
+        document.getElementById(paneId).classList.add('active');
+        if (btnEl) btnEl.classList.add('active');
+    }
+
+    function processCheckin() {
+        const tel = document.getElementById('checkinTel').value.trim();
+        if (!tel) {
+            alert('전화번호를 입력해주세요.');
+            return;
+        }
+
+        let bookings = JSON.parse(localStorage.getItem('chunil_bookings') || '[]');
+        const found = bookings.find(b => b.tel === tel && b.status === '결제완료');
+
+        if (found) {
+            alert(`[체크인 성공] ${found.name}님 (${found.course} / ${found.count}명) 정상 승선 확인되었습니다.`);
+            document.getElementById('checkinTel').value = '';
+        } else {
+            alert('유효한 예약 내역을 찾을 수 없습니다.');
+        }
+    }
+</script>
+</body>
+</html>
