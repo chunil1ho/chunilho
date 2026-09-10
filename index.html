@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=0.5">
     <title>서귀포 체험 배낚시 천일호 - Chunilho Fishing</title>
     <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <style>
@@ -18,7 +19,7 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Pretendard', 'Noto Sans KR', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.7; min-width: 1200px; }
+        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.7; }
 
         .top-bar { background: #0b192c; color: #94a3b8; font-size: 0.82rem; padding: 8px 1rem; }
         .top-bar-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
@@ -36,12 +37,12 @@
         .lang-btn { background: #f1f5f9; border: 1px solid #cbd5e1; padding: 5px 8px; font-size: 0.75rem; font-weight: 600; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
         .lang-btn:hover, .lang-btn.active { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
 
-        .main-nav { background: var(--primary-color); box-shadow: 0 4px 20px rgba(15, 44, 89, 0.15); }
-        .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; list-style: none; }
-        .nav-inner li { flex: 1; text-align: center; }
+        .main-nav { background: var(--primary-color); box-shadow: 0 4px 20px rgba(15, 44, 89, 0.15); overflow-x: auto; }
+        .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; list-style: none; flex-wrap: nowrap; }
+        .nav-inner li { flex: 0 0 auto; text-align: center; min-width: 90px; }
         .nav-btn {
             background: none; border: none; outline: none; width: 100%; padding: 1.1rem 0.5rem;
-            color: #cbd5e1; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease;
+            color: #cbd5e1; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease;
             position: relative; white-space: nowrap;
         }
         .nav-btn:hover, .nav-btn.active { color: #fff; background: rgba(255, 255, 255, 0.05); }
@@ -79,7 +80,7 @@
         .btn-go-book { display: inline-block; background: var(--accent-color); color: #fff; padding: 0.9rem 2.2rem; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; font-size: 1.05rem; box-shadow: 0 6px 20px rgba(255,127,63,0.4); transition: all 0.25s; }
         .btn-go-book:hover { background: var(--accent-hover); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255,127,63,0.5); }
 
-        .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
         .feature-card { background: var(--card-bg); padding: 2rem 1.5rem; border-radius: 14px; text-align: center; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); transition: all 0.3s; }
         .feature-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(15,44,89,0.08); border-color: #cbd5e1; }
         .feature-card .icon-wrap { width: 60px; height: 60px; background: #fef3c7; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin: 0 auto 1rem; }
@@ -89,15 +90,15 @@
         .section-title { font-size: 1.6rem; color: var(--primary-color); text-align: center; margin-bottom: 2rem; font-weight: 800; letter-spacing: -0.5px; position: relative; }
         .section-title::after { content: ''; display: block; width: 45px; height: 3px; background: var(--accent-color); margin: 10px auto 0; border-radius: 2px; }
 
-        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; margin-bottom: 3rem; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.8rem; margin-bottom: 3rem; }
         .gallery-card { background: var(--card-bg); border-radius: 14px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); transition: all 0.3s; }
         .gallery-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
         .gallery-card img { width: 100%; height: 250px; object-fit: cover; display: block; transition: transform 0.5s; }
         .gallery-card:hover img { transform: scale(1.04); }
         .gallery-card .card-caption { padding: 1.3rem; text-align: center; font-weight: 700; color: var(--primary-color); font-size: 1.02rem; }
 
-        .schedule-box { background: var(--card-bg); border-radius: 16px; padding: 2.2rem; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.92rem; }
+        .schedule-box { background: var(--card-bg); border-radius: 16px; padding: 2.2rem; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.92rem; min-width: 750px; }
         th { background: var(--primary-color); color: white; padding: 1.1rem; font-weight: 600; text-align: center; }
         th:first-child { border-top-left-radius: 8px; }
         th:last-child { border-top-right-radius: 8px; }
@@ -120,13 +121,13 @@
         .refund-policy-content strong { color: var(--text-main); }
         .refund-policy-content ul { padding-left: 20px; margin-bottom: 15px; }
 
-        .map-section-wrapper { display: flex; gap: 20px; align-items: stretch; background: var(--card-bg); padding: 2.2rem; border-radius: 16px; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); }
-        .map-info-box { flex: 1; background: #f9f9f9; padding: 30px; border-radius: 8px; box-sizing: border-box; }
+        .map-section-wrapper { display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch; background: var(--card-bg); padding: 2.2rem; border-radius: 16px; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); }
+        .map-info-box { flex: 1; min-width: 300px; background: #f9f9f9; padding: 30px; border-radius: 8px; box-sizing: border-box; }
         .map-info-box h3 { margin-top: 0; color: var(--primary-color); font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem; }
         .map-info-box p { color: var(--text-sub); line-height: 1.6; margin-bottom: 20px; font-size: 0.95rem; }
         .map-info-box ul { padding-left: 20px; color: var(--text-main); line-height: 1.8; font-size: 0.92rem; }
         .map-info-box ul li { margin-bottom: 8px; }
-        .map-box { flex: 1; height: 420px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        .map-box { flex: 1; min-width: 300px; height: 420px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
         .map-btn { display: inline-block; background: #4285F4; color: white; padding: 12px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; transition: background 0.2s; font-size: 0.95rem; }
         .map-btn:hover { background: #3367d6; }
 
@@ -171,6 +172,7 @@
         .close-modal { position: absolute; top: 1.2rem; right: 1.5rem; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-sub); }
 
         .admin-dashboard-layout { display: grid; grid-template-columns: 260px 1fr; gap: 20px; align-items: start; }
+        @media(max-width: 768px) { .admin-dashboard-layout { grid-template-columns: 1fr; } }
         
         .admin-sidebar { background: #0b192c; border-radius: 14px; padding: 1.2rem 0; box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
         .admin-sidebar-title { color: #38bdf8; font-size: 1.05rem; font-weight: 800; padding: 0 1.2rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 8px; }
@@ -194,6 +196,18 @@
 
         footer { background: #0b192c; color: #94a3b8; font-size: 0.88rem; text-align: center; padding: 3.5rem 1rem; line-height: 1.9; margin-top: 5rem; border-top: 1px solid rgba(255,255,255,0.05); }
         footer strong { color: #fff; font-size: 1.1rem; font-weight: 700; letter-spacing: -0.5px; }
+
+        @media (max-width: 768px) {
+            .booking-layout { grid-template-columns: 1fr; }
+            .summary-card { position: static; }
+            .header-inner { flex-direction: column; gap: 12px; }
+            .nav-btn { font-size: 0.82rem; padding: 1rem 0; }
+            .hero { height: 360px; }
+            .hero-bg-container { flex-direction: column; }
+            .hero-bg1 { border-right: none; border-bottom: 2px solid rgba(255, 255, 255, 0.2); }
+            .hero-content h1 { font-size: 1.8rem; }
+            .hero-content p { font-size: 0.95rem; }
+        }
     </style>
 </head>
 <body id="mainBody">
@@ -492,6 +506,36 @@
                                 <option value="8">8명</option>
                                 <option value="9">9명</option>
                                 <option value="10">10명</option>
+                                <option value="11">11명</option>
+                                <option value="12">12명</option>
+                                <option value="13">13명</option>
+                                <option value="14">14명</option>
+                                <option value="15">15명</option>
+                                <option value="16">16명</option>
+                                <option value="17">17명</option>
+                                <option value="18">18명</option>
+                                <option value="19">19명</option>
+                                <option value="20">20명</option>
+                                <option value="21">21명</option>
+                                <option value="22">22명</option>
+                                <option value="23">23명</option>
+                                <option value="24">24명</option>
+                                <option value="25">25명</option>
+                                <option value="26">26명</option>
+                                <option value="27">27명</option>
+                                <option value="28">28명</option>
+                                <option value="29">29명</option>
+                                <option value="30">30명</option>
+                                <option value="31">31명</option>
+                                <option value="32">32명</option>
+                                <option value="33">33명</option>
+                                <option value="34">34명</option>
+                                <option value="35">35명</option>
+                                <option value="36">36명</option>
+                                <option value="37">37명</option>
+                                <option value="38">38명</option>
+                                <option value="39">39명</option>
+                                <option value="40">40명</option>
                             </select>
                         </div>
 
@@ -644,7 +688,7 @@
     </div>
 </div>
 
-<!-- 결제(예약) 완료 안내 커스텀 사각형 모달창 -->
+<!-- 결제(예약) 완료 안내 커스텀 사각형 모달창 (모바일 알림 호환) -->
 <div id="customAlertOverlay" class="auth-modal-overlay">
     <div class="auth-modal" style="text-align: center;">
         <h3 style="color: var(--primary-color); margin-bottom: 1rem; font-weight: 800;">예약 완료 안내</h3>
@@ -668,6 +712,7 @@
     let isAdminLoggedIn = false;
     const ADMIN_PHONE = '010-7768-5913';
 
+    // 다른 기기(모바일 등)에서 예약/결제 시 로컬스토리지 변경을 실시간 감지하여 관리자 화면 자동 동기화
     window.addEventListener('storage', function(e) {
         if (e.key === 'chunilho_bookings') {
             bookings = JSON.parse(e.newValue) || [];
@@ -909,11 +954,24 @@
         localStorage.setItem('chunilho_bookings', JSON.stringify(bookings));
         updateAdminDashboard();
 
+        sendCustomerSMS(cleanTel, name, date, course, time, count, price);
+        sendAdminSMS(ADMIN_PHONE, name, cleanTel, date, course, time, count, price);
+
         const popupMsg = translations[currentLang]?.bookingAlertMsg || translations['ko'].bookingAlertMsg;
         showCustomAlert(popupMsg);
 
         document.getElementById('bookingForm').reset();
         updateSummary();
+    }
+
+    function sendCustomerSMS(custTel, custName, date, course, time, count, price) {
+        const message = `[서귀포배낚시 천일호]\n${custName}님, 예약이 정상적으로 완료(확정)되었습니다.\n\n- 예약자명: ${custName}\n- 전화번호: ${custTel}\n- 예약날짜: ${date}\n- 출항시간: ${time}\n- 선택코스: ${course} (${count}명)\n- 결제금액: ${price.toLocaleString()}원\n\n- 오시는곳: 제주 서귀포시 남성중로 39\n즐거운 바다 여행 되시길 바랍니다!`;
+        console.log(`--- [손님 문자 발송 (${custTel})] ---\n${message}\n----------------------------------`);
+    }
+
+    function sendAdminSMS(adminTel, custName, custTel, date, course, time, count, price) {
+        const message = `[천일호 관리자 알림] 새로운 예약(결제완료) 건이 접수되었습니다.\n\n- 예약자명: ${custName}\n- 전화번호: ${custTel}\n- 예약날짜: ${date}\n- 출항시간: ${time}\n- 선택코스: ${course} (${count}명)\n- 결제금액: ${price.toLocaleString()}원`;
+        console.log(`--- [관리자 문자 발송 (${adminTel})] ---\n${message}\n----------------------------------`);
     }
 
     function searchMyBooking() {
@@ -1471,17 +1529,17 @@
             btnSave: "保存する",
             adminSchedTitle: "⏰ 回次（スケジュール）管理",
             adminSchedDesc: "昼夜コース別の出港時間帯とシーズン別運航日程を管理します。",
-            adminSchedDetails: "<p><strong>[昼の体験2時間]</strong> 夏季: 10:00, 12:00, 13:00, 14:00, 16:00 / 冬季: 10:00, 12:00, 13:00, 15:00</p><p style=\"margin-top: 8px;\"><strong>[昼の体験3時間]</strong> 夏季: 10:00, 12:00, 13:00, 15:00 / 冬季: 10:00, 12:00, 14:00</p><p style=\"margin-top: 8px;\"><strong>[夜タチウオ釣り]</strong> 18:00 (8~11月)</p><p style=\"margin-top: 8px;\"><strong>[夜イカ体験]</strong> 18:30 (6月中旬~9月初)</p>",
+            adminSchedDetails: "<p><strong>[昼の体験2時間]</strong> 夏季: 10:00, 12:00, 13:00, 14:00, 16:00 / 冬季: 10:00, 12:00, 13:00, 15:00</p><p style=\"margin-top: 8px;\"><strong>[昼の体験3時間]</strong> 夏季: 10:00, 12:00, 13:00, 15:00 / 冬季: 10:00, 12:00, 14:00</p><p style=\"margin-top: 8px;\"><strong>[夜タチウオ]</strong> 18:00 (8〜11月)</p><p style=\"margin-top: 8px;\"><strong>[夜イカ体験]</strong> 18:30 (6月中旬〜9月初め)</p>",
             adminPgTitle: "💳 複数PG予約承認及び返金",
-            adminPgDesc: "決済システムを通じた予約件の承認内訳照会及び返金処理を進めます。",
+            adminPgDesc: "決済システムを通じた予約件の承認内訳照会及び返金処理を行います。",
             thOrderNo: "注文番号",
             thBooker: "予約者",
             thAmount: "金額",
             thPayStatus: "決済状態",
             thManage: "管理（キャンセル/返金）",
             adminNoPayData: "照会された決済内訳がありません。",
-            adminCheckinTitle: "📱 現場チェックイン（注文/電話番号）",
-            adminCheckinDesc: "乗船当日に訪問した顧客の電話番号や予約番号で現場乗船チェックインを処理します。",
+            adminCheckinTitle: "📱 現場チェックイン",
+            adminCheckinDesc: "乗船当日に訪問したお客様の電話番号または予約番号で現場乗船チェックインを処理します。",
             phCheckinTel: "予約者の電話番号入力",
             btnCheckin: "チェックイン",
             authModalTitle: "管理者ログイン",
@@ -1489,111 +1547,111 @@
             phId: "管理者ID入力",
             lblPw: "パスワード",
             phPw: "管理者パスワード入力",
-            btnLoginAction: "管理者ログイン",
+            btnLoginAction: "管理者ログインする",
             footerTitle: "西帰浦船釣り チュニルホ",
             footerRep: "代表",
             footerBizNo: "事業者登録番号",
-            footerAddr: "住所: 済州特別自治道西帰浦市南성중路39（チュニルホ）",
+            footerAddr: "住所: 済州特別自治道西帰浦市南성중路39",
             footerTel: "予約問い合わせ",
-            footerCopy: "チュニルホ. All Rights Reserved.",
-            bookingAlertMsg: "ご購入完了後、必ず 010-7768-5913 または カカオトークID (chunil1ho) のいずれかにご連絡いただき、返信を受け取ることで予約が完了となります。担当者と連絡がつかない場合は予約確定ができません。"
+            footerCopy: "Chunilho. All Rights Reserved.",
+            bookingAlertMsg: "【重要】決済完了後、必ず 010-7768-5913 または カカオトークID：chunil1ho のいずれかへご連絡いただき、返信（確認）を受けて初めて予約が完了となります。担当者と連絡がつかない場合、予約は確定されません。"
         },
         zh: {
-            topBarAddress: "🌊 济州西归浦市南성중路39 (天日号)",
+            topBarAddress: "🌊 济州西归浦市南性中路39号 (天日号)",
             topBarInquiry: "📞 预约咨询: 010-7768-5913",
-            logoMainText: "西归浦海钓 天日号",
+            logoMainText: "西归浦船钓 天日号",
             logoSubText: "Seogwipo Chunilho Fishing",
             navHome: "首页",
             navInfo: "航行指南",
-            navLocation: "来访路线",
+            navLocation: "交通路线",
             navBooking: "实时预约",
             navAdmin: "管理中心",
             heroBadgeText: "济州西归浦必游路线",
-            heroTitle: "在海洋上迎接最灿烂的瞬间",
-            heroSub: "初学者和儿童也能轻松享受手感的西归浦近海治愈海钓",
+            heroTitle: "在碧海之上迎接最灿烂的瞬间",
+            heroSub: "无论是初学者还是儿童，都能轻松体验西归浦前海治愈海钓的乐趣",
             heroBtn: "开始心动预约 ✨",
-            hLeftTitle: "👤 预约指南",
+            hLeftTitle: "👤 预约须知",
             hLeftTelT: "预约及客户中心",
             hLeftBankT: "汇款账号指南",
-            hBankOwner: "户名: 姜周渊",
+            hBankOwner: "户名：姜周演",
             featT1: "新手专属亲切教学",
-            featD1: "从鱼竿拿法到装鱼饵，船长都会亲切地教您。",
-            featT2: "日间体验装备与工具",
-            featD2: "无需准备沉重装备！鱼竿、钓组、鱼饵、救生衣全部免费提供。",
+            featD1: "从握钓竿到装鱼饵，船长都会亲切地指导您。",
+            featT2: "白天体验装备与工具",
+            featD2: "无需准备沉重装备！钓竿、钓组、鱼饵、救生衣全部免费借用。",
             featT3: "新鲜即食生鱼片",
-            featD3: "在蔚蓝大海上，当场品尝亲手钓起的新鲜活鱼的感动！",
+            featD3: "在蔚蓝大海上亲手钓到新鲜的鱼，立即品尝生鱼片的感动！",
             featT4: "与珍贵之人的回忆",
-            featD4: "与家人、恋人、朋友一起留下欢声笑语不断的特别济州回忆。",
+            featD4: "与家人、恋人、朋友一起制造充满欢声笑语的济州特别回忆。",
             galTitle: "天日号波光粼粼的海景",
-            gal1: "与孩子们一起充满欢笑的日间体验海钓",
-            gal2: "夜海的浪漫，夜间带鱼·鲭鱼海钓 (8~11月)",
-            gal3: "夏夜的宝石，夜间鱿鱼体验海钓 (6~9月)",
+            gal1: "与孩子们一起充满欢笑的白天体验海钓",
+            gal2: "夜海的浪漫，夜间带鱼·鲭鱼海钓 (8-11月)",
+            gal3: "夏夜的宝石，夜间小鱿鱼体验海钓 (6-9月)",
             infoTitle: "航行路线及季节指南",
             thCat: "分类",
             thCourse: "路线名称",
             thSeason: "航行季节",
             thTime: "出航时间",
-            thDetails: "餐饮及提供事项 (选项/处理费用)",
+            thDetails: "餐饮及提供事项 (选项/加工费用)",
             thPrice: "船费",
-            bDay: "日间",
+            bDay: "白天",
             bNight: "夜间",
-            tC2: "日间体验 2小时",
-            tC3: "日间体验 3小时",
+            tC2: "白天体验 2小时",
+            tC3: "白天体验 3小时",
             tS1: "夏季 (3月~8月)",
-            tS2: "冬季 (9月~2月)",
-            tD2: "免费提供鱼竿、钓组、南极虾、救生衣",
+            tS2: "冬季 (9月~2월)",
+            tD2: "免费提供钓竿、钓组、南极虾、救生衣",
             price30k: "30,000韩元",
-            tD3Base: "免费提供鱼竿、钓组、南极虾、救生衣",
-            tD31: "生鱼片选项: 基本3条起，每条2,000韩元",
+            tD3Base: "免费提供钓竿、钓组、南极虾、救生衣",
+            tD31: "生鱼片选项: 3条起，每条2,000韩元",
             tD32: "进港前1小时向船长咨询 (根据天气情况可能有所变动)",
             tCGalchi: "夜间带鱼海钓",
             tSGalchi: "8月 ~ 11月中旬",
             tTGalchi: "18:00 出航",
             tDGalchiText: "提供农心辣牛肉汤面<br>(装备租赁费2万韩元现场支付)",
-            tDG1: "处理费用: 带鱼、鲭鱼每条2,000韩元",
+            tDG1: "加工费用: 带鱼、鲭鱼每条2,000韩元",
             price90k: "90,000韩元",
-            tCHanchi: "夜间鱿鱼体验",
+            tCHanchi: "夜间小鱿鱼体验",
             tSHanchi: "6月中旬 ~ 9月初",
             tTHanchi: "18:30 出航",
             tDHanchiText: "提供农心辣牛肉汤面<br>(装备租赁费1万韩元现场支付)",
-            tDH1: "鱿鱼现切生鱼片 (现场食用): 每条4,000韩元",
-            tDH2: "打包服务: 另付2,000韩元 (含容器、筷子、辣椒酱)",
+            tDH1: "小鱿鱼即食生鱼片 (现场食用): 每条4,000韩元",
+            tDH2: "打包服务: 另付2,000韩元 (含容器、筷子、韩式辣酱)",
             tDH3: "仅加工处理: 每条2,000韩元",
             price60k: "60,000韩元",
             kakaoInfo: "💬 有疑问吗？实时KakaoTalk咨询: <strong>chunil1ho</strong>",
             refundTitle: "📢 取消及退款规定指南",
-            policy1Title: "1. 个人原因及单纯变心取消",
+            policy1Title: "1. 个人原因及主观变更导致的取消",
             policy1_0: "购买确认后无法取消 (但当天天气恶劣或船舶故障等原因除外)",
-            policy1_1: "使用日前 3天 取消时: 100%全额退款",
-            policy1_2: "使用日前 2天 取消时: 无法退款 (但可更改日期)",
-            policy1_3: "使用日前 1天 / 当天 取消及更改: 无法取消、退款及更改",
-            policy2Title: "2. 天气恶劣及不可抗力因素取消",
-            policy2_1: "若因风浪警报、暴雨、海雾等客户安全原因无法出航，无论使用日为何，均可 100%全额退款 或 免费更改日期。",
-            policy3Title: "3. 商家原因 (船舶故障等) 取消",
-            policy3_1: "若因不可避免的船舶缺陷等无法出海，无论使用日为何，均进行 100%全额退款 处理。",
-            locTitle: "来访路线指南",
+            policy1_1: "使用日前3天取消时: 100%全额退款",
+            policy1_2: "使用日前2天取消时: 不予退款 (但可更改日程)",
+            policy1_3: "使用日前1天/当天取消及更改: 无法取消、退款及更改",
+            policy2Title: "2. 天气恶劣及不可抗力导致的取消",
+            policy2_1: "若因风浪预警、暴雨、海雾等客户安全原因无法出航，无论使用日如何，均可100%全额退款或免费更改日期。",
+            policy3Title: "3. 商家原因 (船舶故障等) 导致的取消",
+            policy3_1: "若因不可避免的船舶缺陷等无法出海，无论使用日如何，均给予100%全额退款处理。",
+            locTitle: "交通路线指南",
             locHeading: "📍 位置及交通方式",
-            locDesc: "天日号来访路线指南。位于西归浦港及新演桥附近，方便您轻松前往。",
+            locDesc: "前往天日号的路线指南。位于西归浦港及新缘桥附近，方便您轻松前往。",
             locAddrLabel: "地址:",
-            locAddrVal: "济州特别자치도 서귀포시 남성중로 39",
+            locAddrVal: "济州特别자치도西归浦市南性中路39",
             locWayLabel: "交通方式:",
-            locWayVal: "看到西归浦游船停车场入口左侧的西归浦海钓天日号标牌后走下来即可。",
+            locWayVal: "看到西归浦游轮停车场入口左侧的西归浦船钓天日号指示牌，顺着走下来即可。",
             locNearLabel: "周边参考:",
-            locNearVal: "河荣奥来1路线认证印章 (新演桥) 及西归浦港附近",
-            mapBtnTest: "在谷歌地图中查看大图",
-            bookTitle: "非会员海钓之旅预约",
-            bookStep1: "1. 期望预约日期",
+            locNearVal: "正房瀑布/天地渊瀑布及西归浦港附近",
+            mapBtnText: "在谷歌地图中查看大图",
+            bookTitle: "非会员海洋旅行预约",
+            bookStep1: "1. 预定希望日期",
             bookStep2: "2. 选择海钓路线",
-            optCourse1: "日间体验 2小时 - 30,000韩元 (全年)",
-            optCourse2: "日间体验 3小时 - 40,000韩元 (全年)",
+            optCourse1: "白天体验 2小时 - 30,000韩元 (全年)",
+            optCourse2: "白天体验 3小时 - 40,000韩元 (全年)",
             optCourse3: "夜间带鱼海钓 - 90,000韩元 (季节: 8月~11月中旬)",
-            optCourse4: "夜间鱿鱼体验海钓 - 60,000韩元 (季节: 6月中旬~9月初)",
+            optCourse4: "夜间小鱿鱼海钓体验 - 60,0000韩元 (季节: 6月中旬~9月初)",
             bookStep3: "3. 选择出航时间",
             bookStep4: "4. 乘船人数",
-            bookStep5: "5. 预约人姓名",
-            phName: "输入姓名",
+            bookStep5: "5. 预定人姓名",
+            phName: "请输入姓名",
             bookStep6: "6. 联系方式",
-            sumTitle: "📋 您选择的预约详情",
+            sumTitle: "📋 您选择的预约明细",
             sumDateLabel: "预约日期",
             sumCourseLabel: "选择路线",
             sumTimeLabel: "出航时间",
@@ -1601,54 +1659,54 @@
             sumTotalLabel: "总支付金额",
             btnPayText: "非会员安全支付并确认预约",
             myBookingTitle: "🔍 非会员预约查询",
-            myBookingDesc: "可通过预约时输入的联系方式查询详情。",
-            phSearchTel: "预约人联系方式 (不含-)",
+            myBookingDesc: "您可以通过预约时输入的联系方式查询明细。",
+            phSearchTel: "预定人联系方式 (不含-)",
             btnSearch: "查询",
             adminSidebarTitle: "天日号预约管理中心",
             adminMenu1: "📊 仪表盘摘要",
-            adminMenu2: "🏢 商家信息及对接管理",
+            adminMenu2: "🏢 企业信息及对接管理",
             adminMenu3: "⏰ 班次 (日程) 管理",
-            adminMenu4: "💳 多通道PG预约批准及退款",
-            adminMenu5: "📱 现场签到",
-            adminDashTitle: "📊 仪表盘摘要 (实时预约记录)",
-            adminDashDesc: "客户完成预约后实时反映的记录。",
-            adminDashSub: "📋 最近实时支付及预约记录",
-            adminNoData: "暂无注册记录。",
+            adminMenu4: "💳 多重PG预约批准及退款",
+            adminMenu5: "📱 现场检票 (订单/电话号码)",
+            adminDashTitle: "📊 仪表盘摘要 (实时预约明细)",
+            adminDashDesc: "客户完成预约后实时反映的明细。",
+            adminDashSub: "📋 最近实时支付及预约明细",
+            adminNoData: "没有注册的明细。",
             adminLogout: "管理员登出",
-            adminInfoTitle: "🏢 商家信息及对接管理",
-            adminInfoDesc: "管理商家基本信息及外部服务对接状态。",
+            adminInfoTitle: "🏢 企业信息及对接管理",
+            adminInfoDesc: "管理企业基本信息及外部服务对接状态。",
             lblCompanyName: "商户名称",
             lblCompanyTel: "代表联系方式",
-            lblCompanyBank: "汇款账号",
+            lblCompanyBank: "汇款账户",
             btnSave: "保存",
             adminSchedTitle: "⏰ 班次 (日程) 管理",
             adminSchedDesc: "管理日间/夜间路线的出航时间段及季节性航行日程。",
-            adminSchedDetails: "<p><strong>[日间体验2小时]</strong> 夏季: 10:00, 12:00, 13:00, 14:00, 16:00 / 冬季: 10:00, 12:00, 13:00, 15:00</p><p style=\"margin-top: 8px;\"><strong>[日间体验3시간]</strong> 夏季: 10:00, 12:00, 13:00, 15:00 / 冬季: 10:00, 12:00, 14:00</p><p style=\"margin-top: 8px;\"><strong>[夜间带鱼]</strong> 18:00 (8~11月)</p><p style=\"margin-top: 8px;\"><strong>[夜间鱿鱼]</strong> 18:30 (6月中旬~9月初)</p>",
-            adminPgTitle: "💳 多通道PG预约批准及退款",
-            adminPgDesc: "查询通过支付系统预约的批准记录并进行退款处理。",
-            thOrderNo: "订单编号",
-            thBooker: "预约人",
+            adminSchedDetails: "<p><strong>[白天体验 2小时]</strong> 夏季: 10:00, 12:00, 13:00, 14:00, 16:00 / 冬季: 10:00, 12:00, 13:00, 15:00</p><p style=\"margin-top: 8px;\"><strong>[白天体验 3小时]</strong> 夏季: 10:00, 12:00, 13:00, 15:00 / 冬季: 10:00, 12:00, 14:00</p><p style=\"margin-top: 8px;\"><strong>[夜间带鱼]</strong> 18:00 (8~11月)</p><p style=\"margin-top: 8px;\"><strong>[夜间小鱿鱼体验]</strong> 18:30 (6月中旬~9月初)</p>",
+            adminPgTitle: "💳 多重PG预约批准及退款",
+            adminPgDesc: "查询通过支付系统进行的预约订单批准明细并进行退款处理。",
+            thOrderNo: "订单号",
+            thBooker: "预定人",
             thAmount: "金额",
             thPayStatus: "支付状态",
             thManage: "管理 (取消/退款)",
-            adminNoPayData: "未查询到支付记录。",
-            adminCheckinTitle: "📱 现场签到 (订单/电话号码)",
-            adminCheckinDesc: "通过乘船当日访问客户的电话号码或预约编号进行现场乘船签到处理。",
-            phCheckinTel: "输入预约人电话号码",
-            btnCheckin: "签到",
+            adminNoPayData: "没有查询到支付明细。",
+            adminCheckinTitle: "📱 现场检票 (订单/电话号码)",
+            adminCheckinDesc: "通过乘船当天来访客户的电话号码或预约号处理现场乘船检票。",
+            phCheckinTel: "输入预定人电话号码",
+            btnCheckin: "检票",
             authModalTitle: "管理员登录",
             lblId: "账号",
             phId: "输入管理员账号",
             lblPw: "密码",
             phPw: "输入管理员密码",
-            btnLoginAction: "管理员登录",
-            footerTitle: "西归浦海钓 天日号",
+            btnLoginAction: "登录管理员",
+            footerTitle: "西归浦船钓 天日号",
             footerRep: "代表",
-            footerBizNo: "企业注册号",
-            footerAddr: "地址: 济州特别자치도 서귀포시 남성중로 39",
+            footerBizNo: "营业执照注册号",
+            footerAddr: "地址: 济州特别자치도西归浦市南性中路39",
             footerTel: "预约咨询",
-            footerCopy: "天日호. All Rights Reserved.",
-            bookingAlertMsg: "完成购买后，必须通过电话 (010-7768-5913) 或 KakaoTalk ID (chunil1ho) 联系我们并收到回复确认后方可完成预约，若无法与负责人取得联系则无法确认预约。"
+            footerCopy: "Chunilho. All Rights Reserved.",
+            bookingAlertMsg: "【重要】完成支付后，必须通过 010-7768-5913 或 KakaoTalk ID: chunil1ho 其中之一与我们联系并收到回复确认后，预约才算最终完成。若无法联系到负责人，预约将无法确认生效。"
         }
     };
 </script>
