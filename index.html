@@ -712,7 +712,7 @@
     const ADMIN_PHONE = '010-7768-5913';
 
     window.addEventListener('keydown', function(e) {
-        if (e.ctrlKey && e.altKey && (e.key === 'j' || e.key === 'J')) {
+        if (e.shiftKey && (e.key === 'j' || e.key === 'J')) {
             e.preventDefault();
             const adminLi = document.getElementById('nav-admin-li');
             if (adminLi) {
