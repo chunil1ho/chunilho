@@ -231,10 +231,10 @@
             </div>
         </a>
         <div class="lang-switcher">
-            <button type="button" class="lang-btn active" onclick="setLanguage('ko')">한국어</button>
-            <button type="button" class="lang-btn" onclick="setLanguage('en')">English</button>
-            <button type="button" class="lang-btn" onclick="setLanguage('ja')">日本語</button>
-            <button type="button" class="lang-btn" onclick="setLanguage('zh')">中文</button>
+            <button type="button" class="lang-btn active" onclick="setLanguage('ko', this)">한국어</button>
+            <button type="button" class="lang-btn" onclick="setLanguage('en', this)">English</button>
+            <button type="button" class="lang-btn" onclick="setLanguage('ja', this)">日本語</button>
+            <button type="button" class="lang-btn" onclick="setLanguage('zh', this)">中文</button>
         </div>
     </div>
 </header>
@@ -464,7 +464,7 @@
         </div>
     </div>
 
-    <!-- 4. 실시간예약 및 조회/취소 카테고리 -->
+    <!-- 4. 실시간예약 및 조회 카테고리 -->
     <div id="cat-booking" class="category-sec">
         <h2 class="section-title" id="book-title" data-i18n="bookTitle">비회원 바다 여행 예약하기</h2>
 
@@ -545,7 +545,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label data-i18n="bookStep6">6. 연락처 (취소 조회용)</label>
+                            <label data-i18n="bookStep6">6. 연락처 (조회용)</label>
                             <input type="tel" id="custTel" placeholder="010-0000-0000" required>
                         </div>
                     </div>
@@ -579,8 +579,8 @@
         </div>
 
         <div class="my-booking-box">
-            <h3 style="font-size: 1.15rem; color: var(--primary-color); margin-bottom: 1rem; font-weight: 800;" data-i18n="myBookingTitle">🔍 비회원 예약 조회 및 취소하기</h3>
-            <p style="font-size: 0.9rem; color: var(--text-sub); margin-bottom: 1.2rem;" data-i18n="myBookingDesc">예약 시 입력하신 연락처로 내역을 조회하고 규정에 맞춰 즉시 취소하실 수 있습니다.</p>
+            <h3 style="font-size: 1.15rem; color: var(--primary-color); margin-bottom: 1rem; font-weight: 800;" data-i18n="myBookingTitle">🔍 비회원 예약 조회하기</h3>
+            <p style="font-size: 0.9rem; color: var(--text-sub); margin-bottom: 1.2rem;" data-i18n="myBookingDesc">예약 시 입력하신 연락처로 내역을 조회하실 수 있습니다. (예약 취소는 관리자에게 문의해 주세요)</p>
             
             <div style="display: flex; gap: 10px; max-width: 450px;">
                 <input type="tel" id="searchTel" placeholder="예약자 연락처 (- 제외)" data-i18n-ph="phSearchTel" style="flex: 1; padding: 0.8rem; border: 1px solid #cbd5e1; border-radius: 8px;">
@@ -589,7 +589,6 @@
 
             <div id="myBookingResult" class="my-booking-result">
                 <div id="bookingDetailsText" style="font-size: 0.92rem; color: var(--text-main); line-height: 1.6;"></div>
-                <div id="cancelActionArea"></div>
             </div>
         </div>
     </div>
@@ -649,9 +648,9 @@
 
                 <div id="pane-pg" class="admin-content-pane">
                     <h3 style="color: var(--primary-color); margin-bottom: 1rem; font-size: 1.2rem; font-weight: 800;" data-i18n="adminPgTitle">💳 복수 PG 예약 승인 및 환불</h3>
-                    <p style="color: var(--text-sub); margin-bottom: 1.5rem; font-size: 0.92rem;" data-i18n="adminPgDesc">결제 시스템을 통한 예약 건의 승인 내역 조회 및 환불 처리를 진행합니다.</p>
+                    <p style="color: var(--text-sub); margin-bottom: 1.5rem; font-size: 0.92rem;" data-i18n="adminPgDesc">결제 시스템을 통한 예약 건의 승인 내역 조회 및 환불(관리자 취소) 처리를 진행합니다.</p>
                     <table class="board-table">
-                        <thead><tr><th data-i18n="thOrderNo">주문번호</th><th data-i18n="thBooker">예약자</th><th data-i18n="thAmount">금액</th><th data-i18n="thPayStatus">결제상태</th><th data-i18n="thManage">관리</th></tr></thead>
+                        <thead><tr><th data-i18n="thOrderNo">주문번호</th><th data-i18n="thBooker">예약자</th><th data-i18n="thAmount">금액</th><th data-i18n="thPayStatus">결제상태</th><th data-i18n="thManage">관리(취소/환불)</th></tr></thead>
                         <tbody id="adminPgTableBody"><tr><td colspan="5" class="center" style="color:var(--text-sub);" data-i18n="adminNoPayData">조회된 결제 내역이 없습니다.</td></tr></tbody>
                     </table>
                 </div>
@@ -728,13 +727,14 @@
         switchCategory('cat-booking', document.getElementById('nav-booking'));
     }
 
-    // 언어 변경 함수 추가 (자동번역 오류 수정 대응)
-    function setLanguage(lang) {
+    function setLanguage(lang, btnEl) {
         currentLang = lang;
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.classList.remove('active');
         });
-        event.target.classList.add('active');
+        if (btnEl) {
+            btnEl.classList.add('active');
+        }
 
         const t = translations[lang];
         if (!t) return;
@@ -928,7 +928,9 @@
         sendCustomerSMS(tel, name, date, course, time, count, price);
         sendAdminSMS(ADMIN_PHONE, name, tel, date, course, time, count, price);
 
-        alert('예약 및 결제가 안전하게 완료되었습니다!\n(손님 및 관리자 휴대폰으로 예약/결제 문자가 발송되었습니다.)');
+        // 요청하신 안내 팝업 내용 추가
+        alert('구매완료시 010-7768-5913 / 카카오톡 ID: chunil1ho 둘중하나로 무조건 연락하고 답장을 받아야 예약 완료 입니다, 담당자와 연락이 안될시는 예약확정불가 .');
+
         document.getElementById('bookingForm').reset();
         updateSummary();
     }
@@ -947,40 +949,35 @@
         const tel = document.getElementById('searchTel').value.trim();
         const resultBox = document.getElementById('myBookingResult');
         const detailsText = document.getElementById('bookingDetailsText');
-        const cancelArea = document.getElementById('cancelActionArea');
 
         if (!tel) {
             alert('연락처를 입력해주세요.');
             return;
         }
 
-        const found = bookings.filter(b => b.tel === tel && b.status === '결제완료');
+        const found = bookings.filter(b => b.tel === tel);
         resultBox.style.display = 'block';
 
         if (found.length === 0) {
             detailsText.innerHTML = '조회된 예약 내역이 없습니다.';
-            cancelArea.innerHTML = '';
             return;
         }
 
         let html = '';
         found.forEach((b, idx) => {
             html += `<div style="margin-bottom:10px; border-bottom:1px dashed #cbd5e1; padding-bottom:8px;">
-                <strong>[예약 ${idx+1}]</strong> 날짜: ${b.date} | 코스: ${b.course} (${b.time}) | 인원: ${b.count}명 | 금액: ${b.price.toLocaleString()}원
-                <br><button type="button" class="btn-cancel-req" onclick="cancelBooking('${b.orderNo}')">예약 취소 및 환불</button>
+                <strong>[예약 ${idx+1}]</strong> 상태: <strong>${b.status}</strong> | 날짜: ${b.date} | 코스: ${b.course} (${b.time}) | 인원: ${b.count}명 | 금액: ${b.price.toLocaleString()}원
             </div>`;
         });
         detailsText.innerHTML = html;
-        cancelArea.innerHTML = '';
     }
 
-    function cancelBooking(orderNo) {
-        if(confirm('정말 예약을 취소하고 환불 처리를 진행하시겠습니까?')) {
+    function adminCancelBooking(orderNo) {
+        if(confirm('관리자 권한으로 해당 예약을 취소 및 환불 처리하시겠습니까?')) {
             const idx = bookings.findIndex(b => b.orderNo === orderNo);
             if (idx > -1) {
                 bookings[idx].status = '취소완료';
-                alert('예약이 정상적으로 취소되었습니다.');
-                searchMyBooking();
+                alert('예약이 관리자에 의해 취소 처리되었습니다.');
                 updateAdminDashboard();
             }
         }
@@ -1040,7 +1037,12 @@
         let pgHtml = '';
         bookings.forEach(b => {
             html += `<div style="padding:8px 0; border-bottom:1px solid #e2e8f0;">[${b.status}] ${b.date} | ${b.course} | ${b.name} (${b.tel}) | ${b.count}명 (${b.price.toLocaleString()}원)</div>`;
-            pgHtml += `<tr><td>${b.orderNo}</td><td>${b.name}</td><td>${b.price.toLocaleString()}원</td><td>${b.status}</td><td>관리</td></tr>`;
+            
+            let actionBtn = b.status === '결제완료' 
+                ? `<button type="button" class="btn-cancel-req" style="padding: 4px 8px; font-size: 0.8rem; margin-top:0;" onclick="adminCancelBooking('${b.orderNo}')">취소/환불</button>` 
+                : '<span style="color:#ef4444; font-weight:600;">취소완료</span>';
+            
+            pgHtml += `<tr><td>${b.orderNo}</td><td>${b.name}</td><td>${b.price.toLocaleString()}원</td><td>${b.status}</td><td>${actionBtn}</td></tr>`;
         });
         container.innerHTML = html;
         if(pgTable) pgTable.innerHTML = pgHtml;
@@ -1155,7 +1157,7 @@
             bookStep4: "4. 승선 인원",
             bookStep5: "5. 예약자 성함",
             phName: "성함 입력",
-            bookStep6: "6. 연락처 (취소 조회용)",
+            bookStep6: "6. 연락처 (조회용)",
             sumTitle: "📋 선택하신 예약 내역",
             sumDateLabel: "예약 날짜",
             sumCourseLabel: "선택 코스",
@@ -1163,8 +1165,8 @@
             sumCountLabel: "승선 인원",
             sumTotalLabel: "총 결제 금액",
             btnPayText: "비회원 안전 결제 및 예약 확정",
-            myBookingTitle: "🔍 비회원 예약 조회 및 취소하기",
-            myBookingDesc: "예약 시 입력하신 연락처로 내역을 조회하고 규정에 맞춰 즉시 취소하실 수 있습니다.",
+            myBookingTitle: "🔍 비회원 예약 조회하기",
+            myBookingDesc: "예약 시 입력하신 연락처로 내역을 조회하실 수 있습니다. (예약 취소는 관리자에게 문의해 주세요)",
             phSearchTel: "예약자 연락처 (- 제외)",
             btnSearch: "조회하기",
             adminSidebarTitle: "천일호 예약 관리자센터",
@@ -1188,12 +1190,12 @@
             adminSchedDesc: "주간/야간 코스별 출항 시간대와 시즌별 운항 일정을 관리합니다.",
             adminSchedDetails: "<p><strong>[주간 체험 2시간]</strong> 하절기: 10:00, 12:00, 13:00, 14:00, 16:00 / 동절기: 10:00, 12:00, 13:00, 15:00</p><p style=\"margin-top: 8px;\"><strong>[주간 체험 3시간]</strong> 하절기: 10:00, 12:00, 13:00, 15:00 / 동절기: 10:00, 12:00, 14:00</p><p style=\"margin-top: 8px;\"><strong>[야간 갈치낚시]</strong> 18:00 (8~11월)</p><p style=\"margin-top: 8px;\"><strong>[야간 한치체험]</strong> 18:30 (6월중순~9월초)</p>",
             adminPgTitle: "💳 복수 PG 예약 승인 및 환불",
-            adminPgDesc: "결제 시스템을 통한 예약 건의 승인 내역 조회 및 환불 처리를 진행합니다.",
+            adminPgDesc: "결제 시스템을 통한 예약 건의 승인 내역 조회 및 환불(관리자 취소) 처리를 진행합니다.",
             thOrderNo: "주문번호",
             thBooker: "예약자",
             thAmount: "금액",
             thPayStatus: "결제상태",
-            thManage: "관리",
+            thManage: "관리(취소/환불)",
             adminNoPayData: "조회된 결제 내역이 없습니다.",
             adminCheckinTitle: "📱 현장 체크인 (주문/전화번호)",
             adminCheckinDesc: "승선 당일 방문한 고객의 전화번호나 예약번호로 현장 승선 체크인을 처리합니다.",
@@ -1306,7 +1308,7 @@
             bookStep4: "4. Number of Passengers",
             bookStep5: "5. Booker Name",
             phName: "Enter name",
-            bookStep6: "6. Contact (For cancellation inquiry)",
+            bookStep6: "6. Contact",
             sumTitle: "📋 Selected Booking Details",
             sumDateLabel: "Booking Date",
             sumCourseLabel: "Selected Course",
@@ -1314,8 +1316,8 @@
             sumCountLabel: "Passengers",
             sumTotalLabel: "Total Price",
             btnPayText: "Non-member Secure Payment & Confirm Booking",
-            myBookingTitle: "🔍 Non-member Booking Inquiry & Cancellation",
-            myBookingDesc: "Inquire details with your contact number and cancel immediately according to the regulations.",
+            myBookingTitle: "🔍 Non-member Booking Inquiry",
+            myBookingDesc: "Inquire booking details with your contact number.",
             phSearchTel: "Contact number (excluding -)",
             btnSearch: "Inquire",
             adminSidebarTitle: "Chunilho Booking Admin Center",
@@ -1364,8 +1366,8 @@
             footerCopy: "Chunilho. All Rights Reserved."
         },
         ja: {
-            topBarAddress: "🌊 韓国済州特別自治道西帰浦市南城中路39 (チュニルホ)",
-            topBarInquiry: "📞 予約問い合わせ:+82 010-7768-5913",
+            topBarAddress: "🌊 済州西帰浦市南성中路39（チュ닐ホ）",
+            topBarInquiry: "📞 予約問い合わせ: 010-7768-5913",
             logoMainText: "西帰浦船釣り チュニルホ",
             logoSubText: "Seogwipo Chunilho Fishing",
             navHome: "ホーム",
@@ -1373,133 +1375,133 @@
             navLocation: "アクセス",
             navBooking: "リアルタイム予約",
             navAdmin: "管理者センター",
-            heroBadgeText: "済州西帰浦 必須旅行コース",
+            heroBadgeText: "済州西帰浦必須旅行コース",
             heroTitle: "海の上で迎える最も輝かしい瞬間",
-            heroSub: "初心者もお子様も誰でも簡単に手応えを楽しめる西帰浦沖のヒーリング船釣り",
+            heroSub: "初心者もお子様も誰でも簡単に手軽に楽しめる西帰浦の海釣りヒーリング",
             heroBtn: "ワクワクする予約を始める ✨",
             hLeftTitle: "👤 予約案内",
-            hLeftTelT: "予約およびカスタマーセンター",
-            hLeftBankT: "入金口座番号のご案内",
+            hLeftTelT: "予約・カスタマーセンター",
+            hLeftBankT: "入金口座番号案内",
             hBankOwner: "口座名義: カン・ジュヨン",
-            featT1: "初心者向け親切指導",
-            featD1: "釣り竿の持ち方からエサ付けまで船長が優しくお教えします。",
-            featT2: "昼間体験の道具＆装備",
-            featD2: "重い装備は不要！釣り竿、仕掛け、エサ、ライフジャケットまで全て無料レンタル！",
-            featT3: "新鮮な即席刺身",
+            featT1: "初心者向け親切レッスン",
+            featD1: "竿の持ち方からエサ付けまで船長が優しく教えます。",
+            featT2: "昼釣り用装備・道具",
+            featD2: "重い装備の準備は不要！竿、仕掛け、エサ、ライフジャケットまで無料貸出。",
+            featT3: "新鮮なその場での刺身",
             featD3: "青い海の上で自分で釣った新鮮な魚をその場で刺身で味わう感動！",
             featT4: "大切な人との思い出",
-            featD4: "家族、恋人、友人と共に笑顔の絶えない特別な済州の思い出を作ってみてください。",
+            featD4: "家族、恋人、友人たちと笑いが絶えない特別な済州の思い出を作ってみてください。",
             galTitle: "チュニルホのきらめく海の風景",
-            gal1: "子供たちと一緒に笑顔あふれる昼間体験釣り",
-            gal2: "夜の海のロマン、夜間太刀魚·サバ釣り (8~11月)",
-            gal3: "夏の夜の宝石、夜間アオリイカ体験釣り (6~9月)",
+            gal1: "子供たちと一緒に笑顔あふれる昼の体験釣り",
+            gal2: "夜の海のロマン、夜タチウオ・サバ釣り（8〜11月）",
+            gal3: "夏の夜の宝石、夜イカ体験釣り（6〜9月）",
             infoTitle: "運航コース及びシーズン案内",
             thCat: "区分",
             thCourse: "コース名",
             thSeason: "運航シーズン",
             thTime: "出港時間",
-            thDetails: "食事及び提供事項 (オプション/調理費用)",
+            thDetails: "食事及び提供事項（オプション／処理費用）",
             thPrice: "乗船料",
-            bDay: "昼間",
-            bNight: "夜間",
-            tC2: "昼間体験 2時間",
-            tC3: "昼間体験 3時間",
-            tS1: "夏季 (3月~8月)",
-            tS2: "冬季 (9月~2月)",
-            tD2: "釣り竿、仕掛け、オキアミ、ライフジャケット無料提供",
+            bDay: "昼",
+            bNight: "夜",
+            tC2: "昼の体験2時間",
+            tC3: "昼の体験3時間",
+            tS1: "夏季（3月〜8月）",
+            tS2: "冬季（9月〜2月）",
+            tD2: "竿、仕掛け、オキアミ、ライフジャケット無料提供",
             price30k: "30,000ウォン",
-            tD3Base: "釣り竿、仕掛け、オキアミ、ライフジャケット無料提供",
-            tD31: "即席刺身オプション: 基本3匹から1匹당2,000ウォン",
-            tD32: "入港1時間前に船長にお問い合わせ (気象状況により変動可能)",
-            tCGalchi: "夜間太刀魚釣り",
-            tSGalchi: "8月 ~ 11月中旬",
-            tTGalchi: "18:00出港",
+            tD3Base: "竿、仕掛け、オキアミ、ライフジャケット無料提供",
+            tD31: "刺身オプション: 基本3匹から1匹あたり2,000ウォン",
+            tD32: "入港1時間前に船長にお問い合わせ（気象状況により変動あり）",
+            tCGalchi: "夜タチウオ釣り",
+            tSGalchi: "8月〜11月中旬",
+            tTGalchi: "18:00 出港",
             tDGalchiText: "農心ユッケジャンカップ麺提供<br>(装備レンタル料2万ウォン現地決済)",
-            tDG1: "調理費用: 太刀魚、サバ1匹당2,000ウォン",
+            tDG1: "処理費用: タチウオ、サバ1匹あたり2,000ウォン",
             price90k: "90,000ウォン",
-            tCHanchi: "夜間アオリイカ体験",
-            tSHanchi: "6月中旬 ~ 9月初め",
-            tTHanchi: "18:30出港",
+            tCHanchi: "夜イカ体験",
+            tSHanchi: "6月中旬〜9月初め",
+            tTHanchi: "18:30 出港",
             tDHanchiText: "農心ユッケジャンカップ麺提供<br>(装備レンタル料1万ウォン現地決済)",
-            tDH1: "アオリイカ即席刺身 (現地食事): 1匹당4,000ウォン",
-            tDH2: "包装サービス: 包装費2,000ウォン追加 (容器、箸、チョコチュジャン含む)",
-            tDH3: "調理のみの場合: 1匹당2,000ウォン",
+            tDH1: "イカの即席刺身（現地での食事）: 1匹あたり4,000ウォン",
+            tDH2: "お持ち帰りサービス: 包装費2,000ウォン追加（容器、箸、チョコチュジャン付き）",
+            tDH3: "処理のみの場合: 1匹あたり2,000ウォン",
             price60k: "60,000ウォン",
-            kakaoInfo: "💬 ご不明な点はございますか？リアルタイムカ카오톡お問い合わせ: <strong>chunil1ho</strong>",
-            refundTitle: "📢 キャンセル及び払戻規定のご案内",
-            policy1Title: "1. 個人の事由及び単純変心によるキャンセル",
-            policy1_0: "購入確定後のキャンセル不可 (ただし、当日悪天候や船舶故障などの理由は可能)",
-            policy1_1: "利用日基準3日前のキャンセル時: 100%全額払戻",
-            policy1_2: "利用日基準2日前のキャンセル時: 払戻不可 (ただし、日程変更可能)",
-            policy1_3: "利用日1日前 / 当日のキャンセル及び変更: キャンセル·払戻及び変更不可",
+            kakaoInfo: "💬 ご不明な点はありますか？リアルタイムカカオトーク問い合わせ: <strong>chunil1ho</strong>",
+            refundTitle: "📢 キャンセル及び払い戻し規定案内",
+            policy1Title: "1. 個人の理由及び単純心変わりによるキャンセル",
+            policy1_0: "購入確定後のキャンセル不可（ただし、当日の悪天候や船舶故障などの理由は可能）",
+            policy1_1: "利用日の3日前キャンセル時: 100%全額払い戻し",
+            policy1_2: "利用日の2日前キャンセル時: 払い戻し不可（ただし日程変更可能）",
+            policy1_3: "利用日の1日前／当日キャンセル及び変更: キャンセル・払い戻しおよび変更不可",
             policy2Title: "2. 悪天候及び天災地変によるキャンセル",
-            policy2_1: "風浪注意報、大雨、海霧など顧客の安全上の理由で出港不可能な場合、利用日に関係なく100%全額払戻または無料の日付変更が可能です。",
-            policy3Title: "3. 業者事情 (船舶故障など)によるキャンセル",
-            policy3_1: "やむを得ない船舶の欠陥などで出漁不可能な場合、利用日に関係なく100%全額払戻措置いたします。",
+            policy2_1: "風浪注意報、大雨、海霧など顧客の安全上の理由で出港できない場合、利用日に関係なく100%全額払い戻しまたは無料の日程変更が可能です。",
+            policy3Title: "3. 業者事情（船舶故障など）によるキャンセル",
+            policy3_1: "やむを得ない船舶の不具合等により出港できない場合、利用日に関わらず100%全額払い戻し措置いたします。",
             locTitle: "アクセス案内",
             locHeading: "📍 位置及びアクセス方法",
-            locDesc: "チュニルホへのアクセス案内です。西帰浦港及びセヨンギョ付近で便利にご訪問いただけます。",
+            locDesc: "チュニルホへのアクセス案内です。西帰浦港およびセヨン교の周辺から便利にお越しいただけます。",
             locAddrLabel: "住所:",
-            locAddrVal: "済州特別自治道西帰浦市南城中路39",
-            locWayLabel: "アクセス方法:",
-            locWayVal: "西帰浦遊覧船駐車場入口の左側にある西帰浦船釣りチュニルホの看板を見てお下がりください。",
+            locAddrVal: "済州特別自治道西帰浦市南성中路39",
+            locWayLabel: "アクセス:",
+            locWayVal: "西帰浦遊覧船駐車場入口の左側にある西帰浦船釣りチュニルホの看板を見てお探しください。",
             locNearLabel: "周辺参考:",
-            locNearVal: "ハヨンオルレ1コース認証スタンプ (セヨンギョ) 及び西帰浦港付近",
+            locNearVal: "ハヨンオルレ1コース認証スタンプ（セヨンギョ）および西帰浦港付近",
             mapBtnText: "Googleマップで大きく見る",
-            bookTitle: "非会員 海の旅予約",
+            bookTitle: "非会員の海の旅を予約する",
             bookStep1: "1. 予約希望日",
             bookStep2: "2. 釣りコース選択",
-            optCourse1: "昼間体験 2時間 - 30,000ウォン (年中)",
-            optCourse2: "昼間体験 3時間 - 40,000ウォン (年中)",
-            optCourse3: "夜間太刀魚釣り - 90,000ウォン (シーズン: 8月~11月中旬)",
-            optCourse4: "夜間アオリイカ体験釣り - 60,000ウォン (シーズン: 6月中旬~9月初)",
+            optCourse1: "昼の体験2時間 - 30,000ウォン（年中）",
+            optCourse2: "昼の体験3時間 - 40,000ウォン（年中）",
+            optCourse3: "夜タチウオ釣り - 90,000ウォン（シーズン: 8月〜11月中旬）",
+            optCourse4: "夜イカ体験釣り - 60,000ウォン（シーズン: 6月中旬〜9月初め）",
             bookStep3: "3. 出港時間選択",
-            bookStep4: "4. 乗船人員",
+            bookStep4: "4. 乗船人数",
             bookStep5: "5. 予約者氏名",
             phName: "氏名入力",
-            bookStep6: "6. 連絡先 (キャンセル照会用)",
-            sumTitle: "📋 選択された予約内訳",
+            bookStep6: "6. 連絡先",
+            sumTitle: "📋 選択された予約内容",
             sumDateLabel: "予約日",
             sumCourseLabel: "選択コース",
             sumTimeLabel: "出港時間",
-            sumCountLabel: "乗船人員",
+            sumCountLabel: "乗船人数",
             sumTotalLabel: "合計決済金額",
-            btnPayText: "非会員安全決済及び予約確定",
-            myBookingTitle: "🔍 非会員予約照会及びキャンセル",
-            myBookingDesc: "ご予約時に入力された連絡先で内訳を照会し、規定に合わせて即時キャンセルできます。",
-            phSearchTel: "予約者連絡先 (- 除く)",
+            btnPayText: "非会員安全決済および予約確定",
+            myBookingTitle: "🔍 非会員予約照会",
+            myBookingDesc: "予約時に入力した連絡先で内容を照会できます。",
+            phSearchTel: "連絡先（ハイフンなし）",
             btnSearch: "照会する",
             adminSidebarTitle: "チュニルホ予約管理者センター",
             adminMenu1: "📊 ダッシュボード要約",
-            adminMenu2: "🏢 業者情報及び連動管理",
-            adminMenu3: "⏰ 回차(スケジュール) 管理",
-            adminMenu4: "💳 複数PG予約承認及び払戻",
+            adminMenu2: "🏢 業者情報および連動管理",
+            adminMenu3: "⏰ 回차（スケジュール）管理",
+            adminMenu4: "💳 複数PG予約承認及び払い戻し",
             adminMenu5: "📱 現地チェックイン",
-            adminDashTitle: "📊 ダッシュボード要約 (リアルタイム予約内訳)",
-            adminDashDesc: "お客様が予約を完了するとリアルタイムで反映される内訳です。",
-            adminDashSub: "📋 最近のリアルタイム決済及び予約内訳",
-            adminNoData: "登録された内訳はありません。",
+            adminDashTitle: "📊 ダッシュボード要約（リアルタイム予約履歴）",
+            adminDashDesc: "お客様が予約を完了するとリアルタイムで反映される履歴です。",
+            adminDashSub: "📋 最近のリアルタイム決済および予約履歴",
+            adminNoData: "登録された履歴がありません。",
             adminLogout: "管理者ログアウト",
-            adminInfoTitle: "🏢 業者情報及び連動管理",
-            adminInfoDesc: "基本情報及び外部サービス連動状態を管理します。",
+            adminInfoTitle: "🏢 業者情報および連動管理",
+            adminInfoDesc: "基本情報および外部サービス連動状態を管理します。",
             lblCompanyName: "商号",
             lblCompanyTel: "代表連絡先",
             lblCompanyBank: "入金口座",
             btnSave: "保存する",
-            adminSchedTitle: "⏰ 回차(スケジュール) 管理",
-            adminSchedDesc: "コース別出港時間帯とシーズン別運航日程を管理します。",
-            adminSchedDetails: "<p><strong>[昼間体験 2時間]</strong> 夏季: 10:00, 12:00, 13:00, 14:00, 16:00 / 冬季: 10:00, 12:00, 13:00, 15:00</p><p style=\"margin-top: 8px;\"><strong>[昼間体験 3時間]</strong> 夏季: 10:00, 12:00, 13:00, 15:00 / 冬季: 10:00, 12:00, 14:00</p><p style=\"margin-top: 8px;\"><strong>[夜間太刀魚]</strong> 18:00 (8~11月)</p><p style=\"margin-top: 8px;\"><strong>[夜間アオリイカ]</strong> 18:30 (6月中旬~9月初)</p>",
-            adminPgTitle: "💳 複数PG予約承認及び払戻",
-            adminPgDesc: "承認内訳の照会及び払戻処理を行います。",
+            adminSchedTitle: "⏰ 回차（スケジュール）管理",
+            adminSchedDesc: "出港時間帯とシーズン別運航日程を管理します。",
+            adminSchedDetails: "<p><strong>[昼の体験2時間]</strong> 夏季: 10:00, 12:00, 13:00, 14:00, 16:00 / 冬季: 10:00, 12:00, 13:00, 15:00</p><p style=\"margin-top: 8px;\"><strong>[昼の体験3시간]</strong> 夏季: 10:00, 12:00, 13:00, 15:00 / 冬季: 10:00, 12:00, 14:00</p><p style=\"margin-top: 8px;\"><strong>[夜タチウオ]</strong> 18:00 (8~11月)</p><p style=\"margin-top: 8px;\"><strong>[夜イカ]</strong> 18:30 (6月中旬~9月初め)</p>",
+            adminPgTitle: "💳 複数PG予約承認及び払い戻し",
+            adminPgDesc: "承認履歴の照会および払い戻し処理を行います。",
             thOrderNo: "注文番号",
             thBooker: "予約者",
             thAmount: "金額",
             thPayStatus: "決済状態",
             thManage: "管理",
-            adminNoPayData: "照会された決済内訳はありません。",
+            adminNoPayData: "照会された決済履歴がありません。",
             adminCheckinTitle: "📱 現地チェックイン",
-            adminCheckinDesc: "乗船当日に訪問した顧客の電話番号でチェックイン処理を行います。",
-            phCheckinTel: "予約者電話番号入力",
+            adminCheckinDesc: "電話番号または注文番号で現地乗船チェックインを処理します。",
+            phCheckinTel: "予約者の電話番号入力",
             btnCheckin: "チェックイン",
             authModalTitle: "管理者ログイン",
             lblId: "ID",
@@ -1510,46 +1512,46 @@
             footerTitle: "西帰浦船釣り チュニルホ",
             footerRep: "代表",
             footerBizNo: "事業者登録番号",
-            footerAddr: "住所: 韓国済州特別自治道西帰浦市南城中路39",
+            footerAddr: "住所: 済州特別自治道西帰浦市南성中路39",
             footerTel: "予約問い合わせ",
-            footerCopy: "Chunilho. All Rights Reserved."
+            footerCopy: "チュニルホ. All Rights Reserved."
         },
         zh: {
-            topBarAddress: "🌊 韩国济州特别自治道西归浦市南城中路39 (天日号)",
-            topBarInquiry: "📞 预约咨询: +82 010-7768-5913",
-            logoMainText: "西归浦船钓 天日号",
+            topBarAddress: "🌊 济州西归浦市南性中路39 (Chunilho)",
+            topBarInquiry: "📞 预约咨询: 010-7768-5913",
+            logoMainText: "西归浦海钓 Chunilho",
             logoSubText: "Seogwipo Chunilho Fishing",
             navHome: "首页",
             navInfo: "航行指南",
             navLocation: "交通路线",
             navBooking: "实时预约",
             navAdmin: "管理中心",
-            heroBadgeText: "济州西归浦 必游路线",
+            heroBadgeText: "济州西归浦必游路线",
             heroTitle: "在海面上迎接最灿烂的瞬间",
-            heroSub: "初学者和小朋友也能轻松享受手感的西归浦前海治愈海钓",
+            heroSub: "新手和儿童也能轻松享受手感的西归浦前海治愈海钓",
             heroBtn: "开始心动预约 ✨",
             hLeftTitle: "👤 预约指南",
             hLeftTelT: "预约及客户中心",
             hLeftBankT: "汇款账号指南",
             hBankOwner: "户名: 姜周妍",
-            featT1: "新手专属亲切指导",
+            featT1: "新手专属亲切教学",
             featD1: "从握钓竿到挂鱼饵，船长都会亲切地教您。",
-            featT2: "白天体验装备与工具",
-            featD2: "无需准备沉重装备！钓竿、钓组、鱼饵、救生衣全部免费提供。",
+            featT2: "白班体验装备与工具",
+            featD2: "无需准备沉重装备！钓竿、钓组、鱼饵、救生衣全部免费租借。",
             featT3: "新鲜现切生鱼片",
-            featD3: "在蔚蓝大海上，当场品尝自己亲手钓上来的新鲜鱼生，感动满满！",
+            featD3: "在蔚蓝大海上品尝自己亲手钓上来的新鲜活鱼的感动！",
             featT4: "与珍贵之人的回忆",
-            featD4: "与家人、恋人、朋友一起，留下充满欢声笑语的特别济州回忆。",
-            galTitle: "天日号波光粼粼的海景",
+            featD4: "与家人、恋人、朋友一起留下笑声不断的济州特别回忆。",
+            galTitle: "Chunilho波光粼粼的海景",
             gal1: "与孩子们一起充满欢笑的白天体验海钓",
-            gal2: "夜海的浪漫，夜间带鱼·鲭鱼海钓 (8~11月)",
-            gal3: "夏夜的宝石，夜间鱿鱼体验海钓 (6~9月)",
+            gal2: "夜海浪漫，夜间带鱼·鲭鱼海钓 (8~11月)",
+            gal3: "夏夜宝石，夜间鱿鱼体验海钓 (6~9月初)",
             infoTitle: "航行路线及季节指南",
             thCat: "分类",
             thCourse: "路线名称",
             thSeason: "航行季节",
             thTime: "出港时间",
-            thDetails: "餐饮及提供事项 (选项/加工费)",
+            thDetails: "餐饮及提供事项 (选项/加工费用)",
             thPrice: "船费",
             bDay: "白天",
             bNight: "夜间",
@@ -1557,111 +1559,111 @@
             tC3: "白天体验 3小时",
             tS1: "夏季 (3月~8月)",
             tS2: "冬季 (9月~2月)",
-            tD2: "免费提供钓竿、钓组、南极虾、救生衣",
+            tD2: "免费提供钓竿、钓组、磷虾、救生衣",
             price30k: "30,000韩元",
-            tD3Base: "免费提供钓竿、钓组、南极虾、救生衣",
-            tD31: "生鱼片选项: 3条起订，每条2,000韩元",
-            tD32: "进港前1小时咨询船长 (视天气情况可能有所变动)",
+            tD3Base: "免费提供钓竿、钓组、磷虾、救生衣",
+            tD31: "生鱼片选项: 基本3条起，每条2,000韩元",
+            tD32: "进港前1小时咨询船长 (视天气情况可能变动)",
             tCGalchi: "夜间带鱼海钓",
             tSGalchi: "8月 ~ 11月中旬",
             tTGalchi: "18:00 出港",
-            tDGalchiText: "提供农心辣牛肉汤面<br>(装备租用费2万韩元现场支付)",
-            tDG1: "加工费: 带鱼、鲭鱼每条2,000韩元",
+            tDGalchiText: "提供农心辣牛肉汤面<br>(装备租赁费2万韩元现场支付)",
+            tDG1: "加工费用: 带鱼、鲭鱼每条2,000韩元",
             price90k: "90,000韩元",
             tCHanchi: "夜间鱿鱼体验",
             tSHanchi: "6月中旬 ~ 9月初",
             tTHanchi: "18:30 出港",
-            tDHanchiText: "提供农心辣牛肉汤面<br>(装备租用费1万韩元现场支付)",
-            tDH1: "鱿鱼生鱼片 (现场食用): 每条4,000韩元",
-            tDH2: "打包服务: 另收2,000韩元包装费 (含容器、筷子、醋辣酱)",
+            tDHanchiText: "提供农心辣牛肉汤面<br>(装备租赁费1万韩元现场支付)",
+            tDH1: "鱿鱼现切生鱼片 (现场食用): 每条4,000韩元",
+            tDH2: "打包服务: 另加2,000韩元包装费 (含容器、筷子、醋辣酱)",
             tDH3: "仅加工处理: 每条2,000韩元",
             price60k: "60,000韩元",
-            kakaoInfo: "💬 有疑问吗？实时 KakaoTalk 咨询: <strong>chunil1ho</strong>",
+            kakaoInfo: "💬 有疑问吗？实时KakaoTalk咨询: <strong>chunil1ho</strong>",
             refundTitle: "📢 取消及退款规定指南",
             policy1Title: "1. 个人原因及单纯变卦取消",
-            policy1_0: "确认购买后不可取消 (但当天天气恶劣或船舶故障等原因除外)",
+            policy1_0: "购买确认后不可取消(当日恶劣天气或船舶故障等原因除外)",
             policy1_1: "使用日前3天取消时: 100%全额退款",
             policy1_2: "使用日前2天取消时: 不予退款 (但可更改日程)",
-            policy1_3: "使用日前1天 / 当天取消及更改: 不可取消·退款及更改",
-            policy2Title: "2. 恶劣天气及天灾人祸取消",
-            policy2_1: "若因风浪预警、暴雨、海雾等客户安全原因无法出港，无论使用日期如何，均可100%全额退款或免费更改日期。",
-            policy3Title: "3. 商家原因 (船舶故障等) 取消",
-            policy3_1: "若因不可避免的船舶缺陷无法出海，无论使用日期如何，均全额退款。",
+            policy1_3: "使用日前1天/当日取消及更改: 无法取消·退款及更改",
+            policy2Title: "2. 恶劣天气及不可抗力取消",
+            policy2_1: "若因风浪注意报、暴雨、海雾等客户安全原因无法出港，无论使用日为何，均可100%全额退款或免费更改日期。",
+            policy3Title: "3. 商家原因(船舶故障等)取消",
+            policy3_1: "若因船舶故障等不可避免的原因无法出海，无论使用日为何，均给予100%全额退款。",
             locTitle: "交通路线指南",
-            locHeading: "📍 位置及交通路线",
-            locDesc: "前往天日号的路线指南。您可在西归浦港及新缘桥附近便捷访问。",
+            locHeading: "📍 位置及乘车路线",
+            locDesc: "前往Chunilho的路线指南。可在西归浦港及新缘桥附近便捷访问。",
             locAddrLabel: "地址:",
-            locAddrVal: "济州特别自治道西归浦市南城中路39",
+            locAddrVal: "济州特别自治道西归浦市南性中路39",
             locWayLabel: "乘车路线:",
-            locWayVal: "看到西归浦游艇停车场入口左侧的“西归浦船钓天日号”标牌后向下走即可。",
+            locWayVal: "看到西归浦游船停车场入口左侧的西归浦海钓Chunilho招牌后走下来即可。",
             locNearLabel: "周边参考:",
-            locNearVal: "正房瀑布、新缘桥及西归浦港附近",
+            locNearVal: "河荣奥来1路线认证印章(新缘桥)及西归浦港附近",
             mapBtnText: "在谷歌地图中查看大图",
-            bookTitle: "非会员海洋之旅预约",
-            bookStep1: "1. 预定希望日期",
+            bookTitle: "非会员海边之旅预约",
+            bookStep1: "1. 期望预约日期",
             bookStep2: "2. 选择海钓路线",
             optCourse1: "白天体验 2小时 - 30,000韩元 (全年)",
             optCourse2: "白天体验 3小时 - 40,000韩元 (全年)",
-            optCourse3: "夜间带鱼海钓 - 90,000韩元 (季节: 8月~11月中旬)",
-            optCourse4: "夜间鱿鱼体验海钓 - 60,000韩元 (季节: 6月中旬~9月初)",
+            optCourse3: "夜间带鱼海钓 - 90,000韩元 (赛季: 8月~11月中旬)",
+            optCourse4: "夜间鱿鱼体验海钓 - 60,000韩元 (赛季: 6月中旬~9月初)",
             bookStep3: "3. 选择出港时间",
             bookStep4: "4. 乘船人数",
             bookStep5: "5. 预约人姓名",
             phName: "输入姓名",
-            bookStep6: "6. 联系方式 (用于取消查询)",
+            bookStep6: "6. 联系方式",
             sumTitle: "📋 您选择的预约详情",
             sumDateLabel: "预约日期",
             sumCourseLabel: "选择路线",
             sumTimeLabel: "出港时间",
             sumCountLabel: "乘船人数",
             sumTotalLabel: "总支付金额",
-            btnPayText: "非会员安全支付并确认预约",
-            myBookingTitle: "🔍 非会员预约查询及取消",
-            myBookingDesc: "通过您预约时输入的联系方式查询详情，并可根据规定立即取消。",
-            phSearchTel: "预约人联系方式 (不含-)",
+            btnPayText: "非会员安全支付及确认预约",
+            myBookingTitle: "🔍 非会员预约查询",
+            myBookingDesc: "可用预约时输入的联系方式查询详情。",
+            phSearchTel: "联系方式 (不含-)",
             btnSearch: "查询",
-            adminSidebarTitle: "天日号预约管理中心",
+            adminSidebarTitle: "Chunilho预约管理中心",
             adminMenu1: "📊 仪表盘摘要",
-            adminMenu2: "🏢 商家信息及对接管理",
+            adminMenu2: "🏢 企业信息及联动管理",
             adminMenu3: "⏰ 班次(日程)管理",
             adminMenu4: "💳 多重PG预约批准及退款",
-            adminMenu5: "📱 现场检票 (订单/电话)",
-            adminDashTitle: "📊 仪表盘摘要 (实时预约明细)",
-            adminDashDesc: "客人完成预约后实时反映的明细。",
-            adminDashSub: "📋 最近实时支付及预约明细",
-            adminNoData: "没有注册的明细。",
+            adminMenu5: "📱 现场签到",
+            adminDashTitle: "📊 仪表盘摘要 (实时预约记录)",
+            adminDashDesc: "顾客完成预约后实时反映的记录。",
+            adminDashSub: "📋 最近实时支付及预约记录",
+            adminNoData: "没有登记的记录。",
             adminLogout: "管理员登出",
-            adminInfoTitle: "🏢 商家信息及对接管理",
-            adminInfoDesc: "管理基本信息及外部服务对接状态。",
-            lblCompanyName: "商户名称",
+            adminInfoTitle: "🏢 企业信息及联动管理",
+            adminInfoDesc: "管理基本信息及外部服务联动状态。",
+            lblCompanyName: "商户名",
             lblCompanyTel: "代表联系方式",
             lblCompanyBank: "汇款账号",
             btnSave: "保存",
             adminSchedTitle: "⏰ 班次(日程)管理",
-            adminSchedDesc: "管理路线出港时间段及各季节航行日程。",
+            adminSchedDesc: "管理出港时间段及各季节航行日程。",
             adminSchedDetails: "<p><strong>[白天体验 2小时]</strong> 夏季: 10:00, 12:00, 13:00, 14:00, 16:00 / 冬季: 10:00, 12:00, 13:00, 15:00</p><p style=\"margin-top: 8px;\"><strong>[白天体验 3小时]</strong> 夏季: 10:00, 12:00, 13:00, 15:00 / 冬季: 10:00, 12:00, 14:00</p><p style=\"margin-top: 8px;\"><strong>[夜间带鱼]</strong> 18:00 (8~11月)</p><p style=\"margin-top: 8px;\"><strong>[夜间鱿鱼]</strong> 18:30 (6月中旬~9月初)</p>",
             adminPgTitle: "💳 多重PG预约批准及退款",
-            adminPgDesc: "查询批准明细并进行退款处理。",
+            adminPgDesc: "查询批准记录并处理退款。",
             thOrderNo: "订单号",
             thBooker: "预约人",
             thAmount: "金额",
             thPayStatus: "支付状态",
             thManage: "管理",
-            adminNoPayData: "没有查询到支付明细。",
-            adminCheckinTitle: "📱 现场检票",
-            adminCheckinDesc: "通过乘船当天来访顾客的电话号码进行现场登船检票。",
+            adminNoPayData: "没有查询到支付记录。",
+            adminCheckinTitle: "📱 现场签到",
+            adminCheckinDesc: "通过电话号码或订单号处理现场登船签到。",
             phCheckinTel: "输入预约人电话号码",
-            btnCheckin: "检票",
+            btnCheckin: "签到",
             authModalTitle: "管理员登录",
             lblId: "账号",
             phId: "输入管理员账号",
             lblPw: "密码",
             phPw: "输入管理员密码",
             btnLoginAction: "管理员登录",
-            footerTitle: "西归浦船钓 天日号",
+            footerTitle: "西归浦海钓 Chunilho",
             footerRep: "代表",
-            footerBizNo: "企业登记号",
-            footerAddr: "地址: 韩国济州特别自治道西归浦市南城中路39",
+            footerBizNo: "营业执照号",
+            footerAddr: "地址: 济州特别自治道西归浦市南性中路39",
             footerTel: "预约咨询",
             footerCopy: "Chunilho. All Rights Reserved."
         }
