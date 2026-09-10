@@ -131,28 +131,6 @@
         .map-btn { display: inline-block; background: #4285F4; color: white; padding: 12px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; transition: background 0.2s; font-size: 0.95rem; }
         .map-btn:hover { background: #3367d6; }
 
-        .status-page-box { background: var(--card-bg); border-radius: 16px; padding: 2.2rem; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); }
-        .status-guide-text { font-size: 0.95rem; color: var(--text-sub); margin-bottom: 1.5rem; text-align: center; }
-
-        .calendar-box { background: #f8fafc; border-radius: 12px; padding: 1.5rem; border: 1px solid var(--border-color); margin-bottom: 2rem; }
-        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-        .calendar-header h3 { font-size: 1.2rem; color: var(--primary-color); font-weight: 800; }
-        .cal-nav-btn { background: #ffffff; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 700; color: var(--primary-color); }
-        .cal-nav-btn:hover { background: var(--primary-color); color: #fff; }
-        
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center; }
-        .cal-day-name { font-weight: 700; font-size: 0.85rem; color: var(--text-sub); padding: 8px 0; }
-        .cal-day-name:first-child { color: #ef4444; }
-        .cal-day-name:last-child { color: #3b82f6; }
-        
-        .cal-date-cell { min-height: 90px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s; position: relative; cursor: pointer; }
-        .cal-date-cell:hover { border-color: var(--primary-color); box-shadow: 0 4px 12px rgba(15,44,89,0.08); transform: translateY(-2px); }
-        .cal-date-cell.other-month { opacity: 0.3; background: #f1f5f9; cursor: default; pointer-events: none; }
-        .cal-day-num { font-size: 0.9rem; font-weight: 700; color: var(--text-main); text-align: left; }
-        .cal-status { font-size: 0.72rem; font-weight: 700; padding: 3px 6px; border-radius: 4px; margin-top: auto; text-align: center; }
-        .status-available { background: #dcfce7; color: #15803d; }
-        .status-full { background: #fee2e2; color: #b91c1c; }
-
         .booking-layout { display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 2rem; align-items: start; }
         .form-box { background: var(--card-bg); border-radius: 16px; padding: 2.2rem; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); }
         
@@ -266,7 +244,6 @@
         <li><button type="button" class="nav-btn active" id="nav-home" onclick="switchCategory('cat-home', this)" data-i18n="navHome">홈</button></li>
         <li><button type="button" class="nav-btn" id="nav-info" onclick="switchCategory('cat-info', this)" data-i18n="navInfo">운항안내</button></li>
         <li><button type="button" class="nav-btn" id="nav-location" onclick="switchCategory('cat-location', this)" data-i18n="navLocation">찾아오시는 길</button></li>
-        <li><button type="button" class="nav-btn" id="nav-status" onclick="switchCategory('cat-status', this)" data-i18n="navStatus">예약현황</button></li>
         <li><button type="button" class="nav-btn" id="nav-booking" onclick="switchCategory('cat-booking', this)" data-i18n="navBooking">실시간예약</button></li>
         <li id="nav-admin-li" style="display: none;"><button type="button" class="nav-btn" id="nav-admin" onclick="checkAdminAccess()" data-i18n="navAdmin">관리자센터</button></li>
     </ul>
@@ -487,32 +464,7 @@
         </div>
     </div>
 
-    <!-- 4. 실시간 예약현황 달력 전용 메뉴 -->
-    <div id="cat-status" class="category-sec">
-        <h2 class="section-title" id="status-title" data-i18n="statusTitle">📅 실시간 예약 현황</h2>
-        <div class="status-page-box">
-            <p class="status-guide-text" data-i18n="statusGuideText">날짜를 클릭하시면 해당 날짜로 실시간 예약을 진행하실 수 있습니다.</p>
-            <div class="calendar-box">
-                <div class="calendar-header">
-                    <button type="button" class="cal-nav-btn" onclick="changeMonth(-1)" data-i18n="prevMonth">◀ 이전 달</button>
-                    <h3 id="calMonthTitleStatus">2026년 9월 예약 현황</h3>
-                    <button type="button" class="cal-nav-btn" onclick="changeMonth(1)" data-i18n="nextMonth">다음 달 ▶</button>
-                </div>
-                <div class="calendar-grid">
-                    <div class="cal-day-name" data-i18n="daySun">일</div>
-                    <div class="cal-day-name" data-i18n="dayMon">월</div>
-                    <div class="cal-day-name" data-i18n="dayTue">화</div>
-                    <div class="cal-day-name" data-i18n="dayWed">수</div>
-                    <div class="cal-day-name" data-i18n="dayThu">목</div>
-                    <div class="cal-day-name" data-i18n="dayFri">금</div>
-                    <div class="cal-day-name" data-i18n="daySat">토</div>
-                </div>
-                <div id="calendarDaysGridStatus" class="calendar-grid" style="margin-top: 8px;"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 5. 실시간예약 및 조회/취소 카테고리 -->
+    <!-- 4. 실시간예약 및 조회/취소 카테고리 -->
     <div id="cat-booking" class="category-sec">
         <h2 class="section-title" id="book-title" data-i18n="bookTitle">비회원 바다 여행 예약하기</h2>
 
@@ -554,6 +506,36 @@
                                 <option value="8">8명</option>
                                 <option value="9">9명</option>
                                 <option value="10">10명</option>
+                                <option value="11">11명</option>
+                                <option value="12">12명</option>
+                                <option value="13">13명</option>
+                                <option value="14">14명</option>
+                                <option value="15">15명</option>
+                                <option value="16">16명</option>
+                                <option value="17">17명</option>
+                                <option value="18">18명</option>
+                                <option value="19">19명</option>
+                                <option value="20">20명</option>
+                                <option value="21">21명</option>
+                                <option value="22">22명</option>
+                                <option value="23">23명</option>
+                                <option value="24">24명</option>
+                                <option value="25">25명</option>
+                                <option value="26">26명</option>
+                                <option value="27">27명</option>
+                                <option value="28">28명</option>
+                                <option value="29">29명</option>
+                                <option value="30">30명</option>
+                                <option value="31">31명</option>
+                                <option value="32">32명</option>
+                                <option value="33">33명</option>
+                                <option value="34">34명</option>
+                                <option value="35">35명</option>
+                                <option value="36">36명</option>
+                                <option value="37">37명</option>
+                                <option value="38">38명</option>
+                                <option value="39">39명</option>
+                                <option value="40">40명</option>
                             </select>
                         </div>
 
@@ -612,7 +594,7 @@
         </div>
     </div>
 
-    <!-- 6. 관리자센터 카테고리 -->
+    <!-- 5. 관리자센터 카테고리 -->
     <div id="cat-admin" class="category-sec">
         <div class="admin-dashboard-layout">
             <div class="admin-sidebar">
@@ -717,8 +699,6 @@
 
 <script>
     let currentLang = 'ko';
-    let currentYear = 2026;
-    let currentMonth = 8; // 0-indexed (9월)
     let bookings = []; 
     let isAdminLoggedIn = false;
     const ADMIN_PHONE = '010-7768-5913'; // 관리자 연락처
@@ -741,14 +721,37 @@
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             btnEl.classList.add('active');
         }
-        if (catId === 'cat-status') {
-            renderCalendarStatus();
-        }
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function goToBooking() {
         switchCategory('cat-booking', document.getElementById('nav-booking'));
+    }
+
+    // 언어 변경 함수 추가 (자동번역 오류 수정 대응)
+    function setLanguage(lang) {
+        currentLang = lang;
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        event.target.classList.add('active');
+
+        const t = translations[lang];
+        if (!t) return;
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (t[key]) {
+                el.innerHTML = t[key];
+            }
+        });
+
+        document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+            const key = el.getAttribute('data-i18n-ph');
+            if (t[key]) {
+                el.placeholder = t[key];
+            }
+        });
     }
 
     function updateOptions() {
@@ -883,7 +886,7 @@
         const orderNo = 'ORD_' + new Date().getTime();
 
         if (typeof IMP !== 'undefined') {
-            IMP.init('imp12345678');
+            IMP.init('imp01457787');
             IMP.request_pay({
                 pg: 'html5_inicis',
                 pay_method: 'card',
@@ -922,11 +925,6 @@
         bookings.push(newBooking);
         updateAdminDashboard();
 
-        // ----------------------------------------------------
-        // [문자 발송 기능 추가] 
-        // 1. 손님에게 가는 예약 완료 문자
-        // 2. 관리자에게 가는 결제 완료 문자 (실제 서비스 시 문자 발송 API 연동)
-        // ----------------------------------------------------
         sendCustomerSMS(tel, name, date, course, time, count, price);
         sendAdminSMS(ADMIN_PHONE, name, tel, date, course, time, count, price);
 
@@ -935,15 +933,13 @@
         updateSummary();
     }
 
-    // 손님에게 발송할 문자 전송 함수 (시뮬레이션)
     function sendCustomerSMS(custTel, custName, date, course, time, count, price) {
-        const message = `[서귀포배낚시 천일호]\n${custName}님, 예약이 정상적으로 확정되었습니다.\n- 일시: ${date} ${time}\n- 코스: ${course} (${count}명)\n- 결제금액: ${price.toLocaleString()}원\n- 오시는곳: 제주 서귀포시 남성중로 39`;
+        const message = `[서귀포배낚시 천일호]\n${custName}님, 예약이 정상적으로 완료(확정)되었습니다.\n\n- 예약자명: ${custName}\n- 전화번호: ${custTel}\n- 예약날짜: ${date}\n- 출항시간: ${time}\n- 선택코스: ${course} (${count}명)\n- 결제금액: ${price.toLocaleString()}원\n\n- 오시는곳: 제주 서귀포시 남성중로 39\n즐거운 바다 여행 되시길 바랍니다!`;
         console.log(`--- [손님 문자 발송 (${custTel})] ---\n${message}\n----------------------------------`);
     }
 
-    // 관리자에게 발송할 문자 전송 함수 (시뮬레이션)
     function sendAdminSMS(adminTel, custName, custTel, date, course, time, count, price) {
-        const message = `[천일호 관리자 알림] 새로운 예약(결제완료)이 접수되었습니다.\n- 예약자: ${custName} (${custTel})\n- 일시: ${date} ${time}\n- 코스: ${course} (${count}명)\n- 결제금액: ${price.toLocaleString()}원`;
+        const message = `[천일호 관리자 알림] 새로운 예약(결제완료) 건이 접수되었습니다.\n\n- 예약자명: ${custName}\n- 전화번호: ${custTel}\n- 예약날짜: ${date}\n- 출항시간: ${time}\n- 선택코스: ${course} (${count}명)\n- 결제금액: ${price.toLocaleString()}원`;
         console.log(`--- [관리자 문자 발송 (${adminTel})] ---\n${message}\n----------------------------------`);
     }
 
@@ -990,56 +986,6 @@
         }
     }
 
-    function renderCalendarStatus() {
-        const grid = document.getElementById('calendarDaysGridStatus');
-        const title = document.getElementById('calMonthTitleStatus');
-        if (!grid) return;
-        
-        grid.innerHTML = '';
-        title.innerText = `${currentYear}년 ${currentMonth + 1}월 예약 현황`;
-
-        const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-        const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-        for (let i = 0; i < firstDay; i++) {
-            const cell = document.createElement('div');
-            cell.className = 'cal-date-cell other-month';
-            grid.appendChild(cell);
-        }
-
-        for (let d = 1; d <= lastDate; d++) {
-            const cell = document.createElement('div');
-            cell.className = 'cal-date-cell';
-            
-            const monthStr = String(currentMonth + 1).padStart(2, '0');
-            const dayStr = String(d).padStart(2, '0');
-            const dateFullStr = `${currentYear}-${monthStr}-${dayStr}`;
-
-            cell.innerHTML = `
-                <div class="cal-day-num">${d}</div>
-                <div class="cal-status status-available">예약가능</div>
-            `;
-            cell.onclick = function() {
-                document.getElementById('custDate').value = dateFullStr;
-                switchCategory('cat-booking', document.getElementById('nav-booking'));
-                updateOptions();
-            };
-            grid.appendChild(cell);
-        }
-    }
-
-    function changeMonth(diff) {
-        currentMonth += diff;
-        if (currentMonth > 11) {
-            currentMonth = 0;
-            currentYear++;
-        } else if (currentMonth < 0) {
-            currentMonth = 11;
-            currentYear--;
-        }
-        renderCalendarStatus();
-    }
-
     function checkAdminAccess() {
         if (isAdminLoggedIn) {
             switchCategory('cat-admin', document.getElementById('nav-admin'));
@@ -1055,7 +1001,7 @@
     function processLogin() {
         const id = document.getElementById('loginId').value.trim();
         const pw = document.getElementById('loginPw').value.trim();
-        if (id === 'admin' && pw === '1234') {
+        if (id === '천일호' && pw === 'tkfkd486@@') {
             isAdminLoggedIn = true;
             closeAuthModal();
             document.getElementById('nav-admin-li').style.display = 'inline-block';
@@ -1123,7 +1069,6 @@
             navHome: "홈",
             navInfo: "운항안내",
             navLocation: "찾아오시는 길",
-            navStatus: "예약현황",
             navBooking: "실시간예약",
             navAdmin: "관리자센터",
             heroBadgeText: "제주 서귀포 필수 여행 코스",
@@ -1199,17 +1144,6 @@
             locNearLabel: "주변 참고:",
             locNearVal: "하영올레 1코스 인증스탬프(새연교) 및 서귀포항 인근",
             mapBtnText: "구글 지도에서 크게 보기",
-            statusTitle: "📅 실시간 예약 현황",
-            statusGuideText: "날짜를 클릭하시면 해당 날짜로 실시간 예약을 진행하실 수 있습니다.",
-            prevMonth: "◀ 이전 달",
-            nextMonth: "다음 달 ▶",
-            daySun: "일",
-            dayMon: "월",
-            dayTue: "화",
-            dayWed: "수",
-            dayThu: "목",
-            dayFri: "금",
-            daySat: "토",
             bookTitle: "비회원 바다 여행 예약하기",
             bookStep1: "1. 예약 희망 날짜",
             bookStep2: "2. 낚시 코스 선택",
@@ -1286,7 +1220,6 @@
             navHome: "Home",
             navInfo: "Schedule",
             navLocation: "Location",
-            navStatus: "Status",
             navBooking: "Booking",
             navAdmin: "Admin",
             heroBadgeText: "Jeju Seogwipo Essential Course",
@@ -1362,17 +1295,6 @@
             locNearLabel: "Nearby:",
             locNearVal: "Hayoung Olle Course 1 stamp (Saeyeongyo) & Seogwipo Port",
             mapBtnText: "View Larger on Google Maps",
-            statusTitle: "📅 Real-time Booking Status",
-            statusGuideText: "Click a date to proceed with real-time booking for that date.",
-            prevMonth: "◀ Prev Month",
-            nextMonth: "Next Month ▶",
-            daySun: "Sun",
-            dayMon: "Mon",
-            dayTue: "Tue",
-            dayWed: "Wed",
-            dayThu: "Thu",
-            dayFri: "Fri",
-            daySat: "Sat",
             bookTitle: "Non-member Sea Trip Booking",
             bookStep1: "1. Preferred Date",
             bookStep2: "2. Select Fishing Course",
@@ -1442,14 +1364,13 @@
             footerCopy: "Chunilho. All Rights Reserved."
         },
         ja: {
-            topBarAddress: "🌊 韓国済州特別自治道西귀포市南城中路39 (チュニルホ)",
+            topBarAddress: "🌊 韓国済州特別自治道西帰浦市南城中路39 (チュニルホ)",
             topBarInquiry: "📞 予約問い合わせ:+82 010-7768-5913",
             logoMainText: "西帰浦船釣り チュニルホ",
             logoSubText: "Seogwipo Chunilho Fishing",
             navHome: "ホーム",
             navInfo: "運航案内",
             navLocation: "アクセス",
-            navStatus: "予約状況",
             navBooking: "リアルタイム予約",
             navAdmin: "管理者センター",
             heroBadgeText: "済州西帰浦 必須旅行コース",
@@ -1481,7 +1402,7 @@
             thPrice: "乗船料",
             bDay: "昼間",
             bNight: "夜間",
-            tC2: "昼間体験 2시간",
+            tC2: "昼間体験 2時間",
             tC3: "昼間体験 3時間",
             tS1: "夏季 (3月~8月)",
             tS2: "冬季 (9月~2月)",
@@ -1517,32 +1438,21 @@
             policy3_1: "やむを得ない船舶の欠陥などで出漁不可能な場合、利用日に関係なく100%全額払戻措置いたします。",
             locTitle: "アクセス案内",
             locHeading: "📍 位置及びアクセス方法",
-            locDesc: "チュニルホへのアクセス案内です。西帰浦港及びセヨンギョ付近で便利にごご訪問いただけます。",
+            locDesc: "チュニルホへのアクセス案内です。西帰浦港及びセヨンギョ付近で便利にご訪問いただけます。",
             locAddrLabel: "住所:",
             locAddrVal: "済州特別自治道西帰浦市南城中路39",
             locWayLabel: "アクセス方法:",
-            locWayVal: "西帰浦遊覧船駐車場入口の左側にある西帰浦船釣りチュニルホの看板を見てお探しください。",
+            locWayVal: "西帰浦遊覧船駐車場入口の左側にある西帰浦船釣りチュニルホの看板を見てお下がりください。",
             locNearLabel: "周辺参考:",
             locNearVal: "ハヨンオルレ1コース認証スタンプ (セヨンギョ) 及び西帰浦港付近",
             mapBtnText: "Googleマップで大きく見る",
-            statusTitle: "📅 リアルタイム予約状況",
-            statusGuideText: "日付をクリックすると、該当する日付でリアルタイム予約を進めることができます。",
-            prevMonth: "◀ 前月",
-            nextMonth: "翌月 ▶",
-            daySun: "日",
-            dayMon: "月",
-            dayTue: "火",
-            dayWed: "水",
-            dayThu: "木",
-            dayFri: "金",
-            daySat: "土",
             bookTitle: "非会員 海の旅予約",
             bookStep1: "1. 予約希望日",
             bookStep2: "2. 釣りコース選択",
             optCourse1: "昼間体験 2時間 - 30,000ウォン (年中)",
             optCourse2: "昼間体験 3時間 - 40,000ウォン (年中)",
             optCourse3: "夜間太刀魚釣り - 90,000ウォン (シーズン: 8月~11月中旬)",
-            optCourse4: "夜間アオリイカ体験釣り - 60,000ウォン (シーズン: 6月中旬~9月初め)",
+            optCourse4: "夜間アオリイカ体験釣り - 60,000ウォン (シーズン: 6月中旬~9月初)",
             bookStep3: "3. 出港時間選択",
             bookStep4: "4. 乗船人員",
             bookStep5: "5. 予約者氏名",
@@ -1553,42 +1463,42 @@
             sumCourseLabel: "選択コース",
             sumTimeLabel: "出港時間",
             sumCountLabel: "乗船人員",
-            sumTotalLabel: "合計金額",
+            sumTotalLabel: "合計決済金額",
             btnPayText: "非会員安全決済及び予約確定",
             myBookingTitle: "🔍 非会員予約照会及びキャンセル",
-            myBookingDesc: "ご予約時に入力いただいた連絡先で内訳を照会し、規定に合わせて即時キャンセルできます。",
+            myBookingDesc: "ご予約時に入力された連絡先で内訳を照会し、規定に合わせて即時キャンセルできます。",
             phSearchTel: "予約者連絡先 (- 除く)",
             btnSearch: "照会する",
             adminSidebarTitle: "チュニルホ予約管理者センター",
-            adminMenu1: "📊 ダッシュボード要약",
-            adminMenu2: "🏢 業者情報及び連동管理",
+            adminMenu1: "📊 ダッシュボード要約",
+            adminMenu2: "🏢 業者情報及び連動管理",
             adminMenu3: "⏰ 回차(スケジュール) 管理",
             adminMenu4: "💳 複数PG予約承認及び払戻",
-            adminMenu5: "📱 現場チェックイン",
-            adminDashTitle: "📊 ダッシュボード要약 (リアルタイム予約内訳)",
+            adminMenu5: "📱 現地チェックイン",
+            adminDashTitle: "📊 ダッシュボード要約 (リアルタイム予約内訳)",
             adminDashDesc: "お客様が予約を完了するとリアルタイムで反映される内訳です。",
             adminDashSub: "📋 最近のリアルタイム決済及び予約内訳",
             adminNoData: "登録された内訳はありません。",
             adminLogout: "管理者ログアウト",
-            adminInfoTitle: "🏢 業者情報及び連동管理",
-            adminInfoDesc: "基本情報及び外部サービス連동状態を管理します。",
+            adminInfoTitle: "🏢 業者情報及び連動管理",
+            adminInfoDesc: "基本情報及び外部サービス連動状態を管理します。",
             lblCompanyName: "商号",
             lblCompanyTel: "代表連絡先",
             lblCompanyBank: "入金口座",
             btnSave: "保存する",
             adminSchedTitle: "⏰ 回차(スケジュール) 管理",
-            adminSchedDesc: "コース別出港時間帯とシーズン別運항日程を管理します。",
-            adminSchedDetails: "<p><strong>[昼間体験 2時間]</strong> 夏季: 10:00, 12:00, 13:00, 14:00, 16:00 / 冬季: 10:00, 12:00, 13:00, 15:00</p>",
+            adminSchedDesc: "コース別出港時間帯とシーズン別運航日程を管理します。",
+            adminSchedDetails: "<p><strong>[昼間体験 2時間]</strong> 夏季: 10:00, 12:00, 13:00, 14:00, 16:00 / 冬季: 10:00, 12:00, 13:00, 15:00</p><p style=\"margin-top: 8px;\"><strong>[昼間体験 3時間]</strong> 夏季: 10:00, 12:00, 13:00, 15:00 / 冬季: 10:00, 12:00, 14:00</p><p style=\"margin-top: 8px;\"><strong>[夜間太刀魚]</strong> 18:00 (8~11月)</p><p style=\"margin-top: 8px;\"><strong>[夜間アオリイカ]</strong> 18:30 (6月中旬~9月初)</p>",
             adminPgTitle: "💳 複数PG予約承認及び払戻",
-            adminPgDesc: "決済システムを通じた予約件の承認内訳照会及び払戻処理を行います。",
+            adminPgDesc: "承認内訳の照会及び払戻処理を行います。",
             thOrderNo: "注文番号",
             thBooker: "予約者",
             thAmount: "金額",
             thPayStatus: "決済状態",
             thManage: "管理",
             adminNoPayData: "照会された決済内訳はありません。",
-            adminCheckinTitle: "📱 現場チェックイン",
-            adminCheckinDesc: "乗船当日に訪問した顧客の電話番号や予約番号で現場乗船チェックインを処理します。",
+            adminCheckinTitle: "📱 現地チェックイン",
+            adminCheckinDesc: "乗船当日に訪問した顧客の電話番号でチェックイン処理を行います。",
             phCheckinTel: "予約者電話番号入力",
             btnCheckin: "チェックイン",
             authModalTitle: "管理者ログイン",
@@ -1596,38 +1506,166 @@
             phId: "管理者ID入力",
             lblPw: "パスワード",
             phPw: "管理者パスワード入力",
-            btnLoginAction: "管理者ログイン",
+            btnLoginAction: "管理者ログインする",
             footerTitle: "西帰浦船釣り チュニルホ",
             footerRep: "代表",
             footerBizNo: "事業者登録番号",
-            footerAddr: "住所: 韓国済州特別自治道西귀포市南城中路39",
+            footerAddr: "住所: 韓国済州特別自治道西帰浦市南城中路39",
             footerTel: "予約問い合わせ",
+            footerCopy: "Chunilho. All Rights Reserved."
+        },
+        zh: {
+            topBarAddress: "🌊 韩国济州特别自治道西归浦市南城中路39 (天日号)",
+            topBarInquiry: "📞 预约咨询: +82 010-7768-5913",
+            logoMainText: "西归浦船钓 天日号",
+            logoSubText: "Seogwipo Chunilho Fishing",
+            navHome: "首页",
+            navInfo: "航行指南",
+            navLocation: "交通路线",
+            navBooking: "实时预约",
+            navAdmin: "管理中心",
+            heroBadgeText: "济州西归浦 必游路线",
+            heroTitle: "在海面上迎接最灿烂的瞬间",
+            heroSub: "初学者和小朋友也能轻松享受手感的西归浦前海治愈海钓",
+            heroBtn: "开始心动预约 ✨",
+            hLeftTitle: "👤 预约指南",
+            hLeftTelT: "预约及客户中心",
+            hLeftBankT: "汇款账号指南",
+            hBankOwner: "户名: 姜周妍",
+            featT1: "新手专属亲切指导",
+            featD1: "从握钓竿到挂鱼饵，船长都会亲切地教您。",
+            featT2: "白天体验装备与工具",
+            featD2: "无需准备沉重装备！钓竿、钓组、鱼饵、救生衣全部免费提供。",
+            featT3: "新鲜现切生鱼片",
+            featD3: "在蔚蓝大海上，当场品尝自己亲手钓上来的新鲜鱼生，感动满满！",
+            featT4: "与珍贵之人的回忆",
+            featD4: "与家人、恋人、朋友一起，留下充满欢声笑语的特别济州回忆。",
+            galTitle: "天日号波光粼粼的海景",
+            gal1: "与孩子们一起充满欢笑的白天体验海钓",
+            gal2: "夜海的浪漫，夜间带鱼·鲭鱼海钓 (8~11月)",
+            gal3: "夏夜的宝石，夜间鱿鱼体验海钓 (6~9月)",
+            infoTitle: "航行路线及季节指南",
+            thCat: "分类",
+            thCourse: "路线名称",
+            thSeason: "航行季节",
+            thTime: "出港时间",
+            thDetails: "餐饮及提供事项 (选项/加工费)",
+            thPrice: "船费",
+            bDay: "白天",
+            bNight: "夜间",
+            tC2: "白天体验 2小时",
+            tC3: "白天体验 3小时",
+            tS1: "夏季 (3月~8月)",
+            tS2: "冬季 (9月~2月)",
+            tD2: "免费提供钓竿、钓组、南极虾、救生衣",
+            price30k: "30,000韩元",
+            tD3Base: "免费提供钓竿、钓组、南极虾、救生衣",
+            tD31: "生鱼片选项: 3条起订，每条2,000韩元",
+            tD32: "进港前1小时咨询船长 (视天气情况可能有所变动)",
+            tCGalchi: "夜间带鱼海钓",
+            tSGalchi: "8月 ~ 11月中旬",
+            tTGalchi: "18:00 出港",
+            tDGalchiText: "提供农心辣牛肉汤面<br>(装备租用费2万韩元现场支付)",
+            tDG1: "加工费: 带鱼、鲭鱼每条2,000韩元",
+            price90k: "90,000韩元",
+            tCHanchi: "夜间鱿鱼体验",
+            tSHanchi: "6月中旬 ~ 9月初",
+            tTHanchi: "18:30 出港",
+            tDHanchiText: "提供农心辣牛肉汤面<br>(装备租用费1万韩元现场支付)",
+            tDH1: "鱿鱼生鱼片 (现场食用): 每条4,000韩元",
+            tDH2: "打包服务: 另收2,000韩元包装费 (含容器、筷子、醋辣酱)",
+            tDH3: "仅加工处理: 每条2,000韩元",
+            price60k: "60,000韩元",
+            kakaoInfo: "💬 有疑问吗？实时 KakaoTalk 咨询: <strong>chunil1ho</strong>",
+            refundTitle: "📢 取消及退款规定指南",
+            policy1Title: "1. 个人原因及单纯变卦取消",
+            policy1_0: "确认购买后不可取消 (但当天天气恶劣或船舶故障等原因除外)",
+            policy1_1: "使用日前3天取消时: 100%全额退款",
+            policy1_2: "使用日前2天取消时: 不予退款 (但可更改日程)",
+            policy1_3: "使用日前1天 / 当天取消及更改: 不可取消·退款及更改",
+            policy2Title: "2. 恶劣天气及天灾人祸取消",
+            policy2_1: "若因风浪预警、暴雨、海雾等客户安全原因无法出港，无论使用日期如何，均可100%全额退款或免费更改日期。",
+            policy3Title: "3. 商家原因 (船舶故障等) 取消",
+            policy3_1: "若因不可避免的船舶缺陷无法出海，无论使用日期如何，均全额退款。",
+            locTitle: "交通路线指南",
+            locHeading: "📍 位置及交通路线",
+            locDesc: "前往天日号的路线指南。您可在西归浦港及新缘桥附近便捷访问。",
+            locAddrLabel: "地址:",
+            locAddrVal: "济州特别自治道西归浦市南城中路39",
+            locWayLabel: "乘车路线:",
+            locWayVal: "看到西归浦游艇停车场入口左侧的“西归浦船钓天日号”标牌后向下走即可。",
+            locNearLabel: "周边参考:",
+            locNearVal: "正房瀑布、新缘桥及西归浦港附近",
+            mapBtnText: "在谷歌地图中查看大图",
+            bookTitle: "非会员海洋之旅预约",
+            bookStep1: "1. 预定希望日期",
+            bookStep2: "2. 选择海钓路线",
+            optCourse1: "白天体验 2小时 - 30,000韩元 (全年)",
+            optCourse2: "白天体验 3小时 - 40,000韩元 (全年)",
+            optCourse3: "夜间带鱼海钓 - 90,000韩元 (季节: 8月~11月中旬)",
+            optCourse4: "夜间鱿鱼体验海钓 - 60,000韩元 (季节: 6月中旬~9月初)",
+            bookStep3: "3. 选择出港时间",
+            bookStep4: "4. 乘船人数",
+            bookStep5: "5. 预约人姓名",
+            phName: "输入姓名",
+            bookStep6: "6. 联系方式 (用于取消查询)",
+            sumTitle: "📋 您选择的预约详情",
+            sumDateLabel: "预约日期",
+            sumCourseLabel: "选择路线",
+            sumTimeLabel: "出港时间",
+            sumCountLabel: "乘船人数",
+            sumTotalLabel: "总支付金额",
+            btnPayText: "非会员安全支付并确认预约",
+            myBookingTitle: "🔍 非会员预约查询及取消",
+            myBookingDesc: "通过您预约时输入的联系方式查询详情，并可根据规定立即取消。",
+            phSearchTel: "预约人联系方式 (不含-)",
+            btnSearch: "查询",
+            adminSidebarTitle: "天日号预约管理中心",
+            adminMenu1: "📊 仪表盘摘要",
+            adminMenu2: "🏢 商家信息及对接管理",
+            adminMenu3: "⏰ 班次(日程)管理",
+            adminMenu4: "💳 多重PG预约批准及退款",
+            adminMenu5: "📱 现场检票 (订单/电话)",
+            adminDashTitle: "📊 仪表盘摘要 (实时预约明细)",
+            adminDashDesc: "客人完成预约后实时反映的明细。",
+            adminDashSub: "📋 最近实时支付及预约明细",
+            adminNoData: "没有注册的明细。",
+            adminLogout: "管理员登出",
+            adminInfoTitle: "🏢 商家信息及对接管理",
+            adminInfoDesc: "管理基本信息及外部服务对接状态。",
+            lblCompanyName: "商户名称",
+            lblCompanyTel: "代表联系方式",
+            lblCompanyBank: "汇款账号",
+            btnSave: "保存",
+            adminSchedTitle: "⏰ 班次(日程)管理",
+            adminSchedDesc: "管理路线出港时间段及各季节航行日程。",
+            adminSchedDetails: "<p><strong>[白天体验 2小时]</strong> 夏季: 10:00, 12:00, 13:00, 14:00, 16:00 / 冬季: 10:00, 12:00, 13:00, 15:00</p><p style=\"margin-top: 8px;\"><strong>[白天体验 3小时]</strong> 夏季: 10:00, 12:00, 13:00, 15:00 / 冬季: 10:00, 12:00, 14:00</p><p style=\"margin-top: 8px;\"><strong>[夜间带鱼]</strong> 18:00 (8~11月)</p><p style=\"margin-top: 8px;\"><strong>[夜间鱿鱼]</strong> 18:30 (6月中旬~9月初)</p>",
+            adminPgTitle: "💳 多重PG预约批准及退款",
+            adminPgDesc: "查询批准明细并进行退款处理。",
+            thOrderNo: "订单号",
+            thBooker: "预约人",
+            thAmount: "金额",
+            thPayStatus: "支付状态",
+            thManage: "管理",
+            adminNoPayData: "没有查询到支付明细。",
+            adminCheckinTitle: "📱 现场检票",
+            adminCheckinDesc: "通过乘船当天来访顾客的电话号码进行现场登船检票。",
+            phCheckinTel: "输入预约人电话号码",
+            btnCheckin: "检票",
+            authModalTitle: "管理员登录",
+            lblId: "账号",
+            phId: "输入管理员账号",
+            lblPw: "密码",
+            phPw: "输入管理员密码",
+            btnLoginAction: "管理员登录",
+            footerTitle: "西归浦船钓 天日号",
+            footerRep: "代表",
+            footerBizNo: "企业登记号",
+            footerAddr: "地址: 韩国济州特别自治道西归浦市南城中路39",
+            footerTel: "预约咨询",
             footerCopy: "Chunilho. All Rights Reserved."
         }
     };
-
-    function setLanguage(lang) {
-        currentLang = lang;
-        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
-
-        const t = translations[lang];
-        if (!t) return;
-
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if (t[key]) {
-                el.innerHTML = t[key];
-            }
-        });
-
-        document.querySelectorAll('[data-i18n-ph]').forEach(el => {
-            const key = el.getAttribute('data-i18n-ph');
-            if (t[key]) {
-                el.placeholder = t[key];
-            }
-        });
-    }
 </script>
 </body>
 </html>
