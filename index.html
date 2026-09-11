@@ -708,14 +708,74 @@
 
 <script>
     let currentLang = 'ko';
-    
-    let bookings = JSON.parse(localStorage.getItem('chunilho_bookings')) || []; 
-    let isAdminLoggedIn = false;
+
+    // 모바일 결제 후 페이지가 다시 생성되어도 예약정보가 유지되도록
+    // localStorage를 안전하게 읽고, 쿠키에도 백업합니다.
+    const BOOKING_STORAGE_KEY = 'chunilho_bookings';
+    const BOOKING_COOKIE_KEY = 'chunilho_bookings_backup';
     const ADMIN_PHONE = '010-7768-5913';
+    let isAdminLoggedIn = false;
+
+    function normalizeTel(tel) {
+        return String(tel || '').replace(/[^0-9]/g, '');
+    }
+
+    function loadBookings() {
+        try {
+            const raw = localStorage.getItem(BOOKING_STORAGE_KEY);
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (Array.isArray(parsed)) return parsed;
+            }
+        } catch (e) {
+            console.warn('localStorage 예약 조회 실패:', e);
+        }
+
+        try {
+            const match = document.cookie.match(/(?:^|; )chunilho_bookings_backup=([^;]*)/);
+            if (match) {
+                const parsed = JSON.parse(decodeURIComponent(match[1]));
+                if (Array.isArray(parsed)) return parsed;
+            }
+        } catch (e) {
+            console.warn('쿠키 예약 조회 실패:', e);
+        }
+        return [];
+    }
+
+    function saveBookings(data) {
+        const list = Array.isArray(data) ? data : [];
+        const json = JSON.stringify(list);
+        let localSaved = false;
+
+        try {
+            localStorage.setItem(BOOKING_STORAGE_KEY, json);
+            const check = JSON.parse(localStorage.getItem(BOOKING_STORAGE_KEY) || '[]');
+            localSaved = Array.isArray(check) && check.length === list.length;
+        } catch (e) {
+            console.warn('localStorage 예약 저장 실패:', e);
+        }
+
+        try {
+            document.cookie = BOOKING_COOKIE_KEY + '=' + encodeURIComponent(json) +
+                '; max-age=31536000; path=/; SameSite=Lax';
+        } catch (e) {
+            console.warn('쿠키 예약 저장 실패:', e);
+        }
+
+        return localSaved || list.length === 0;
+    }
+
+    let bookings = loadBookings();
+
+    function refreshBookingsFromStorage() {
+        bookings = loadBookings();
+        return bookings;
+    }
 
     window.addEventListener('storage', function(e) {
-        if (e.key === 'chunilho_bookings') {
-            bookings = JSON.parse(e.newValue) || [];
+        if (e.key === BOOKING_STORAGE_KEY) {
+            refreshBookingsFromStorage();
             updateAdminDashboard();
         }
     });
@@ -938,7 +998,11 @@
     }
 
     function completeBookingRegistration(orderNo, date, course, time, count, name, tel, price) {
-        const cleanTel = tel.replace(/-/g, '').trim();
+        const cleanTel = normalizeTel(tel);
+
+        // 결제 콜백 직후 최신 데이터를 다시 읽고 새 예약을 추가합니다.
+        bookings = loadBookings();
+
         const newBooking = {
             orderNo: orderNo,
             date: date,
@@ -950,9 +1014,25 @@
             price: price,
             status: '결제완료'
         };
+
         bookings.push(newBooking);
-        localStorage.setItem('chunilho_bookings', JSON.stringify(bookings));
+
+        const saved = saveBookings(bookings);
+        bookings = loadBookings();
+
+        if (!saved && !bookings.some(b => b.orderNo === orderNo)) {
+            alert('예약정보 저장에 실패했습니다. 브라우저의 비공개 모드를 해제한 후 다시 결제해주세요.');
+            return;
+        }
+
         updateAdminDashboard();
+
+        // 결제 완료 즉시 같은 모바일 화면에서 예약 확인이 보이도록 자동 조회합니다.
+        const searchTelEl = document.getElementById('searchTel');
+        if (searchTelEl) {
+            searchTelEl.value = cleanTel;
+            searchMyBooking();
+        }
 
         sendCustomerSMS(cleanTel, name, date, course, time, count, price);
         sendAdminSMS(ADMIN_PHONE, name, cleanTel, date, course, time, count, price);
@@ -976,7 +1056,7 @@
 
     function searchMyBooking() {
         const rawTel = document.getElementById('searchTel').value.trim();
-        const tel = rawTel.replace(/-/g, '');
+        const tel = normalizeTel(rawTel);
         const resultBox = document.getElementById('myBookingResult');
         const detailsText = document.getElementById('bookingDetailsText');
 
@@ -985,18 +1065,28 @@
             return;
         }
 
-        const found = bookings.filter(b => b.tel === tel);
+        // 모바일 결제창에서 복귀한 뒤에도 최신 저장정보를 다시 읽습니다.
+        refreshBookingsFromStorage();
+
+        const found = bookings.filter(b => normalizeTel(b.tel) === tel);
         resultBox.style.display = 'block';
 
         if (found.length === 0) {
-            detailsText.innerHTML = '조회된 예약 내역이 없습니다.';
+            detailsText.innerHTML = '조회된 예약 내역이 없습니다.<br><small style="color:#64748b;">결제에 사용한 연락처와 동일하게 입력해주세요.</small>';
             return;
         }
 
         let html = '';
         found.forEach((b, idx) => {
-            html += `<div style="margin-bottom:10px; border-bottom:1px dashed #cbd5e1; padding-bottom:8px;">
-                <strong>[예약 ${idx+1}]</strong> 상태: <strong>${b.status}</strong> | 날짜: ${b.date} | 코스: ${b.course} (${b.time}) | 인원: ${b.count}명 | 금액: ${b.price.toLocaleString()}원
+            html += `<div style="margin-bottom:12px; border-bottom:1px dashed #cbd5e1; padding-bottom:10px;">
+                <strong style="color:var(--primary-color);">[예약 ${idx+1}]</strong>
+                <span style="display:inline-block; margin-left:6px; padding:3px 8px; border-radius:6px; background:#dcfce7; color:#166534; font-weight:700;">${b.status || '결제완료'}</span>
+                <br>
+                예약번호: <strong>${b.orderNo || '-'}</strong><br>
+                예약자: ${b.name || '-'}<br>
+                날짜: ${b.date || '-'} / 출항: ${b.time || '-'}<br>
+                코스: ${b.course || '-'} / 인원: ${b.count || 0}명<br>
+                결제금액: <strong>${Number(b.price || 0).toLocaleString()}원</strong>
             </div>`;
         });
         detailsText.innerHTML = html;
@@ -1007,7 +1097,7 @@
             const idx = bookings.findIndex(b => b.orderNo === orderNo);
             if (idx > -1) {
                 bookings[idx].status = '취소완료';
-                localStorage.setItem('chunilho_bookings', JSON.stringify(bookings));
+                saveBookings(bookings);
                 alert('예약이 관리자에 의해 취소 처리되었습니다.');
                 updateAdminDashboard();
             }
@@ -1054,7 +1144,7 @@
     }
 
     function updateAdminDashboard() {
-        bookings = JSON.parse(localStorage.getItem('chunilho_bookings')) || [];
+        bookings = loadBookings();
         const container = document.getElementById('adminBookingListContainer');
         const pgTable = document.getElementById('adminPgTableBody');
         if (!container) return;
@@ -1096,6 +1186,7 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+        bookings = loadBookings();
         updateAdminDashboard();
     });
 
