@@ -1,39 +1,23 @@
 import { getStore } from "@netlify/blobs";
 
-export const store = getStore("chunilho-bookings", {
-  consistency: "strong"
+export const store = getStore({ 
+  name: "chunilho-bookings", 
+  consistency: "strong",
+  siteID: process.env.NETLIFY_SITE_ID || process.env.SITE_ID,
+  token: process.env.NETLIFY_ACCESS_TOKEN || process.env.TOKEN
 });
 
 export function json(statusCode, body) {
-  return {
-    statusCode,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "no-store"
-    },
-    body: JSON.stringify(body)
-  };
+  return { statusCode, headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" }, body: JSON.stringify(body) };
 }
 
 export async function body(event) {
-  try {
-    return JSON.parse(event.body || "{}");
-  } catch {
-    return {};
-  }
+  try { return JSON.parse(event.body || "{}"); } catch { return {}; }
 }
 
-export function normalizeTel(tel) {
-  return String(tel || "").replace(/\D/g, "");
-}
+export function normalizeTel(tel) { return String(tel || "").replace(/\D/g, ""); }
 
 export function getAuthToken(event) {
-  const h =
-    event.headers?.authorization ||
-    event.headers?.Authorization ||
-    "";
-
-  return h.startsWith("Bearer ")
-    ? h.slice(7)
-    : "";
+  const h = event.headers?.authorization || event.headers?.Authorization || "";
+  return h.startsWith("Bearer ") ? h.slice(7) : "";
 }
