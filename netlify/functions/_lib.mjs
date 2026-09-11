@@ -1,7 +1,6 @@
 import { getStore } from "@netlify/blobs";
 
-export const store = getStore({
-  name: "chunilho-bookings",
+export const store = getStore("chunilho-bookings", {
   consistency: "strong"
 });
 
