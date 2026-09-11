@@ -1,8 +1,8 @@
 import { getStore } from "@netlify/blobs";
 
-export const store = getStore({ 
-  name: "chunilho-bookings", 
-  consistency: "strong",
+export const store = getStore("chunilho-bookings", {
+  consistency: "strong"
+});
   siteID: process.env.NETLIFY_SITE_ID || process.env.SITE_ID,
   token: process.env.NETLIFY_ACCESS_TOKEN || process.env.TOKEN
 });
