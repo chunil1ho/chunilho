@@ -952,7 +952,7 @@
                 if (rsp.success) {
                     // 브라우저 성공 응답만 믿지 않고 서버에서 PortOne 결제를 검증한 뒤 예약을 저장
                     try {
-                        await apiRequest('/payments/verify', {
+                        await apiRequest('/payments-verify', {
                             method: 'POST',
                             body: JSON.stringify({
                                 impUid: rsp.imp_uid,
