@@ -1,6 +1,19 @@
 import { getStore } from "@netlify/blobs";
 
-export const store = getStore("chunilho-bookings", {
+const siteID = process.env.NETLIFY_SITE_ID;
+const token = process.env.NETLIFY_AUTH_TOKEN;
+
+if (!siteID || !token) {
+  console.error("Netlify Blobs 환경변수가 없습니다.", {
+    hasSiteID: Boolean(siteID),
+    hasToken: Boolean(token)
+  });
+}
+
+export const store = getStore({
+  name: "chunilho-bookings",
+  siteID,
+  token,
   consistency: "strong"
 });
 
