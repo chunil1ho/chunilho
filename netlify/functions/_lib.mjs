@@ -1,19 +1,9 @@
 import { getStore } from "@netlify/blobs";
 
-const siteID = process.env.NETLIFY_SITE_ID;
-const token = process.env.NETLIFY_AUTH_TOKEN;
-
-if (!siteID || !token) {
-  console.error("Netlify Blobs 환경변수가 없습니다.", {
-    hasSiteID: Boolean(siteID),
-    hasToken: Boolean(token)
-  });
-}
-
 export const store = getStore({
   name: "chunilho-bookings",
-  siteID,
-  token,
+  siteID: process.env.NETLIFY_SITE_ID,
+  token: process.env.NETLIFY_AUTH_TOKEN,
   consistency: "strong"
 });
 
@@ -22,7 +12,9 @@ export function json(statusCode, body) {
     statusCode,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "no-store"
+      "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+      "Pragma": "no-cache",
+      "Expires": "0"
     },
     body: JSON.stringify(body)
   };
@@ -30,7 +22,10 @@ export function json(statusCode, body) {
 
 export async function body(event) {
   try {
-    return JSON.parse(event.body || "{}");
+    if (!event.body) return {};
+    return typeof event.body === "string"
+      ? JSON.parse(event.body)
+      : event.body;
   } catch {
     return {};
   }
@@ -41,12 +36,18 @@ export function normalizeTel(tel) {
 }
 
 export function getAuthToken(event) {
-  const h =
-    event.headers?.authorization ||
-    event.headers?.Authorization ||
+  const headers = event?.headers || {};
+
+  const authorization =
+    headers.authorization ||
+    headers.Authorization ||
     "";
 
-  return h.startsWith("Bearer ")
-    ? h.slice(7)
-    : "";
+  if (!authorization) return "";
+
+  if (authorization.startsWith("Bearer ")) {
+    return authorization.slice(7).trim();
+  }
+
+  return authorization.trim();
 }
