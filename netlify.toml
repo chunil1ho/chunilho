@@ -1,11 +1,13 @@
 [build]
-publish = "."
-functions = "netlify/functions"
-
-[functions]
-node_bundler = "esbuild"
+  publish = "."
+  functions = "netlify/functions"
 
 [[redirects]]
-from = "/api/payments/verify"
-to = "/.netlify/functions/payments-verify"
-status = 200
+  from = "/api/admin-login"
+  to = "/.netlify/functions/admin-login"
+  status = 200
+
+[[redirects]]
+  from = "/api/bookings"
+  to = "/.netlify/functions/bookings"
+  status = 200
