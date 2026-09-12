@@ -6,6 +6,6 @@ functions = "netlify/functions"
 node_bundler = "esbuild"
 
 [[redirects]]
-from = "/api/*"
-to = "/.netlify/functions/:splat"
+from = "/api/payments/verify"
+to = "/.netlify/functions/payments-verify"
 status = 200
