@@ -952,21 +952,83 @@
                 if (rsp.success) {
                     // 브라우저 성공 응답만 믿지 않고 서버에서 PortOne 결제를 검증한 뒤 예약을 저장
                     try {
-                        await apiRequest('/payments-verify', {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                impUid: rsp.imp_uid,
-                                orderNo,
-                                expectedAmount: totalPrice,
-                                date: dateVal,
-                                course: courseName,
-                                time: timeSelect,
-                                count,
-                                name: nameVal,
-                                tel: normalizeTel(telVal)
-                            })
-                        });
-                        await completeBookingRegistration(orderNo, dateVal, courseName, timeSelect, count, nameVal, telVal, totalPrice, rsp.imp_uid, 'paid');
+const verifyResult = await apiRequest('/payments-verify', {
+    method: 'POST',
+    body: JSON.stringify({
+        impUid: rsp.imp_uid,
+        orderNo,
+        expectedAmount: totalPrice,
+        date: dateVal,
+        course: courseName,
+        time: timeSelect,
+        count,
+        name: nameVal,
+        tel: normalizeTel(telVal)
+    })
+});
+
+if (!verifyResult?.verified) {
+    throw new Error(
+        verifyResult?.message || '결제 검증에 실패했습니다.'
+    );
+}
+
+// 결제 검증 함수에서 이미 예약을 저장했으므로
+// /bookings를 다시 호출하지 않습니다.
+sendCustomerSMS(
+    normalizeTel(telVal),
+    nameVal,
+    dateVal,
+    courseName,
+    timeSelect,
+    count,
+    totalPrice
+);
+
+sendAdminSMS(
+    ADMIN_PHONE,
+    nameVal,
+    normalizeTel(telVal),
+    dateVal,
+    courseName,
+    timeSelect,
+    count,
+    totalPrice
+);
+
+const popupMsg =
+    translations[currentLang]?.bookingAlertMsg ||
+    translations['ko'].bookingAlertMsg;
+
+showCustomAlert(popupMsg);
+
+const searchTel = document.getElementById('searchTel');
+if (searchTel) {
+    searchTel.value = telVal;
+}
+
+document.getElementById('bookingForm').reset();
+updateSummary();
+
+setTimeout(() => {
+    const bookingSection = document.getElementById('cat-booking');
+
+    if (bookingSection) {
+        bookingSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+
+    const searchTelAfterReset =
+        document.getElementById('searchTel');
+
+    if (searchTelAfterReset) {
+        searchTelAfterReset.value = telVal;
+    }
+
+    searchMyBooking();
+}, 150);
                     } catch (error) {
                         alert('결제는 완료되었을 수 있으나 서버 검증에 실패했습니다. 관리자에게 문의해주세요.\n' + error.message);
                     }
