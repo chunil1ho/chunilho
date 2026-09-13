@@ -947,6 +947,9 @@ const timeSelect = document.getElementById('timeSelect').value;
 alert('시간 선택창 읽기 성공');
 
 const count = parseInt(document.getElementById('custCount').value);
+    alert('인원수 확인: ' + (countElement ? '찾음' : '없음'));
+
+const count = parseInt(countElement.value);
 ```
 if (!dateVal || !nameVal || !telVal) {
     alert('예약 날짜, 성함, 연락처를 모두 입력해주세요.');
