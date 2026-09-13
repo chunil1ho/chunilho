@@ -5,17 +5,23 @@ import {
   normalizeTel
 } from "./_lib.mjs";
 
+
+/*
+ * ==========================================
+ * PortOne 인증 토큰 발급
+ * ==========================================
+ */
 async function getPortOneToken() {
   const impKey = process.env.IMP_KEY;
   const impSecret = process.env.IMP_SECRET;
 
   if (!impKey || !impSecret) {
     throw new Error(
-      "IMP_KEY / IMP_SECRET 환경변수가 필요합니다."
+      "IMP_KEY / IMP_SECRET 환경변수가 설정되지 않았습니다."
     );
   }
 
-  const r = await fetch(
+  const response = await fetch(
     "https://api.iamport.kr/users/getToken",
     {
       method: "POST",
@@ -29,23 +35,29 @@ async function getPortOneToken() {
     }
   );
 
-  const d = await r.json();
+  const data = await response.json();
 
   if (
-    !r.ok ||
-    d.code !== 0 ||
-    !d.response?.access_token
+    !response.ok ||
+    data.code !== 0 ||
+    !data.response?.access_token
   ) {
     throw new Error(
-      d.message || "PortOne 인증 실패"
+      data.message || "PortOne 인증에 실패했습니다."
     );
   }
 
-  return d.response.access_token;
+  return data.response.access_token;
 }
 
+
+/*
+ * ==========================================
+ * PortOne 실제 결제정보 조회
+ * ==========================================
+ */
 async function getPayment(impUid, token) {
-  const r = await fetch(
+  const response = await fetch(
     `https://api.iamport.kr/payments/${encodeURIComponent(
       impUid
     )}`,
@@ -57,36 +69,66 @@ async function getPayment(impUid, token) {
     }
   );
 
-  const d = await r.json();
+  const data = await response.json();
 
   if (
-    !r.ok ||
-    d.code !== 0 ||
-    !d.response
+    !response.ok ||
+    data.code !== 0 ||
+    !data.response
   ) {
     throw new Error(
-      d.message || "결제 조회 실패"
+      data.message || "PortOne 결제정보 조회에 실패했습니다."
     );
   }
 
-  return d.response;
+  return data.response;
 }
 
+
+/*
+ * ==========================================
+ * 예약 저장
+ * ==========================================
+ */
 async function saveBooking(data, payment) {
-  const orderNo = String(data.orderNo).trim();
+  const orderNo = String(data.orderNo || "").trim();
+
+  if (!orderNo) {
+    throw new Error("주문번호가 없습니다.");
+  }
 
   const key = "booking/" + orderNo;
 
-  /*
-   * 이미 저장된 예약이면 중복 저장하지 않음
-   */
-  const existing = await store.get(
-    key,
-    {
-      type: "json"
-    }
-  );
 
+  /*
+   * ------------------------------------------
+   * 이미 저장된 예약인지 확인
+   * ------------------------------------------
+   */
+  let existing = null;
+
+  try {
+    existing = await store.get(
+      key,
+      {
+        type: "json"
+      }
+    );
+  } catch (error) {
+    console.error(
+      "기존 예약 확인 오류:",
+      error
+    );
+
+    throw new Error(
+      "기존 예약 확인 중 서버 오류가 발생했습니다."
+    );
+  }
+
+
+  /*
+   * 이미 저장되어 있으면 중복 저장하지 않음
+   */
   if (existing) {
     return {
       booking: existing,
@@ -94,18 +136,24 @@ async function saveBooking(data, payment) {
     };
   }
 
+
+  /*
+   * ------------------------------------------
+   * 예약 데이터 생성
+   * ------------------------------------------
+   */
   const booking = {
     orderNo,
 
-    date: String(data.date),
+    date: String(data.date || ""),
 
-    course: String(data.course),
+    course: String(data.course || ""),
 
     time: String(data.time || ""),
 
     count: Number(data.count),
 
-    name: String(data.name),
+    name: String(data.name || ""),
 
     tel: normalizeTel(data.tel),
 
@@ -123,40 +171,33 @@ async function saveBooking(data, payment) {
       ""
     ),
 
-    createdAt:
-      new Date().toISOString()
+    createdAt: new Date().toISOString()
   };
 
-  /*
-   * 예약 데이터 최종 확인
-   */
 
+  /*
+   * ------------------------------------------
+   * 예약 데이터 검증
+   * ------------------------------------------
+   */
   if (!booking.date) {
-    throw new Error(
-      "예약 날짜가 없습니다."
-    );
+    throw new Error("예약 날짜가 없습니다.");
   }
 
   if (!booking.course) {
-    throw new Error(
-      "예약 코스가 없습니다."
-    );
+    throw new Error("예약 코스가 없습니다.");
   }
 
   if (!booking.name) {
-    throw new Error(
-      "예약자명이 없습니다."
-    );
+    throw new Error("예약자명이 없습니다.");
   }
 
   if (!booking.tel) {
-    throw new Error(
-      "전화번호가 없습니다."
-    );
+    throw new Error("전화번호가 없습니다.");
   }
 
   if (
-    !booking.count ||
+    !Number.isFinite(booking.count) ||
     booking.count < 1
   ) {
     throw new Error(
@@ -165,7 +206,7 @@ async function saveBooking(data, payment) {
   }
 
   if (
-    !booking.price ||
+    !Number.isFinite(booking.price) ||
     booking.price < 1
   ) {
     throw new Error(
@@ -173,13 +214,34 @@ async function saveBooking(data, payment) {
     );
   }
 
+  if (!booking.impUid) {
+    throw new Error(
+      "결제번호(imp_uid)가 없습니다."
+    );
+  }
+
+
   /*
-   * Netlify Blobs에 직접 저장
+   * ------------------------------------------
+   * Netlify Blobs 저장
+   * ------------------------------------------
    */
-  await store.setJSON(
-    key,
-    booking
-  );
+  try {
+    await store.setJSON(
+      key,
+      booking
+    );
+  } catch (error) {
+    console.error(
+      "예약 저장 오류:",
+      error
+    );
+
+    throw new Error(
+      "결제 검증은 완료되었지만 예약 저장에 실패했습니다."
+    );
+  }
+
 
   return {
     booking,
@@ -187,27 +249,77 @@ async function saveBooking(data, payment) {
   };
 }
 
+
+/*
+ * ==========================================
+ * Netlify Function
+ * ==========================================
+ */
 export async function handler(event) {
+
+  /*
+   * OPTIONS 요청 허용
+   *
+   * 실제 결제 요청은 POST이지만
+   * 브라우저/Netlify 환경에서 OPTIONS가 들어와도
+   * 405가 발생하지 않도록 처리합니다.
+   */
+  if (event.httpMethod === "OPTIONS") {
+    return {
+      statusCode: 204,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers":
+          "Content-Type, Authorization"
+      },
+      body: ""
+    };
+  }
+
+
+  /*
+   * 결제 검증은 POST만 허용
+   */
   if (event.httpMethod !== "POST") {
     return json(405, {
-      message: "Method Not Allowed"
+      ok: false,
+      verified: false,
+      message: "POST 요청만 허용됩니다."
     });
   }
 
+
+  /*
+   * ------------------------------------------
+   * PortOne 환경변수 확인
+   * ------------------------------------------
+   */
   if (
     !process.env.IMP_KEY ||
     !process.env.IMP_SECRET
   ) {
     return json(500, {
+      ok: false,
+      verified: false,
       message:
-        "IMP_KEY / IMP_SECRET 환경변수가 필요합니다."
+        "IMP_KEY / IMP_SECRET 환경변수가 설정되지 않았습니다."
     });
   }
 
-  const data = await body(event);
 
   /*
-   * 결제 검증에 필요한 값
+   * ------------------------------------------
+   * 요청 데이터
+   * ------------------------------------------
+   */
+  const data = await body(event);
+
+
+  /*
+   * ------------------------------------------
+   * 결제 검증 필수값
+   * ------------------------------------------
    */
   if (
     !data.impUid ||
@@ -216,13 +328,18 @@ export async function handler(event) {
     data.expectedAmount === null
   ) {
     return json(400, {
+      ok: false,
+      verified: false,
       message:
         "결제 검증 정보가 누락되었습니다."
     });
   }
 
+
   /*
-   * 예약 정보 확인
+   * ------------------------------------------
+   * 예약 필수값
+   * ------------------------------------------
    */
   if (
     !data.date ||
@@ -232,20 +349,29 @@ export async function handler(event) {
     !data.count
   ) {
     return json(400, {
+      ok: false,
+      verified: false,
       message:
         "예약정보가 누락되었습니다."
     });
   }
 
+
   try {
+
     /*
+     * ========================================
      * 1. PortOne 인증
+     * ========================================
      */
     const token =
       await getPortOneToken();
 
+
     /*
+     * ========================================
      * 2. 실제 결제정보 조회
+     * ========================================
      */
     const payment =
       await getPayment(
@@ -253,8 +379,11 @@ export async function handler(event) {
         token
       );
 
+
     /*
+     * ========================================
      * 3. 결제 상태 확인
+     * ========================================
      */
     if (payment.status !== "paid") {
       throw new Error(
@@ -262,8 +391,11 @@ export async function handler(event) {
       );
     }
 
+
     /*
+     * ========================================
      * 4. 주문번호 확인
+     * ========================================
      */
     if (
       String(payment.merchant_uid) !==
@@ -274,24 +406,26 @@ export async function handler(event) {
       );
     }
 
+
     /*
+     * ========================================
      * 5. 실제 결제금액 확인
+     * ========================================
      */
     if (
       Number(payment.amount) !==
       Number(data.expectedAmount)
     ) {
       throw new Error(
-        "결제금액이 예약금액과 일치하지 않습니다."
+        `결제금액이 일치하지 않습니다. 실제 결제금액: ${payment.amount}원 / 예약금액: ${data.expectedAmount}원`
       );
     }
 
+
     /*
-     * 6. 서버 검증 완료
-     *
-     * 여기서 바로 Netlify Blobs에 저장합니다.
-     *
-     * 기존처럼 /api/bookings를 다시 호출하지 않습니다.
+     * ========================================
+     * 6. 예약 저장
+     * ========================================
      */
     const result =
       await saveBooking(
@@ -299,13 +433,19 @@ export async function handler(event) {
         payment
       );
 
+
     /*
-     * 7. 성공 응답
+     * ========================================
+     * 7. 성공
+     * ========================================
      */
     return json(200, {
       ok: true,
+
       verified: true,
-      duplicate: result.duplicate,
+
+      duplicate:
+        result.duplicate,
 
       payment: {
         impUid:
@@ -325,18 +465,26 @@ export async function handler(event) {
         result.booking
     });
 
-  } catch (e) {
+
+  } catch (error) {
+
     console.error(
       "결제 검증 오류:",
-      e
+      error
     );
 
+
+    /*
+     * 결제 검증 실패
+     */
     return json(400, {
       ok: false,
+
       verified: false,
+
       message:
-        e.message ||
-        "결제 검증 실패"
+        error?.message ||
+        "결제 검증에 실패했습니다."
     });
   }
 }
