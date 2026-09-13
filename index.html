@@ -857,10 +857,7 @@ const dateVal = dateElement.value;
     }
 
     function updateTimeSelect() {
-        const courseSelect = document.getElementById('courseSelect');
-        
-        alert('코스 선택창 확인: ' + (courseSelect ? '찾음' : '없음'));
-        
+        const courseSelect = document.getElementById('courseSelect'); 
         const timeSelect = document.getElementById('timeSelect');
         const dateVal = document.getElementById('custDate').value;
         
@@ -942,6 +939,7 @@ const nameVal = nameElement.value.trim();
 const telVal = document.getElementById('custTel').value.trim();
     alert('전화번호 읽기 성공');
 const courseSelect = document.getElementById('courseSelect');
+    alert('코스 선택창 확인: ' + (courseSelect ? '찾음' : '없음'));
 const timeSelect = document.getElementById('timeSelect').value;
 const count = parseInt(document.getElementById('custCount').value);
 
