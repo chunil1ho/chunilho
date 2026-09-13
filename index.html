@@ -936,7 +936,16 @@
         const courseName = courseSelect.selectedOptions[0].innerText.split(' - ')[0];
         const totalPrice = coursePrice * count;
         const orderNo = 'ORD_' + new Date().getTime();
-
+localStorage.setItem('chunilho_pending_payment', JSON.stringify({
+    orderNo: orderNo,
+    date: dateVal,
+    courseName: courseName,
+    time: timeSelect,
+    count: count,
+    name: nameVal,
+    tel: normalizeTel(telVal),
+    totalPrice: totalPrice
+}));
         if (typeof IMP !== 'undefined') {
             IMP.init('imp01457787');
             IMP.request_pay({
@@ -1042,7 +1051,150 @@ setTimeout(() => {
             alert('결제 모듈을 불러오지 못했습니다. 페이지를 새로고침한 뒤 다시 시도해주세요.');
         }
     }
+    async function handleMobilePaymentRedirect() {
+        const params = new URLSearchParams(window.location.search);
 
+        if (params.get('payment_redirect') !== '1') {
+            return;
+        }
+
+        const impUid = params.get('imp_uid');
+        const merchantUid = params.get('merchant_uid');
+
+        if (!impUid || !merchantUid) {
+            alert('모바일 결제 정보를 확인할 수 없습니다.');
+            return;
+        }
+
+        const pendingRaw = localStorage.getItem('chunilho_pending_payment');
+
+        if (!pendingRaw) {
+            alert('예약 정보를 확인할 수 없습니다. 관리자에게 문의해주세요.');
+            return;
+        }
+
+        let pending;
+
+        try {
+            pending = JSON.parse(pendingRaw);
+        } catch (error) {
+            localStorage.removeItem('chunilho_pending_payment');
+            alert('예약 정보 처리 중 오류가 발생했습니다.');
+            return;
+        }
+
+        if (String(pending.orderNo) !== String(merchantUid)) {
+            alert('주문번호가 일치하지 않습니다. 관리자에게 문의해주세요.');
+            return;
+        }
+
+        try {
+            const verifyResult = await apiRequest('/payments-verify', {
+                method: 'POST',
+                body: JSON.stringify({
+                    impUid,
+                    orderNo: merchantUid,
+                    expectedAmount: pending.totalPrice,
+                    date: pending.date,
+                    course: pending.courseName,
+                    time: pending.time,
+                    count: pending.count,
+                    name: pending.name,
+                    tel: pending.tel
+                })
+            });
+
+            if (!verifyResult?.verified) {
+                throw new Error(
+                    verifyResult?.message || '결제 검증에 실패했습니다.'
+                );
+            }
+
+            localStorage.removeItem('chunilho_pending_payment');
+
+            sendCustomerSMS(
+                pending.tel,
+                pending.name,
+                pending.date,
+                pending.courseName,
+                pending.time,
+                pending.count,
+                pending.totalPrice
+            );
+
+            sendAdminSMS(
+                ADMIN_PHONE,
+                pending.name,
+                pending.tel,
+                pending.date,
+                pending.courseName,
+                pending.time,
+                pending.count,
+                pending.totalPrice
+            );
+
+            const popupMsg =
+                translations[currentLang]?.bookingAlertMsg ||
+                translations['ko'].bookingAlertMsg;
+
+            showCustomAlert(popupMsg);
+
+            const searchTel = document.getElementById('searchTel');
+
+            if (searchTel) {
+                searchTel.value = pending.tel;
+            }
+
+            const bookingForm = document.getElementById('bookingForm');
+
+            if (bookingForm) {
+                bookingForm.reset();
+            }
+
+            updateSummary();
+
+            setTimeout(() => {
+                const bookingSection = document.getElementById('cat-booking');
+
+                if (bookingSection) {
+                    bookingSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+
+                const searchTelAfterReset = document.getElementById('searchTel');
+
+                if (searchTelAfterReset) {
+                    searchTelAfterReset.value = pending.tel;
+                }
+
+                searchMyBooking();
+            }, 300);
+
+            window.history.replaceState(
+                {},
+                document.title,
+                window.location.pathname
+            );
+
+        } catch (error) {
+            console.error('모바일 결제 검증 오류:', error);
+
+            alert(
+                '결제는 완료되었을 수 있으나 예약 처리 중 오류가 발생했습니다.\n' +
+                error.message
+            );
+        }
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener(
+            'DOMContentLoaded',
+            handleMobilePaymentRedirect
+        );
+    } else {
+        handleMobilePaymentRedirect();
+    }
     async function completeBookingRegistration(orderNo, date, course, time, count, name, tel, price, impUid = '', paymentStatus = 'paid') {
         const cleanTel = normalizeTel(tel);
         try {
