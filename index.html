@@ -930,7 +930,11 @@ const dateVal = document.getElementById('custDate').value;
     
     alert('이름 읽기 직전');
     
-const nameVal = document.getElementById('custName').value.trim();
+const nameElement = document.getElementById('custName');
+
+alert('custName 확인: ' + (nameElement ? '찾음' : '없음'));
+
+const nameVal = nameElement.value.trim();
 const telVal = document.getElementById('custTel').value.trim();
 const courseSelect = document.getElementById('courseSelect');
 const timeSelect = document.getElementById('timeSelect').value;
