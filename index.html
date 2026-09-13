@@ -922,34 +922,13 @@ const dateVal = dateElement.value;
     }
 
 function startPayment() {
-      alert('결제버튼 클릭됨');
-    
 const dateVal = document.getElementById('custDate').value;
-
-      alert('예약정보 읽기 성공');
-    
-    alert('이름 읽기 직전');
-    
 const nameElement = document.getElementById('custName');
-
-alert('custName 확인: ' + (nameElement ? '찾음' : '없음'));
-
 const nameVal = nameElement.value.trim();
-    alert('전화번호 읽기 직전');
 const telVal = document.getElementById('custTel').value.trim();
-    alert('전화번호 읽기 성공');
 const courseSelect = document.getElementById('courseSelect');
-    alert('코스 선택창 확인: ' + (courseSelect ? '찾음' : '없음'));
-alert('시간 선택창 읽기 직전');
-
 const timeSelect = document.getElementById('timeSelect').value;
-
-alert('시간 선택창 읽기 성공');
-
 const count = parseInt(document.getElementById('custCount').value);
-    alert('인원수 확인: ' + (countElement ? '찾음' : '없음'));
-
-const count = parseInt(countElement.value);
 ```
 if (!dateVal || !nameVal || !telVal) {
     alert('예약 날짜, 성함, 연락처를 모두 입력해주세요.');
