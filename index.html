@@ -951,7 +951,8 @@
             }, async function(rsp) {
                 if (rsp.success) {
                     // 브라우저 성공 응답만 믿지 않고 서버에서 PortOne 결제를 검증한 뒤 예약을 저장
-                    try {
+    try {
+        console.log('payments-verify 호출 시작');
 const verifyResult = await apiRequest('/payments-verify', {
     method: 'POST',
     body: JSON.stringify({
@@ -966,7 +967,7 @@ const verifyResult = await apiRequest('/payments-verify', {
         tel: normalizeTel(telVal)
     })
 });
-
+        console.log('payments-verify 응답:', verifyResult);
 if (!verifyResult?.verified) {
     throw new Error(
         verifyResult?.message || '결제 검증에 실패했습니다.'
