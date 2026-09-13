@@ -928,7 +928,7 @@ const telVal = document.getElementById('custTel').value.trim();
 const courseSelect = document.getElementById('courseSelect');
 const timeSelect = document.getElementById('timeSelect').value;
 const count = parseInt(document.getElementById('custCount').value);
-```
+
 if (!dateVal || !nameVal || !telVal) {
     alert('예약 날짜, 성함, 연락처를 모두 입력해주세요.');
     return;
@@ -1130,7 +1130,7 @@ if (
         '결제 모듈을 정상적으로 불러오지 못했습니다. 페이지를 새로고침한 뒤 다시 시도해주세요.'
     );
 }
-```
+
 
 }
 
@@ -1138,7 +1138,7 @@ async function handleMobilePaymentRedirect() {
 const params =
 new URLSearchParams(window.location.search);
 
-```
+
 if (
     params.get('payment_redirect') !== '1'
 ) {
@@ -1310,7 +1310,7 @@ try {
         error.message
     );
 }
-```
+
 
 }
 
