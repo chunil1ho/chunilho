@@ -77,11 +77,47 @@ async function getPayment(impUid, token) {
     !data.response
   ) {
     throw new Error(
-      data.message || "PortOne 결제정보 조회에 실패했습니다."
+      data.message ||
+      "PortOne 결제정보 조회에 실패했습니다."
     );
   }
 
   return data.response;
+}
+
+
+/*
+ * ==========================================
+ * custom_data 예약정보 복원
+ * ==========================================
+ */
+function parseCustomData(payment) {
+  const customData = payment?.custom_data;
+
+  if (!customData) {
+    return null;
+  }
+
+  if (typeof customData === "object") {
+    return customData;
+  }
+
+  if (typeof customData === "string") {
+    try {
+      return JSON.parse(customData);
+    } catch (error) {
+      console.error(
+        "PortOne custom_data JSON 파싱 오류:",
+        error
+      );
+
+      throw new Error(
+        "결제에 저장된 예약정보를 읽을 수 없습니다."
+      );
+    }
+  }
+
+  return null;
 }
 
 
@@ -181,19 +217,27 @@ async function saveBooking(data, payment) {
    * ------------------------------------------
    */
   if (!booking.date) {
-    throw new Error("예약 날짜가 없습니다.");
+    throw new Error(
+      "예약 날짜가 없습니다."
+    );
   }
 
   if (!booking.course) {
-    throw new Error("예약 코스가 없습니다.");
+    throw new Error(
+      "예약 코스가 없습니다."
+    );
   }
 
   if (!booking.name) {
-    throw new Error("예약자명이 없습니다.");
+    throw new Error(
+      "예약자명이 없습니다."
+    );
   }
 
   if (!booking.tel) {
-    throw new Error("전화번호가 없습니다.");
+    throw new Error(
+      "전화번호가 없습니다."
+    );
   }
 
   if (
@@ -259,10 +303,6 @@ export async function handler(event) {
 
   /*
    * OPTIONS 요청 허용
-   *
-   * 실제 결제 요청은 POST이지만
-   * 브라우저/Netlify 환경에서 OPTIONS가 들어와도
-   * 405가 발생하지 않도록 처리합니다.
    */
   if (event.httpMethod === "OPTIONS") {
     return {
@@ -311,48 +351,23 @@ export async function handler(event) {
   /*
    * ------------------------------------------
    * 요청 데이터
+   *
+   * 이제 모바일에서는
+   * impUid + orderNo만 보내도 됩니다.
    * ------------------------------------------
    */
-  const data = await body(event);
+  const requestData = await body(event);
 
 
-  /*
-   * ------------------------------------------
-   * 결제 검증 필수값
-   * ------------------------------------------
-   */
   if (
-    !data.impUid ||
-    !data.orderNo ||
-    data.expectedAmount === undefined ||
-    data.expectedAmount === null
+    !requestData.impUid ||
+    !requestData.orderNo
   ) {
     return json(400, {
       ok: false,
       verified: false,
       message:
         "결제 검증 정보가 누락되었습니다."
-    });
-  }
-
-
-  /*
-   * ------------------------------------------
-   * 예약 필수값
-   * ------------------------------------------
-   */
-  if (
-    !data.date ||
-    !data.course ||
-    !data.name ||
-    !data.tel ||
-    !data.count
-  ) {
-    return json(400, {
-      ok: false,
-      verified: false,
-      message:
-        "예약정보가 누락되었습니다."
     });
   }
 
@@ -375,7 +390,7 @@ export async function handler(event) {
      */
     const payment =
       await getPayment(
-        data.impUid,
+        requestData.impUid,
         token
       );
 
@@ -399,7 +414,7 @@ export async function handler(event) {
      */
     if (
       String(payment.merchant_uid) !==
-      String(data.orderNo)
+      String(requestData.orderNo)
     ) {
       throw new Error(
         "주문번호가 일치하지 않습니다."
@@ -409,9 +424,118 @@ export async function handler(event) {
 
     /*
      * ========================================
-     * 5. 실제 결제금액 확인
+     * 5. PortOne에 저장된 custom_data 복원
      * ========================================
      */
+    const customData =
+      parseCustomData(payment);
+
+
+    if (!customData) {
+      throw new Error(
+        "결제에 저장된 예약정보를 찾을 수 없습니다."
+      );
+    }
+
+
+    /*
+     * ========================================
+     * 6. custom_data 주문번호 확인
+     * ========================================
+     */
+    if (
+      customData.orderNo &&
+      String(customData.orderNo) !==
+        String(payment.merchant_uid)
+    ) {
+      throw new Error(
+        "예약 주문번호가 결제 주문번호와 일치하지 않습니다."
+      );
+    }
+
+
+    /*
+     * ========================================
+     * 7. 예약정보 구성
+     *
+     * 모바일:
+     * custom_data에서 복원
+     *
+     * PC:
+     * 기존 요청값이 있다면 그대로 사용
+     * ========================================
+     */
+    const data = {
+
+      impUid:
+        requestData.impUid,
+
+      orderNo:
+        payment.merchant_uid,
+
+      date:
+        requestData.date ||
+        customData.date,
+
+      course:
+        requestData.course ||
+        customData.course,
+
+      time:
+        requestData.time ||
+        customData.time,
+
+      count:
+        requestData.count ??
+        customData.count,
+
+      name:
+        requestData.name ||
+        customData.name,
+
+      tel:
+        requestData.tel ||
+        customData.tel,
+
+      expectedAmount:
+        requestData.expectedAmount ??
+        customData.expectedAmount
+    };
+
+
+    /*
+     * ========================================
+     * 8. 예약정보 필수값 확인
+     * ========================================
+     */
+    if (
+      !data.date ||
+      !data.course ||
+      !data.name ||
+      !data.tel ||
+      !data.count
+    ) {
+      throw new Error(
+        "결제에 저장된 예약정보가 완전하지 않습니다."
+      );
+    }
+
+
+    /*
+     * ========================================
+     * 9. 결제금액 확인
+     * ========================================
+     */
+    if (
+      data.expectedAmount === undefined ||
+      data.expectedAmount === null
+    ) {
+      throw new Error(
+        "예약 결제금액 정보를 찾을 수 없습니다."
+      );
+    }
+
+
     if (
       Number(payment.amount) !==
       Number(data.expectedAmount)
@@ -424,7 +548,7 @@ export async function handler(event) {
 
     /*
      * ========================================
-     * 6. 예약 저장
+     * 10. 예약 저장
      * ========================================
      */
     const result =
@@ -436,10 +560,11 @@ export async function handler(event) {
 
     /*
      * ========================================
-     * 7. 성공
+     * 11. 성공
      * ========================================
      */
     return json(200, {
+
       ok: true,
 
       verified: true,
@@ -448,6 +573,7 @@ export async function handler(event) {
         result.duplicate,
 
       payment: {
+
         impUid:
           payment.imp_uid,
 
@@ -459,10 +585,12 @@ export async function handler(event) {
 
         status:
           payment.status
+
       },
 
       booking:
         result.booking
+
     });
 
 
@@ -478,6 +606,7 @@ export async function handler(event) {
      * 결제 검증 실패
      */
     return json(400, {
+
       ok: false,
 
       verified: false,
@@ -485,6 +614,8 @@ export async function handler(event) {
       message:
         error?.message ||
         "결제 검증에 실패했습니다."
+
     });
+
   }
 }
