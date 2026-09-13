@@ -954,8 +954,11 @@ const paymentCustomData = JSON.stringify({
     tel: normalizeTel(telVal),
     expectedAmount: totalPrice
 });
-
-if (typeof IMP !== 'undefined') {
+if (
+    typeof IMP !== 'undefined' &&
+    typeof IMP.init === 'function' &&
+    typeof IMP.request_pay === 'function'
+) {
     IMP.init('imp01457787');
 
     IMP.request_pay({
@@ -1123,7 +1126,7 @@ if (typeof IMP !== 'undefined') {
 } else {
 
     alert(
-        '결제 모듈을 불러오지 못했습니다. 페이지를 새로고침한 뒤 다시 시도해주세요.'
+        '결제 모듈을 정상적으로 불러오지 못했습니다. 페이지를 새로고침한 뒤 다시 시도해주세요.'
     );
 }
 ```
@@ -1318,6 +1321,7 @@ try {
     } else {
         handleMobilePaymentRedirect();
     }
+    
     async function completeBookingRegistration(orderNo, date, course, time, count, name, tel, price, impUid = '', paymentStatus = 'paid') {
         const cleanTel = normalizeTel(tel);
         try {
