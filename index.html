@@ -714,7 +714,7 @@
     let isAdminLoggedIn = false;
     let adminToken = sessionStorage.getItem('chunilho_admin_token') || '';
     const ADMIN_PHONE = '010-7768-5913';
-    const API_BASE = '/api';
+    const API_BASE = 'https://chunilho.netlify.app/api';
 
     async function apiRequest(path, options = {}) {
         const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
