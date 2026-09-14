@@ -14,12 +14,14 @@ export function json(statusCode, body) {
       "Content-Type": "application/json; charset=utf-8",
       "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
       "Pragma": "no-cache",
-      "Expires": "0"
+      "Expires": "0",
+      "Access-Control-Allow-Origin": "https://chunilho.com",
+      "Access-Control-Allow-Methods": "GET, POST, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization"
     },
     body: JSON.stringify(body)
   };
 }
-
 export async function body(event) {
   try {
     if (!event.body) return {};
