@@ -5,7 +5,10 @@ function json(statusCode, body) {
     statusCode,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "no-store"
+      "Cache-Control": "no-store",
+      "Access-Control-Allow-Origin": "https://chunilho.com",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization"
     },
     body: JSON.stringify(body)
   };
@@ -44,11 +47,21 @@ export async function handler(event) {
     event?.requestContext?.http?.method ||
     "";
 
-  if (method !== "POST") {
-    return json(405, {
-      message: "Method Not Allowed"
-    });
-  }
+if (method === "OPTIONS") {
+  return {
+    statusCode: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "https://chunilho.com",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization"
+    },
+    body: ""
+  };
+}
+
+if (method !== "POST") {
+  return json(405, { message: "Method Not Allowed" });
+}
 
   try {
     const { id = "", pw = "" } = readBody(event);
