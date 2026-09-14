@@ -1,14 +1,22 @@
-import {
-  store,
-  json,
-  body,
-  normalizeTel
-} from "./_lib.mjs";
-
+import { store, json, body, normalizeTel } from "./_lib.mjs";
 import { verifyAdmin } from "./_auth.mjs";
 
 export async function handler(event) {
   const method = event.httpMethod;
+
+  const corsHeaders = {
+    "Access-Control-Allow-Origin": "https://chunilho.com",
+    "Access-Control-Allow-Methods": "GET, POST, PATCH, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization"
+  };
+
+  if (method === "OPTIONS") {
+    return {
+      statusCode: 204,
+      headers: corsHeaders,
+      body: ""
+    };
+  }
 
   /*
    * ==========================================
