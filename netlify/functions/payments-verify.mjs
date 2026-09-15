@@ -383,26 +383,33 @@ export async function handler(event) {
       await getPortOneToken();
 
 
-    /*
-     * ========================================
-     * 2. 실제 결제정보 조회
-     * ========================================
-     */
-    const payment = await getPortOnePayment(impUid);
+/*
+ * ========================================
+ * 2. 실제 결제정보 조회
+ * ========================================
+ */
+const payment =
+  await getPayment(
+    requestData.impUid,
+    token
+  );
 
-    /*
-     * ========================================
-     * 3. 결제 상태 확인
-     * ========================================
-     */
+/*
+ * ========================================
+ * 3. 결제 상태 확인
+ * ========================================
+ */
 
-    console.log("PortOne 결제 조회 결과:", JSON.stringify(payment));
-    
-    if (payment.status !== "paid") {
-      throw new Error(
-        "결제가 완료 상태가 아닙니다."
-      );
-    }
+console.log(
+  "PortOne 결제 조회 결과:",
+  JSON.stringify(payment)
+);
+
+if (payment.status !== "paid") {
+  throw new Error(
+    "결제가 완료 상태가 아닙니다."
+  );
+}
 
 
     /*
