@@ -102,20 +102,28 @@ function parseCustomData(payment) {
     return customData;
   }
 
-  if (typeof customData === "string") {
-    try {
-      return JSON.parse(customData);
-    } catch (error) {
-      console.error(
-        "PortOne custom_data JSON 파싱 오류:",
-        error
-      );
+if (typeof customData === "string") {
+  try {
+    let parsed = JSON.parse(customData);
 
-      throw new Error(
-        "결제에 저장된 예약정보를 읽을 수 없습니다."
-      );
+    // custom_data가 JSON 문자열 안에
+    // JSON 문자열로 한 번 더 들어있는 경우
+    if (typeof parsed === "string") {
+      parsed = JSON.parse(parsed);
     }
+
+    return parsed;
+  } catch (error) {
+    console.error(
+      "PortOne custom_data JSON 파싱 오류:",
+      error
+    );
+
+    throw new Error(
+      "결제에 저장된 예약정보를 읽을 수 없습니다."
+    );
   }
+}
 
   return null;
 }
