@@ -435,7 +435,11 @@ if (payment.status !== "paid") {
     const customData =
       parseCustomData(payment);
 
-
+console.log(
+  "PortOne custom_data:",
+  JSON.stringify(customData)
+);
+    
     if (!customData) {
       throw new Error(
         "결제에 저장된 예약정보를 찾을 수 없습니다."
@@ -507,6 +511,10 @@ if (payment.status !== "paid") {
         customData.expectedAmount
     };
 
+    console.log(
+  "최종 예약 데이터:",
+  JSON.stringify(data)
+);
 
     /*
      * ========================================
