@@ -800,6 +800,24 @@
     function updateOptions() {
         const dateElement = document.getElementById('custDate');
 const dateVal = dateElement.value;
+        // 예약 가능 날짜 범위 확인
+const reservationToday = new Date();
+reservationToday.setHours(0, 0, 0, 0);
+
+const reservationMaxDate = new Date(reservationToday);
+reservationMaxDate.setMonth(reservationMaxDate.getMonth() + 3);
+
+const selectedReservationDate = new Date(dateVal + 'T00:00:00');
+
+if (
+    !dateVal ||
+    selectedReservationDate < reservationToday ||
+    selectedReservationDate > reservationMaxDate
+) {
+    alert('예약은 오늘부터 3개월까지만 가능합니다.');
+    dateElement.focus();
+    return;
+}
         const courseSelect = document.getElementById('courseSelect');
         const seasonNotice = document.getElementById('seasonNotice');
         const optGalchi = document.getElementById('optGalchi');
