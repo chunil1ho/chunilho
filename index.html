@@ -1119,6 +1119,35 @@ function showBoardWriteForm() {
     if (detail) detail.style.display = 'none';
     if (form) form.style.display = 'block';
 }
+
+function setupBoardImagePreview() {
+    const imageInput = document.getElementById('board-images');
+    const preview = document.getElementById('board-image-preview');
+
+    if (!imageInput || !preview) return;
+
+    imageInput.addEventListener('change', function () {
+        preview.innerHTML = '';
+
+        const files = Array.from(this.files || []);
+
+        files.forEach(file => {
+            if (!file.type.startsWith('image/')) return;
+
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                const img = document.createElement('img');
+                img.src = event.target.result;
+                img.alt = file.name;
+                preview.appendChild(img);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    });
+}
+
     async function loadBookingsFromServer() {
         try {
             if (isAdminLoggedIn && adminToken) {
@@ -1729,7 +1758,9 @@ try {
     } else {
         handleMobilePaymentRedirect();
     }
-    
+    document.addEventListener('DOMContentLoaded', function () {
+    setupBoardImagePreview();
+});
     async function completeBookingRegistration(orderNo, date, course, time, count, name, tel, price, impUid = '', paymentStatus = 'paid') {
         const cleanTel = normalizeTel(tel);
         try {
