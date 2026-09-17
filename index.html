@@ -311,6 +311,122 @@
         padding: 18px;
     }
 }
+        /* =========================
+   조황게시판 작성폼
+   ========================= */
+
+#board-write-form {
+    margin-top: 20px;
+}
+
+.board-form-box {
+    padding: 25px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.board-form-title {
+    margin-bottom: 25px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #0f2c59;
+}
+
+.board-form-title h3 {
+    margin: 0;
+    color: #0f2c59;
+    font-size: 20px;
+}
+
+.board-form-group {
+    margin-bottom: 20px;
+}
+
+.board-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.board-form-group input[type="text"],
+.board-form-group textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    font-family: inherit;
+}
+
+.board-form-group textarea {
+    resize: vertical;
+    min-height: 180px;
+    line-height: 1.6;
+}
+
+.board-form-group input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    font-size: 14px;
+}
+
+.board-form-group small {
+    display: block;
+    margin-top: 6px;
+    color: #777;
+    font-size: 12px;
+}
+
+.board-image-preview {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.board-image-preview img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+.board-form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.board-form-buttons button {
+    min-width: 90px;
+}
+
+@media (max-width: 600px) {
+    .board-form-box {
+        padding: 18px;
+    }
+
+    .board-image-preview {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .board-image-preview img {
+        height: 110px;
+    }
+
+    .board-form-buttons {
+        justify-content: stretch;
+    }
+
+    .board-form-buttons button {
+        flex: 1;
+    }
+}
     </style>
 </head>
 <body id="mainBody">
@@ -756,16 +872,87 @@
                     id="board-write-btn"
                     class="primary-btn"
                     style="display:none;"
+                        onclick="showBoardWriteForm()"
                     data-i18n="boardWrite">
                 글쓰기
             </button>
         </div>
+<div id="board-list">
+    <div class="board-empty">
+        <p data-i18n="boardEmpty">등록된 조황 게시글이 없습니다.</p>
+    </div>
+</div>
 
-        <div id="board-list">
-            <div class="board-empty">
-                <p data-i18n="boardEmpty">등록된 조황 게시글이 없습니다.</p>
-            </div>
+<div id="board-write-form" style="display:none;">
+    <div class="board-form-box">
+
+        <div class="board-form-title">
+            <h3 data-i18n="boardWriteTitle">조황글 작성</h3>
         </div>
+
+        <div class="board-form-group">
+            <label for="board-title" data-i18n="boardPostTitle">
+                제목
+            </label>
+
+            <input
+                type="text"
+                id="board-title"
+                maxlength="100"
+                placeholder="조황글 제목을 입력하세요."
+                data-i18n-placeholder="boardTitlePlaceholder">
+        </div>
+
+        <div class="board-form-group">
+            <label for="board-content" data-i18n="boardPostContent">
+                내용
+            </label>
+
+            <textarea
+                id="board-content"
+                rows="10"
+                placeholder="조황 내용을 입력하세요."
+                data-i18n-placeholder="boardContentPlaceholder"></textarea>
+        </div>
+
+        <div class="board-form-group">
+            <label for="board-images" data-i18n="boardPhotos">
+                사진 첨부
+            </label>
+
+            <input
+                type="file"
+                id="board-images"
+                accept="image/*"
+                multiple>
+
+            <small data-i18n="boardPhotoGuide">
+                여러 장의 사진을 선택할 수 있습니다.
+            </small>
+        </div>
+
+        <div id="board-image-preview" class="board-image-preview"></div>
+
+        <div class="board-form-buttons">
+            <button
+                type="button"
+                id="board-cancel-btn"
+                class="secondary-btn"
+                data-i18n="boardCancel">
+                취소
+            </button>
+
+            <button
+                type="button"
+                id="board-save-btn"
+                class="primary-btn"
+                data-i18n="boardSave">
+                등록하기
+            </button>
+        </div>
+
+    </div>
+</div>
 
         <div id="board-detail" style="display:none;">
 
@@ -915,9 +1102,23 @@
         }
         return data;
     }
+function updateBoardWriteButton() {
+    const writeButton = document.getElementById('board-write-btn');
 
+    if (!writeButton) return;
+
+    writeButton.style.display = isAdminLoggedIn ? 'inline-block' : 'none';
+}
     function normalizeTel(tel) { return String(tel || '').replace(/\D/g, ''); }
+function showBoardWriteForm() {
+    const list = document.getElementById('board-list');
+    const detail = document.getElementById('board-detail');
+    const form = document.getElementById('board-write-form');
 
+    if (list) list.style.display = 'none';
+    if (detail) detail.style.display = 'none';
+    if (form) form.style.display = 'block';
+}
     async function loadBookingsFromServer() {
         try {
             if (isAdminLoggedIn && adminToken) {
@@ -1671,6 +1872,7 @@ async function adminConfirmBooking(orderNo) {
             isAdminLoggedIn = true;
             closeAuthModal();
             document.getElementById('nav-admin-li').style.display = 'inline-block';
+            updateBoardWriteButton();
             await loadBookingsFromServer();
             switchCategory('cat-admin', document.getElementById('nav-admin'));
             updateAdminDashboard();
@@ -1796,6 +1998,15 @@ if (b.status === '결제완료') {
             navLocation: "찾아오시는 길",
             navBooking: "실시간예약",
             navBoard: "조황게시판",
+            boardWriteTitle: "조황글 작성",
+boardPostTitle: "제목",
+boardPostContent: "내용",
+boardPhotos: "사진 첨부",
+boardPhotoGuide: "여러 장의 사진을 선택할 수 있습니다.",
+boardCancel: "취소",
+boardSave: "등록하기",
+boardTitlePlaceholder: "조황글 제목을 입력하세요.",
+boardContentPlaceholder: "조황 내용을 입력하세요.",
             boardTitle: "조황게시판",
 boardSubtitle: "천일호의 생생한 조황 소식을 확인해보세요.",
 boardListTitle: "조황 소식",
@@ -1932,6 +2143,15 @@ bookStep7: "구매 후 전화 또는 문자로 확정 연락을 받으셔야 이
             navLocation: "Location",
             navBooking: "Live Booking",
             navBoard: "Fishing Reports",
+            boardWriteTitle: "Write Fishing Report",
+boardPostTitle: "Title",
+boardPostContent: "Content",
+boardPhotos: "Attach Photos",
+boardPhotoGuide: "You can select multiple photos.",
+boardCancel: "Cancel",
+boardSave: "Publish",
+boardTitlePlaceholder: "Enter the fishing report title.",
+boardContentPlaceholder: "Enter the fishing report content.",
             boardTitle: "Fishing Reports",
 boardSubtitle: "Check out the latest fishing reports from Chunil-ho.",
 boardListTitle: "Fishing Reports",
@@ -2068,6 +2288,15 @@ bookStep7: "After purchase, you must receive a confirmation by phone or text mes
             navLocation: "アクセス",
             navBooking: "リアルタイム予約",
             navBoard: "釣果掲示板",
+            boardWriteTitle: "釣果情報を投稿",
+boardPostTitle: "タイトル",
+boardPostContent: "内容",
+boardPhotos: "写真を添付",
+boardPhotoGuide: "複数の写真を選択できます。",
+boardCancel: "キャンセル",
+boardSave: "登録する",
+boardTitlePlaceholder: "釣果情報のタイトルを入力してください。",
+boardContentPlaceholder: "釣果情報の内容を入力してください。",
             boardTitle: "釣果掲示板",
 boardSubtitle: "千日号の最新釣果情報をご覧ください。",
 boardListTitle: "釣果情報",
@@ -2203,6 +2432,15 @@ boardBack: "一覧に戻る",
             navLocation: "交通路线",
             navBooking: "实时预约",
             navBoard: "渔获公告",
+            boardWriteTitle: "发布渔获信息",
+boardPostTitle: "标题",
+boardPostContent: "内容",
+boardPhotos: "上传照片",
+boardPhotoGuide: "可以选择多张照片。",
+boardCancel: "取消",
+boardSave: "发布",
+boardTitlePlaceholder: "请输入渔获信息标题。",
+boardContentPlaceholder: "请输入渔获信息内容。",
             boardTitle: "渔获公告",
 boardSubtitle: "查看千日号最新的渔获信息。",
 boardListTitle: "渔获信息",
