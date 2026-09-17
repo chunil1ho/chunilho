@@ -208,6 +208,109 @@
             .hero-content h1 { font-size: 1.8rem; }
             .hero-content p { font-size: 0.95rem; }
         }
+        /* =========================
+   조황게시판
+   ========================= */
+
+#cat-board {
+    padding-bottom: 50px;
+}
+
+#cat-board .section-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#cat-board .section-title h2 {
+    margin-bottom: 10px;
+}
+
+#cat-board .section-title p {
+    color: #666;
+    font-size: 15px;
+}
+
+.board-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #0f2c59;
+}
+
+.board-header h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #0f2c59;
+}
+
+#board-write-btn {
+    border: none;
+    cursor: pointer;
+    padding: 10px 18px;
+    border-radius: 6px;
+    background: #0f2c59;
+    color: #fff;
+    font-weight: 600;
+}
+
+#board-write-btn:hover {
+    opacity: 0.9;
+}
+
+#board-list {
+    width: 100%;
+}
+
+.board-empty {
+    padding: 60px 20px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.board-empty p {
+    margin: 0;
+    color: #777;
+    font-size: 15px;
+}
+
+#board-detail {
+    margin-top: 20px;
+}
+
+#board-detail-content {
+    margin-top: 20px;
+    padding: 25px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+}
+
+@media (max-width: 600px) {
+    #cat-board .section-title h2 {
+        font-size: 24px;
+    }
+
+    .board-header h3 {
+        font-size: 18px;
+    }
+
+    #board-write-btn {
+        padding: 8px 13px;
+        font-size: 13px;
+    }
+
+    .board-empty {
+        padding: 45px 15px;
+    }
+
+    #board-detail-content {
+        padding: 18px;
+    }
+}
     </style>
 </head>
 <body id="mainBody">
@@ -245,6 +348,7 @@
         <li><button type="button" class="nav-btn" id="nav-info" onclick="switchCategory('cat-info', this)" data-i18n="navInfo">운항안내</button></li>
         <li><button type="button" class="nav-btn" id="nav-location" onclick="switchCategory('cat-location', this)" data-i18n="navLocation">찾아오시는 길</button></li>
         <li><button type="button" class="nav-btn" id="nav-booking" onclick="switchCategory('cat-booking', this)" data-i18n="navBooking">실시간예약</button></li>
+               <li><button type="button" class="nav-btn" id="nav-board" onclick="switchCategory('cat-board', this)" data-i18n="navBoard">조황게시판</button></li>
         <li id="nav-admin-li" style="display: none;"><button type="button" class="nav-btn" id="nav-admin" onclick="checkAdminAccess()" data-i18n="navAdmin">관리자센터</button></li>
     </ul>
 </div>
@@ -614,8 +718,48 @@
             </div>
         </div>
     </div>
+   <!-- 5. 조황게시판 카테고리 -->
+    <div id="cat-board" class="category-sec">
 
-    <!-- 5. 관리자센터 카테고리 -->
+        <div class="section-title">
+            <h2 data-i18n="boardTitle">조황게시판</h2>
+            <p data-i18n="boardSubtitle">천일호의 생생한 조황 소식을 확인해보세요.</p>
+        </div>
+
+        <div class="board-header">
+            <h3 data-i18n="boardListTitle">조황 소식</h3>
+
+            <button type="button"
+                    id="board-write-btn"
+                    class="primary-btn"
+                    style="display:none;"
+                    data-i18n="boardWrite">
+                글쓰기
+            </button>
+        </div>
+
+        <div id="board-list">
+            <div class="board-empty">
+                <p data-i18n="boardEmpty">등록된 조황 게시글이 없습니다.</p>
+            </div>
+        </div>
+
+        <div id="board-detail" style="display:none;">
+
+            <button type="button"
+                    class="secondary-btn"
+                    onclick="showBoardList()"
+                    data-i18n="boardBack">
+                목록으로
+            </button>
+
+            <div id="board-detail-content"></div>
+
+        </div>
+
+    </div>
+
+    <!-- 6. 관리자센터 카테고리 -->
     <div id="cat-admin" class="category-sec">
         <div class="admin-dashboard-layout">
             <div class="admin-sidebar">
@@ -1628,6 +1772,13 @@ if (b.status === '결제완료') {
             navInfo: "운항안내",
             navLocation: "찾아오시는 길",
             navBooking: "실시간예약",
+            navBoard: "조황게시판",
+            boardTitle: "조황게시판",
+boardSubtitle: "천일호의 생생한 조황 소식을 확인해보세요.",
+boardListTitle: "조황 소식",
+boardWrite: "글쓰기",
+boardEmpty: "등록된 조황 게시글이 없습니다.",
+boardBack: "목록으로",
             navAdmin: "관리자센터",
             heroBadgeText: "제주 서귀포 필수 여행 코스",
             heroTitle: "바다 위에서 맞이하는 가장 찬란한 순간",
@@ -1757,6 +1908,13 @@ bookStep7: "구매 후 전화 또는 문자로 확정 연락을 받으셔야 이
             navInfo: "Course Info",
             navLocation: "Location",
             navBooking: "Live Booking",
+            navBoard: "Fishing Reports",
+            boardTitle: "Fishing Reports",
+boardSubtitle: "Check out the latest fishing reports from Chunil-ho.",
+boardListTitle: "Fishing Reports",
+boardWrite: "Write Post",
+boardEmpty: "No fishing reports have been posted yet.",
+boardBack: "Back to List",
             navAdmin: "Admin Center",
             heroBadgeText: "Must-visit Travel Course in Seogwipo, Jeju",
             heroTitle: "The Most Brilliant Moment on the Ocean",
@@ -1886,6 +2044,13 @@ bookStep7: "After purchase, you must receive a confirmation by phone or text mes
             navInfo: "運航案内",
             navLocation: "アクセス",
             navBooking: "リアルタイム予約",
+            navBoard: "釣果掲示板",
+            boardTitle: "釣果掲示板",
+boardSubtitle: "千日号の最新釣果情報をご覧ください。",
+boardListTitle: "釣果情報",
+boardWrite: "投稿する",
+boardEmpty: "登録された釣果投稿はありません。",
+boardBack: "一覧に戻る",
             navAdmin: "管理者センター",
             heroBadgeText: "済州西帰浦の必須旅行コース",
             heroTitle: "海の上で迎える最も輝かしい瞬間",
@@ -2014,6 +2179,13 @@ bookStep7: "After purchase, you must receive a confirmation by phone or text mes
             navInfo: "航行指南",
             navLocation: "交通路线",
             navBooking: "实时预约",
+            navBoard: "渔获公告",
+            boardTitle: "渔获公告",
+boardSubtitle: "查看千日号最新的渔获信息。",
+boardListTitle: "渔获信息",
+boardWrite: "发布文章",
+boardEmpty: "暂无已发布的渔获公告。",
+boardBack: "返回列表",
             navAdmin: "管理中心",
             heroBadgeText: "济州西归浦必游旅行路线",
             heroTitle: "在海面上迎接最灿烂的瞬间",
