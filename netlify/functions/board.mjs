@@ -1,4 +1,4 @@
-import { getStore } from "@netlify/blobs";
+import { getStore } from "@Netlify/blobs";
 import { json, body } from "./_lib.mjs";
 import { verifyAdmin } from "./_auth.mjs";
 
@@ -23,6 +23,7 @@ export async function handler(event) {
       });
     }
 
+
     // ========================================
     // GET : 조황게시판 목록
     // ========================================
@@ -37,47 +38,130 @@ export async function handler(event) {
       });
     }
 
-if (method === "DELETE") {
-  if (!verifyAdmin(event)) {
-    return json(401, {
-      message: "관리자 로그인이 필요합니다."
-    });
-  }
 
-  const data = await body(event);
-  const postId = String(data?.id || "").trim();
+    // ========================================
+    // DELETE : 조황게시글 삭제
+    // ========================================
+    if (method === "DELETE") {
 
-  if (!postId) {
-    return json(400, {
-      message: "삭제할 게시글 ID가 없습니다."
-    });
-  }
+      if (!verifyAdmin(event)) {
+        return json(401, {
+          message: "관리자 로그인이 필요합니다."
+        });
+      }
 
-  const existingPosts = await boardStore.get("posts", {
-    type: "json"
-  });
+      const data = await body(event);
+      const postId = String(data?.id || "").trim();
 
-  const posts = Array.isArray(existingPosts)
-    ? existingPosts
-    : [];
+      if (!postId) {
+        return json(400, {
+          message: "삭제할 게시글 ID가 없습니다."
+        });
+      }
 
-  const filteredPosts = posts.filter(
-    post => String(post.id) !== postId
-  );
+      const existingPosts = await boardStore.get("posts", {
+        type: "json"
+      });
 
-  if (filteredPosts.length === posts.length) {
-    return json(404, {
-      message: "삭제할 게시글을 찾을 수 없습니다."
-    });
-  }
+      const posts = Array.isArray(existingPosts)
+        ? existingPosts
+        : [];
 
-  await boardStore.setJSON("posts", filteredPosts);
+      const filteredPosts = posts.filter(
+        post => String(post.id) !== postId
+      );
 
-  return json(200, {
-    success: true,
-    message: "게시글이 삭제되었습니다."
-  });
-}
+      if (filteredPosts.length === posts.length) {
+        return json(404, {
+          message: "삭제할 게시글을 찾을 수 없습니다."
+        });
+      }
+
+      await boardStore.setJSON("posts", filteredPosts);
+
+      return json(200, {
+        success: true,
+        message: "게시글이 삭제되었습니다."
+      });
+    }
+
+
+    // ========================================
+    // PUT : 조황게시글 수정
+    // ========================================
+    if (method === "PUT") {
+
+      if (!verifyAdmin(event)) {
+        return json(401, {
+          message: "관리자 로그인이 필요합니다."
+        });
+      }
+
+      const data = await body(event);
+
+      const postId = String(data?.id || "").trim();
+      const title = String(data?.title || "").trim();
+      const content = String(data?.content || "").trim();
+
+      if (!postId) {
+        return json(400, {
+          message: "수정할 게시글 ID가 없습니다."
+        });
+      }
+
+      if (!title) {
+        return json(400, {
+          message: "제목을 입력해주세요."
+        });
+      }
+
+      if (!content) {
+        return json(400, {
+          message: "내용을 입력해주세요."
+        });
+      }
+
+      const existingPosts = await boardStore.get("posts", {
+        type: "json"
+      });
+
+      const posts = Array.isArray(existingPosts)
+        ? existingPosts
+        : [];
+
+      const index = posts.findIndex(
+        post => String(post.id) === postId
+      );
+
+      if (index === -1) {
+        return json(404, {
+          message: "수정할 게시글을 찾을 수 없습니다."
+        });
+      }
+
+      posts[index] = {
+        ...posts[index],
+        title: title,
+        content: content,
+        images: Array.isArray(data?.images)
+          ? data.images
+          : (posts[index].images || []),
+        updatedAt: new Date().toISOString()
+      };
+
+      await boardStore.setJSON("posts", posts);
+
+      return json(200, {
+        success: true,
+        post: posts[index]
+      });
+    }
+
+
+    // ========================================
+    // POST : 조황게시글 등록
+    // ========================================
+    if (method === "POST") {
 
       // 관리자 인증
       if (!verifyAdmin(event)) {
@@ -106,7 +190,6 @@ if (method === "DELETE") {
         });
       }
 
-
       // 기존 게시글 가져오기
       const existingPosts = await boardStore.get("posts", {
         type: "json"
@@ -115,7 +198,6 @@ if (method === "DELETE") {
       const posts = Array.isArray(existingPosts)
         ? existingPosts
         : [];
-
 
       // 새 게시글 생성
       const now = new Date().toISOString();
@@ -131,14 +213,11 @@ if (method === "DELETE") {
         updatedAt: now
       };
 
-
       // 최신 글을 맨 위에 추가
       posts.unshift(post);
 
-
       // Netlify Blobs 저장
       await boardStore.setJSON("posts", posts);
-
 
       // 성공 응답
       return json(200, {
