@@ -878,11 +878,12 @@
             </button>
         </div>
 <div id="board-list">
-    <div class="board-empty">
-        <p data-i18n="boardEmpty">등록된 조황 게시글이 없습니다.</p>
+    <div id="board-post-list">
+        <div class="board-empty">
+            <p data-i18n="boardEmpty">등록된 조황 게시글이 없습니다.</p>
+        </div>
     </div>
 </div>
-
 <div id="board-write-form" style="display:none;">
     <div class="board-form-box">
 
@@ -1123,7 +1124,61 @@ function showBoardWriteForm() {
     if (detail) detail.style.display = 'none';
     if (form) form.style.display = 'block';
 }
+function showBoardList() {
+    const list = document.getElementById('board-list');
+    const detail = document.getElementById('board-detail');
+    const form = document.getElementById('board-write-form');
 
+    if (list) list.style.display = 'block';
+    if (detail) detail.style.display = 'none';
+    if (form) form.style.display = 'none';
+
+    loadBoardPosts();
+}
+    async function loadBoardPosts() {
+    const list = document.getElementById('board-post-list');
+    if (!list) return;
+
+    try {
+        const data = await apiRequest('/board');
+        const posts = Array.isArray(data.posts) ? data.posts : [];
+
+        if (posts.length === 0) {
+            list.innerHTML = `
+                <div class="board-empty">
+                    등록된 조황게시글이 없습니다.
+                </div>
+            `;
+            return;
+        }
+
+        list.innerHTML = posts.map(post => {
+            const date = post.createdAt
+                ? new Date(post.createdAt).toLocaleDateString('ko-KR')
+                : '';
+
+            return `
+                <div class="board-post-item" onclick="showBoardDetail('${post.id}')">
+                    <div class="board-post-title">
+                        ${escapeHtml(post.title)}
+                    </div>
+                    <div class="board-post-date">
+                        ${date}
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+    } catch (error) {
+        console.error('조황게시판 불러오기 오류:', error);
+
+        list.innerHTML = `
+            <div class="board-empty">
+                조황게시판을 불러오지 못했습니다.
+            </div>
+        `;
+    }
+}
 function setupBoardImagePreview() {
     const imageInput = document.getElementById('board-images');
     const preview = document.getElementById('board-image-preview');
@@ -1762,8 +1817,9 @@ try {
     } else {
         handleMobilePaymentRedirect();
     }
-    document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     setupBoardImagePreview();
+    loadBoardPosts();
 });
     async function completeBookingRegistration(orderNo, date, course, time, count, name, tel, price, impUid = '', paymentStatus = 'paid') {
         const cleanTel = normalizeTel(tel);
