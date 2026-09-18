@@ -490,31 +490,61 @@
 
 .board-list-header {
     display: grid;
-    grid-template-columns: 70px 1fr 110px;
+    grid-template-columns: 70px minmax(0, 1fr) 110px;
     align-items: center;
-    padding: 13px 12px;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    min-height: 48px;
+    padding: 0;
+
     background: #f8fafc;
     border-top: 2px solid #0f2c59;
     border-bottom: 1px solid #d1d5db;
+
     font-size: 14px;
     font-weight: 700;
     color: #374151;
     text-align: center;
 }
 
-.board-list-header-title {
-    text-align: left;
-    padding-left: 10px;
+.board-list-header > div {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+    border-right: 1px solid #e5e7eb;
 }
 
+.board-list-header > div:last-child {
+    border-right: none;
+}
+
+.board-list-header-title {
+    justify-content: flex-start !important;
+    padding-left: 12px;
+}
+
+
+/* 게시글 한 줄 */
 .board-post-item {
     display: grid;
-    grid-template-columns: 70px 1fr 110px;
+    grid-template-columns: 70px minmax(0, 1fr) 110px;
     align-items: center;
+
+    width: 100%;
+    box-sizing: border-box;
+
     min-height: 52px;
-    padding: 0 12px;
-    border-bottom: 1px solid #e5e7eb;
+    padding: 0;
+
     background: #fff;
+
+    border-bottom: 1px solid #e5e7eb;
+
     cursor: pointer;
     transition: background 0.15s ease;
 }
@@ -523,34 +553,67 @@
     background: #f8fafc;
 }
 
+
+/* 번호 */
 .board-post-number {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+    min-height: 52px;
+
+    box-sizing: border-box;
+
     font-size: 14px;
     color: #6b7280;
+
+    border-right: 1px solid #f1f5f9;
 }
 
+
+/* 제목 */
 .board-post-title {
     min-width: 0;
-    padding: 14px 10px;
+
+    padding: 0 12px;
+
     font-size: 15px;
     color: #111827;
+
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    text-align: left;
 }
 
+
+/* 작성일 */
 .board-post-date {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+    min-height: 52px;
+
+    box-sizing: border-box;
+
     font-size: 13px;
     color: #6b7280;
+
+    border-left: 1px solid #f1f5f9;
 }
 
 
 /* 게시글이 없을 때 */
 .board-empty {
     padding: 40px 20px;
+
     text-align: center;
     color: #6b7280;
+
     border-top: 2px solid #0f2c59;
     border-bottom: 1px solid #e5e7eb;
 }
@@ -560,34 +623,38 @@
 @media (max-width: 600px) {
 
     .board-list-header {
-        grid-template-columns: 45px 1fr 82px;
-        padding: 11px 6px;
+        grid-template-columns: 45px minmax(0, 1fr) 82px;
+
+        min-height: 45px;
+
         font-size: 13px;
     }
 
+    .board-list-header-title {
+        padding-left: 8px;
+    }
+
     .board-post-item {
-        grid-template-columns: 45px 1fr 82px;
-        padding: 0 6px;
+        grid-template-columns: 45px minmax(0, 1fr) 82px;
+
         min-height: 48px;
     }
 
     .board-post-number {
+        min-height: 48px;
         font-size: 13px;
     }
 
     .board-post-title {
-        padding: 13px 6px;
+        padding: 0 8px;
         font-size: 14px;
     }
 
     .board-post-date {
+        min-height: 48px;
         font-size: 11px;
     }
-
-    .board-list-header-title {
-        padding-left: 6px;
-    }
-}    
+}
     </style>
 </head>
 <body id="mainBody">
