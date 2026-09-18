@@ -1637,44 +1637,52 @@ for (const file of imageFiles) {
     images.push(imageData);
 }
         const button = document.getElementById('board-save-btn');
-        
-        if (button) {
-            button.disabled = true;
-            button.textContent = '등록 중...';
-        }
 
-        await apiRequest('/board', {
-            method: 'POST',
-            body: JSON.stringify({
-                title,
-                content,
-                images
-            })
-        });
+if (button) {
+    button.disabled = true;
+    button.textContent = window.editingBoardPostId
+        ? '수정 중...'
+        : '등록 중...';
+}
 
-        alert('조황글이 등록되었습니다.');
+const isEditing = !!window.editingBoardPostId;
 
-        if (titleInput) titleInput.value = '';
-        if (contentInput) contentInput.value = '';
+await apiRequest('/board', {
+    method: isEditing ? 'PUT' : 'POST',
+    body: JSON.stringify({
+        id: isEditing ? window.editingBoardPostId : undefined,
+        title,
+        content,
+        images
+    })
+});
 
-        const imageInput = document.getElementById('board-images');
-        if (imageInput) imageInput.value = '';
+alert(isEditing ? '조황글이 수정되었습니다.' : '조황글이 등록되었습니다.');
 
-        const preview = document.getElementById('board-image-preview');
-        if (preview) preview.innerHTML = '';
+if (titleInput) titleInput.value = '';
+if (contentInput) contentInput.value = '';
 
-        showBoardList();
+const imageInput = document.getElementById('board-images');
+if (imageInput) imageInput.value = '';
 
-    } catch (error) {
-        console.error('조황글 등록 오류:', error);
-        alert(error.message || '조황글 등록에 실패했습니다.');
-    } finally {
-        const button = document.getElementById('board-save-btn');
-        if (button) {
-            button.disabled = false;
-            button.textContent = '등록하기';
-        }
+const preview = document.getElementById('board-image-preview');
+if (preview) preview.innerHTML = '';
+
+window.editingBoardPostId = null;
+
+showBoardList();
+
+} catch (error) {
+    console.error('조황글 저장 오류:', error);
+    alert(error.message || '조황글 저장에 실패했습니다.');
+} finally {
+    const button = document.getElementById('board-save-btn');
+
+    if (button) {
+        button.disabled = false;
+        button.textContent = '등록하기';
     }
+}
 });
 function setupBoardImagePreview() {
     const imageInput = document.getElementById('board-images');
