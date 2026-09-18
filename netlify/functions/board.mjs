@@ -37,11 +37,47 @@ export async function handler(event) {
       });
     }
 
+if (method === "DELETE") {
+  if (!verifyAdmin(event)) {
+    return json(401, {
+      message: "관리자 로그인이 필요합니다."
+    });
+  }
 
-    // ========================================
-    // POST : 조황글 등록
-    // ========================================
-    if (method === "POST") {
+  const data = await body(event);
+  const postId = String(data?.id || "").trim();
+
+  if (!postId) {
+    return json(400, {
+      message: "삭제할 게시글 ID가 없습니다."
+    });
+  }
+
+  const existingPosts = await boardStore.get("posts", {
+    type: "json"
+  });
+
+  const posts = Array.isArray(existingPosts)
+    ? existingPosts
+    : [];
+
+  const filteredPosts = posts.filter(
+    post => String(post.id) !== postId
+  );
+
+  if (filteredPosts.length === posts.length) {
+    return json(404, {
+      message: "삭제할 게시글을 찾을 수 없습니다."
+    });
+  }
+
+  await boardStore.setJSON("posts", filteredPosts);
+
+  return json(200, {
+    success: true,
+    message: "게시글이 삭제되었습니다."
+  });
+}
 
       // 관리자 인증
       if (!verifyAdmin(event)) {
