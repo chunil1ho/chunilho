@@ -1226,6 +1226,65 @@ function showBoardWriteForm() {
     if (detail) detail.style.display = 'none';
     if (form) form.style.display = 'block';
 }
+    async function editBoardPost(postId) {
+    const list = document.getElementById('board-list');
+    const detail = document.getElementById('board-detail');
+    const form = document.getElementById('board-write-form');
+
+    const titleInput = document.getElementById('board-title');
+    const contentInput = document.getElementById('board-content');
+
+    if (!form || !titleInput || !contentInput) {
+        alert('수정 폼을 찾을 수 없습니다.');
+        return;
+    }
+
+    try {
+        const data = await apiRequest('/board');
+        const posts = Array.isArray(data.posts) ? data.posts : [];
+
+        const post = posts.find(
+            item => String(item.id) === String(postId)
+        );
+
+        if (!post) {
+            alert('게시글을 찾을 수 없습니다.');
+            return;
+        }
+
+        // 기존 제목과 내용 넣기
+        titleInput.value = post.title || '';
+        contentInput.value = post.content || '';
+
+        // 목록과 상세화면 숨기기
+        if (list) list.style.display = 'none';
+        if (detail) detail.style.display = 'none';
+
+        // 수정 폼 표시
+        form.style.display = 'block';
+
+        // 폼 제목 변경
+        const formTitle = form.querySelector('.board-form-title h3');
+
+        if (formTitle) {
+            formTitle.textContent = '조황글 수정';
+        }
+
+        // 저장 버튼 문구 변경
+        const saveButton = document.getElementById('board-save-btn');
+
+        if (saveButton) {
+            saveButton.textContent = '수정하기';
+        }
+
+        // 현재 수정 중인 게시글 ID 저장
+        window.editingBoardPostId = String(post.id);
+
+    } catch (error) {
+        console.error('게시글 수정 폼 오류:', error);
+        alert('게시글 정보를 불러오지 못했습니다.');
+    }
+}
 function showBoardList() {
     const list = document.getElementById('board-list');
     const detail = document.getElementById('board-detail');
