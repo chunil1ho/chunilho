@@ -1307,16 +1307,23 @@ function showBoardList() {
                 <h2>${escapeHtml(post.title)}</h2>
                 <div class="board-detail-date">${date}</div>
               ${
-            isAdminLoggedIn
-                ? `
-                    <button
-                        type="button"
-                        class="board-delete-btn"
-                        onclick="deleteBoardPost('${post.id}')">
-                        삭제
-                    </button>
-                `
-                : ''
+isAdminLoggedIn
+    ? `
+        <button
+            type="button"
+            class="board-edit-btn"
+            onclick="editBoardPost('${post.id}')">
+            수정
+        </button>
+
+        <button
+            type="button"
+            class="board-delete-btn"
+            onclick="deleteBoardPost('${post.id}')">
+            삭제
+        </button>
+    `
+    : ''
         }
     </div>
 
