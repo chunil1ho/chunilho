@@ -1298,6 +1298,12 @@ function showBoardList() {
 
     const title = titleInput?.value.trim() || '';
     const content = contentInput?.value.trim() || '';
+        
+    const imageInput = document.getElementById('board-images');
+const imageFiles = imageInput?.files
+    ? Array.from(imageInput.files)
+    : [];
+        
 
     if (!title) {
         alert('제목을 입력해주세요.');
@@ -1312,7 +1318,22 @@ function showBoardList() {
     }
 
     try {
+        const images = [];
+
+for (const file of imageFiles) {
+    const imageData = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+
+        reader.readAsDataURL(file);
+    });
+
+    images.push(imageData);
+}
         const button = document.getElementById('board-save-btn');
+        
         if (button) {
             button.disabled = true;
             button.textContent = '등록 중...';
@@ -1322,7 +1343,8 @@ function showBoardList() {
             method: 'POST',
             body: JSON.stringify({
                 title,
-                content
+                content,
+                images
             })
         });
 
