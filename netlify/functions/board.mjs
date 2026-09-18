@@ -1,5 +1,6 @@
-import { getStore } from "@netlify/blobs";
-import { json, body, getAuthToken } from "./_lib.mjs";
+import { getStore } from "@Netlify/blobs";
+import { json, body } from "./_lib.mjs";
+import { verifyAdmin } from "./_auth.mjs";
 
 const boardStore = getStore({
   name: "chunilho-board",
@@ -8,34 +9,16 @@ const boardStore = getStore({
   consistency: "strong"
 });
 
-async function isAdmin(event) {
-  const token = getAuthToken(event);
-
-  if (!token) return false;
-
-  try {
-    const response = await fetch(
-      "https://chunilho.netlify.app/api/admin-session",
-      {
-        headers: {
-          Authorization: "Bearer " + token
-        }
-      }
-    );
-
-    return response.ok;
-  } catch (error) {
-    console.error("관리자 인증 오류:", error);
-    return false;
-  }
-}
-
 export async function handler(event) {
   const method = event.httpMethod;
 
   try {
-    // 게시글 목록 조회
+
+    // ========================================
+    // GET : 조황게시판 목록
+    // ========================================
     if (method === "GET") {
+
       const posts = await boardStore.get("posts", {
         type: "json"
       });
@@ -45,61 +28,96 @@ export async function handler(event) {
       });
     }
 
-    // 게시글 등록
-    if (method === "POST") {
-      const admin = await isAdmin(event);
 
-      if (!admin) {
+    // ========================================
+    // POST : 조황글 등록
+    // ========================================
+    if (method === "POST") {
+
+      // 관리자 인증
+      if (!verifyAdmin(event)) {
         return json(401, {
-          message: "관리자 권한이 필요합니다."
+          message: "관리자 로그인이 필요합니다."
         });
       }
 
+      // 요청 데이터
       const data = await body(event);
 
-      const title = String(data.title || "").trim();
-      const content = String(data.content || "").trim();
+      const title = String(data?.title || "").trim();
+      const content = String(data?.content || "").trim();
 
-      if (!title || !content) {
+      // 제목 확인
+      if (!title) {
         return json(400, {
-          message: "제목과 내용을 입력해주세요."
+          message: "제목을 입력해주세요."
         });
       }
 
-      const posts = await boardStore.get("posts", {
-        type: "json"
-      }) || [];
+      // 내용 확인
+      if (!content) {
+        return json(400, {
+          message: "내용을 입력해주세요."
+        });
+      }
 
+
+      // 기존 게시글 가져오기
+      const existingPosts = await boardStore.get("posts", {
+        type: "json"
+      });
+
+      const posts = Array.isArray(existingPosts)
+        ? existingPosts
+        : [];
+
+
+      // 새 게시글 생성
       const now = new Date().toISOString();
 
       const post = {
         id: Date.now().toString(),
-        title,
-        content,
-        images: Array.isArray(data.images) ? data.images : [],
+        title: title,
+        content: content,
+        images: Array.isArray(data?.images)
+          ? data.images
+          : [],
         createdAt: now,
         updatedAt: now
       };
 
+
+      // 최신 글을 맨 위에 추가
       posts.unshift(post);
 
+
+      // Netlify Blobs 저장
       await boardStore.setJSON("posts", posts);
 
+
+      // 성공 응답
       return json(200, {
         success: true,
-        post
+        post: post
       });
     }
 
+
+    // ========================================
+    // 지원하지 않는 요청
+    // ========================================
     return json(405, {
       message: "Method Not Allowed"
     });
 
   } catch (error) {
+
     console.error("Board API Error:", error);
 
     return json(500, {
-      message: error.message || "조황게시판 서버 오류가 발생했습니다."
+      message:
+        error?.message ||
+        "조황게시판 서버 오류가 발생했습니다."
     });
   }
 }
