@@ -879,7 +879,13 @@
         </div>
 <div id="board-list">
     <div id="board-post-list">
-        <div id="board-detail" style="display:none;">
+        <div class="board-empty">
+            <p data-i18n="boardEmpty">등록된 조황 게시글이 없습니다.</p>
+        </div>
+    </div>
+</div>
+        
+    <div id="board-detail" style="display:none;">
     <div class="board-detail-box">
 
         <button
@@ -891,11 +897,6 @@
 
         <div id="board-detail-content"></div>
 
-    </div>
-</div>
-        <div class="board-empty">
-            <p data-i18n="boardEmpty">등록된 조황 게시글이 없습니다.</p>
-        </div>
     </div>
 </div>
 <div id="board-write-form" style="display:none;">
@@ -1220,6 +1221,75 @@ function showBoardList() {
                 조황게시판을 불러오지 못했습니다.
             </div>
         `;
+    }
+}
+    async function showBoardDetail(postId) {
+    const list = document.getElementById('board-list');
+    const detail = document.getElementById('board-detail');
+    const form = document.getElementById('board-write-form');
+    const contentBox = document.getElementById('board-detail-content');
+
+    if (!detail || !contentBox) return;
+
+    try {
+        const data = await apiRequest('/board');
+        const posts = Array.isArray(data.posts) ? data.posts : [];
+
+        const post = posts.find(
+            item => String(item.id) === String(postId)
+        );
+
+        if (!post) {
+            alert('게시글을 찾을 수 없습니다.');
+            return;
+        }
+
+        const date = post.createdAt
+            ? new Date(post.createdAt).toLocaleDateString('ko-KR')
+            : '';
+
+        const images = Array.isArray(post.images)
+            ? post.images
+            : [];
+
+        contentBox.innerHTML = `
+            <div class="board-detail-header">
+                <h2>${escapeHtml(post.title)}</h2>
+                <div class="board-detail-date">${date}</div>
+            </div>
+
+            <div class="board-detail-body">
+                ${escapeHtml(post.content).replace(/\n/g, '<br>')}
+            </div>
+
+            ${
+                images.length > 0
+                    ? `
+                        <div class="board-detail-images">
+                            ${images.map(image => `
+                                <img
+                                    src="${escapeHtml(image)}"
+                                    alt="${escapeHtml(post.title)}">
+                            `).join('')}
+                        </div>
+                    `
+                    : ''
+            }
+        `;
+
+        if (list) list.style.display = 'none';
+        if (form) form.style.display = 'none';
+
+        detail.style.display = 'block';
+
+        window.scrollTo({
+            top: detail.offsetTop - 80,
+            behavior: 'smooth'
+        });
+
+    } catch (error) {
+        console.error('조황게시글 상세보기 오류:', error);
+        alert(error.message || '게시글을 불러오지 못했습니다.');
     }
 }
     document.getElementById('board-save-btn')?.addEventListener('click', async () => {
