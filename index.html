@@ -217,18 +217,20 @@
 
 .board-detail-images img {
     width: 100%;
-    height: 220px;
-    object-fit: cover;
+    height: auto;
+    max-height: 500px;
+    object-fit: contain;
     display: block;
     border-radius: 10px;
 }
-        @media (max-width: 600px) {
+@media (max-width: 600px) {
     .board-detail-images {
         grid-template-columns: 1fr;
     }
 
     .board-detail-images img {
-        height: 200px;
+        height: auto;
+        max-height: 500px;
     }
 }
         
