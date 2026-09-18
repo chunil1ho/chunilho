@@ -1425,23 +1425,41 @@ function showBoardList() {
             return;
         }
 
-        list.innerHTML = posts.map(post => {
-            const date = post.createdAt
-                ? new Date(post.createdAt).toLocaleDateString('ko-KR')
-                : '';
+list.innerHTML = `
+    <div class="board-list-header">
+        <div>번호</div>
+        <div class="board-list-header-title">제목</div>
+        <div>작성일</div>
+    </div>
 
-            return `
-                <div class="board-post-item" onclick="showBoardDetail('${post.id}')">
-                    <div class="board-post-title">
-                        ${escapeHtml(post.title)}
-                    </div>
-                    <div class="board-post-date">
-                        ${date}
-                    </div>
+    ${posts.map((post, index) => {
+        const date = post.createdAt
+            ? new Date(post.createdAt).toLocaleDateString('ko-KR')
+            : '';
+
+        const number = posts.length - index;
+
+        return `
+            <div
+                class="board-post-item"
+                onclick="showBoardDetail('${post.id}')">
+
+                <div class="board-post-number">
+                    ${number}
                 </div>
-            `;
-        }).join('');
 
+                <div class="board-post-title">
+                    ${escapeHtml(post.title)}
+                </div>
+
+                <div class="board-post-date">
+                    ${date}
+                </div>
+
+            </div>
+        `;
+    }).join('')}
+`;
     } catch (error) {
         console.error('조황게시판 불러오기 오류:', error);
 
