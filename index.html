@@ -1433,9 +1433,16 @@ list.innerHTML = `
     </div>
 
     ${posts.map((post, index) => {
-        const date = post.createdAt
-            ? new Date(post.createdAt).toLocaleDateString('ko-KR')
-            : '';
+const date = post.createdAt
+    ? (() => {
+        const d = new Date(post.createdAt);
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+
+        return `${year}.${month}.${day}`;
+    })()
+    : '';
 
         const number = posts.length - index;
 
