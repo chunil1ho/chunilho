@@ -898,133 +898,142 @@
         </div>
     </div>
 
-   <!-- 5. 조황게시판 카테고리 -->
-    <div id="cat-board" class="category-sec">
+<!-- 5. 조황게시판 카테고리 -->
+<div id="cat-board" class="category-sec">
 
-        <div class="section-title">
-            <h2 data-i18n="boardTitle">조황게시판</h2>
-            <p data-i18n="boardSubtitle">천일호의 생생한 조황 소식을 확인해보세요.</p>
-        </div>
-
-        <div class="board-header">
-            <h3 data-i18n="boardListTitle">조황 소식</h3>
-
-            <button type="button"
-                    id="board-write-btn"
-                    class="primary-btn"
-                    style="display:none;"
-                        onclick="showBoardWriteForm()"
-                    data-i18n="boardWrite">
-                글쓰기
-            </button>
-        </div>
-<div id="board-list">
-    <div id="board-post-list">
-        <div class="board-empty">
-            <p data-i18n="boardEmpty">등록된 조황 게시글이 없습니다.</p>
-        </div>
+    <div class="section-title">
+        <h2 data-i18n="boardTitle">조황게시판</h2>
+        <p data-i18n="boardSubtitle">
+            천일호의 생생한 조황 소식을 확인해보세요.
+        </p>
     </div>
-</div>
-        
-    <div id="board-detail" style="display:none;">
-    <div class="board-detail-box">
+
+    <div class="board-header">
+        <h3 data-i18n="boardListTitle">조황 소식</h3>
 
         <button
             type="button"
-            class="secondary-btn"
-            onclick="showBoardList()">
-            목록으로
+            id="board-write-btn"
+            class="primary-btn"
+            style="display:none;"
+            onclick="showBoardWriteForm()"
+            data-i18n="boardWrite">
+            글쓰기
         </button>
-
-        <div id="board-detail-content"></div>
-
     </div>
-</div>
-<div id="board-write-form" style="display:none;">
-    <div class="board-form-box">
 
-        <div class="board-form-title">
-            <h3 data-i18n="boardWriteTitle">조황글 작성</h3>
+
+    <!-- 게시글 목록 -->
+    <div id="board-list">
+        <div id="board-post-list">
+            <div class="board-empty">
+                <p data-i18n="boardEmpty">
+                    등록된 조황 게시글이 없습니다.
+                </p>
+            </div>
         </div>
+    </div>
 
-        <div class="board-form-group">
-            <label for="board-title" data-i18n="boardPostTitle">
-                제목
-            </label>
 
-            <input
-                type="text"
-                id="board-title"
-                maxlength="100"
-                placeholder="조황글 제목을 입력하세요."
-                data-i18n-placeholder="boardTitlePlaceholder">
-        </div>
+    <!-- 게시글 상세 -->
+    <div id="board-detail" style="display:none;">
+        <div class="board-detail-box">
 
-        <div class="board-form-group">
-            <label for="board-content" data-i18n="boardPostContent">
-                내용
-            </label>
-
-            <textarea
-                id="board-content"
-                rows="10"
-                placeholder="조황 내용을 입력하세요."
-                data-i18n-placeholder="boardContentPlaceholder"></textarea>
-        </div>
-
-        <div class="board-form-group">
-            <label for="board-images" data-i18n="boardPhotos">
-                사진 첨부
-            </label>
-
-            <input
-                type="file"
-                id="board-images"
-                accept="image/*"
-                multiple>
-
-            <small data-i18n="boardPhotoGuide">
-                여러 장의 사진을 선택할 수 있습니다.
-            </small>
-        </div>
-
-        <div id="board-image-preview" class="board-image-preview"></div>
-
-        <div class="board-form-buttons">
             <button
                 type="button"
-                id="board-cancel-btn"
                 class="secondary-btn"
-                data-i18n="boardCancel">
-                취소
-            </button>
-
-            <button
-                type="button"
-                id="board-save-btn"
-                class="primary-btn"
-                data-i18n="boardSave">
-                등록하기
-            </button>
-        </div>
-
-    </div>
-</div>
-
-        <div id="board-detail" style="display:none;">
-
-            <button type="button"
-                    class="secondary-btn"
-                    onclick="showBoardList()"
-                    data-i18n="boardBack">
+                onclick="showBoardList()"
+                data-i18n="boardBack">
                 목록으로
             </button>
 
             <div id="board-detail-content"></div>
 
         </div>
-
     </div>
+
+
+    <!-- 게시글 작성 및 수정 폼 -->
+    <div id="board-write-form" style="display:none;">
+        <div class="board-form-box">
+
+            <div class="board-form-title">
+                <h3 data-i18n="boardWriteTitle">
+                    조황글 작성
+                </h3>
+            </div>
+
+            <div class="board-form-group">
+                <label for="board-title" data-i18n="boardPostTitle">
+                    제목
+                </label>
+
+                <input
+                    type="text"
+                    id="board-title"
+                    maxlength="100"
+                    placeholder="조황글 제목을 입력하세요."
+                    data-i18n-placeholder="boardTitlePlaceholder">
+            </div>
+
+
+            <div class="board-form-group">
+                <label for="board-content" data-i18n="boardPostContent">
+                    내용
+                </label>
+
+                <textarea
+                    id="board-content"
+                    rows="10"
+                    placeholder="조황 내용을 입력하세요."
+                    data-i18n-placeholder="boardContentPlaceholder"></textarea>
+            </div>
+
+
+            <div class="board-form-group">
+                <label for="board-images" data-i18n="boardPhotos">
+                    사진 첨부
+                </label>
+
+                <input
+                    type="file"
+                    id="board-images"
+                    accept="image/*"
+                    multiple>
+
+                <small data-i18n="boardPhotoGuide">
+                    여러 장의 사진을 선택할 수 있습니다.
+                </small>
+            </div>
+
+
+            <div id="board-image-preview" class="board-image-preview"></div>
+
+
+            <div class="board-form-buttons">
+
+                <button
+                    type="button"
+                    id="board-cancel-btn"
+                    class="secondary-btn"
+                    data-i18n="boardCancel">
+                    취소
+                </button>
+
+                <button
+                    type="button"
+                    id="board-save-btn"
+                    class="primary-btn"
+                    data-i18n="boardSave">
+                    등록하기
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
 
     <!-- 6. 관리자센터 카테고리 -->
     <div id="cat-admin" class="category-sec">
