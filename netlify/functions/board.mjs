@@ -1,4 +1,4 @@
-import { getStore } from "@Netlify/blobs";
+import { getStore } from "@netlify/blobs";
 import { json, body } from "./_lib.mjs";
 import { verifyAdmin } from "./_auth.mjs";
 
