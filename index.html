@@ -336,18 +336,22 @@
     #board-detail-content {
         padding: 18px;
     }
-}
-        .board-delete-btn {
+    
+.board-edit-btn,
+.board-delete-btn {
+    display: inline-block;
     margin-top: 12px;
     padding: 8px 14px;
     border: none;
     border-radius: 6px;
-    background: #ef4444;
     color: #fff;
     font-size: 13px;
     font-weight: 600;
+    line-height: 1.4;
     cursor: pointer;
+    vertical-align: middle;
 }
+
 .board-edit-btn {
     background: #0f2c59;
     margin-right: 6px;
@@ -356,6 +360,11 @@
 .board-delete-btn {
     background: #ef4444;
 }
+
+.board-edit-btn:hover {
+    background: #1d4f91;
+}
+
 .board-delete-btn:hover {
     background: #dc2626;
 }
