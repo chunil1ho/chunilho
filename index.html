@@ -337,6 +337,21 @@
         padding: 18px;
     }
 }
+        .board-delete-btn {
+    margin-top: 12px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #ef4444;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.board-delete-btn:hover {
+    background: #dc2626;
+}
         /* =========================
    조황게시판 작성폼
    ========================= */
@@ -1282,7 +1297,20 @@ function showBoardList() {
             <div class="board-detail-header">
                 <h2>${escapeHtml(post.title)}</h2>
                 <div class="board-detail-date">${date}</div>
-            </div>
+              ${
+            isAdminLoggedIn
+                ? `
+                    <button
+                        type="button"
+                        class="board-delete-btn"
+                        onclick="deleteBoardPost('${post.id}')">
+                        삭제
+                    </button>
+                `
+                : ''
+        }
+    </div>
+
 
             <div class="board-detail-body">
                 ${escapeHtml(post.content).replace(/\n/g, '<br>')}
@@ -1316,6 +1344,36 @@ function showBoardList() {
     } catch (error) {
         console.error('조황게시글 상세보기 오류:', error);
         alert(error.message || '게시글을 불러오지 못했습니다.');
+    }
+}
+    // =========================
+async function deleteBoardPost(postId) {
+    if (!isAdminLoggedIn) {
+        alert('관리자 로그인이 필요합니다.');
+        return;
+    }
+
+    const confirmed = confirm(
+        '이 조황게시글을 삭제하시겠습니까?\n삭제하면 복구할 수 없습니다.'
+    );
+
+    if (!confirmed) return;
+
+    try {
+        await apiRequest('/board', {
+            method: 'DELETE',
+            body: JSON.stringify({
+                id: postId
+            })
+        });
+
+        alert('게시글이 삭제되었습니다.');
+
+        showBoardList();
+
+    } catch (error) {
+        console.error('조황게시글 삭제 오류:', error);
+        alert(error.message || '게시글 삭제에 실패했습니다.');
     }
 }
     document.getElementById('board-save-btn')?.addEventListener('click', async () => {
