@@ -1096,17 +1096,38 @@
     const ADMIN_PHONE = '010-7768-5913';
     const API_BASE = 'https://chunilho.netlify.app/api';
 
-    async function apiRequest(path, options = {}) {
-        const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
-        if (adminToken) headers.Authorization = 'Bearer ' + adminToken;
-        const response = await fetch(API_BASE + path, { ...options, headers });
-        let data = null;
-        try { data = await response.json(); } catch (_) {}
-        if (!response.ok) {
-            throw new Error(data?.message || '서버 요청에 실패했습니다.');
-        }
-        return data;
+async function apiRequest(path, options = {}) {
+    const headers = { ...(options.headers || {}) };
+
+    if (options.body) {
+        headers['Content-Type'] = 'application/json';
     }
+
+    if (adminToken) {
+        headers.Authorization = 'Bearer ' + adminToken;
+    }
+
+    const response = await fetch(API_BASE + path, {
+        ...options,
+        headers
+    });
+
+    let data = null;
+
+    try {
+        data = await response.json();
+    } catch (_) {
+        data = null;
+    }
+
+    if (!response.ok) {
+        throw new Error(
+            data?.message || '서버 요청에 실패했습니다.'
+        );
+    }
+
+    return data;
+}
 function updateBoardWriteButton() {
     const writeButton = document.getElementById('board-write-btn');
 
