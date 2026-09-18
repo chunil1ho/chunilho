@@ -1179,6 +1179,64 @@ function showBoardList() {
         `;
     }
 }
+    document.getElementById('board-save-btn')?.addEventListener('click', async () => {
+    const titleInput = document.getElementById('board-title');
+    const contentInput = document.getElementById('board-content');
+
+    const title = titleInput?.value.trim() || '';
+    const content = contentInput?.value.trim() || '';
+
+    if (!title) {
+        alert('제목을 입력해주세요.');
+        titleInput?.focus();
+        return;
+    }
+
+    if (!content) {
+        alert('내용을 입력해주세요.');
+        contentInput?.focus();
+        return;
+    }
+
+    try {
+        const button = document.getElementById('board-save-btn');
+        if (button) {
+            button.disabled = true;
+            button.textContent = '등록 중...';
+        }
+
+        await apiRequest('/board', {
+            method: 'POST',
+            body: JSON.stringify({
+                title,
+                content
+            })
+        });
+
+        alert('조황글이 등록되었습니다.');
+
+        if (titleInput) titleInput.value = '';
+        if (contentInput) contentInput.value = '';
+
+        const imageInput = document.getElementById('board-images');
+        if (imageInput) imageInput.value = '';
+
+        const preview = document.getElementById('board-image-preview');
+        if (preview) preview.innerHTML = '';
+
+        showBoardList();
+
+    } catch (error) {
+        console.error('조황글 등록 오류:', error);
+        alert(error.message || '조황글 등록에 실패했습니다.');
+    } finally {
+        const button = document.getElementById('board-save-btn');
+        if (button) {
+            button.disabled = false;
+            button.textContent = '등록하기';
+        }
+    }
+});
 function setupBoardImagePreview() {
     const imageInput = document.getElementById('board-images');
     const preview = document.getElementById('board-image-preview');
