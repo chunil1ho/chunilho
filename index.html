@@ -761,7 +761,10 @@
     }
 
 }
-    .board-detail-header {
+/* 여기까지 기존 홈페이지 CSS */
+
+/* 조황게시판 상세 */
+.board-detail-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -791,45 +794,68 @@
     margin: 0 8px 0 0;
     white-space: nowrap;
 }
-    /* 조황게시판 상세 - PC 오른쪽 정렬 강제 */
-@media (min-width: 769px) {
+
+
+/* PC - 날짜 / 수정 / 삭제 오른쪽 정렬 */
+@media screen and (min-width: 769px) {
 
     #board-detail .board-detail-header {
         display: flex !important;
+        flex-direction: row !important;
         align-items: center !important;
         justify-content: space-between !important;
         width: 100% !important;
-        gap: 20px !important;
         box-sizing: border-box !important;
     }
 
     #board-detail .board-detail-title {
-        flex: 1 !important;
+        flex: 1 1 auto !important;
         min-width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
         text-align: left !important;
     }
 
     #board-detail .board-detail-title h2 {
         margin: 0 !important;
+        padding: 0 !important;
         text-align: left !important;
     }
 
     #board-detail .board-detail-actions {
         display: flex !important;
+        flex-direction: row !important;
         align-items: center !important;
         justify-content: flex-end !important;
-        gap: 8px !important;
+        flex: 0 0 auto !important;
+        width: auto !important;
         margin-left: auto !important;
-        flex-shrink: 0 !important;
+        margin-right: 0 !important;
+        padding: 0 !important;
+        gap: 8px !important;
         white-space: nowrap !important;
     }
 
     #board-detail .board-detail-date {
+        display: inline-block !important;
+        width: auto !important;
         margin: 0 8px 0 0 !important;
+        padding: 0 !important;
         white-space: nowrap !important;
+        text-align: right !important;
     }
 
+    #board-detail .board-detail-actions .board-edit-btn,
+    #board-detail .board-detail-actions .board-delete-btn {
+        display: inline-flex !important;
+        width: auto !important;
+        flex: 0 0 auto !important;
+        margin: 0 !important;
+        white-space: nowrap !important;
+    }
 }
+
+</style>
     </style>
 </head>
 <body id="mainBody">
