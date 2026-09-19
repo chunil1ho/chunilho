@@ -1599,40 +1599,130 @@ function showBoardList() {
         }
 
 list.innerHTML = `
-    <div class="board-list-header">
-        <div>번호</div>
-        <div class="board-list-header-title">제목</div>
-        <div>작성일</div>
+    <div
+        class="board-list-header"
+        style="
+            display:grid !important;
+            grid-template-columns:70px minmax(0,1fr) 110px !important;
+            align-items:center !important;
+            width:100% !important;
+            height:48px !important;
+            padding:0 !important;
+            margin:0 !important;
+            box-sizing:border-box !important;
+            background:#f8fafc !important;
+            border-top:2px solid #0f2c59 !important;
+            border-bottom:1px solid #d1d5db !important;
+        "
+    >
+        <div
+            style="
+                display:flex !important;
+                align-items:center !important;
+                justify-content:center !important;
+                height:48px !important;
+            "
+        >
+            번호
+        </div>
+
+        <div
+            style="
+                display:flex !important;
+                align-items:center !important;
+                justify-content:flex-start !important;
+                height:48px !important;
+                padding-left:12px !important;
+                box-sizing:border-box !important;
+            "
+        >
+            제목
+        </div>
+
+        <div
+            style="
+                display:flex !important;
+                align-items:center !important;
+                justify-content:center !important;
+                height:48px !important;
+            "
+        >
+            작성일
+        </div>
     </div>
 
     ${posts.map((post, index) => {
-const date = post.createdAt
-    ? (() => {
-        const d = new Date(post.createdAt);
-        const year = d.getFullYear();
-        const month = String(d.getMonth() + 1).padStart(2, '0');
-        const day = String(d.getDate()).padStart(2, '0');
+        const date = post.createdAt
+            ? (() => {
+                const d = new Date(post.createdAt);
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
 
-        return `${year}.${month}.${day}`;
-    })()
-    : '';
+                return `${year}.${month}.${day}`;
+            })()
+            : '';
 
         const number = posts.length - index;
 
         return `
             <div
                 class="board-post-item"
-                onclick="showBoardDetail('${post.id}')">
+                onclick="showBoardDetail('${post.id}')"
+                style="
+                    display:grid !important;
+                    grid-template-columns:70px minmax(0,1fr) 110px !important;
+                    align-items:center !important;
+                    width:100% !important;
+                    height:52px !important;
+                    min-height:52px !important;
+                    padding:0 !important;
+                    margin:0 !important;
+                    box-sizing:border-box !important;
+                    background:#fff !important;
+                    border-bottom:1px solid #e5e7eb !important;
+                    cursor:pointer !important;
+                "
+            >
 
-                <div class="board-post-number">
+                <div
+                    class="board-post-number"
+                    style="
+                        display:flex !important;
+                        align-items:center !important;
+                        justify-content:center !important;
+                        height:52px !important;
+                    "
+                >
                     ${number}
                 </div>
 
-                <div class="board-post-title">
+                <div
+                    class="board-post-title"
+                    style="
+                        display:block !important;
+                        min-width:0 !important;
+                        padding:0 12px !important;
+                        line-height:52px !important;
+                        text-align:left !important;
+                        white-space:nowrap !important;
+                        overflow:hidden !important;
+                        text-overflow:ellipsis !important;
+                        box-sizing:border-box !important;
+                    "
+                >
                     ${escapeHtml(post.title)}
                 </div>
 
-                <div class="board-post-date">
+                <div
+                    class="board-post-date"
+                    style="
+                        display:flex !important;
+                        align-items:center !important;
+                        justify-content:center !important;
+                        height:52px !important;
+                    "
+                >
                     ${date}
                 </div>
 
