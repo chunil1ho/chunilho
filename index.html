@@ -1849,6 +1849,8 @@ async function deleteBoardPost(postId) {
     if (!confirmed) return;
 
     try {
+        console.log('삭제 요청 토큰:', adminToken);
+console.log('삭제할 게시글 ID:', postId);
         await apiRequest('/board', {
             method: 'DELETE',
             body: JSON.stringify({
