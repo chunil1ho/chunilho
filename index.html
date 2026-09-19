@@ -800,47 +800,73 @@
 @media screen and (min-width: 769px) {
 
     #board-detail .board-detail-header {
-        display: flex !important;
-        flex-direction: row !important;
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) auto !important;
+        grid-template-rows: auto !important;
+
         align-items: center !important;
-        justify-content: space-between !important;
         width: 100% !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
         box-sizing: border-box !important;
     }
 
     #board-detail .board-detail-title {
-        flex: 1 1 auto !important;
+        display: block !important;
+
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+
+        width: auto !important;
         min-width: 0 !important;
+
         margin: 0 !important;
         padding: 0 !important;
+
         text-align: left !important;
     }
 
     #board-detail .board-detail-title h2 {
+        display: block !important;
+
         margin: 0 !important;
         padding: 0 !important;
+
         text-align: left !important;
     }
 
     #board-detail .board-detail-actions {
         display: flex !important;
         flex-direction: row !important;
+
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+
         align-items: center !important;
         justify-content: flex-end !important;
-        flex: 0 0 auto !important;
-        width: auto !important;
-        margin-left: auto !important;
-        margin-right: 0 !important;
+
+        width: max-content !important;
+        min-width: max-content !important;
+
+        margin: 0 !important;
         padding: 0 !important;
+
         gap: 8px !important;
+
         white-space: nowrap !important;
     }
 
     #board-detail .board-detail-date {
         display: inline-block !important;
+
         width: auto !important;
+        min-width: max-content !important;
+
         margin: 0 8px 0 0 !important;
         padding: 0 !important;
+
         white-space: nowrap !important;
         text-align: right !important;
     }
@@ -848,9 +874,13 @@
     #board-detail .board-detail-actions .board-edit-btn,
     #board-detail .board-detail-actions .board-delete-btn {
         display: inline-flex !important;
+
         width: auto !important;
-        flex: 0 0 auto !important;
+        min-width: max-content !important;
+
         margin: 0 !important;
+        padding: 6px 12px !important;
+
         white-space: nowrap !important;
     }
 }
@@ -1906,7 +1936,7 @@ box-sizing:border-box !important;
     </div>
 
 </div>
-    </div>
+
 
 
             <div class="board-detail-body">
