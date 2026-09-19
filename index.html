@@ -742,6 +742,7 @@
         font-size: 16px !important;
     }
 }    
+    
     /* PC 조황게시판 표 형태 */
 @media (min-width: 601px) {
 
@@ -929,6 +930,80 @@
     #board-write-form .board-form-buttons button {
         min-width: 110px !important;
         height: 48px !important;
+        font-size: 16px !important;
+    }
+}
+    /* =========================
+   PC 조황게시판 작성폼 전체 폭
+   ========================= */
+@media screen and (min-width: 769px) {
+
+    /* 조황게시판 영역 */
+    #cat-board {
+        width: 100% !important;
+        max-width: 1200px !important;
+        box-sizing: border-box !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    /* 작성/수정 폼 */
+    #cat-board #board-write-form {
+        display: block;
+        width: 100% !important;
+        max-width: 1200px !important;
+        box-sizing: border-box !important;
+        margin: 20px 0 0 0 !important;
+        padding: 0 !important;
+    }
+
+    #cat-board #board-write-form .board-form-box {
+        width: 100% !important;
+        max-width: none !important;
+        box-sizing: border-box !important;
+        padding: 35px !important;
+    }
+
+    /* 제목 입력 */
+    #cat-board #board-title {
+        width: 100% !important;
+        max-width: none !important;
+        height: 55px !important;
+        box-sizing: border-box !important;
+        font-size: 17px !important;
+    }
+
+    /* 내용 입력 */
+    #cat-board #board-content {
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+        height: 450px !important;
+        min-height: 450px !important;
+        box-sizing: border-box !important;
+        font-size: 16px !important;
+        line-height: 1.7 !important;
+    }
+
+    /* 사진 첨부 */
+    #cat-board #board-images {
+        width: 100% !important;
+        max-width: none !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 버튼 */
+    #cat-board .board-form-buttons {
+        width: 100% !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        justify-content: flex-end !important;
+        gap: 12px !important;
+    }
+
+    #cat-board .board-form-buttons button {
+        min-width: 120px !important;
+        height: 50px !important;
         font-size: 16px !important;
     }
 }
