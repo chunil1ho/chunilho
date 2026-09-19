@@ -16,7 +16,7 @@ export function json(statusCode, body) {
       "Pragma": "no-cache",
       "Expires": "0",
       "Access-Control-Allow-Origin": "https://chunilho.com",
-      "Access-Control-Allow-Methods": "GET, POST, PATCH, DELETE, OPTIONS",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type, Authorization"
     },
     body: JSON.stringify(body)
