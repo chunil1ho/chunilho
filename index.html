@@ -666,22 +666,21 @@
 
     #cat-board #board-write-form {
         display: block !important;
-        width: 100% !important;
-        max-width: 1200px !important;
-        margin: 20px auto !important;
-        padding: 0 !important;
+        width: 100vw !important;
+        max-width: none !important;
+        margin: 20px 0 0 calc(50% - 50vw) !important;
+        padding: 0 40px !important;
         box-sizing: border-box !important;
     }
 
     #cat-board #board-write-form .board-form-box {
         display: block !important;
-
         width: 100% !important;
-        max-width: 1200px !important;
-        min-height: 650px !important;
+        max-width: none !important;
+        min-height: 700px !important;
 
-        margin: 0 !important;
-        padding: 35px !important;
+        margin: 0 auto !important;
+        padding: 40px !important;
 
         box-sizing: border-box !important;
 
@@ -697,44 +696,43 @@
     }
 
     #cat-board #board-write-form .board-form-title h3 {
-        font-size: 26px !important;
         margin: 0 !important;
+        font-size: 28px !important;
     }
 
-    /* 각 입력 영역 */
+    /* 입력 영역 */
     #cat-board #board-write-form .board-form-group {
         width: 100% !important;
         margin-bottom: 24px !important;
     }
 
-    /* 제목 입력창 */
+    /* 제목 입력 */
     #cat-board #board-title {
         display: block !important;
         width: 100% !important;
-        height: 55px !important;
-
-        min-height: 55px !important;
-        max-height: 55px !important;
+        height: 60px !important;
+        min-height: 60px !important;
+        max-height: 60px !important;
 
         padding: 12px 15px !important;
         box-sizing: border-box !important;
 
-        font-size: 17px !important;
+        font-size: 18px !important;
     }
 
-    /* 내용 입력창 */
+    /* 내용 입력 */
     #cat-board #board-content {
         display: block !important;
-
         width: 100% !important;
 
-max-width: 1200px;
-min-height: 650px;
+        height: 450px !important;
+        min-height: 450px !important;
+        max-height: 450px !important;
 
         padding: 15px !important;
         box-sizing: border-box !important;
 
-        font-size: 16px !important;
+        font-size: 17px !important;
         line-height: 1.7 !important;
 
         resize: none !important;
@@ -744,12 +742,10 @@ min-height: 650px;
     /* 사진 선택 */
     #cat-board #board-images {
         display: block !important;
-
         width: 100% !important;
         height: auto !important;
 
         box-sizing: border-box !important;
-
         font-size: 15px !important;
     }
 
@@ -768,36 +764,33 @@ min-height: 650px;
     #cat-board #board-image-preview img {
         width: 100% !important;
         height: 160px !important;
-
         object-fit: cover !important;
     }
 
     /* 버튼 */
     #cat-board #board-write-form .board-form-buttons {
         display: flex !important;
-
         width: 100% !important;
 
         justify-content: flex-end !important;
         align-items: center !important;
 
         gap: 12px !important;
-
         margin-top: 30px !important;
     }
 
     #cat-board #board-write-form .board-form-buttons button {
-        width: 120px !important;
-        min-width: 120px !important;
+        width: 130px !important;
+        min-width: 130px !important;
 
-        height: 50px !important;
-        min-height: 50px !important;
+        height: 52px !important;
+        min-height: 52px !important;
 
         font-size: 16px !important;
-
         box-sizing: border-box !important;
     }
 }
+
     /* PC 조황게시판 표 형태 */
 @media (min-width: 601px) {
 
