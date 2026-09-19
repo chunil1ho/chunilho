@@ -655,7 +655,93 @@
         font-size: 11px;
     }
 }
-    
+/* =========================
+   PC 조황게시판 작성/수정폼 확대
+   ========================= */
+
+@media screen and (min-width: 769px) {
+
+    #board-write-form {
+        width: 100% !important;
+        max-width: 1100px !important;
+        margin: 20px auto 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    #board-write-form .board-form-box {
+        width: 100% !important;
+        padding: 35px !important;
+        box-sizing: border-box !important;
+    }
+
+    #board-write-form .board-form-title {
+        width: 100% !important;
+        margin-bottom: 28px !important;
+    }
+
+    #board-write-form .board-form-title h3 {
+        font-size: 26px !important;
+    }
+
+    #board-write-form .board-form-group {
+        width: 100% !important;
+        margin-bottom: 24px !important;
+    }
+
+    #board-write-form .board-form-group label {
+        font-size: 16px !important;
+        margin-bottom: 10px !important;
+    }
+
+    #board-write-form .board-form-group input[type="text"] {
+        width: 100% !important;
+        height: 55px !important;
+        padding: 12px 15px !important;
+        font-size: 17px !important;
+        box-sizing: border-box !important;
+    }
+
+    #board-write-form .board-form-group textarea {
+        width: 100% !important;
+        min-height: 450px !important;
+        height: 450px !important;
+        padding: 15px !important;
+        font-size: 16px !important;
+        line-height: 1.7 !important;
+        box-sizing: border-box !important;
+        resize: vertical !important;
+    }
+
+    #board-write-form .board-form-group input[type="file"] {
+        font-size: 15px !important;
+        padding: 12px 0 !important;
+    }
+
+    #board-write-form .board-image-preview {
+        width: 100% !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 15px !important;
+    }
+
+    #board-write-form .board-image-preview img {
+        width: 100% !important;
+        height: 160px !important;
+        object-fit: cover !important;
+    }
+
+    #board-write-form .board-form-buttons {
+        width: 100% !important;
+        margin-top: 28px !important;
+        gap: 12px !important;
+    }
+
+    #board-write-form .board-form-buttons button {
+        min-width: 120px !important;
+        height: 50px !important;
+        padding: 0 20px !important;
+        font-size: 16px !important;
+    }
+}    
     /* PC 조황게시판 표 형태 */
 @media (min-width: 601px) {
 
