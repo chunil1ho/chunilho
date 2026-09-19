@@ -437,20 +437,87 @@
     font-size: 12px;
 }
 
-.board-image-preview {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-top: 15px;
+/* =========================================
+   조황게시판 사진 미리보기
+   ========================================= */
+
+#cat-board #board-image-preview {
+    display: grid !important;
+    grid-template-columns: repeat(5, 140px) !important;
+    gap: 14px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: 15px !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
 }
 
-.board-image-preview img {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 6px;
-    border: 1px solid #ddd;
+/* 사진 하나를 담는 박스 */
+#cat-board #board-image-preview .board-image-preview-item {
+    position: relative !important;
+    width: 140px !important;
+    min-width: 140px !important;
+    max-width: 140px !important;
+    height: 110px !important;
+    min-height: 110px !important;
+    max-height: 110px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 1px solid #ddd !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    background: #f5f5f5 !important;
+    box-sizing: border-box !important;
 }
+
+/* 미리보기 사진 */
+#cat-board #board-image-preview .board-image-preview-item img,
+#cat-board #board-image-preview img {
+    display: block !important;
+    width: 140px !important;
+    min-width: 140px !important;
+    max-width: 140px !important;
+    height: 110px !important;
+    min-height: 110px !important;
+    max-height: 110px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    object-fit: cover !important;
+    box-sizing: border-box !important;
+}
+
+/* 사진 삭제 × 버튼 */
+#cat-board #board-image-preview .board-image-preview-remove {
+    position: absolute !important;
+    top: 6px !important;
+    right: 6px !important;
+    width: 26px !important;
+    min-width: 26px !important;
+    max-width: 26px !important;
+    height: 26px !important;
+    min-height: 26px !important;
+    max-height: 26px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 50% !important;
+    background: rgba(0, 0, 0, 0.7) !important;
+    color: #fff !important;
+    font-size: 17px !important;
+    font-weight: bold !important;
+    line-height: 26px !important;
+    text-align: center !important;
+    cursor: pointer !important;
+    z-index: 10 !important;
+    box-sizing: border-box !important;
+}
+
+#cat-board #board-image-preview .board-image-preview-remove:hover {
+    background: #ef4444 !important;
+}
+
 
 .board-form-buttons {
     display: flex;
@@ -468,12 +535,28 @@
         padding: 18px;
     }
 
-    .board-image-preview {
-        grid-template-columns: repeat(2, 1fr);
+    #cat-board #board-image-preview {
+        grid-template-columns: repeat(2, 140px) !important;
+        gap: 12px !important;
     }
 
-    .board-image-preview img {
-        height: 110px;
+    #cat-board #board-image-preview .board-image-preview-item {
+        width: 140px !important;
+        min-width: 140px !important;
+        max-width: 140px !important;
+        height: 110px !important;
+        min-height: 110px !important;
+        max-height: 110px !important;
+    }
+
+    #cat-board #board-image-preview .board-image-preview-item img,
+    #cat-board #board-image-preview img {
+        width: 140px !important;
+        min-width: 140px !important;
+        max-width: 140px !important;
+        height: 110px !important;
+        min-height: 110px !important;
+        max-height: 110px !important;
     }
 
     .board-form-buttons {
