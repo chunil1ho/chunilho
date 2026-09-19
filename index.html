@@ -655,7 +655,7 @@
         font-size: 11px;
     }
 }
-    /* PC 게시판 표 형태 강제 적용 */
+    /* PC 조황게시판 표 형태 */
 @media (min-width: 601px) {
 
     #board-post-list {
@@ -666,33 +666,84 @@
     #board-post-list .board-list-header {
         display: grid !important;
         grid-template-columns: 70px minmax(0, 1fr) 110px !important;
+        align-items: center !important;
+
         width: 100% !important;
+        height: 48px !important;
         min-height: 48px !important;
+
         padding: 0 !important;
+        margin: 0 !important;
+
         box-sizing: border-box !important;
+
+        background: #f8fafc !important;
+        border-top: 2px solid #0f2c59 !important;
+        border-bottom: 1px solid #d1d5db !important;
     }
 
+    #board-post-list .board-list-header > div {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        height: 48px !important;
+        box-sizing: border-box !important;
+
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        color: #374151 !important;
+    }
+
+    #board-post-list .board-list-header .board-list-header-title {
+        justify-content: flex-start !important;
+        padding-left: 12px !important;
+    }
+
+
+    /* 게시글 */
     #board-post-list .board-post-item {
         display: grid !important;
         grid-template-columns: 70px minmax(0, 1fr) 110px !important;
+        align-items: center !important;
+
         width: 100% !important;
+        height: 52px !important;
         min-height: 52px !important;
+
         padding: 0 !important;
+        margin: 0 !important;
+
         box-sizing: border-box !important;
+
+        background: #fff !important;
+        border-bottom: 1px solid #e5e7eb !important;
     }
 
     #board-post-list .board-post-number {
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        min-height: 52px !important;
+
+        height: 52px !important;
+
+        font-size: 14px !important;
+        color: #6b7280 !important;
     }
 
     #board-post-list .board-post-title {
         display: block !important;
+
         min-width: 0 !important;
+
         padding: 0 12px !important;
+
+        font-size: 15px !important;
+        color: #111827 !important;
+
+        line-height: 52px !important;
         text-align: left !important;
+
         white-space: nowrap !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
@@ -702,7 +753,11 @@
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        min-height: 52px !important;
+
+        height: 52px !important;
+
+        font-size: 13px !important;
+        color: #6b7280 !important;
     }
 
 }
