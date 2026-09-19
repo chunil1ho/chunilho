@@ -1951,13 +1951,15 @@ function showBoardWriteForm() {
     if (detail) detail.style.display = 'none';
     if (form) form.style.display = 'block';
 }
-    async function editBoardPost(postId) {
+async function editBoardPost(postId) {
     const list = document.getElementById('board-list');
     const detail = document.getElementById('board-detail');
     const form = document.getElementById('board-write-form');
 
     const titleInput = document.getElementById('board-title');
     const contentInput = document.getElementById('board-content');
+    const imageInput = document.getElementById('board-images');
+    const preview = document.getElementById('board-image-preview');
 
     if (!form || !titleInput || !contentInput) {
         alert('수정 폼을 찾을 수 없습니다.');
@@ -2004,6 +2006,91 @@ function showBoardWriteForm() {
 
         // 현재 수정 중인 게시글 ID 저장
         window.editingBoardPostId = String(post.id);
+
+        // =========================================
+        // 기존 사진 불러오기
+        // =========================================
+
+        if (preview) {
+            preview.innerHTML = '';
+
+            preview.style.display = 'grid';
+            preview.style.gridTemplateColumns = 'repeat(5, 140px)';
+            preview.style.gap = '14px';
+            preview.style.width = '100%';
+            preview.style.alignItems = 'start';
+        }
+
+        // 기존 사진을 수정할 때 사용할 배열
+        window.editingBoardImages = Array.isArray(post.images)
+            ? [...post.images]
+            : [];
+
+        // 기존 사진 표시
+        if (preview && window.editingBoardImages.length > 0) {
+
+            window.editingBoardImages.forEach((image, index) => {
+
+                const item = document.createElement('div');
+
+                item.className = 'board-image-preview-item';
+
+                item.style.width = '140px';
+                item.style.height = '110px';
+                item.style.minWidth = '140px';
+                item.style.maxWidth = '140px';
+                item.style.minHeight = '110px';
+                item.style.maxHeight = '110px';
+                item.style.position = 'relative';
+                item.style.overflow = 'hidden';
+                item.style.boxSizing = 'border-box';
+
+                const img = document.createElement('img');
+
+                img.src = image;
+                img.alt = post.title || '기존 사진';
+
+                img.style.display = 'block';
+                img.style.width = '140px';
+                img.style.height = '110px';
+                img.style.minWidth = '140px';
+                img.style.maxWidth = '140px';
+                img.style.minHeight = '110px';
+                img.style.maxHeight = '110px';
+                img.style.objectFit = 'cover';
+                img.style.margin = '0';
+                img.style.padding = '0';
+                img.style.border = 'none';
+                img.style.boxSizing = 'border-box';
+
+                // 기존 사진 삭제 버튼
+                const removeButton = document.createElement('button');
+
+                removeButton.type = 'button';
+                removeButton.className = 'board-image-preview-remove';
+                removeButton.textContent = '×';
+                removeButton.setAttribute('aria-label', '사진 삭제');
+
+                removeButton.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    window.editingBoardImages.splice(index, 1);
+
+                    item.remove();
+                });
+
+                item.appendChild(img);
+                item.appendChild(removeButton);
+
+                preview.appendChild(item);
+            });
+        }
+
+        // 새로 선택할 사진은 초기화
+        if (imageInput) {
+            imageInput.value = '';
+        }
 
     } catch (error) {
         console.error('게시글 수정 폼 오류:', error);
@@ -2413,7 +2500,9 @@ const imageFiles = imageInput?.files
     }
 
     try {
-        const images = [];
+        const images = window.editingBoardPostId
+    ? [...(window.editingBoardImages || [])]
+    : [];
 
         // 사진 용량을 줄여서 Base64로 변환
         for (const file of imageFiles) {
@@ -2508,7 +2597,7 @@ const preview = document.getElementById('board-image-preview');
 if (preview) preview.innerHTML = '';
 
 window.editingBoardPostId = null;
-
+window.editingBoardImages = [];
 showBoardList();
 
 } catch (error) {
