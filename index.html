@@ -659,90 +659,146 @@
    PC 조황게시판 작성/수정폼 확대
    ========================= */
 
+/* =========================
+   PC 조황게시판 작성 / 수정폼
+   ========================= */
 @media screen and (min-width: 769px) {
 
-    #board-write-form {
+    #cat-board #board-write-form {
+        display: block !important;
         width: 100% !important;
-        max-width: 1100px !important;
-        margin: 20px auto 0 !important;
+        max-width: 1200px !important;
+        margin: 20px auto !important;
+        padding: 0 !important;
         box-sizing: border-box !important;
     }
 
-    #board-write-form .board-form-box {
+    #cat-board #board-write-form .board-form-box {
+        display: block !important;
+
         width: 100% !important;
+        max-width: 1200px !important;
+        min-height: 650px !important;
+
+        margin: 0 !important;
         padding: 35px !important;
+
         box-sizing: border-box !important;
+
+        border: 1px solid #ddd !important;
+        border-radius: 10px !important;
+        background: #fff !important;
     }
 
-    #board-write-form .board-form-title {
+    /* 제목 */
+    #cat-board #board-write-form .board-form-title {
         width: 100% !important;
         margin-bottom: 28px !important;
     }
 
-    #board-write-form .board-form-title h3 {
+    #cat-board #board-write-form .board-form-title h3 {
         font-size: 26px !important;
+        margin: 0 !important;
     }
 
-    #board-write-form .board-form-group {
+    /* 각 입력 영역 */
+    #cat-board #board-write-form .board-form-group {
         width: 100% !important;
         margin-bottom: 24px !important;
     }
 
-    #board-write-form .board-form-group label {
-        font-size: 16px !important;
-        margin-bottom: 10px !important;
-    }
-
-    #board-write-form .board-form-group input[type="text"] {
+    /* 제목 입력창 */
+    #cat-board #board-title {
+        display: block !important;
         width: 100% !important;
         height: 55px !important;
+
+        min-height: 55px !important;
+        max-height: 55px !important;
+
         padding: 12px 15px !important;
-        font-size: 17px !important;
         box-sizing: border-box !important;
+
+        font-size: 17px !important;
     }
 
-    #board-write-form .board-form-group textarea {
+    /* 내용 입력창 */
+    #cat-board #board-content {
+        display: block !important;
+
         width: 100% !important;
-        min-height: 450px !important;
+
         height: 450px !important;
+        min-height: 450px !important;
+        max-height: 450px !important;
+
         padding: 15px !important;
+        box-sizing: border-box !important;
+
         font-size: 16px !important;
         line-height: 1.7 !important;
-        box-sizing: border-box !important;
-        resize: vertical !important;
+
+        resize: none !important;
+        overflow-y: auto !important;
     }
 
-    #board-write-form .board-form-group input[type="file"] {
-        font-size: 15px !important;
-        padding: 12px 0 !important;
-    }
+    /* 사진 선택 */
+    #cat-board #board-images {
+        display: block !important;
 
-    #board-write-form .board-image-preview {
         width: 100% !important;
+        height: auto !important;
+
+        box-sizing: border-box !important;
+
+        font-size: 15px !important;
+    }
+
+    /* 사진 미리보기 */
+    #cat-board #board-image-preview {
+        width: 100% !important;
+        box-sizing: border-box !important;
+
+        display: grid !important;
         grid-template-columns: repeat(4, 1fr) !important;
         gap: 15px !important;
+
+        margin-top: 15px !important;
     }
 
-    #board-write-form .board-image-preview img {
+    #cat-board #board-image-preview img {
         width: 100% !important;
         height: 160px !important;
+
         object-fit: cover !important;
     }
 
-    #board-write-form .board-form-buttons {
+    /* 버튼 */
+    #cat-board #board-write-form .board-form-buttons {
+        display: flex !important;
+
         width: 100% !important;
-        margin-top: 28px !important;
+
+        justify-content: flex-end !important;
+        align-items: center !important;
+
         gap: 12px !important;
+
+        margin-top: 30px !important;
     }
 
-    #board-write-form .board-form-buttons button {
+    #cat-board #board-write-form .board-form-buttons button {
+        width: 120px !important;
         min-width: 120px !important;
+
         height: 50px !important;
-        padding: 0 20px !important;
+        min-height: 50px !important;
+
         font-size: 16px !important;
+
+        box-sizing: border-box !important;
     }
-}    
-    
+}
     /* PC 조황게시판 표 형태 */
 @media (min-width: 601px) {
 
