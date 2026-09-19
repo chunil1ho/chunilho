@@ -761,6 +761,36 @@
     }
 
 }
+    .board-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.board-detail-title {
+    flex: 1;
+    min-width: 0;
+}
+
+.board-detail-title h2 {
+    margin: 0;
+}
+
+.board-detail-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.board-detail-date {
+    margin: 0 8px 0 0;
+    white-space: nowrap;
+}
     </style>
 </head>
 <body id="mainBody">
@@ -1776,28 +1806,41 @@ box-sizing:border-box !important;
             : [];
 
         contentBox.innerHTML = `
-            <div class="board-detail-header">
-                <h2>${escapeHtml(post.title)}</h2>
-                <div class="board-detail-date">${date}</div>
-              ${
-isAdminLoggedIn
-    ? `
-        <button
-            type="button"
-            class="board-edit-btn"
-            onclick="editBoardPost('${post.id}')">
-            수정
-        </button>
+<div class="board-detail-header">
 
-        <button
-            type="button"
-            class="board-delete-btn"
-            onclick="deleteBoardPost('${post.id}')">
-            삭제
-        </button>
-    `
-    : ''
+    <div class="board-detail-title">
+        <h2>${escapeHtml(post.title)}</h2>
+    </div>
+
+    <div class="board-detail-actions">
+
+        <div class="board-detail-date">
+            ${date}
+        </div>
+
+        ${
+            isAdminLoggedIn
+                ? `
+                    <button
+                        type="button"
+                        class="board-edit-btn"
+                        onclick="editBoardPost('${post.id}')">
+                        수정
+                    </button>
+
+                    <button
+                        type="button"
+                        class="board-delete-btn"
+                        onclick="deleteBoardPost('${post.id}')">
+                        삭제
+                    </button>
+                `
+                : ''
         }
+
+    </div>
+
+</div>
     </div>
 
 
