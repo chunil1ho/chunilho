@@ -761,131 +761,6 @@
     }
 
 }
-/* 여기까지 기존 홈페이지 CSS */
-
-/* 조황게시판 상세 */
-.board-detail-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.board-detail-title {
-    flex: 1;
-    min-width: 0;
-}
-
-.board-detail-title h2 {
-    margin: 0;
-}
-
-.board-detail-actions {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 8px;
-    flex-shrink: 0;
-}
-
-.board-detail-date {
-    margin: 0 8px 0 0;
-    white-space: nowrap;
-}
-
-
-/* PC - 날짜 / 수정 / 삭제 오른쪽 정렬 */
-@media screen and (min-width: 769px) {
-
-    #board-detail .board-detail-header {
-        display: grid !important;
-        grid-template-columns: minmax(0, 1fr) auto !important;
-        grid-template-rows: auto !important;
-
-        align-items: center !important;
-        width: 100% !important;
-
-        margin: 0 !important;
-        padding: 0 !important;
-
-        box-sizing: border-box !important;
-    }
-
-    #board-detail .board-detail-title {
-        display: block !important;
-
-        grid-column: 1 !important;
-        grid-row: 1 !important;
-
-        width: auto !important;
-        min-width: 0 !important;
-
-        margin: 0 !important;
-        padding: 0 !important;
-
-        text-align: left !important;
-    }
-
-    #board-detail .board-detail-title h2 {
-        display: block !important;
-
-        margin: 0 !important;
-        padding: 0 !important;
-
-        text-align: left !important;
-    }
-
-    #board-detail .board-detail-actions {
-        display: flex !important;
-        flex-direction: row !important;
-
-        grid-column: 2 !important;
-        grid-row: 1 !important;
-
-        align-items: center !important;
-        justify-content: flex-end !important;
-
-        width: max-content !important;
-        min-width: max-content !important;
-
-        margin: 0 !important;
-        padding: 0 !important;
-
-        gap: 8px !important;
-
-        white-space: nowrap !important;
-    }
-
-    #board-detail .board-detail-date {
-        display: inline-block !important;
-
-        width: auto !important;
-        min-width: max-content !important;
-
-        margin: 0 8px 0 0 !important;
-        padding: 0 !important;
-
-        white-space: nowrap !important;
-        text-align: right !important;
-    }
-
-    #board-detail .board-detail-actions .board-edit-btn,
-    #board-detail .board-detail-actions .board-delete-btn {
-        display: inline-flex !important;
-
-        width: auto !important;
-        min-width: max-content !important;
-
-        margin: 0 !important;
-        padding: 6px 12px !important;
-
-        white-space: nowrap !important;
-    }
-}
-
-</style>
     </style>
 </head>
 <body id="mainBody">
@@ -1901,42 +1776,29 @@ box-sizing:border-box !important;
             : [];
 
         contentBox.innerHTML = `
-<div class="board-detail-header">
+            <div class="board-detail-header">
+                <h2>${escapeHtml(post.title)}</h2>
+                <div class="board-detail-date">${date}</div>
+              ${
+isAdminLoggedIn
+    ? `
+        <button
+            type="button"
+            class="board-edit-btn"
+            onclick="editBoardPost('${post.id}')">
+            수정
+        </button>
 
-    <div class="board-detail-title">
-        <h2>${escapeHtml(post.title)}</h2>
-    </div>
-
-    <div class="board-detail-actions">
-
-        <div class="board-detail-date">
-            ${date}
-        </div>
-
-        ${
-            isAdminLoggedIn
-                ? `
-                    <button
-                        type="button"
-                        class="board-edit-btn"
-                        onclick="editBoardPost('${post.id}')">
-                        수정
-                    </button>
-
-                    <button
-                        type="button"
-                        class="board-delete-btn"
-                        onclick="deleteBoardPost('${post.id}')">
-                        삭제
-                    </button>
-                `
-                : ''
+        <button
+            type="button"
+            class="board-delete-btn"
+            onclick="deleteBoardPost('${post.id}')">
+            삭제
+        </button>
+    `
+    : ''
         }
-
     </div>
-
-</div>
-
 
 
             <div class="board-detail-body">
