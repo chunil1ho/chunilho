@@ -2466,18 +2466,20 @@ function setupBoardImagePreview() {
 
     if (!imageInput || !preview) return;
 
-    imageInput.addEventListener('change', function () {
+    // 여러 번 파일을 선택해도 기존 사진을 유지
+    let selectedFiles = [];
+
+    function renderPreview() {
         preview.innerHTML = '';
 
-        const files = Array.from(this.files || []);
-
-        files.forEach((file, index) => {
+        selectedFiles.forEach((file, index) => {
             if (!file.type.startsWith('image/')) return;
 
             const reader = new FileReader();
 
             reader.onload = function (event) {
                 const item = document.createElement('div');
+
                 item.className = 'board-image-preview-item';
 
                 item.style.width = '140px';
@@ -2491,6 +2493,7 @@ function setupBoardImagePreview() {
                 item.style.boxSizing = 'border-box';
 
                 const img = document.createElement('img');
+
                 img.src = event.target.result;
                 img.alt = file.name;
 
@@ -2508,6 +2511,7 @@ function setupBoardImagePreview() {
                 img.style.boxSizing = 'border-box';
 
                 const removeButton = document.createElement('button');
+
                 removeButton.type = 'button';
                 removeButton.className = 'board-image-preview-remove';
                 removeButton.textContent = '×';
@@ -2517,19 +2521,17 @@ function setupBoardImagePreview() {
                     e.preventDefault();
                     e.stopPropagation();
 
-                    const currentFiles = Array.from(imageInput.files || []);
-
-                    currentFiles.splice(index, 1);
+                    selectedFiles.splice(index, 1);
 
                     const dataTransfer = new DataTransfer();
 
-                    currentFiles.forEach(file => {
+                    selectedFiles.forEach(file => {
                         dataTransfer.items.add(file);
                     });
 
                     imageInput.files = dataTransfer.files;
 
-                    imageInput.dispatchEvent(new Event('change'));
+                    renderPreview();
                 });
 
                 item.appendChild(img);
@@ -2540,6 +2542,26 @@ function setupBoardImagePreview() {
 
             reader.readAsDataURL(file);
         });
+    }
+
+    imageInput.addEventListener('change', function () {
+
+        // 이번에 새로 선택한 사진을 기존 사진 뒤에 추가
+        const newFiles = Array.from(this.files || []);
+
+        selectedFiles = selectedFiles.concat(newFiles);
+
+        // 전체 파일 목록 유지
+        const dataTransfer = new DataTransfer();
+
+        selectedFiles.forEach(file => {
+            dataTransfer.items.add(file);
+        });
+
+        imageInput.files = dataTransfer.files;
+
+        // 전체 미리보기 표시
+        renderPreview();
     });
 }
     async function loadBookingsFromServer() {
