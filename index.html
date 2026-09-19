@@ -2125,10 +2125,10 @@ removeButton.addEventListener('click', function (e) {
             });
         }
 
-        // 새로 선택할 사진은 초기화
-        if (imageInput) {
-            imageInput.value = '';
-        }
+// 새로 선택한 사진 초기화
+if (typeof window.resetBoardNewImages === 'function') {
+    window.resetBoardNewImages();
+}
 
     } catch (error) {
         console.error('게시글 수정 폼 오류:', error);
@@ -2640,6 +2640,9 @@ if (preview) preview.innerHTML = '';
 
 window.editingBoardPostId = null;
 window.editingBoardImages = [];
+        if (typeof window.resetBoardNewImages === 'function') {
+    window.resetBoardNewImages();
+}
 showBoardList();
 
 } catch (error) {
@@ -2660,103 +2663,34 @@ function setupBoardImagePreview() {
 
     if (!imageInput || !preview) return;
 
-    // 사진을 가로로 배치
+    // 이미 초기화된 경우 중복 이벤트 방지
+    if (imageInput.dataset.boardPreviewInitialized === '1') {
+        return;
+    }
+
+    imageInput.dataset.boardPreviewInitialized = '1';
+
+    // =========================================
+    // 미리보기 기본 설정
+    // =========================================
+
     preview.style.display = 'grid';
     preview.style.gridTemplateColumns = 'repeat(5, 140px)';
     preview.style.gap = '14px';
     preview.style.width = '100%';
     preview.style.alignItems = 'start';
 
-    // 새로 선택한 파일만 관리
+    // 새로 선택한 파일만 따로 관리
     let selectedFiles = [];
 
-    function renderNewFilePreview() {
-        // 기존 사진 영역은 건드리지 않고
-        // 새로 선택한 사진만 추가 표시
-        selectedFiles.forEach((file, index) => {
+    // 비동기 FileReader가 오래된 미리보기를 다시 그리지 못하게 방지
+    let renderVersion = 0;
 
-            if (!file.type.startsWith('image/')) return;
+    // =========================================
+    // 파일 input 동기화
+    // =========================================
 
-            const reader = new FileReader();
-
-            reader.onload = function (event) {
-
-                const item = document.createElement('div');
-
-                item.className = 'board-image-preview-item board-new-image-item';
-
-                item.style.width = '140px';
-                item.style.height = '110px';
-                item.style.minWidth = '140px';
-                item.style.maxWidth = '140px';
-                item.style.minHeight = '110px';
-                item.style.maxHeight = '110px';
-                item.style.position = 'relative';
-                item.style.overflow = 'hidden';
-                item.style.boxSizing = 'border-box';
-
-                const img = document.createElement('img');
-
-                img.src = event.target.result;
-                img.alt = file.name;
-
-                img.style.display = 'block';
-                img.style.width = '140px';
-                img.style.height = '110px';
-                img.style.minWidth = '140px';
-                img.style.maxWidth = '140px';
-                img.style.minHeight = '110px';
-                img.style.maxHeight = '110px';
-                img.style.objectFit = 'cover';
-                img.style.margin = '0';
-                img.style.padding = '0';
-                img.style.border = 'none';
-                img.style.boxSizing = 'border-box';
-
-                const removeButton = document.createElement('button');
-
-                removeButton.type = 'button';
-                removeButton.className = 'board-image-preview-remove';
-
-                removeButton.textContent = '×';
-                removeButton.setAttribute('aria-label', '사진 삭제');
-
-                removeButton.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    selectedFiles.splice(index, 1);
-
-                    const dataTransfer = new DataTransfer();
-
-                    selectedFiles.forEach(file => {
-                        dataTransfer.items.add(file);
-                    });
-
-                    imageInput.files = dataTransfer.files;
-
-                    item.remove();
-                });
-
-                item.appendChild(img);
-                item.appendChild(removeButton);
-
-                preview.appendChild(item);
-            };
-
-            reader.readAsDataURL(file);
-        });
-    }
-
-    imageInput.addEventListener('change', function () {
-
-        // 이번에 새로 선택한 사진
-        const newFiles = Array.from(this.files || []);
-
-        // 기존에 선택한 새 사진 뒤에 추가
-        selectedFiles = selectedFiles.concat(newFiles);
-
-        // 파일 input에는 새 사진 전체 유지
+    function syncInputFiles() {
         const dataTransfer = new DataTransfer();
 
         selectedFiles.forEach(file => {
@@ -2764,10 +2698,254 @@ function setupBoardImagePreview() {
         });
 
         imageInput.files = dataTransfer.files;
+    }
 
-        // 새 사진 미리보기 추가
-        renderNewFilePreview();
-    });
+    // =========================================
+    // 사진 삭제 버튼 스타일
+    // =========================================
+
+    function styleRemoveButton(button) {
+
+        button.style.position = 'absolute';
+        button.style.top = '6px';
+        button.style.right = '6px';
+
+        button.style.display = 'flex';
+        button.style.alignItems = 'center';
+        button.style.justifyContent = 'center';
+
+        button.style.width = '26px';
+        button.style.height = '26px';
+
+        button.style.minWidth = '26px';
+        button.style.maxWidth = '26px';
+        button.style.minHeight = '26px';
+        button.style.maxHeight = '26px';
+
+        button.style.padding = '0';
+        button.style.margin = '0';
+
+        button.style.border = 'none';
+        button.style.borderRadius = '50%';
+
+        button.style.background = 'rgba(0, 0, 0, 0.75)';
+        button.style.color = '#ffffff';
+
+        button.style.fontFamily = 'Arial, sans-serif';
+        button.style.fontSize = '20px';
+        button.style.fontWeight = 'bold';
+        button.style.lineHeight = '26px';
+
+        button.style.textAlign = 'center';
+        button.style.cursor = 'pointer';
+
+        button.style.zIndex = '9999';
+
+        button.style.boxSizing = 'border-box';
+
+        button.style.opacity = '1';
+        button.style.visibility = 'visible';
+    }
+
+    // =========================================
+    // 새 사진 미리보기 표시
+    // =========================================
+
+    function renderNewFilePreview() {
+
+        const currentVersion = ++renderVersion;
+
+        // 기존 게시글 사진은 건드리지 않고
+        // 새로 선택한 사진만 삭제 후 다시 그림
+        preview
+            .querySelectorAll('.board-new-image-item')
+            .forEach(item => item.remove());
+
+        selectedFiles.forEach((file, index) => {
+
+            if (!file.type.startsWith('image/')) {
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+
+                // 이미 새로운 렌더링이 시작되었다면 무시
+                if (currentVersion !== renderVersion) {
+                    return;
+                }
+
+                // 현재 selectedFiles에 실제로 존재하는 파일인지 확인
+                if (selectedFiles[index] !== file) {
+                    return;
+                }
+
+                const item = document.createElement('div');
+
+                item.className =
+                    'board-image-preview-item board-new-image-item';
+
+                item.style.width = '140px';
+                item.style.height = '110px';
+
+                item.style.minWidth = '140px';
+                item.style.maxWidth = '140px';
+
+                item.style.minHeight = '110px';
+                item.style.maxHeight = '110px';
+
+                item.style.position = 'relative';
+                item.style.overflow = 'hidden';
+
+                item.style.boxSizing = 'border-box';
+
+                // =========================================
+                // 사진
+                // =========================================
+
+                const img = document.createElement('img');
+
+                img.src = event.target.result;
+                img.alt = file.name;
+
+                img.style.display = 'block';
+
+                img.style.width = '140px';
+                img.style.height = '110px';
+
+                img.style.minWidth = '140px';
+                img.style.maxWidth = '140px';
+
+                img.style.minHeight = '110px';
+                img.style.maxHeight = '110px';
+
+                img.style.objectFit = 'cover';
+
+                img.style.margin = '0';
+                img.style.padding = '0';
+
+                img.style.border = 'none';
+
+                img.style.boxSizing = 'border-box';
+
+                // =========================================
+                // 삭제 버튼
+                // =========================================
+
+                const removeButton = document.createElement('button');
+
+                removeButton.type = 'button';
+
+                removeButton.className =
+                    'board-image-preview-remove';
+
+                removeButton.textContent = '×';
+
+                removeButton.setAttribute(
+                    'aria-label',
+                    '사진 삭제'
+                );
+
+                // 버튼 스타일 강제 적용
+                styleRemoveButton(removeButton);
+
+                // =========================================
+                // 새 사진 삭제
+                // =========================================
+
+                removeButton.addEventListener(
+                    'click',
+                    function (e) {
+
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        // index가 아니라 실제 File 객체를 기준으로 삭제
+                        const removeIndex =
+                            selectedFiles.findIndex(
+                                selectedFile => selectedFile === file
+                            );
+
+                        if (removeIndex !== -1) {
+
+                            selectedFiles.splice(
+                                removeIndex,
+                                1
+                            );
+                        }
+
+                        // input 파일도 다시 구성
+                        syncInputFiles();
+
+                        // 새 사진 미리보기만 다시 그림
+                        renderNewFilePreview();
+                    }
+                );
+
+                item.appendChild(img);
+                item.appendChild(removeButton);
+
+                preview.appendChild(item);
+            };
+
+            reader.onerror = function () {
+                console.error(
+                    '이미지를 읽을 수 없습니다:',
+                    file.name
+                );
+            };
+
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // =========================================
+    // 새 게시글 / 수정 시작 시 새 사진 초기화
+    // =========================================
+
+    window.resetBoardNewImages = function () {
+
+        selectedFiles.length = 0;
+
+        renderVersion++;
+
+        imageInput.value = '';
+
+        preview
+            .querySelectorAll('.board-new-image-item')
+            .forEach(item => item.remove());
+    };
+
+    // =========================================
+    // 사진 선택
+    // =========================================
+
+    imageInput.addEventListener(
+        'change',
+        function () {
+
+            // 이번에 새로 선택한 사진
+            const newFiles = Array.from(
+                this.files || []
+            ).filter(
+                file => file.type.startsWith('image/')
+            );
+
+            if (newFiles.length === 0) {
+                return;
+            }
+
+            // 기존 새 사진 뒤에 추가
+            selectedFiles.push(...newFiles);
+
+            // input 파일 목록 유지
+            syncInputFiles();
+
+            // 새 사진만 다시 표시
+            renderNewFilePreview();
+        }
+    );
 }
     async function loadBookingsFromServer() {
         try {
