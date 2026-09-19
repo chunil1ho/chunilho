@@ -2523,6 +2523,10 @@ console.log('삭제할 게시글 ID:', postId);
 const imageFiles = imageInput?.files
     ? Array.from(imageInput.files)
     : [];
+
+const existingImages = window.editingBoardPostId
+    ? [...(window.editingBoardImages || [])]
+    : [];
         
 
     if (!title) {
@@ -2652,32 +2656,34 @@ showBoardList();
 });
 function setupBoardImagePreview() {
     const imageInput = document.getElementById('board-images');
-   const preview = document.getElementById('board-image-preview');
-    
-if (!imageInput || !preview) return;
-    
-// 사진을 가로로 배치
-preview.style.display = 'grid';
-preview.style.gridTemplateColumns = 'repeat(5, 140px)';
-preview.style.gap = '14px';
-preview.style.width = '100%';
-preview.style.alignItems = 'start';
+    const preview = document.getElementById('board-image-preview');
 
-    // 여러 번 파일을 선택해도 기존 사진을 유지
+    if (!imageInput || !preview) return;
+
+    // 사진을 가로로 배치
+    preview.style.display = 'grid';
+    preview.style.gridTemplateColumns = 'repeat(5, 140px)';
+    preview.style.gap = '14px';
+    preview.style.width = '100%';
+    preview.style.alignItems = 'start';
+
+    // 새로 선택한 파일만 관리
     let selectedFiles = [];
 
-    function renderPreview() {
-        preview.innerHTML = '';
-
+    function renderNewFilePreview() {
+        // 기존 사진 영역은 건드리지 않고
+        // 새로 선택한 사진만 추가 표시
         selectedFiles.forEach((file, index) => {
+
             if (!file.type.startsWith('image/')) return;
 
             const reader = new FileReader();
 
             reader.onload = function (event) {
+
                 const item = document.createElement('div');
 
-                item.className = 'board-image-preview-item';
+                item.className = 'board-image-preview-item board-new-image-item';
 
                 item.style.width = '140px';
                 item.style.height = '110px';
@@ -2711,6 +2717,7 @@ preview.style.alignItems = 'start';
 
                 removeButton.type = 'button';
                 removeButton.className = 'board-image-preview-remove';
+
                 removeButton.textContent = '×';
                 removeButton.setAttribute('aria-label', '사진 삭제');
 
@@ -2728,7 +2735,7 @@ preview.style.alignItems = 'start';
 
                     imageInput.files = dataTransfer.files;
 
-                    renderPreview();
+                    item.remove();
                 });
 
                 item.appendChild(img);
@@ -2743,12 +2750,13 @@ preview.style.alignItems = 'start';
 
     imageInput.addEventListener('change', function () {
 
-        // 이번에 새로 선택한 사진을 기존 사진 뒤에 추가
+        // 이번에 새로 선택한 사진
         const newFiles = Array.from(this.files || []);
 
+        // 기존에 선택한 새 사진 뒤에 추가
         selectedFiles = selectedFiles.concat(newFiles);
 
-        // 전체 파일 목록 유지
+        // 파일 input에는 새 사진 전체 유지
         const dataTransfer = new DataTransfer();
 
         selectedFiles.forEach(file => {
@@ -2757,8 +2765,8 @@ preview.style.alignItems = 'start';
 
         imageInput.files = dataTransfer.files;
 
-        // 전체 미리보기 표시
-        renderPreview();
+        // 새 사진 미리보기 추가
+        renderNewFilePreview();
     });
 }
     async function loadBookingsFromServer() {
