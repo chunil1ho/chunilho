@@ -787,6 +787,58 @@
     }
 
 }
+    /* ================================
+   조황게시판 PC 작성폼 크기 조정
+   ================================ */
+@media screen and (min-width: 769px) {
+
+    #board-write-form {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+        box-sizing: border-box !important;
+    }
+
+    #board-write-form .board-form-box {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 30px !important;
+    }
+
+    #board-write-form #board-title {
+        width: 100% !important;
+        min-height: 48px !important;
+        box-sizing: border-box !important;
+        font-size: 17px !important;
+    }
+
+    #board-write-form #board-content {
+        width: 100% !important;
+        min-height: 420px !important;
+        box-sizing: border-box !important;
+        font-size: 16px !important;
+        line-height: 1.7 !important;
+        resize: vertical !important;
+    }
+
+    #board-write-form #board-image-preview {
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+        width: 100% !important;
+        margin-top: 15px !important;
+    }
+
+    #board-write-form #board-image-preview img {
+        display: block !important;
+        width: 100% !important;
+        height: 220px !important;
+        object-fit: cover !important;
+        border-radius: 10px !important;
+    }
+
+}
     </style>
 </head>
 <body id="mainBody">
