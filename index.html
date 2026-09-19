@@ -2054,6 +2054,36 @@ function setupBoardImagePreview() {
             checkAdminAccess();
         }
     });
+    // 모바일 관리자 로그인: 로고 영역 5회 빠르게 터치
+let adminTapCount = 0;
+let adminTapTimer = null;
+
+const adminTouchTarget = document.querySelector('.logo-area');
+
+if (adminTouchTarget) {
+    adminTouchTarget.addEventListener('click', function () {
+
+        adminTapCount++;
+
+        clearTimeout(adminTapTimer);
+
+        adminTapTimer = setTimeout(function () {
+            adminTapCount = 0;
+        }, 1500);
+
+        if (adminTapCount >= 5) {
+            adminTapCount = 0;
+
+            const adminLi = document.getElementById('nav-admin-li');
+
+            if (adminLi) {
+                adminLi.style.display = 'inline-block';
+            }
+
+            checkAdminAccess();
+        }
+    });
+}
 
     function switchCategory(catId, btnEl) {
         document.querySelectorAll('.category-sec').forEach(sec => sec.classList.remove('active'));
