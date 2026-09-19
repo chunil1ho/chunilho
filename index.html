@@ -739,32 +739,74 @@
         overflow-y: auto !important;
     }
 
-    /* 사진 선택 */
+     /* 사진 선택 */
     #cat-board #board-images {
         display: block !important;
         width: 100% !important;
         height: auto !important;
-
         box-sizing: border-box !important;
         font-size: 15px !important;
     }
 
     /* 사진 미리보기 */
     #cat-board #board-image-preview {
-        width: 100% !important;
-        box-sizing: border-box !important;
-
         display: grid !important;
-        grid-template-columns: repeat(4, 1fr) !important;
-        gap: 15px !important;
-
+        grid-template-columns: repeat(5, 140px) !important;
+        gap: 14px !important;
+        width: 100% !important;
         margin-top: 15px !important;
+        box-sizing: border-box !important;
     }
 
-    #cat-board #board-image-preview img {
+    /* 미리보기 사진 하나 */
+    #cat-board .board-image-preview-item {
+        position: relative;
+        width: 140px !important;
+        height: 110px !important;
+        border: 1px solid #ddd !important;
+        border-radius: 8px !important;
+        overflow: hidden !important;
+        background: #f5f5f5 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 미리보기 이미지 */
+    #cat-board .board-image-preview-item img {
+        display: block !important;
         width: 100% !important;
-        height: 160px !important;
+        height: 100% !important;
         object-fit: cover !important;
+    }
+
+    /* 사진 삭제 X */
+    #cat-board .board-image-preview-remove {
+        position: absolute !important;
+        top: 6px !important;
+        right: 6px !important;
+
+        width: 26px !important;
+        height: 26px !important;
+
+        padding: 0 !important;
+        margin: 0 !important;
+
+        border: none !important;
+        border-radius: 50% !important;
+
+        background: rgba(0, 0, 0, 0.7) !important;
+        color: #fff !important;
+
+        font-size: 17px !important;
+        font-weight: bold !important;
+        line-height: 26px !important;
+        text-align: center !important;
+
+        cursor: pointer !important;
+        z-index: 2 !important;
+    }
+
+    #cat-board .board-image-preview-remove:hover {
+        background: #ef4444 !important;
     }
 
     /* 버튼 */
@@ -2333,26 +2375,59 @@ function setupBoardImagePreview() {
 
     if (!imageInput || !preview) return;
 
-    imageInput.addEventListener('change', function () {
-        preview.innerHTML = '';
+imageInput.addEventListener('change', function () {
+    preview.innerHTML = '';
 
-        const files = Array.from(this.files || []);
+    const files = Array.from(this.files || []);
 
-        files.forEach(file => {
-            if (!file.type.startsWith('image/')) return;
+    files.forEach((file, index) => {
+        if (!file.type.startsWith('image/')) return;
 
-            const reader = new FileReader();
+        const reader = new FileReader();
 
-            reader.onload = function (event) {
-                const img = document.createElement('img');
-                img.src = event.target.result;
-                img.alt = file.name;
-                preview.appendChild(img);
-            };
+        reader.onload = function (event) {
 
-            reader.readAsDataURL(file);
-        });
+            const item = document.createElement('div');
+            item.className = 'board-image-preview-item';
+
+            const img = document.createElement('img');
+            img.src = event.target.result;
+            img.alt = file.name;
+
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.className = 'board-image-preview-remove';
+            removeButton.textContent = '×';
+            removeButton.setAttribute('aria-label', '사진 삭제');
+
+            removeButton.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const currentFiles = Array.from(imageInput.files || []);
+
+                currentFiles.splice(index, 1);
+
+                const dataTransfer = new DataTransfer();
+
+                currentFiles.forEach(file => {
+                    dataTransfer.items.add(file);
+                });
+
+                imageInput.files = dataTransfer.files;
+
+                imageInput.dispatchEvent(new Event('change'));
+            });
+
+            item.appendChild(img);
+            item.appendChild(removeButton);
+
+            preview.appendChild(item);
+        };
+
+        reader.readAsDataURL(file);
     });
+});
 }
 
     async function loadBookingsFromServer() {
