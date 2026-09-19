@@ -771,13 +771,21 @@
     }
 
     /* 미리보기 이미지 */
-    #cat-board .board-image-preview-item img {
-        display: block !important;
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-    }
+#cat-board .board-image-preview-item img {
+    display: block !important;
 
+    width: 140px !important;
+    max-width: 140px !important;
+
+    height: 110px !important;
+    max-height: 110px !important;
+
+    min-width: 140px !important;
+    min-height: 110px !important;
+
+    object-fit: cover !important;
+    box-sizing: border-box !important;
+}
     /* 사진 삭제 X */
     #cat-board .board-image-preview-remove {
         position: absolute !important;
