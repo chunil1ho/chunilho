@@ -377,7 +377,11 @@
 }
 
 .board-form-box {
-    padding: 25px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+
+    padding: 35px;
     border: 1px solid #ddd;
     border-radius: 10px;
     background: #fff;
@@ -396,7 +400,9 @@
 }
 
 .board-form-group {
+    width: 100%;
     margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
 .board-form-group label {
@@ -408,6 +414,7 @@
 
 .board-form-group input[type="text"],
 .board-form-group textarea {
+    display: block;
     box-sizing: border-box;
     width: 100%;
     padding: 12px;
@@ -417,9 +424,14 @@
     font-family: inherit;
 }
 
+.board-form-group input[type="text"] {
+    min-height: 50px;
+}
+
 .board-form-group textarea {
     resize: vertical;
-    min-height: 180px;
+    min-height: 400px;
+    height: 400px;
     line-height: 1.6;
 }
 
@@ -437,21 +449,38 @@
     font-size: 12px;
 }
 
+
+/* 사진 미리보기 */
 .board-image-preview {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 15px;
+
+    width: 100%;
+    box-sizing: border-box;
+
     margin-top: 15px;
 }
 
+
+/* 사진 크기 */
 .board-image-preview img {
+    display: block;
+
     width: 100%;
-    height: 120px;
+    height: 200px;
+
+    max-width: 100%;
+
     object-fit: cover;
-    border-radius: 6px;
+
+    border-radius: 8px;
     border: 1px solid #ddd;
+    box-sizing: border-box;
 }
 
+
+/* 버튼 */
 .board-form-buttons {
     display: flex;
     justify-content: flex-end;
