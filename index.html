@@ -839,6 +839,92 @@
     }
 
 }
+    /* ================================
+   PC 조황게시판 작성폼 최종 크기 조정
+   ================================ */
+@media screen and (min-width: 769px) {
+
+    /* 작성폼 전체 */
+    #board-write-form {
+        display: block;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 작성폼 박스 */
+    #board-write-form .board-form-box {
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding: 35px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 제목 입력 */
+    #board-write-form .board-form-group {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    #board-write-form #board-title {
+        display: block !important;
+        width: 100% !important;
+        height: 52px !important;
+        box-sizing: border-box !important;
+        font-size: 17px !important;
+        padding: 12px 15px !important;
+    }
+
+    /* 내용 입력 */
+    #board-write-form #board-content {
+        display: block !important;
+        width: 100% !important;
+        height: 450px !important;
+        min-height: 450px !important;
+        box-sizing: border-box !important;
+        padding: 15px !important;
+        font-size: 16px !important;
+        line-height: 1.7 !important;
+        resize: vertical !important;
+    }
+
+    /* 사진 미리보기 */
+    #board-write-form .board-image-preview {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 15px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        margin-top: 15px !important;
+    }
+
+    /* 사진 자체 */
+    #board-write-form .board-image-preview img {
+        display: block !important;
+        width: 100% !important;
+        height: 200px !important;
+        max-width: 100% !important;
+        object-fit: cover !important;
+        border-radius: 10px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 버튼 영역 */
+    #board-write-form .board-form-buttons {
+        display: flex !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+        gap: 10px !important;
+        width: 100% !important;
+        margin-top: 25px !important;
+    }
+}
     </style>
 </head>
 <body id="mainBody">
