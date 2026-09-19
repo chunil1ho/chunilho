@@ -2064,12 +2064,50 @@ async function editBoardPost(postId) {
                 img.style.boxSizing = 'border-box';
 
                 // 기존 사진 삭제 버튼
-                const removeButton = document.createElement('button');
+const removeButton = document.createElement('button');
 
-                removeButton.type = 'button';
-                removeButton.className = 'board-image-preview-remove';
-                removeButton.textContent = '×';
-                removeButton.setAttribute('aria-label', '사진 삭제');
+removeButton.type = 'button';
+removeButton.className = 'board-image-preview-remove';
+removeButton.textContent = '×';
+removeButton.setAttribute('aria-label', '사진 삭제');
+
+removeButton.style.position = 'absolute';
+removeButton.style.top = '6px';
+removeButton.style.right = '6px';
+removeButton.style.display = 'flex';
+removeButton.style.alignItems = 'center';
+removeButton.style.justifyContent = 'center';
+removeButton.style.width = '26px';
+removeButton.style.height = '26px';
+removeButton.style.minWidth = '26px';
+removeButton.style.maxWidth = '26px';
+removeButton.style.minHeight = '26px';
+removeButton.style.maxHeight = '26px';
+removeButton.style.padding = '0';
+removeButton.style.margin = '0';
+removeButton.style.border = 'none';
+removeButton.style.borderRadius = '50%';
+removeButton.style.background = 'rgba(0, 0, 0, 0.75)';
+removeButton.style.color = '#ffffff';
+removeButton.style.fontFamily = 'Arial, sans-serif';
+removeButton.style.fontSize = '20px';
+removeButton.style.fontWeight = 'bold';
+removeButton.style.lineHeight = '26px';
+removeButton.style.textAlign = 'center';
+removeButton.style.cursor = 'pointer';
+removeButton.style.zIndex = '9999';
+removeButton.style.boxSizing = 'border-box';
+removeButton.style.opacity = '1';
+removeButton.style.visibility = 'visible';
+
+removeButton.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    window.editingBoardImages.splice(index, 1);
+
+    item.remove();
+});
 
                 removeButton.addEventListener('click', function (e) {
                     e.preventDefault();
