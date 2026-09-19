@@ -655,6 +655,57 @@
         font-size: 11px;
     }
 }
+    /* PC 게시판 표 형태 강제 적용 */
+@media (min-width: 601px) {
+
+    #board-post-list {
+        width: 100% !important;
+        display: block !important;
+    }
+
+    #board-post-list .board-list-header {
+        display: grid !important;
+        grid-template-columns: 70px minmax(0, 1fr) 110px !important;
+        width: 100% !important;
+        min-height: 48px !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    #board-post-list .board-post-item {
+        display: grid !important;
+        grid-template-columns: 70px minmax(0, 1fr) 110px !important;
+        width: 100% !important;
+        min-height: 52px !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    #board-post-list .board-post-number {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-height: 52px !important;
+    }
+
+    #board-post-list .board-post-title {
+        display: block !important;
+        min-width: 0 !important;
+        padding: 0 12px !important;
+        text-align: left !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    #board-post-list .board-post-date {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-height: 52px !important;
+    }
+
+}
     </style>
 </head>
 <body id="mainBody">
