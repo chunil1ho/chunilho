@@ -1772,6 +1772,58 @@ box-sizing:border-box !important;
         `;
     }
 }
+    document.addEventListener('DOMContentLoaded', function () {
+
+    const boardCancelBtn = document.getElementById('board-cancel-btn');
+
+    if (!boardCancelBtn) return;
+
+    boardCancelBtn.addEventListener('click', function () {
+
+        // 입력 내용 초기화
+        const titleInput = document.getElementById('board-title');
+        const contentInput = document.getElementById('board-content');
+        const imageInput = document.getElementById('board-images');
+        const preview = document.getElementById('board-image-preview');
+
+        if (titleInput) titleInput.value = '';
+        if (contentInput) contentInput.value = '';
+        if (imageInput) imageInput.value = '';
+        if (preview) preview.innerHTML = '';
+
+        // 현재 수정 중인 게시글 ID 초기화
+        window.editingBoardPostId = null;
+
+        // 화면 전환
+        const form = document.getElementById('board-write-form');
+        const detail = document.getElementById('board-detail');
+        const list = document.getElementById('board-list');
+
+        if (form) form.style.display = 'none';
+        if (detail) detail.style.display = 'none';
+        if (list) list.style.display = 'block';
+
+        // 저장 버튼을 등록 상태로 복구
+        const saveButton = document.getElementById('board-save-btn');
+
+        if (saveButton) {
+            saveButton.textContent = '등록하기';
+        }
+
+        // 폼 제목을 작성 상태로 복구
+        const formTitle = form?.querySelector('.board-form-title h3');
+
+        if (formTitle) {
+            formTitle.textContent = '조황글 작성';
+        }
+
+        // 게시글 목록 새로고침
+        if (typeof loadBoardPosts === 'function') {
+            loadBoardPosts();
+        }
+    });
+
+});
     async function showBoardDetail(postId) {
     const list = document.getElementById('board-list');
     const detail = document.getElementById('board-detail');
