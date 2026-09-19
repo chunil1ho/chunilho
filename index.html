@@ -2466,61 +2466,82 @@ function setupBoardImagePreview() {
 
     if (!imageInput || !preview) return;
 
-imageInput.addEventListener('change', function () {
-    preview.innerHTML = '';
+    imageInput.addEventListener('change', function () {
+        preview.innerHTML = '';
 
-    const files = Array.from(this.files || []);
+        const files = Array.from(this.files || []);
 
-    files.forEach((file, index) => {
-        if (!file.type.startsWith('image/')) return;
+        files.forEach((file, index) => {
+            if (!file.type.startsWith('image/')) return;
 
-        const reader = new FileReader();
+            const reader = new FileReader();
 
-        reader.onload = function (event) {
+            reader.onload = function (event) {
+                const item = document.createElement('div');
+                item.className = 'board-image-preview-item';
 
-            const item = document.createElement('div');
-            item.className = 'board-image-preview-item';
+                item.style.width = '140px';
+                item.style.height = '110px';
+                item.style.minWidth = '140px';
+                item.style.maxWidth = '140px';
+                item.style.minHeight = '110px';
+                item.style.maxHeight = '110px';
+                item.style.position = 'relative';
+                item.style.overflow = 'hidden';
+                item.style.boxSizing = 'border-box';
 
-            const img = document.createElement('img');
-            img.src = event.target.result;
-            img.alt = file.name;
+                const img = document.createElement('img');
+                img.src = event.target.result;
+                img.alt = file.name;
 
-            const removeButton = document.createElement('button');
-            removeButton.type = 'button';
-            removeButton.className = 'board-image-preview-remove';
-            removeButton.textContent = '×';
-            removeButton.setAttribute('aria-label', '사진 삭제');
+                img.style.display = 'block';
+                img.style.width = '140px';
+                img.style.height = '110px';
+                img.style.minWidth = '140px';
+                img.style.maxWidth = '140px';
+                img.style.minHeight = '110px';
+                img.style.maxHeight = '110px';
+                img.style.objectFit = 'cover';
+                img.style.margin = '0';
+                img.style.padding = '0';
+                img.style.border = 'none';
+                img.style.boxSizing = 'border-box';
 
-            removeButton.addEventListener('click', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
+                const removeButton = document.createElement('button');
+                removeButton.type = 'button';
+                removeButton.className = 'board-image-preview-remove';
+                removeButton.textContent = '×';
+                removeButton.setAttribute('aria-label', '사진 삭제');
 
-                const currentFiles = Array.from(imageInput.files || []);
+                removeButton.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
 
-                currentFiles.splice(index, 1);
+                    const currentFiles = Array.from(imageInput.files || []);
 
-                const dataTransfer = new DataTransfer();
+                    currentFiles.splice(index, 1);
 
-                currentFiles.forEach(file => {
-                    dataTransfer.items.add(file);
+                    const dataTransfer = new DataTransfer();
+
+                    currentFiles.forEach(file => {
+                        dataTransfer.items.add(file);
+                    });
+
+                    imageInput.files = dataTransfer.files;
+
+                    imageInput.dispatchEvent(new Event('change'));
                 });
 
-                imageInput.files = dataTransfer.files;
+                item.appendChild(img);
+                item.appendChild(removeButton);
 
-                imageInput.dispatchEvent(new Event('change'));
-            });
+                preview.appendChild(item);
+            };
 
-            item.appendChild(img);
-            item.appendChild(removeButton);
-
-            preview.appendChild(item);
-        };
-
-        reader.readAsDataURL(file);
+            reader.readAsDataURL(file);
+        });
     });
-});
 }
-
     async function loadBookingsFromServer() {
         try {
             if (isAdminLoggedIn && adminToken) {
@@ -2637,7 +2658,7 @@ if (
 ) {
     alert('예약은 오늘부터 3개월까지만 가능합니다.');
     dateElement.focus();
-    return;
+    return;ㅋ
 }
         const courseSelect = document.getElementById('courseSelect');
         const seasonNotice = document.getElementById('seasonNotice');
