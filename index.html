@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=0.5">
     <title>서귀포 체험 배낚시 천일호 - Chunilho Fishing</title>
-    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <script sr<div class="board-detail-header">c="https://cdn.iamport.kr/v1/iamport.js"></script>
     <style>
         :root {
             --primary-color: #0f2c59;
@@ -1776,29 +1776,49 @@ box-sizing:border-box !important;
             : [];
 
         contentBox.innerHTML = `
-            <div class="board-detail-header">
-                <h2>${escapeHtml(post.title)}</h2>
-                <div class="board-detail-date">${date}</div>
-              ${
-isAdminLoggedIn
-    ? `
-        <button
-            type="button"
-            class="board-edit-btn"
-            onclick="editBoardPost('${post.id}')">
-            수정
-        </button>
+<div class="board-detail-header">
 
-        <button
-            type="button"
-            class="board-delete-btn"
-            onclick="deleteBoardPost('${post.id}')">
-            삭제
-        </button>
-    `
-    : ''
+    <h2>${escapeHtml(post.title)}</h2>
+
+    <div
+        class="board-detail-actions"
+        style="
+            display:flex;
+            justify-content:flex-end;
+            align-items:center;
+            gap:6px;
+            width:100%;
+            margin-top:8px;
+        "
+    >
+
+        <div class="board-detail-date">
+            ${date}
+        </div>
+
+        ${
+            isAdminLoggedIn
+                ? `
+                    <button
+                        type="button"
+                        class="board-edit-btn"
+                        onclick="editBoardPost('${post.id}')">
+                        수정
+                    </button>
+
+                    <button
+                        type="button"
+                        class="board-delete-btn"
+                        onclick="deleteBoardPost('${post.id}')">
+                        삭제
+                    </button>
+                `
+                : ''
         }
+
     </div>
+
+</div>
 
 
             <div class="board-detail-body">
