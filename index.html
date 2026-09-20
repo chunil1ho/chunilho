@@ -424,13 +424,19 @@
 }
 
 .board-form-group input[type="file"] {
-    display: block;
-    width: auto;
-    margin-left: auto;
-    padding: 10px 0;
-    font-size: 14px;
+    display: block !important;
+    width: fit-content !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+    padding: 10px 0 !important;
+    font-size: 14px !important;
 }
-
+    .board-form-group input[type="file"] + small {
+    display: block !important;
+    width: 100% !important;
+    text-align: right !important;
+    margin-top: 6px !important;
+}
 .board-form-group small {
     display: block;
     margin-top: 6px;
@@ -837,16 +843,22 @@
         resize: none !important;
         overflow-y: auto !important;
     }
-
-     /* 사진 선택 */
-    #cat-board #board-images {
-        display: block !important;
-        width: 100% !important;
-        height: auto !important;
-        box-sizing: border-box !important;
-        font-size: 15px !important;
-    }
-
+#cat-board #board-images {
+    display: block !important;
+    width: fit-content !important;
+    max-width: fit-content !important;
+    height: auto !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+    font-size: 15px !important;
+}
+    #cat-board #board-images + small {
+    display: block !important;
+    width: 100% !important;
+    text-align: right !important;
+    margin-top: 6px !important;
+}
     /* 사진 미리보기 */
     #cat-board #board-image-preview {
         display: grid !important;
@@ -1187,13 +1199,6 @@
 
     resize: none !important;
 }
-    /* 사진 첨부 */
-    #cat-board #board-images {
-        width: 100% !important;
-        max-width: none !important;
-        box-sizing: border-box !important;
-    }
-
     /* 버튼 */
     #cat-board .board-form-buttons {
         width: 100% !important;
