@@ -1208,38 +1208,6 @@
         font-size: 16px !important;
     }
 }
-/* =========================================
-   조황게시판 파일선택 / 버튼 오른쪽 정렬
-   ========================================= */
-
-#cat-board .board-file-actions {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-end !important;
-    width: 100% !important;
-    margin-top: 10px !important;
-}
-
-#cat-board .board-file-actions #board-images {
-    display: block !important;
-    margin: 0 !important;
-}
-
-#cat-board .board-file-actions small {
-    display: block !important;
-    margin-top: 6px !important;
-    text-align: right !important;
-}
-
-/* 취소 / 수정하기 */
-#cat-board .board-form-buttons {
-    display: flex !important;
-    justify-content: flex-end !important;
-    align-items: center !important;
-    gap: 10px !important;
-    width: 100% !important;
-    margin-top: 20px !important;
-}
     </style>
 </head>
 <body id="mainBody">
@@ -1768,17 +1736,15 @@
                     사진 첨부
                 </label>
 
-<div class="board-file-actions">
+                <input
+                    type="file"
+                    id="board-images"
+                    accept="image/*"
+                    multiple>
 
-    <input
-        type="file"
-        id="board-images"
-        accept="image/*"
-        multiple>
-
-    <small data-i18n="boardPhotoGuide">
-        여러 장의 사진을 선택할 수 있습니다.
-    </small>
+                <small data-i18n="boardPhotoGuide">
+                    여러 장의 사진을 선택할 수 있습니다.
+                </small>
             </div>
 
 
