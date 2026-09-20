@@ -423,6 +423,13 @@
     line-height: 1.6;
 }
 
+.board-form-group input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    font-size: 14px;
+}
+
 .board-form-group small {
     display: block;
     margin-top: 6px;
@@ -829,11 +836,16 @@
         resize: none !important;
         overflow-y: auto !important;
     }
-/* 사진 첨부 영역만 오른쪽 정렬 */
-#cat-board .board-form-group:has(#board-images) {
-    width: 100% !important;
-    text-align: right !important;
-}
+
+     /* 사진 선택 */
+    #cat-board #board-images {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        box-sizing: border-box !important;
+        font-size: 15px !important;
+    }
+
     /* 사진 미리보기 */
     #cat-board #board-image-preview {
         display: grid !important;
@@ -1174,6 +1186,13 @@
 
     resize: none !important;
 }
+    /* 사진 첨부 */
+    #cat-board #board-images {
+        width: 100% !important;
+        max-width: none !important;
+        box-sizing: border-box !important;
+    }
+
     /* 버튼 */
     #cat-board .board-form-buttons {
         width: 100% !important;
@@ -1188,55 +1207,6 @@
         height: 50px !important;
         font-size: 16px !important;
     }
-}
-/* =========================================
-   조황게시판 사진첨부 + 하단버튼 오른쪽 정렬
-   ========================================= */
-
-/* 사진 첨부 영역 */
-#cat-board .board-form-group:has(#board-images) {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    width: 100% !important;
-}
-
-/* 사진 첨부 제목 */
-#cat-board .board-form-group:has(#board-images) label {
-    display: block !important;
-    width: 100% !important;
-    text-align: left !important;
-    margin-bottom: 8px !important;
-}
-
-/* 파일 선택 */
-#cat-board .board-form-group:has(#board-images) #board-images {
-    display: block !important;
-    width: auto !important;
-    max-width: fit-content !important;
-    margin-left: auto !important;
-    margin-right: 0 !important;
-    align-self: flex-end !important;
-}
-
-/* 사진 안내 문구 */
-#cat-board .board-form-group:has(#board-images) small {
-    display: block !important;
-    width: 100% !important;
-    text-align: right !important;
-    margin-top: 6px !important;
-}
-
-/* 취소 / 등록하기 / 수정하기 */
-#cat-board .board-form-buttons {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: flex-end !important;
-    align-items: center !important;
-    width: 100% !important;
-    gap: 10px !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
 }
     </style>
 </head>
@@ -1761,9 +1731,7 @@
             </div>
 
 
-<div
-    class="board-form-group"
-    style="display:flex; flex-direction:column; align-items:stretch; width:100%;">
+            <div class="board-form-group">
                 <label for="board-images" data-i18n="boardPhotos">
                     사진 첨부
                 </label>
