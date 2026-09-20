@@ -423,20 +423,6 @@
     line-height: 1.6;
 }
 
-.board-form-group input[type="file"] {
-    display: block !important;
-    width: fit-content !important;
-    margin-left: auto !important;
-    margin-right: 0 !important;
-    padding: 10px 0 !important;
-    font-size: 14px !important;
-}
-    .board-form-group input[type="file"] + small {
-    display: block !important;
-    width: 100% !important;
-    text-align: right !important;
-    margin-top: 6px !important;
-}
 .board-form-group small {
     display: block;
     margin-top: 6px;
@@ -847,25 +833,6 @@
 #cat-board .board-form-group:has(#board-images) {
     width: 100% !important;
     text-align: right !important;
-}
-
-/* 파일 선택 버튼 */
-#cat-board #board-images {
-    display: inline-block !important;
-    width: auto !important;
-    max-width: none !important;
-    margin: 0 !important;
-    padding: 10px 0 !important;
-    box-sizing: border-box !important;
-    font-size: 15px !important;
-}
-
-/* 안내 문구 */
-#cat-board #board-images + small {
-    display: block !important;
-    width: 100% !important;
-    text-align: right !important;
-    margin-top: 6px !important;
 }
     /* 사진 미리보기 */
     #cat-board #board-image-preview {
@@ -1794,7 +1761,9 @@
             </div>
 
 
-            <div class="board-form-group">
+<div
+    class="board-form-group"
+    style="display:flex; flex-direction:column; align-items:stretch; width:100%;">
                 <label for="board-images" data-i18n="boardPhotos">
                     사진 첨부
                 </label>
