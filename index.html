@@ -819,6 +819,24 @@
     border: 1px solid #ddd !important;
     border-radius: 8px !important;
 }
+    /* 조황게시판 제목칸 가로 전체 사용 */
+#cat-board #board-write-form .board-form-group:has(#board-title) {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+}
+
+#cat-board #board-title {
+    width: 100% !important;
+    height: 75px !important;
+    min-height: 75px !important;
+    max-height: 75px !important;
+
+    box-sizing: border-box !important;
+    padding: 0 16px !important;
+
+    font-size: 18px !important;
+    line-height: 75px !important;
+}
     /* 내용 입력 */
     #cat-board #board-content {
         display: block !important;
