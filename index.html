@@ -1208,30 +1208,38 @@
         font-size: 16px !important;
     }
 }
-/* =========================================
-   조황게시판 작성/수정 버튼 오른쪽 정렬
-   ========================================= */
+     /* =========================================
+    조황게시판 버튼 오른쪽 정렬
+    ========================================= */
 
-/* 파일 선택 */
+/* 파일 선택 버튼 오른쪽 정렬 */
 #cat-board #board-images {
-    display: block;
-    margin-left: auto;
+    display: block !important;
+    margin-left: auto !important;
 }
 
-/* 취소 / 수정하기 버튼 영역 */
-#cat-board #board-write-form .board-form-actions {
+/* 사진 안내문도 오른쪽 정렬 */
+#cat-board #board-images + small {
+    display: block !important;
+    text-align: right !important;
+    width: 100% !important;
+    margin-top: 6px !important;
+}
+
+/* 취소 / 등록(수정) 버튼 오른쪽 정렬 */
+#cat-board .board-form-buttons {
     display: flex !important;
     justify-content: flex-end !important;
     align-items: center !important;
     gap: 10px !important;
     width: 100% !important;
-    margin-top: 20px !important;
 }
 
-/* 버튼 자체 */
-#cat-board #board-write-form .board-form-actions button {
+/* 버튼 자체의 기존 여백 때문에 위치가 밀리는 것 방지 */
+#cat-board .board-form-buttons button {
     margin-left: 0 !important;
-}    
+    margin-right: 0 !important;
+}
     </style>
 </head>
 <body id="mainBody">
