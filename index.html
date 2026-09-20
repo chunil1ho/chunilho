@@ -843,17 +843,25 @@
         resize: none !important;
         overflow-y: auto !important;
     }
+/* 사진 첨부 영역만 오른쪽 정렬 */
+#cat-board .board-form-group:has(#board-images) {
+    width: 100% !important;
+    text-align: right !important;
+}
+
+/* 파일 선택 버튼 */
 #cat-board #board-images {
-    display: block !important;
-    width: fit-content !important;
-    max-width: fit-content !important;
-    height: auto !important;
-    margin-left: auto !important;
-    margin-right: 0 !important;
+    display: inline-block !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 10px 0 !important;
     box-sizing: border-box !important;
     font-size: 15px !important;
 }
-    #cat-board #board-images + small {
+
+/* 안내 문구 */
+#cat-board #board-images + small {
     display: block !important;
     width: 100% !important;
     text-align: right !important;
