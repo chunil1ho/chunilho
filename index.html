@@ -1246,6 +1246,35 @@
     margin-left: 0 !important;
     margin-right: 0 !important;
 }
+    /* 조황게시판 사진 첨부 영역 */
+#cat-board .board-form-group:has(#board-images) {
+    text-align: right !important;
+}
+
+/* 사진 첨부 라벨 */
+#cat-board .board-form-group:has(#board-images) label {
+    display: block !important;
+    text-align: left !important;
+}
+
+/* 파일 선택 버튼 */
+#cat-board #board-images {
+    display: inline-block !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+}
+
+/* 안내 문구 */
+#cat-board #board-images + small {
+    display: block !important;
+    text-align: right !important;
+}
+    #cat-board .board-form-buttons {
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
     </style>
 </head>
 <body id="mainBody">
