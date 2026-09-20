@@ -1208,21 +1208,38 @@
         font-size: 16px !important;
     }
 }
-    /* =========================================
-   조황게시판 작성폼 오른쪽 정렬
+/* =========================================
+   조황게시판 사진첨부 + 하단버튼 오른쪽 정렬
    ========================================= */
 
-/* 파일 선택 버튼 */
-#cat-board #board-images {
+/* 사진 첨부 영역 */
+#cat-board .board-form-group:has(#board-images) {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+}
+
+/* 사진 첨부 제목 */
+#cat-board .board-form-group:has(#board-images) label {
     display: block !important;
-    width: max-content !important;
-    max-width: max-content !important;
+    width: 100% !important;
+    text-align: left !important;
+    margin-bottom: 8px !important;
+}
+
+/* 파일 선택 */
+#cat-board .board-form-group:has(#board-images) #board-images {
+    display: block !important;
+    width: auto !important;
+    max-width: fit-content !important;
     margin-left: auto !important;
     margin-right: 0 !important;
+    align-self: flex-end !important;
 }
 
 /* 사진 안내 문구 */
-#cat-board #board-images + small {
+#cat-board .board-form-group:has(#board-images) small {
     display: block !important;
     width: 100% !important;
     text-align: right !important;
@@ -1235,45 +1252,10 @@
     flex-direction: row !important;
     justify-content: flex-end !important;
     align-items: center !important;
-    gap: 10px !important;
     width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-}
-
-/* 버튼 자체 */
-#cat-board .board-form-buttons button {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-}
-    /* 조황게시판 사진 첨부 영역 */
-#cat-board .board-form-group:has(#board-images) {
-    text-align: right !important;
-}
-
-/* 사진 첨부 라벨 */
-#cat-board .board-form-group:has(#board-images) label {
-    display: block !important;
-    text-align: left !important;
-}
-
-/* 파일 선택 버튼 */
-#cat-board #board-images {
-    display: inline-block !important;
-    margin-left: auto !important;
-    margin-right: 0 !important;
-}
-
-/* 안내 문구 */
-#cat-board #board-images + small {
-    display: block !important;
-    text-align: right !important;
-}
-    #cat-board .board-form-buttons {
-    display: flex !important;
-    justify-content: flex-end !important;
-    align-items: center !important;
     gap: 10px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
     </style>
 </head>
