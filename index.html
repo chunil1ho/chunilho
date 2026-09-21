@@ -1474,6 +1474,7 @@
                                 <option value="40000_주간 체험 3시간" data-i18n="optCourse2">주간 체험 3시간 - 40,000원 (연중)</option>
                                 <option value="90000_야간 갈치낚시" data-i18n="optCourse3" id="optGalchi">야간 갈치낚시 - 90,000원 (시즌: 8월~11월중순)</option>
                                 <option value="60000_야간 한치 체험낚시" data-i18n="optCourse4" id="optHanchi">야간 한치 체험낚시 - 60,000원 (시즌: 6월중순~9월초)</option>
+                                <option value="90000_지깅체험 4시간" data-i18n="optCourse5" id="optJigging">지깅체험 4시간 - 90,000원 (연중)</option>
                             </select>
                         </div>
 
@@ -3056,6 +3057,7 @@ if (
         const seasonNotice = document.getElementById('seasonNotice');
         const optGalchi = document.getElementById('optGalchi');
         const optHanchi = document.getElementById('optHanchi');
+        const optJigging = document.getElementById('optJigging');
 
         if (!dateVal) {
             if(seasonNotice) seasonNotice.innerText = '';
@@ -3111,6 +3113,27 @@ if (
         const courseSelect = document.getElementById('courseSelect'); 
         const timeSelect = document.getElementById('timeSelect');
         const dateVal = document.getElementById('custDate').value;
+        const countSelect = document.getElementById('custCount');
+
+if (countSelect) {
+    const isJigging = courseSelect.value.includes('지깅');
+
+    Array.from(countSelect.options).forEach(option => {
+        const count = parseInt(option.value);
+
+        if (isJigging) {
+            option.disabled = count > 8;
+            option.style.display = count > 8 ? 'none' : '';
+        } else {
+            option.disabled = false;
+            option.style.display = '';
+        }
+    });
+
+    if (isJigging && parseInt(countSelect.value) > 8) {
+        countSelect.value = '1';
+    }
+}
         
         if (!timeSelect) return;
         timeSelect.innerHTML = '';
@@ -3122,6 +3145,8 @@ if (
             times = ['18:00 (야간)'];
         } else if (courseVal.includes('한치')) {
             times = ['18:30 (야간)'];
+            } else if (courseVal.includes('지깅')) {
+    times = ['오전타임 (06:00~08:00)', '오후타임 (13:00~14:00)'];
         } else {
             let isSummer = true;
             if (dateVal) {
