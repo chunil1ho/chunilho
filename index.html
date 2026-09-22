@@ -4237,11 +4237,12 @@ if (b.status === '결제완료') {
                 onclick="adminConfirmBooking('${b.orderNo}')">
             예약확정
         </button>
-        <button type="button"
-                class="btn-cancel-req"
-                style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
-                onclick="adminCancelBooking('${b.orderNo}')">
-            취소/환불
+<button type="button"
+        class="btn-cancel-req"
+        style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
+        onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}'); return false;">
+    취소/환불
+</button>
         </button>
     `;
 } else if (b.status === '예약확정') {
