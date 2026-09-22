@@ -3900,7 +3900,17 @@ if (b.status === '결제완료') {
     `;
 } else if (b.status === '예약확정') {
     actionBtn = `
-        <span style="color:#16a34a; font-weight:600;">예약완료</span>
+        <span style="color:#16a34a; font-weight:600;">
+            예약완료
+        </span>
+
+        <button type="button"
+                class="btn-cancel-req"
+                style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
+                onclick="adminCancelConfirmBooking('${b.orderNo}')">
+            예약확정취소
+        </button>
+
         <button type="button"
                 class="btn-cancel-req"
                 style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
