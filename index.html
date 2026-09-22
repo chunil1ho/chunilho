@@ -4432,7 +4432,7 @@ html += `
     | ${b.name} (${b.tel})
     | ${b.count}명
     (${Number(b.price || 0).toLocaleString()}원)
-
+ | dateTimeChanged = ${b.dateTimeChanged}
     ${
         b.dateTimeChanged
             ? '<span style="color:#dc2626; font-weight:600; margin-left:6px;">🔄 예약일/시간 변경됨</span>'
