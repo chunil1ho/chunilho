@@ -3950,18 +3950,24 @@ function updateRefundAmount() {
 
     const percentBox = document.getElementById('refundPercentBox');
     const amountBox = document.getElementById('refundAmountBox');
-    
-    if (policyText) {
-    policyText.style.display = 'none';
-    policyText.textContent = '';
-}
+    const policyText = document.getElementById('refundPolicyText');
 
     percentBox.style.display = 'none';
     amountBox.style.display = 'none';
 
+    if (policyText) {
+        policyText.style.display = 'none';
+        policyText.textContent = '';
+    }
+
     let refundAmount = refundOriginalPrice;
 
-    if (type === 'percent') {
+    if (type === 'full') {
+
+        refundAmount = refundOriginalPrice;
+
+    } else if (type === 'percent') {
+
         percentBox.style.display = 'block';
 
         const percent = Number(
@@ -3973,6 +3979,7 @@ function updateRefundAmount() {
         );
 
     } else if (type === 'amount') {
+
         amountBox.style.display = 'block';
 
         refundAmount = Number(
@@ -3987,63 +3994,74 @@ function updateRefundAmount() {
             refundAmount = refundOriginalPrice;
         }
 
-} else if (type === 'policy') {
-    const bookingDate = window.refundBookingDate;
+    } else if (type === 'policy') {
 
-    if (!bookingDate) {
-        refundAmount = 0;
-    } else {
-        const today = new Date();
-        const useDate = new Date(bookingDate);
+        const bookingDate = window.refundBookingDate;
 
-        today.setHours(0, 0, 0, 0);
-        useDate.setHours(0, 0, 0, 0);
+        if (!bookingDate) {
+            refundAmount = 0;
 
-        const diffTime = useDate.getTime() - today.getTime();
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        } else {
 
-if (diffDays >= 3) {
-    refundAmount = refundOriginalPrice;
+            const today = new Date();
+            const useDate = new Date(bookingDate);
 
-    if (policyText) {
-        policyText.textContent =
-            '이용일 3일 전: 100% 전액 환불';
-        policyText.style.display = 'block';
+            today.setHours(0, 0, 0, 0);
+            useDate.setHours(0, 0, 0, 0);
+
+            const diffTime =
+                useDate.getTime() - today.getTime();
+
+            const diffDays = Math.floor(
+                diffTime / (1000 * 60 * 60 * 24)
+            );
+
+            if (diffDays >= 3) {
+
+                refundAmount = refundOriginalPrice;
+
+                if (policyText) {
+                    policyText.textContent =
+                        '이용일 3일 전: 100% 전액 환불';
+                    policyText.style.display = 'block';
+                }
+
+            } else if (diffDays === 2) {
+
+                refundAmount = 0;
+
+                if (policyText) {
+                    policyText.textContent =
+                        '이용일 2일 전: 환불 불가 (일정 변경 가능)';
+                    policyText.style.display = 'block';
+                }
+
+            } else if (diffDays === 1) {
+
+                refundAmount = 0;
+
+                if (policyText) {
+                    policyText.textContent =
+                        '이용일 1일 전: 환불 불가 (일정 변경 불가)';
+                    policyText.style.display = 'block';
+                }
+
+            } else {
+
+                refundAmount = 0;
+
+                if (policyText) {
+                    policyText.textContent =
+                        '이용일 당일: 환불 불가 (일정 변경 불가)';
+                    policyText.style.display = 'block';
+                }
+            }
+        }
     }
 
-} else if (diffDays === 2) {
-    refundAmount = 0;
-
-    if (policyText) {
-        policyText.textContent =
-            '이용일 2일 전: 환불 불가 (일정 변경 가능)';
-        policyText.style.display = 'block';
-    }
-
-} else if (diffDays === 1) {
-    refundAmount = 0;
-
-    if (policyText) {
-        policyText.textContent =
-            '이용일 1일 전: 환불 불가 (일정 변경 불가)';
-        policyText.style.display = 'block';
-    }
-
-} else {
-    refundAmount = 0;
-
-    if (policyText) {
-        policyText.textContent =
-            '이용일 당일: 환불 불가 (일정 변경 불가)';
-        policyText.style.display = 'block';
-    }
-}
-    }
-}
     document.getElementById('refundFinalAmount').textContent =
         refundAmount.toLocaleString() + '원';
 }
-
 async function processRefund() {
     if (!refundOrderNo) {
         alert('환불할 예약을 선택해주세요.');
