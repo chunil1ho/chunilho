@@ -4337,9 +4337,30 @@ async function adminCancelConfirmBooking(orderNo) {
         let html = '';
         let pgHtml = '';
         [...bookings].reverse().forEach(b => {
-            html += `<div style="padding:8px 0; border-bottom:1px solid #e2e8f0;">[${b.status}] ${b.date} | ${b.course} | ${b.name} (${b.tel}) | ${b.count}명 (${Number(b.price || 0).toLocaleString()}원)</div>`;
-let actionBtn = '';
+html += `
+<div style="padding:8px 0; border-bottom:1px solid #e2e8f0;">
+    [${b.status}]
+    ${b.date} ${b.time ? '| ' + b.time : ''}
+    | ${b.course}
+    | ${b.name} (${b.tel})
+    | ${b.count}명
+    (${Number(b.price || 0).toLocaleString()}원)
 
+    ${
+        b.dateTimeChanged
+            ? '<span style="color:#dc2626; font-weight:600; margin-left:6px;">🔄 예약일/시간 변경됨</span>'
+            : ''
+    }
+</div>`;
+            let actionBtn = '';
+actionBtn = `
+    <button type="button"
+            class="btn-cancel-req"
+            style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
+            onclick="openDateTimeChange('${b.orderNo}', '${b.date}', '${b.time || ''}'); return false;">
+        예약 날짜/시간 변경
+    </button>
+`;
 if (b.status === '결제완료') {
     actionBtn = `
         <button type="button"
