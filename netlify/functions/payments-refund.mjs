@@ -516,18 +516,31 @@ export async function handler(event) {
      * 13. 예약 정보 업데이트
      * =====================================
      */
-    const refundedAmount =
-      Number(
-        refundResult.cancel_amount ||
-        requestedAmount
-      );
+const refundedAmount =
+  Number(
+    refundResult.cancel_amount ||
+    requestedAmount
+  );
 
+const previousRefundAmount =
+  Number(
+    booking.refundAmount || 0
+  );
 
-    booking.status =
-      "취소완료";
+const totalRefundAmount =
+  previousRefundAmount +
+  refundedAmount;
 
-    booking.refundAmount =
-      refundedAmount;
+if (totalRefundAmount >= bookingPrice) {
+  booking.status = "취소완료";
+  booking.paymentStatus = "cancelled";
+} else {
+  booking.status = "부분환불";
+  booking.paymentStatus = "partially_refunded";
+}
+
+booking.refundAmount =
+  totalRefundAmount;
 
     booking.refundRequestedAt =
       new Date().toISOString();
