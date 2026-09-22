@@ -3891,13 +3891,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            let html = '';
-            found.forEach((b, idx) => {
-                html += `<div style="margin-bottom:10px; border-bottom:1px dashed #cbd5e1; padding-bottom:8px;">
-                    <strong>[예약 ${idx+1}]</strong> 상태: <strong>${b.status || '결제완료'}</strong><br>
-                    예약번호: ${b.orderNo} | 날짜: ${b.date} | 코스: ${b.course} (${b.time}) | 인원: ${b.count}명 | 금액: ${Number(b.price || 0).toLocaleString()}원
-                </div>`;
-            });
+let html = '';
+found.forEach((b, idx) => {
+    html += `<div style="margin-bottom:10px; border-bottom:1px dashed #cbd5e1; padding-bottom:8px;">
+        <strong>[예약 ${idx+1}]</strong> 상태: <strong>${b.status || '결제완료'}</strong><br>
+        예약번호: ${b.orderNo} | 날짜: ${b.date} | 코스: ${b.course} (${b.time}) | 인원: ${b.count}명 | 금액: ${Number(b.price || 0).toLocaleString()}원
+
+        ${
+            b.dateTimeChanged
+                ? '<br><span style="color:#dc2626; font-weight:600;">🔄 예약일/시간이 관리자에 의해 변경되었습니다.</span>'
+                : ''
+        }
+    </div>`;
+});
             detailsText.innerHTML = html;
         } catch (error) {
             detailsText.innerHTML = '예약 조회 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
