@@ -1983,6 +1983,17 @@
                        onchange="updateRefundAmount()">
                 동의된 환불기준
             </label>
+            <div id="refundPolicyText"
+     style="
+        display:none;
+        margin:8px 0 15px 25px;
+        padding:8px 10px;
+        background:#f8f9fa;
+        border-radius:6px;
+        font-size:0.9rem;
+        color:#555;
+     ">
+</div>
 
             <label>
                 <input type="radio"
@@ -3939,6 +3950,11 @@ function updateRefundAmount() {
 
     const percentBox = document.getElementById('refundPercentBox');
     const amountBox = document.getElementById('refundAmountBox');
+    
+    if (policyText) {
+    policyText.style.display = 'none';
+    policyText.textContent = '';
+}
 
     percentBox.style.display = 'none';
     amountBox.style.display = 'none';
@@ -3986,13 +4002,42 @@ function updateRefundAmount() {
         const diffTime = useDate.getTime() - today.getTime();
         const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
-        if (diffDays >= 3) {
-            // 이용일 3일 전까지 → 100% 환불
-            refundAmount = refundOriginalPrice;
-        } else {
-            // 이용일 2일 전 / 1일 전 / 당일 → 환불 불가
-            refundAmount = 0;
-        }
+if (diffDays >= 3) {
+    refundAmount = refundOriginalPrice;
+
+    if (policyText) {
+        policyText.textContent =
+            '이용일 3일 전: 100% 전액 환불';
+        policyText.style.display = 'block';
+    }
+
+} else if (diffDays === 2) {
+    refundAmount = 0;
+
+    if (policyText) {
+        policyText.textContent =
+            '이용일 2일 전: 환불 불가 (일정 변경 가능)';
+        policyText.style.display = 'block';
+    }
+
+} else if (diffDays === 1) {
+    refundAmount = 0;
+
+    if (policyText) {
+        policyText.textContent =
+            '이용일 1일 전: 환불 불가 (일정 변경 불가)';
+        policyText.style.display = 'block';
+    }
+
+} else {
+    refundAmount = 0;
+
+    if (policyText) {
+        policyText.textContent =
+            '이용일 당일: 환불 불가 (일정 변경 불가)';
+        policyText.style.display = 'block';
+    }
+}
     }
 }
     document.getElementById('refundFinalAmount').textContent =
