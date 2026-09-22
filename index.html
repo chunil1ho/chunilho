@@ -1945,7 +1945,125 @@
         </div>
     </div>
 </div>
+<!-- 관리자 예약 취소/환불 모달 -->
+<div id="refundModalOverlay" class="auth-modal-overlay">
+    <div class="auth-modal" style="max-width:520px;">
 
+        <button type="button"
+                class="close-modal"
+                onclick="closeRefundModal()">&times;</button>
+
+        <h3 style="color:var(--primary-color); margin-bottom:1.2rem;">
+            예약 취소 / 환불
+        </h3>
+
+        <div style="margin-bottom:1rem;">
+            <strong>환불기준</strong>
+            <span title="천일호 환불기준에 따라 환불금액이 결정됩니다."
+                  style="cursor:help; margin-left:5px;">
+                ⓘ
+            </span>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:1.2rem;">
+
+            <label>
+                <input type="radio"
+                       name="refundType"
+                       value="full"
+                       checked
+                       onchange="updateRefundAmount()">
+                전액환불
+            </label>
+
+            <label>
+                <input type="radio"
+                       name="refundType"
+                       value="policy"
+                       onchange="updateRefundAmount()">
+                동의된 환불기준
+            </label>
+
+            <label>
+                <input type="radio"
+                       name="refundType"
+                       value="percent"
+                       onchange="updateRefundAmount()">
+                결제금액 정률 환불
+            </label>
+
+            <label>
+                <input type="radio"
+                       name="refundType"
+                       value="amount"
+                       onchange="updateRefundAmount()">
+                결제금액 정액 환불
+            </label>
+
+        </div>
+
+        <div id="refundPercentBox"
+             style="display:none; margin-bottom:1rem;">
+            <label style="display:block; margin-bottom:5px;">
+                환불 비율 (%)
+            </label>
+            <input type="number"
+                   id="refundPercent"
+                   min="0"
+                   max="100"
+                   value="100"
+                   oninput="updateRefundAmount()"
+                   style="width:100%; box-sizing:border-box;">
+        </div>
+
+        <div id="refundAmountBox"
+             style="display:none; margin-bottom:1rem;">
+            <label style="display:block; margin-bottom:5px;">
+                환불 금액 (원)
+            </label>
+            <input type="number"
+                   id="refundAmount"
+                   min="0"
+                   value="0"
+                   oninput="updateRefundAmount()"
+                   style="width:100%; box-sizing:border-box;">
+        </div>
+
+        <div style="
+            background:#f5f5f5;
+            border-radius:8px;
+            padding:12px;
+            margin-bottom:1rem;
+        ">
+            <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                <span>결제금액</span>
+                <strong id="refundOriginalAmount">0원</strong>
+            </div>
+
+            <div style="display:flex; justify-content:space-between;">
+                <span>환불금액</span>
+                <strong id="refundFinalAmount">0원</strong>
+            </div>
+        </div>
+
+        <div style="
+            font-size:0.85rem;
+            color:#666;
+            line-height:1.5;
+            margin-bottom:1.2rem;
+        ">
+            ※ 부분환불은 해당 예약에서 1회만 가능합니다.
+        </div>
+
+        <button type="button"
+                class="btn-submit"
+                onclick="processRefund()"
+                style="width:100%; float:none;">
+            환불 처리
+        </button>
+
+    </div>
+</div>
 <!-- 결제(예약) 완료 안내 커스텀 사각형 모달창 (모바일 알림 호환) -->
 <div id="customAlertOverlay" class="auth-modal-overlay">
     <div class="auth-modal" style="text-align: center;">
@@ -3775,7 +3893,140 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error(error);
         }
     }
+// =========================================
+// 관리자 환불 모달
+// =========================================
 
+let refundOrderNo = null;
+let refundOriginalPrice = 0;
+
+function openRefundModal(orderNo, price) {
+    refundOrderNo = orderNo;
+    refundOriginalPrice = Number(price || 0);
+
+    document.getElementById('refundOriginalAmount').textContent =
+        refundOriginalPrice.toLocaleString() + '원';
+
+    document.getElementById('refundFinalAmount').textContent =
+        refundOriginalPrice.toLocaleString() + '원';
+
+    document.querySelector('input[name="refundType"][value="full"]').checked = true;
+
+    document.getElementById('refundPercentBox').style.display = 'none';
+    document.getElementById('refundAmountBox').style.display = 'none';
+
+    document.getElementById('refundModalOverlay').classList.add('active');
+}
+
+function closeRefundModal() {
+    document.getElementById('refundModalOverlay').classList.remove('active');
+
+    refundOrderNo = null;
+    refundOriginalPrice = 0;
+}
+
+function updateRefundAmount() {
+    const selected = document.querySelector(
+        'input[name="refundType"]:checked'
+    );
+
+    if (!selected) return;
+
+    const type = selected.value;
+
+    const percentBox = document.getElementById('refundPercentBox');
+    const amountBox = document.getElementById('refundAmountBox');
+
+    percentBox.style.display = 'none';
+    amountBox.style.display = 'none';
+
+    let refundAmount = refundOriginalPrice;
+
+    if (type === 'percent') {
+        percentBox.style.display = 'block';
+
+        const percent = Number(
+            document.getElementById('refundPercent').value || 0
+        );
+
+        refundAmount = Math.floor(
+            refundOriginalPrice * percent / 100
+        );
+
+    } else if (type === 'amount') {
+        amountBox.style.display = 'block';
+
+        refundAmount = Number(
+            document.getElementById('refundAmount').value || 0
+        );
+
+        if (refundAmount < 0) {
+            refundAmount = 0;
+        }
+
+        if (refundAmount > refundOriginalPrice) {
+            refundAmount = refundOriginalPrice;
+        }
+
+    } else if (type === 'policy') {
+        // 실제 환불기준은 다음 단계에서 연결
+        refundAmount = refundOriginalPrice;
+    }
+
+    document.getElementById('refundFinalAmount').textContent =
+        refundAmount.toLocaleString() + '원';
+}
+
+function processRefund() {
+    if (!refundOrderNo) {
+        alert('환불할 예약을 선택해주세요.');
+        return;
+    }
+
+    const selected = document.querySelector(
+        'input[name="refundType"]:checked'
+    );
+
+    if (!selected) {
+        alert('환불기준을 선택해주세요.');
+        return;
+    }
+
+    const type = selected.value;
+
+    let refundAmount = refundOriginalPrice;
+
+    if (type === 'percent') {
+        const percent = Number(
+            document.getElementById('refundPercent').value || 0
+        );
+
+        refundAmount = Math.floor(
+            refundOriginalPrice * percent / 100
+        );
+
+    } else if (type === 'amount') {
+        refundAmount = Number(
+            document.getElementById('refundAmount').value || 0
+        );
+    }
+
+    if (refundAmount <= 0) {
+        alert('환불금액을 확인해주세요.');
+        return;
+    }
+
+    if (refundAmount > refundOriginalPrice) {
+        alert('환불금액이 결제금액을 초과할 수 없습니다.');
+        return;
+    }
+
+    alert(
+        '현재는 환불금액 계산 화면까지만 연결되어 있습니다.\n\n' +
+        '환불금액: ' + refundAmount.toLocaleString() + '원\n\n' +
+        '실제 결제 취소는 다음 단계에서 PortOne과 연결합니다.'
+    );
+}
 async function adminCancelBooking(orderNo) {
     if (!isAdminLoggedIn || !adminToken) {
         alert('관리자 로그인이 필요합니다.');
@@ -3960,7 +4211,7 @@ if (b.status === '결제완료') {
         <button type="button"
                 class="btn-cancel-req"
                 style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
-                onclick="adminCancelBooking('${b.orderNo}')">
+                onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)})"
             취소/환불
         </button>
     `;
