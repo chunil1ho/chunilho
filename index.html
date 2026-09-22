@@ -3776,21 +3776,29 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    async function adminCancelBooking(orderNo) {
-        if (!isAdminLoggedIn || !adminToken) {
-            alert('관리자 로그인이 필요합니다.');
-            return;
-        }
-        if (confirm('관리자 권한으로 해당 예약을 취소 및 환불 처리하시겠습니까?')) {
-            try {
-                await apiRequest('/bookings/' + encodeURIComponent(orderNo), { method: 'PATCH', body: JSON.stringify({ status: '취소완료' }) });
-                alert('예약이 관리자에 의해 취소 처리되었습니다.');
-                await updateAdminDashboard();
-            } catch (error) {
-                alert('예약 취소 처리에 실패했습니다.\n' + error.message);
-            }
+async function adminCancelBooking(orderNo) {
+    if (!isAdminLoggedIn || !adminToken) {
+        alert('관리자 로그인이 필요합니다.');
+        return;
+    }
+
+    if (confirm('관리자 권한으로 해당 예약을 취소 및 환불 처리하시겠습니까?')) {
+        try {
+            await apiRequest('/bookings/' + encodeURIComponent(orderNo), {
+                method: 'PATCH',
+                body: JSON.stringify({ status: '취소완료' })
+            });
+
+            alert('예약이 관리자에 의해 취소 처리되었습니다.');
+            await updateAdminDashboard();
+
+        } catch (error) {
+            alert('예약 취소 처리에 실패했습니다.\n' + error.message);
         }
     }
+}
+
+
 async function adminConfirmBooking(orderNo) {
     if (!isAdminLoggedIn || !adminToken) {
         alert('관리자 로그인이 필요합니다.');
@@ -3811,9 +3819,47 @@ async function adminConfirmBooking(orderNo) {
 
             alert('예약이 확정되었습니다.');
             await updateAdminDashboard();
+
         } catch (error) {
             alert('예약확정 처리에 실패했습니다.\n' + error.message);
         }
+    }
+}
+
+
+async function adminCancelConfirmBooking(orderNo) {
+    if (!isAdminLoggedIn || !adminToken) {
+        alert('관리자 로그인이 필요합니다.');
+        return;
+    }
+
+    if (!confirm(
+        '예약확정을 취소하시겠습니까?\n\n' +
+        '※ 결제/환불은 취소되지 않습니다.\n' +
+        '예약 상태만 예약확정 대기로 변경됩니다.'
+    )) {
+        return;
+    }
+
+    try {
+        await apiRequest(
+            '/bookings/' + encodeURIComponent(orderNo),
+            {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    status: '결제완료'
+                })
+            }
+        );
+
+        alert('예약확정이 취소되었습니다.');
+        await updateAdminDashboard();
+
+    } catch (error) {
+        alert(
+            '예약확정 취소 처리에 실패했습니다.\n' +
+            error.message
+        );
     }
 }
     function checkAdminAccess() {
