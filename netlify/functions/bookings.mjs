@@ -338,14 +338,44 @@ export async function handler(event) {
       });
     }
 
-    const data = await body(event);
+const data = await body(event);
 
-    if (data.status) {
-      current.status = String(data.status);
-    }
+if (data.status) {
+  current.status = String(data.status);
+}
 
-    current.updatedAt =
-      new Date().toISOString();
+/* ==========================================
+ * 관리자 예약 날짜 / 시간 변경
+ * ========================================== */
+
+if (data.date !== undefined) {
+  const newDate = String(data.date).trim();
+
+  if (!newDate) {
+    return json(400, {
+      message: "예약 날짜가 올바르지 않습니다."
+    });
+  }
+
+  current.date = newDate;
+  current.dateTimeChanged = true;
+}
+
+if (data.time !== undefined) {
+  const newTime = String(data.time).trim();
+
+  if (!newTime) {
+    return json(400, {
+      message: "예약 시간이 올바르지 않습니다."
+    });
+  }
+
+  current.time = newTime;
+  current.dateTimeChanged = true;
+}
+
+current.updatedAt =
+  new Date().toISOString();
 
     try {
       await store.setJSON(
