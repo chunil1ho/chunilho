@@ -2197,9 +2197,11 @@ function showBoardWriteForm() {
         detail.style.display = 'none';
     }
 
-    if (form) {
-        form.style.display = 'block';
-    }
+if (form) {
+    form.style.display = 'block';
+}
+
+initBoardSmartEditor();
 }
     initBoardSmartEditor();
 async function editBoardPost(postId) {
