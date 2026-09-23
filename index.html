@@ -5466,43 +5466,6 @@ function formatBoardText(command) {
 <script type="text/javascript"
         src="/smarteditor2/js/service/HuskyEZCreator.js"
         charset="utf-8"></script>
-    <script>
-let boardSmartEditor = [];
-
-window.initBoardSmartEditor = function () {
-
-    if (
-        boardSmartEditor.getById &&
-        boardSmartEditor.getById["board-content"]
-    ) {
-        return;
-    }
-
-    nhn.husky.EZCreator.createInIFrame({
-        oAppRef: boardSmartEditor,
-
-        elPlaceHolder: "board-content",
-
-        sSkinURI:
-            "/smarteditor2/SmartEditor2Skin.html",
-
-        htParams: {
-            bUseToolbar: true,
-            bUseVerticalResizer: true,
-            bUseModeChanger: true,
-            I18N_LOCALE: "ko_KR"
-        },
-
-        fOnAppLoad: function () {
-            console.log(
-                "SmartEditor2 로딩 완료"
-            );
-        },
-
-        fCreator: "createSEditor2"
-    });
-}
-</script>
-    
+  
 </body>
 </html>
