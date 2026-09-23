@@ -2328,10 +2328,10 @@ setTimeout(function () {
 
     initBoardSmartEditor(function (editor) {
 
-        editor.exec(
-            'PASTE_HTML',
-            [post.content || '']
-        );
+editor.exec(
+    'SET_IR',
+    [post.content || '']
+);
 
     });
 
