@@ -555,8 +555,6 @@ booking.refundAmount =
           ).toISOString()
         : new Date().toISOString();
 
-    booking.paymentStatus =
-      "cancelled";
 
     booking.updatedAt =
       new Date().toISOString();
