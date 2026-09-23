@@ -2822,16 +2822,30 @@ console.log('삭제할 게시글 ID:', postId);
     }
 }
     document.getElementById('board-save-btn')?.addEventListener('click', async () => {
-const titleInput = document.getElementById('board-title');
-const contentInput = document.getElementById('board-content');
-const editor = document.getElementById('board-editor');
+const titleInput =
+    document.getElementById('board-title');
 
-if (editor && contentInput) {
-    contentInput.value = editor.innerHTML;
+const contentInput =
+    document.getElementById('board-content');
+
+// SmartEditor2 내용을 textarea에 반영
+if (
+    boardSmartEditor.getById &&
+    boardSmartEditor.getById['board-content']
+) {
+    boardSmartEditor
+        .getById['board-content']
+        .exec(
+            'UPDATE_CONTENTS_FIELD',
+            []
+        );
 }
 
-const title = titleInput?.value.trim() || '';
-const content = contentInput?.value.trim() || '';
+const title =
+    titleInput?.value.trim() || '';
+
+const content =
+    contentInput?.value.trim() || '';
         
     const imageInput = document.getElementById('board-images');
 const imageFiles = imageInput?.files
