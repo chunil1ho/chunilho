@@ -856,7 +856,7 @@
     padding: 14px 15px !important;
     box-sizing: border-box !important;
 
-    font-size: 20px !important;
+    font-size: 19px !important;
     font-weight: 600 !important;
 }
 
@@ -1778,46 +1778,123 @@
                     조황글 작성
                 </h3>
             </div>
+<div class="board-form-group">
+    <label for="board-title" data-i18n="boardPostTitle">
+        제목
+    </label>
 
-            <div class="board-form-group">
-                <label for="board-title" data-i18n="boardPostTitle">
-                    제목
-                </label>
-
-                <input
-    type="text"
-    id="board-title"
-    maxlength="100"
-    placeholder="조황글 제목을 입력하세요."
-    data-i18n-placeholder="boardTitlePlaceholder"
-    style="
-        display:block !important;
-        width:100% !important;
-        height:60px !important;
-        min-height:60px !important;
-        max-height:60px !important;
-        box-sizing:border-box !important;
-        padding:14px 15px !important;
-        font-size:19px !important;
-        font-weight:600 !important;
-    ">
-            </div>
-
-
-            <div class="board-form-group">
-                <label for="board-content" data-i18n="boardPostContent">
-                    내용
-                </label>
-<textarea
-    id="board-content"
-    rows="10"
-    style="width:100%; height:450px; min-height:450px; max-height:450px; resize:none; box-sizing:border-box;"
-    placeholder="조황 내용을 입력하세요."
-    data-i18n-placeholder="boardContentPlaceholder"></textarea>
-               
-            </div>
+    <input
+        type="text"
+        id="board-title"
+        maxlength="100"
+        placeholder="조황글 제목을 입력하세요."
+        data-i18n-placeholder="boardTitlePlaceholder"
+        style="
+            display:block !important;
+            width:100% !important;
+            height:60px !important;
+            min-height:60px !important;
+            max-height:60px !important;
+            box-sizing:border-box !important;
+            padding:14px 15px !important;
+            font-size:19px !important;
+            font-weight:600 !important;
+        ">
+</div>
 
 
+<div class="board-form-group">
+    <label for="board-content" data-i18n="boardPostContent">
+        내용
+    </label>
+
+    <!-- 편집 메뉴 -->
+<div id="board-editor-toolbar"
+     style="
+        display:flex;
+        flex-wrap:wrap;
+        gap:6px;
+        padding:8px;
+        margin-bottom:8px;
+        border:1px solid #d1d5db;
+        border-radius:6px;
+        background:#f8fafc;
+        box-sizing:border-box;
+     ">
+
+    <button type="button"
+            onmousedown="event.preventDefault();"
+            onclick="formatBoardText('bold');">
+        굵게
+    </button>
+
+    <button type="button"
+            onmousedown="event.preventDefault();"
+            onclick="formatBoardText('italic');">
+        기울임
+    </button>
+
+    <button type="button"
+            onmousedown="event.preventDefault();"
+            onclick="formatBoardText('underline');">
+        밑줄
+    </button>
+
+    <button type="button"
+            onmousedown="event.preventDefault();"
+            onclick="formatBoardText('justifyLeft');">
+        왼쪽
+    </button>
+
+    <button type="button"
+            onmousedown="event.preventDefault();"
+            onclick="formatBoardText('justifyCenter');">
+        가운데
+    </button>
+
+    <button type="button"
+            onmousedown="event.preventDefault();"
+            onclick="formatBoardText('justifyRight');">
+        오른쪽
+    </button>
+
+    <button type="button"
+            onmousedown="event.preventDefault();"
+            onclick="formatBoardText('insertUnorderedList');">
+        • 목록
+    </button>
+
+</div>
+    <!-- 실제 글 작성 영역 -->
+    <div
+        id="board-editor"
+        contenteditable="true"
+        style="
+            width:100%;
+            height:450px;
+            min-height:450px;
+            max-height:450px;
+            overflow-y:auto;
+            box-sizing:border-box;
+            padding:15px;
+            border:1px solid #ccc;
+            border-radius:6px;
+            background:#fff;
+            font-size:16px;
+            line-height:1.7;
+            font-family:inherit;
+            outline:none;
+        "
+    ></div>
+
+    <!-- 저장용 기존 textarea -->
+    <textarea
+        id="board-content"
+        style="display:none;"
+    ></textarea>
+
+</div>
+              
             <div class="board-form-group">
                 <label for="board-images" data-i18n="boardPhotos">
                     사진 첨부
@@ -2163,9 +2240,42 @@ function showBoardWriteForm() {
     const detail = document.getElementById('board-detail');
     const form = document.getElementById('board-write-form');
 
-    if (list) list.style.display = 'none';
-    if (detail) detail.style.display = 'none';
-    if (form) form.style.display = 'block';
+    const titleInput =
+        document.getElementById('board-title');
+
+    const contentInput =
+        document.getElementById('board-content');
+
+    const editor =
+        document.getElementById('board-editor');
+
+    // 새 글 작성이므로 기존 수정 상태 초기화
+    window.editingBoardPostId = null;
+    window.editingBoardImages = [];
+
+    if (titleInput) {
+        titleInput.value = '';
+    }
+
+    if (contentInput) {
+        contentInput.value = '';
+    }
+
+    if (editor) {
+        editor.innerHTML = '';
+    }
+
+    if (list) {
+        list.style.display = 'none';
+    }
+
+    if (detail) {
+        detail.style.display = 'none';
+    }
+
+    if (form) {
+        form.style.display = 'block';
+    }
 }
 async function editBoardPost(postId) {
     const list = document.getElementById('board-list');
@@ -2195,9 +2305,16 @@ async function editBoardPost(postId) {
             return;
         }
 
-        // 기존 제목과 내용 넣기
-        titleInput.value = post.title || '';
-        contentInput.value = post.content || '';
+// 기존 제목과 내용 넣기
+titleInput.value = post.title || '';
+
+const editor = document.getElementById('board-editor');
+
+if (editor) {
+    editor.innerHTML = post.content || '';
+}
+
+contentInput.value = post.content || '';
 
         // 목록과 상세화면 숨기기
         if (list) list.style.display = 'none';
@@ -2552,6 +2669,13 @@ document.addEventListener('click', function (event) {
 
     if (titleInput) titleInput.value = '';
     if (contentInput) contentInput.value = '';
+
+const editor = document.getElementById('board-editor');
+
+if (editor) {
+    editor.innerHTML = '';
+}
+
     if (imageInput) imageInput.value = '';
     if (preview) preview.innerHTML = '';
 
@@ -2663,7 +2787,7 @@ document.addEventListener('click', function (event) {
 
 
             <div class="board-detail-body">
-                ${escapeHtml(post.content).replace(/\n/g, '<br>')}
+               ${sanitizeBoardContent(post.content)}
             </div>
 
             ${
@@ -2729,11 +2853,16 @@ console.log('삭제할 게시글 ID:', postId);
     }
 }
     document.getElementById('board-save-btn')?.addEventListener('click', async () => {
-    const titleInput = document.getElementById('board-title');
-    const contentInput = document.getElementById('board-content');
+const titleInput = document.getElementById('board-title');
+const contentInput = document.getElementById('board-content');
+const editor = document.getElementById('board-editor');
 
-    const title = titleInput?.value.trim() || '';
-    const content = contentInput?.value.trim() || '';
+if (editor && contentInput) {
+    contentInput.value = editor.innerHTML;
+}
+
+const title = titleInput?.value.trim() || '';
+const content = contentInput?.value.trim() || '';
         
     const imageInput = document.getElementById('board-images');
 const imageFiles = imageInput?.files
@@ -5283,6 +5412,85 @@ if (document.readyState === 'loading') {
     );
 } else {
     setReservationDateLimit();
+}
+function formatBoardText(command) {
+    const editor =
+        document.getElementById('board-editor');
+
+    if (!editor) {
+        return;
+    }
+
+    editor.focus();
+
+    document.execCommand(
+        command,
+        false,
+        null
+    );
+}    
+    function sanitizeBoardContent(html) {
+    const template = document.createElement('template');
+
+    template.innerHTML = html || '';
+
+    const allowedTags = [
+        'B',
+        'STRONG',
+        'I',
+        'EM',
+        'U',
+        'UL',
+        'OL',
+        'LI',
+        'BR',
+        'P',
+        'DIV',
+        'SPAN'
+    ];
+
+    const elements =
+        template.content.querySelectorAll('*');
+
+    elements.forEach(element => {
+
+        if (!allowedTags.includes(element.tagName)) {
+            element.replaceWith(
+                document.createTextNode(
+                    element.textContent || ''
+                )
+            );
+            return;
+        }
+
+        // 허용할 속성만 유지
+        [...element.attributes].forEach(attr => {
+
+            if (attr.name !== 'style') {
+                element.removeAttribute(attr.name);
+            }
+
+        });
+
+        if (element.hasAttribute('style')) {
+            const textAlign =
+                element.style.textAlign;
+
+            element.removeAttribute('style');
+
+            if (
+                textAlign === 'left' ||
+                textAlign === 'center' ||
+                textAlign === 'right'
+            ) {
+                element.style.textAlign =
+                    textAlign;
+            }
+        }
+    });
+
+    return template.innerHTML
+        .replace(/\n/g, '<br>');
 }
 </script>
 </body>
