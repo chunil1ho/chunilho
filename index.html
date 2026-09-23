@@ -3918,7 +3918,21 @@ let refundOrderNo = null;
 let refundOriginalPrice = 0;
 function openRefundModal(orderNo, price, bookingDate) {
     refundOrderNo = orderNo;
-    refundOriginalPrice = Number(price || 0);
+    
+    const currentBooking =
+    bookings.find(
+        item => String(item.orderNo) === String(orderNo)
+    );
+
+const alreadyRefunded =
+    Number(currentBooking?.refundAmount || 0);
+
+refundOriginalPrice =
+    Math.max(
+        0,
+        Number(price || 0) - alreadyRefunded
+    );
+    
     window.refundBookingDate = bookingDate;
 
     document.getElementById('refundOriginalAmount').textContent =
