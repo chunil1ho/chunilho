@@ -4493,6 +4493,18 @@ if (b.status === '결제완료') {
     취소/환불
 </button>
     `;
+        actionBtn = `
+        <span style="color:#f59e0b; font-weight:600;">
+            부분환불
+        </span>
+
+        <button type="button"
+                class="btn-cancel-req"
+                style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
+                onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}')">
+            추가 환불
+        </button>
+    `;
 } else if (b.status === '취소완료') {
     actionBtn = '<span style="color:#ef4444; font-weight:600;">취소완료</span>';
 } else {
