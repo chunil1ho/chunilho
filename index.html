@@ -2309,12 +2309,18 @@ contentInput.value = post.content || '';
         // 수정 폼 표시
         form.style.display = 'block';
 // SmartEditor2에 기존 내용 불러오기
-initBoardSmartEditor(function (editor) {
-    editor.exec(
-        'PASTE_HTML',
-        [post.content || '']
-    );
-});
+setTimeout(function () {
+
+    initBoardSmartEditor(function (editor) {
+
+        editor.exec(
+            'PASTE_HTML',
+            [post.content || '']
+        );
+
+    });
+
+}, 100);
         // 폼 제목 변경
         const formTitle = form.querySelector('.board-form-title h3');
 
