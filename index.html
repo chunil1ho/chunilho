@@ -2161,21 +2161,32 @@ function updateBoardWriteButton() {
     function normalizeTel(tel) { return String(tel || '').replace(/\D/g, ''); }
     let boardSmartEditor = [];
 
-function initBoardSmartEditor() {
+function initBoardSmartEditor(onReady) {
 
+    // 이미 SmartEditor2가 만들어져 있으면 바로 전달
     if (
         boardSmartEditor.getById &&
         boardSmartEditor.getById["board-content"]
     ) {
+        const editor =
+            boardSmartEditor.getById["board-content"];
+
+        if (typeof onReady === 'function') {
+            onReady(editor);
+        }
+
         return;
     }
 
+    // SmartEditor2 엔진 확인
     if (
         typeof nhn === 'undefined' ||
         !nhn.husky ||
         !nhn.husky.EZCreator
     ) {
-        console.error('SmartEditor2 엔진을 찾을 수 없습니다.');
+        console.error(
+            'SmartEditor2 엔진을 찾을 수 없습니다.'
+        );
         return;
     }
 
@@ -2195,7 +2206,20 @@ function initBoardSmartEditor() {
         },
 
         fOnAppLoad: function () {
-            console.log('SmartEditor2 로딩 완료');
+
+            const editor =
+                boardSmartEditor.getById["board-content"];
+
+            console.log(
+                'SmartEditor2 로딩 완료'
+            );
+
+            if (
+                typeof onReady === 'function' &&
+                editor
+            ) {
+                onReady(editor);
+            }
         },
 
         fCreator: "createSEditor2"
@@ -2276,13 +2300,6 @@ async function editBoardPost(postId) {
 
 // 기존 제목과 내용 넣기
 titleInput.value = post.title || '';
-
-const editor = document.getElementById('board-editor');
-
-if (editor) {
-    editor.innerHTML = post.content || '';
-}
-
 contentInput.value = post.content || '';
 
         // 목록과 상세화면 숨기기
@@ -2291,7 +2308,13 @@ contentInput.value = post.content || '';
 
         // 수정 폼 표시
         form.style.display = 'block';
-
+// SmartEditor2에 기존 내용 불러오기
+initBoardSmartEditor(function (editor) {
+    editor.exec(
+        'PASTE_HTML',
+        [post.content || '']
+    );
+});
         // 폼 제목 변경
         const formTitle = form.querySelector('.board-form-title h3');
 
