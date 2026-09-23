@@ -3916,62 +3916,25 @@ found.forEach((b, idx) => {
 
 let refundOrderNo = null;
 let refundOriginalPrice = 0;
-
-function openRefundModal(
-    orderNo,
-    price,
-    bookingDate,
-    alreadyRefundedAmount
-) {
+function openRefundModal(orderNo, price, bookingDate) {
     refundOrderNo = orderNo;
+    refundOriginalPrice = Number(price || 0);
+    window.refundBookingDate = bookingDate;
 
-    const originalPrice =
-        Number(price || 0);
+    document.getElementById('refundOriginalAmount').textContent =
+        refundOriginalPrice.toLocaleString() + '원';
 
-    const alreadyRefunded =
-        Number(alreadyRefundedAmount || 0);
+    document.getElementById('refundFinalAmount').textContent =
+        refundOriginalPrice.toLocaleString() + '원';
 
-    // 이미 환불된 금액을 제외한 남은 환불 가능 금액
-    const remainingAmount =
-        Math.max(
-            0,
-            originalPrice - alreadyRefunded
-        );
-
-    // 이후 환불 계산은 남은 금액을 기준으로 함
-    refundOriginalPrice =
-        remainingAmount;
-
-    window.refundBookingDate =
-        bookingDate;
-
-    document.getElementById(
-        'refundOriginalAmount'
-    ).textContent =
-        remainingAmount.toLocaleString() + '원';
-
-    document.getElementById(
-        'refundFinalAmount'
-    ).textContent =
-        remainingAmount.toLocaleString() + '원';
-
-    document.querySelector(
-        'input[name="refundType"][value="policy"]'
-    ).checked = true;
-
+    document.querySelector('input[name="refundType"][value="policy"]').checked = true;
+    
     updateRefundAmount();
 
-    document.getElementById(
-        'refundPercentBox'
-    ).style.display = 'none';
+    document.getElementById('refundPercentBox').style.display = 'none';
+    document.getElementById('refundAmountBox').style.display = 'none';
 
-    document.getElementById(
-        'refundAmountBox'
-    ).style.display = 'none';
-
-    document.getElementById(
-        'refundModalOverlay'
-    ).classList.add('active');
+    document.getElementById('refundModalOverlay').classList.add('active');
 }
 
 function closeRefundModal() {
