@@ -3917,25 +3917,61 @@ found.forEach((b, idx) => {
 let refundOrderNo = null;
 let refundOriginalPrice = 0;
 
-function openRefundModal(orderNo, price, bookingDate) {
+function openRefundModal(
+    orderNo,
+    price,
+    bookingDate,
+    alreadyRefundedAmount
+) {
     refundOrderNo = orderNo;
-    refundOriginalPrice = Number(price || 0);
-    window.refundBookingDate = bookingDate;
 
-    document.getElementById('refundOriginalAmount').textContent =
-        refundOriginalPrice.toLocaleString() + '원';
+    const originalPrice =
+        Number(price || 0);
 
-    document.getElementById('refundFinalAmount').textContent =
-        refundOriginalPrice.toLocaleString() + '원';
+    const alreadyRefunded =
+        Number(alreadyRefundedAmount || 0);
 
-    document.querySelector('input[name="refundType"][value="policy"]').checked = true;
-    
+    // 이미 환불된 금액을 제외한 남은 환불 가능 금액
+    const remainingAmount =
+        Math.max(
+            0,
+            originalPrice - alreadyRefunded
+        );
+
+    // 이후 환불 계산은 남은 금액을 기준으로 함
+    refundOriginalPrice =
+        remainingAmount;
+
+    window.refundBookingDate =
+        bookingDate;
+
+    document.getElementById(
+        'refundOriginalAmount'
+    ).textContent =
+        remainingAmount.toLocaleString() + '원';
+
+    document.getElementById(
+        'refundFinalAmount'
+    ).textContent =
+        remainingAmount.toLocaleString() + '원';
+
+    document.querySelector(
+        'input[name="refundType"][value="policy"]'
+    ).checked = true;
+
     updateRefundAmount();
 
-    document.getElementById('refundPercentBox').style.display = 'none';
-    document.getElementById('refundAmountBox').style.display = 'none';
+    document.getElementById(
+        'refundPercentBox'
+    ).style.display = 'none';
 
-    document.getElementById('refundModalOverlay').classList.add('active');
+    document.getElementById(
+        'refundAmountBox'
+    ).style.display = 'none';
+
+    document.getElementById(
+        'refundModalOverlay'
+    ).classList.add('active');
 }
 
 function closeRefundModal() {
@@ -4454,19 +4490,22 @@ if (b.status === '결제완료') {
                 onclick="adminConfirmBooking('${b.orderNo}')">
             예약확정
         </button>
+
         <button type="button"
-        class="btn-cancel-req"
-        style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
-        onclick="openDateTimeChange('${b.orderNo}', '${b.date}', '${b.time || ''}'); return false;">
-    예약 날짜/시간 변경
-</button>
-<button type="button"
-        class="btn-cancel-req"
-        style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
-        onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}'); return false;">
-    취소/환불
-</button>
+                class="btn-cancel-req"
+                style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
+                onclick="openDateTimeChange('${b.orderNo}', '${b.date}', '${b.time || ''}'); return false;">
+            예약 날짜/시간 변경
+        </button>
+
+        <button type="button"
+                class="btn-cancel-req"
+                style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
+                onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}', ${Number(b.refundAmount || 0)}); return false;">
+            취소/환불
+        </button>
     `;
+
 } else if (b.status === '예약확정') {
     actionBtn = `
         <span style="color:#16a34a; font-weight:600;">
@@ -4479,21 +4518,24 @@ if (b.status === '결제완료') {
                 onclick="adminCancelConfirmBooking('${b.orderNo}')">
             예약확정취소
         </button>
-<button type="button"
-        class="btn-cancel-req"
-        style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
-        onclick="openDateTimeChange('${b.orderNo}', '${b.date}', '${b.time || ''}'); return false;">
-    예약 날짜/시간 변경
-</button>
-<button type="button"
-        class="btn-cancel-req"
-        style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
-        onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}')">
-    취소/환불
-</button>
+
+        <button type="button"
+                class="btn-cancel-req"
+                style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
+                onclick="openDateTimeChange('${b.orderNo}', '${b.date}', '${b.time || ''}'); return false;">
+            예약 날짜/시간 변경
+        </button>
+
+        <button type="button"
+                class="btn-cancel-req"
+                style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
+                onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}', ${Number(b.refundAmount || 0)})">
+            취소/환불
+        </button>
     `;
-    } else if (b.status === '부분환불') {
-        actionBtn = `
+
+} else if (b.status === '부분환불') {
+    actionBtn = `
         <span style="color:#f59e0b; font-weight:600;">
             부분환불
         </span>
@@ -4501,21 +4543,30 @@ if (b.status === '결제완료') {
         <button type="button"
                 class="btn-cancel-req"
                 style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
-                onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}')">
+                onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}', ${Number(b.refundAmount || 0)})">
             추가 환불
         </button>
     `;
-} else if (b.status === '취소완료') {
-    actionBtn = '<span style="color:#ef4444; font-weight:600;">취소완료</span>';
-} else {
-    actionBtn = `<span style="font-weight:600;">${b.status}</span>`;
-}
-            pgHtml += `<tr><td>${b.orderNo}</td><td>${b.name}</td><td>${Number(b.price || 0).toLocaleString()}원</td><td>${b.status}</td><td>${actionBtn}</td></tr>`;
-        });
-        container.innerHTML = html;
-        if(pgTable) pgTable.innerHTML = pgHtml;
-    }
 
+} else if (b.status === '취소완료') {
+
+    actionBtn =
+        '<span style="color:#ef4444; font-weight:600;">취소완료</span>';
+
+} else {
+
+    actionBtn =
+        `<span style="font-weight:600;">${b.status}</span>`;
+}
+
+pgHtml += `
+    <tr>
+        <td>${b.orderNo}</td>
+        <td>${b.name}</td>
+        <td>${Number(b.price || 0).toLocaleString()}원</td>
+        <td>${b.status}</td>
+        <td>${actionBtn}</td>
+    </tr>`;
     async function processCheckin() {
         const rawTel = document.getElementById('checkinTel').value.trim();
         const tel = normalizeTel(rawTel);
