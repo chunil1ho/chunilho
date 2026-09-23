@@ -3916,19 +3916,42 @@ found.forEach((b, idx) => {
 
 let refundOrderNo = null;
 let refundOriginalPrice = 0;
-function openRefundModal(orderNo, price, bookingDate) {
+function openRefundModal(
+    orderNo,
+    price,
+    bookingDate,
+    alreadyRefundedAmount
+) {
     refundOrderNo = orderNo;
-    refundOriginalPrice = Number(price || 0);
-    window.refundBookingDate = bookingDate;
+
+    const originalPrice =
+        Number(price || 0);
+
+    const alreadyRefunded =
+        Number(alreadyRefundedAmount || 0);
+
+    const remainingAmount =
+        Math.max(
+            0,
+            originalPrice - alreadyRefunded
+        );
+
+    refundOriginalPrice =
+        remainingAmount;
+
+    window.refundBookingDate =
+        bookingDate;
 
     document.getElementById('refundOriginalAmount').textContent =
-        refundOriginalPrice.toLocaleString() + '원';
+        remainingAmount.toLocaleString() + '원';
 
     document.getElementById('refundFinalAmount').textContent =
-        refundOriginalPrice.toLocaleString() + '원';
+        remainingAmount.toLocaleString() + '원';
 
-    document.querySelector('input[name="refundType"][value="policy"]').checked = true;
-    
+    document.querySelector(
+        'input[name="refundType"][value="policy"]'
+    ).checked = true;
+
     updateRefundAmount();
 
     document.getElementById('refundPercentBox').style.display = 'none';
@@ -3936,6 +3959,15 @@ function openRefundModal(orderNo, price, bookingDate) {
 
     document.getElementById('refundModalOverlay').classList.add('active');
 }
+
+function closeRefundModal() {
+    document.getElementById('refundModalOverlay').classList.remove('active');
+
+    refundOrderNo = null;
+    refundOriginalPrice = 0;
+}
+
+function updateRefundAmount() {
 
 function closeRefundModal() {
     document.getElementById('refundModalOverlay').classList.remove('active');
