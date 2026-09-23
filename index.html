@@ -4530,6 +4530,14 @@ pgHtml += `
         <td>${b.status}</td>
         <td>${actionBtn}</td>
     </tr>`;
+                    });
+
+        container.innerHTML = html;
+
+        if (pgTable) {
+            pgTable.innerHTML = pgHtml;
+        }
+    }
     async function processCheckin() {
         const rawTel = document.getElementById('checkinTel').value.trim();
         const tel = normalizeTel(rawTel);
