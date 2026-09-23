@@ -373,20 +373,25 @@ export async function handler(event) {
      * 7. 결제 상태 확인
      * =====================================
      */
-    if (
-      payment.status !== "paid"
-    ) {
+const refundableStatuses = [
+    "paid",
+    "partial_cancelled",
+    "cancelled"
+];
 
-      return json(400, {
+if (
+    !refundableStatuses.includes(
+        String(payment.status || "").toLowerCase()
+    )
+) {
+    return json(400, {
         ok: false,
-
         message:
-          "현재 환불 가능한 결제 상태가 아닙니다.",
-        
+            "현재 환불 가능한 결제 상태가 아닙니다.",
         paymentStatus:
-          payment.status
-      });
-    }
+            payment.status
+    });
+}
 
 
     /*
