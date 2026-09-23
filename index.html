@@ -2159,6 +2159,48 @@ function updateBoardWriteButton() {
     writeButton.style.display = isAdminLoggedIn ? 'inline-block' : 'none';
 }
     function normalizeTel(tel) { return String(tel || '').replace(/\D/g, ''); }
+    let boardSmartEditor = [];
+
+function initBoardSmartEditor() {
+
+    if (
+        boardSmartEditor.getById &&
+        boardSmartEditor.getById["board-content"]
+    ) {
+        return;
+    }
+
+    if (
+        typeof nhn === 'undefined' ||
+        !nhn.husky ||
+        !nhn.husky.EZCreator
+    ) {
+        console.error('SmartEditor2 엔진을 찾을 수 없습니다.');
+        return;
+    }
+
+    nhn.husky.EZCreator.createInIFrame({
+        oAppRef: boardSmartEditor,
+
+        elPlaceHolder: "board-content",
+
+        sSkinURI:
+            "/smarteditor2/SmartEditor2Skin.html",
+
+        htParams: {
+            bUseToolbar: true,
+            bUseVerticalResizer: true,
+            bUseModeChanger: true,
+            I18N_LOCALE: "ko_KR"
+        },
+
+        fOnAppLoad: function () {
+            console.log('SmartEditor2 로딩 완료');
+        },
+
+        fCreator: "createSEditor2"
+    });
+}
 function showBoardWriteForm() {
     const list = document.getElementById('board-list');
     const detail = document.getElementById('board-detail');
@@ -2203,7 +2245,7 @@ if (form) {
 
 initBoardSmartEditor();
 }
-    initBoardSmartEditor();
+
 async function editBoardPost(postId) {
     const list = document.getElementById('board-list');
     const detail = document.getElementById('board-detail');
