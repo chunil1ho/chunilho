@@ -4466,7 +4466,6 @@ if (b.status === '결제완료') {
         onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}'); return false;">
     취소/환불
 </button>
-        </button>
     `;
 } else if (b.status === '예약확정') {
     actionBtn = `
@@ -4493,6 +4492,7 @@ if (b.status === '결제완료') {
     취소/환불
 </button>
     `;
+    } else if (b.status === '부분환불') {
         actionBtn = `
         <span style="color:#f59e0b; font-weight:600;">
             부분환불
