@@ -99,33 +99,33 @@
 
         .home-top-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
 
-        .home-left-box { background: var(--card-bg); border-radius: 16px; padding: 1.8rem; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between; }
-        .home-left-box h3 { font-size: 1.1rem; color: var(--primary-color); margin-bottom: 1rem; font-weight: 800; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; }
+        .home-left-box { background: var(--card-bg); border-radius: 16px; padding: 2rem; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between; }
+        .home-left-box h3 { font-size: 1.2rem; color: var(--primary-color); margin-bottom: 1rem; font-weight: 800; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; }
         .info-box-item { margin-bottom: 1rem; font-size: 0.9rem; color: var(--text-main); }
         .info-box-item strong { display: block; color: var(--primary-color); margin-bottom: 0.2rem; font-size: 0.95rem; }
-        .account-highlight { background: #f8fafc; padding: 0.8rem; border-radius: 8px; border: 1px dashed #cbd5e1; font-weight: 700; color: var(--accent-color); font-size: 0.95rem; text-align: center; margin-top: 0.5rem; }
+        .account-highlight { background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px dashed #cbd5e1; font-weight: 700; color: var(--accent-color); font-size: 0.95rem; text-align: center; margin-top: 0.5rem; }
 
-        .hero { position: relative; width: 100%; height: 420px; overflow: hidden; display: flex; align-items: center; justify-content: center; color: #fff; text-align: center; border-radius: 16px; margin-bottom: 2.5rem; box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+        .hero { position: relative; width: 100%; height: 520px; overflow: hidden; display: flex; align-items: center; justify-content: center; color: #fff; text-align: center; border-radius: 16px; margin-bottom: 2rem; box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
         .hero-bg-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; }
         .hero-bg { flex: 1; height: 100%; background-size: cover; background-position: center; transition: transform 6s ease; }
         .hero:hover .hero-bg { transform: scale(1.03); }
         .hero-bg1 { background-image: url('image/hero.jpg'); border-right: 2px solid rgba(255, 255, 255, 0.2); }
         .hero-bg2 { background-image: url('image/hero2.jpg'); }
 
-        .hero-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(180deg, rgba(15,44,89,0.3) 0%, rgba(11,25,44,0.8) 100%); z-index: 1; }
+        .hero-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(180deg, rgba(15,44,89,0.15) 0%, rgba(11,25,44,0.65) 100%); z-index: 1; }
         .hero-content { position: relative; z-index: 2; padding: 0 1.5rem; max-width: 700px; }
-        .hero-badge { display: inline-block; background: rgba(255, 127, 63, 0.9); color: #fff; font-size: 0.8rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; margin-bottom: 1rem; letter-spacing: 1px; }
-        .hero-content h1 { font-size: 2.3rem; font-weight: 800; margin-bottom: 0.8rem; text-shadow: 0 2px 8px rgba(0,0,0,0.5); letter-spacing: -1px; min-height: 3.4rem; }
-        .hero-content p { font-size: 1.1rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 4px rgba(0,0,0,0.5); margin-bottom: 1.5rem; min-height: 2.4rem; }
-        .btn-go-book { display: inline-block; background: var(--accent-color); color: #fff; padding: 0.9rem 2.2rem; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; font-size: 1.05rem; box-shadow: 0 6px 20px rgba(255,127,63,0.4); transition: all 0.25s; }
+        .hero-badge { display: inline-block; background: rgba(255, 127, 63, 0.95); color: #fff; font-size: 0.8rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; margin-bottom: 1rem; letter-spacing: 1px; }
+        .hero-content h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 0.8rem; text-shadow: 0 2px 8px rgba(0,0,0,0.5); letter-spacing: -1px; min-height: 3.4rem; }
+        .hero-content p { font-size: 1.2rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 4px rgba(0,0,0,0.5); margin-bottom: 1.5rem; min-height: 2.4rem; }
+        .btn-go-book { display: inline-block; background: var(--accent-color); color: #fff; padding: 1rem 2.6rem; font-weight: 700; border: none; border-radius: 12px; cursor: pointer; font-size: 1.05rem; box-shadow: 0 6px 20px rgba(255,127,63,0.4); transition: all 0.25s; }
         .btn-go-book:hover { background: var(--accent-hover); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255,127,63,0.5); }
 
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 3rem; }
         .feature-card { background: var(--card-bg); padding: 2rem 1.5rem; border-radius: 14px; text-align: center; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); transition: all 0.3s; }
         .feature-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(15,44,89,0.08); border-color: #cbd5e1; }
-        .feature-card .icon-wrap { width: 60px; height: 60px; background: #fef3c7; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin: 0 auto 1rem; }
-        .feature-card h3 { font-size: 1.1rem; color: var(--primary-color); margin-bottom: 0.5rem; font-weight: 700; }
-        .feature-card p { font-size: 0.88rem; color: var(--text-sub); }
+        .feature-card .icon-wrap { width: 68px; height: 68px; background: #fef3c7; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin: 0 auto 1rem; }
+        .feature-card h3 { font-size: 1.15rem; color: var(--primary-color); margin-bottom: 0.5rem; font-weight: 700; }
+        .feature-card p { font-size: 0.92rem; color: var(--text-sub); }
 
         .section-title { font-size: 1.6rem; color: var(--primary-color); text-align: center; margin-bottom: 2rem; font-weight: 800; letter-spacing: -0.5px; position: relative; }
         .section-title::after { content: ''; display: block; width: 45px; height: 3px; background: var(--accent-color); margin: 10px auto 0; border-radius: 2px; }
@@ -1352,8 +1352,8 @@
                     <h3 id="h-left-title" data-i18n="hLeftTitle">👤 예약 안내</h3>
                     <div class="info-box-item">
                         <strong id="h-left-tel-t" data-i18n="hLeftTelT">예약 및 고객 센터</strong>
-                        <span id="h-left-tel-d" style="font-size:1.05rem; font-weight:700; color:var(--accent-color);">📞 +82 010-7768-5913</span>
-                        <p style="font-size: 0.88rem; color: var(--text-sub); margin-top: 0.5rem;" id="h-left-desc" data-i18n="hLeftDesc">상품 구매 후 반드시 전화 또는 카카오톡(ID: chunil1ho)으로 연락하여 예약 확정을 받으셔야 합니다.</p>
+                        <span id="h-left-tel-d" style="font-size:1.15rem; font-weight:700; color:var(--accent-color);">📞 +82 010-7768-5913</span>
+                        <p style="font-size: 0.92rem; color: var(--text-sub); margin-top: 0.5rem;" id="h-left-desc" data-i18n="hLeftDesc">상품 구매 후 반드시 전화 또는 카카오톡(ID: chunil1ho)으로 연락하여 예약 확정을 받으셔야 합니다.</p>
                     </div>
                 </div>
                 <div class="info-box-item" style="margin-bottom:0;">
