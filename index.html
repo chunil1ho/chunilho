@@ -105,20 +105,83 @@
         .info-box-item strong { display: block; color: var(--primary-color); margin-bottom: 0.2rem; font-size: 0.95rem; }
         .account-highlight { background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px dashed #cbd5e1; font-weight: 700; color: var(--accent-color); font-size: 0.95rem; text-align: center; margin-top: 0.5rem; }
 
-        .hero { position: relative; width: 100%; height: 520px; overflow: hidden; display: flex; align-items: center; justify-content: center; color: #fff; text-align: center; border-radius: 16px; margin-bottom: 2rem; box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
-        .hero-bg-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; }
-        .hero-bg { flex: 1; height: 100%; background-size: cover; background-position: center; transition: transform 6s ease; }
-        .hero:hover .hero-bg { transform: scale(1.03); }
-        .hero-bg1 { background-image: url('image/hero.jpg'); border-right: 2px solid rgba(255, 255, 255, 0.2); }
-        .hero-bg2 { background-image: url('image/hero2.jpg'); }
+        .hero { position: relative; width: 100%; height: 520px; overflow: hidden; display: flex; align-items: center; justify-content: flex-start; color: #fff; text-align: left; border-radius: 16px; margin-bottom: 2rem; box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+.hero-bg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hero-bg {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 6s ease;
+}
+
+.hero:hover .hero-bg {
+    transform: scale(1.03);
+}
+
+.hero-bg1 {
+    background-image: url('image/hero.jpg');
+}
+
+.hero-bg2 {
+    display: none;
+}
 
         .hero-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(180deg, rgba(15,44,89,0.15) 0%, rgba(11,25,44,0.65) 100%); z-index: 1; }
-        .hero-content { position: relative; z-index: 2; padding: 0 1.5rem; max-width: 700px; }
+        .hero-content { position: relative; z-index: 2;padding: 0 1.5rem 0 8%; max-width: 700px; }
         .hero-badge { display: inline-block; background: rgba(255, 127, 63, 0.95); color: #fff; font-size: 0.8rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; margin-bottom: 1rem; letter-spacing: 1px; }
-        .hero-content h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 0.8rem; text-shadow: 0 2px 8px rgba(0,0,0,0.5); letter-spacing: -1px; min-height: 3.4rem; }
+        .hero-content h1 { font-size: 2.8rem; font-weight: 900; margin-bottom: 0.8rem; text-shadow: 0 2px 8px rgba(0,0,0,0.5); letter-spacing: -1px; min-height: 3.4rem; }
         .hero-content p { font-size: 1.2rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 4px rgba(0,0,0,0.5); margin-bottom: 1.5rem; min-height: 2.4rem; }
-        .btn-go-book { display: inline-block; background: var(--accent-color); color: #fff; padding: 1rem 2.6rem; font-weight: 700; border: none; border-radius: 12px; cursor: pointer; font-size: 1.05rem; box-shadow: 0 6px 20px rgba(255,127,63,0.4); transition: all 0.25s; }
+        .btn-go-book { display: inline-block; background: var(--accent-color); color: #fff; padding: 1rem 3rem; font-weight: 700; border: none; border-radius: 12px; cursor: pointer; font-size: 1.05rem; box-shadow: 0 6px 20px rgba(255,127,63,0.4); transition: all 0.25s; }
         .btn-go-book:hover { background: var(--accent-hover); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255,127,63,0.5); }
+    /* =========================================
+   히어로 전화 / 카카오톡 버튼
+   ========================================= */
+
+.hero-contact-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.hero-contact-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 130px;
+    height: 46px;
+    padding: 0 20px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.45);
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.hero-contact-btn.phone {
+    background: rgba(15,44,89,0.9);
+    color: #fff;
+}
+
+.hero-contact-btn.kakao {
+    background: #fee500;
+    color: #191919;
+}
+
+.hero-contact-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
 
         .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 3rem; }
         .feature-card { background: var(--card-bg); padding: 2rem 1.5rem; border-radius: 14px; text-align: center; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); transition: all 0.3s; }
@@ -131,6 +194,121 @@
         .section-title::after { content: ''; display: block; width: 45px; height: 3px; background: var(--accent-color); margin: 10px auto 0; border-radius: 2px; }
 
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.8rem; margin-bottom: 3rem; }
+    /* =========================================
+   홈 상품 카드
+   ========================================= */
+
+.home-products {
+    margin: 0 0 3rem;
+}
+
+.home-products-header {
+    text-align: center;
+    margin-bottom: 1.8rem;
+}
+
+.home-products-header > span {
+    display: block;
+    color: var(--accent-color);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 0.4rem;
+}
+
+.home-products-header h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--primary-color);
+}
+
+.home-products-header p {
+    margin: 0;
+    color: var(--text-sub);
+    font-size: 0.95rem;
+}
+
+.home-product-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.home-product-card {
+    overflow: hidden;
+    background: var(--card-bg);
+    border-radius: 14px;
+    border: 1px solid rgba(15,44,89,0.08);
+    box-shadow: 0 8px 22px rgba(15,44,89,0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.home-product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 30px rgba(15,44,89,0.14);
+}
+
+.home-product-image {
+    width: 100%;
+    height: 170px;
+    overflow: hidden;
+}
+
+.home-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s ease;
+}
+
+.home-product-card:hover .home-product-image img {
+    transform: scale(1.05);
+}
+
+.home-product-body {
+    padding: 1.1rem;
+}
+
+.home-product-body h3 {
+    margin: 0 0 0.55rem;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--primary-color);
+}
+
+.home-product-body p {
+    margin: 0 0 0.9rem;
+    min-height: 42px;
+    color: var(--text-sub);
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+.home-product-price {
+    margin-bottom: 0.8rem;
+    color: var(--accent-color);
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.home-product-body button {
+    width: 100%;
+    height: 42px;
+    border: none;
+    border-radius: 8px;
+    background: var(--primary-color);
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.home-product-body button:hover {
+    background: var(--accent-color);
+}
         .gallery-card { background: var(--card-bg); border-radius: 14px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); transition: all 0.3s; }
         .gallery-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
         .gallery-card img { width: 100%; height: 250px; object-fit: cover; display: block; transition: transform 0.5s; }
@@ -1343,9 +1521,95 @@
                 <h1 id="hero-title" data-i18n="heroTitle">바다 위에서 맞이하는 가장 찬란한 순간</h1>
                 <p id="hero-sub" data-i18n="heroSub">초보자도, 아이도 누구나 손쉽게 손맛을 즐기는 서귀포 앞바다 힐링 배낚시</p>
                 <button type="button" class="btn-go-book" id="hero-btn" onclick="goToBooking()" data-i18n="heroBtn">설레는 예약 시작하기 ✨</button>
+                <div class="hero-contact-buttons">
+    <a href="tel:01077685913" class="hero-contact-btn phone">
+        📞 전화 문의
+    </a>
+
+    <button type="button" class="hero-contact-btn kakao"
+            onclick="alert('카카오톡 ID : chunil1ho')">
+        💬 카카오톡
+    </button>
+</div>
             </div>
         </section>
+<!-- 낚시 종류 -->
+<section class="home-products">
+    <div class="home-products-header">
+        <span>CHUNILHO FISHING</span>
+        <h2>천일호 낚시 상품</h2>
+        <p>원하는 낚시를 선택하고 간편하게 예약하세요.</p>
+    </div>
 
+    <div class="home-product-grid">
+
+        <!-- 주간 체험낚시 -->
+        <div class="home-product-card">
+            <div class="home-product-image">
+                <img src="image/pic1.jpg" alt="주간 체험낚시">
+            </div>
+            <div class="home-product-body">
+                <h3>주간 체험낚시</h3>
+                <p>초보자와 가족 누구나 즐길 수 있는 서귀포 앞바다 체험낚시</p>
+                <div class="home-product-price">30,000원~</div>
+                <button type="button" onclick="goToBooking()">예약하기</button>
+            </div>
+        </div>
+
+        <!-- 한치낚시 -->
+        <div class="home-product-card">
+            <div class="home-product-image">
+                <img src="image/pic3.jpg" alt="한치낚시">
+            </div>
+            <div class="home-product-body">
+                <h3>한치낚시</h3>
+                <p>제주 밤바다에서 즐기는 짜릿한 한치 손맛</p>
+                <div class="home-product-price">60,000원~</div>
+                <button type="button" onclick="goToBooking()">예약하기</button>
+            </div>
+        </div>
+
+        <!-- 갈치낚시 -->
+        <div class="home-product-card">
+            <div class="home-product-image">
+                <img src="image/pic2.jpg" alt="갈치낚시">
+            </div>
+            <div class="home-product-body">
+                <h3>갈치낚시</h3>
+                <p>제주 밤바다의 대표 낚시, 갈치와 고등어를 함께 즐겨보세요.</p>
+                <div class="home-product-price">90,000원~</div>
+                <button type="button" onclick="goToBooking()">예약하기</button>
+            </div>
+        </div>
+
+        <!-- 야간 한치·갈치낚시 -->
+        <div class="home-product-card">
+            <div class="home-product-image">
+                <img src="image/hero2.jpg" alt="야간 한치 갈치낚시">
+            </div>
+            <div class="home-product-body">
+                <h3>야간 한치·갈치낚시</h3>
+                <p>계절에 따라 즐기는 제주 밤바다의 특별한 낚시</p>
+                <div class="home-product-price">60,000원~</div>
+                <button type="button" onclick="goToBooking()">예약하기</button>
+            </div>
+        </div>
+
+        <!-- 흘림낚시 -->
+        <div class="home-product-card">
+            <div class="home-product-image">
+                <img src="image/hero.jpg" alt="흘림낚시">
+            </div>
+            <div class="home-product-body">
+                <h3>흘림낚시</h3>
+                <p>더 깊은 바다와 강한 손맛을 원하는 분들을 위한 전문 낚시</p>
+                <div class="home-product-price">800,000원~</div>
+                <button type="button" onclick="goToBooking()">예약하기</button>
+            </div>
+        </div>
+
+    </div>
+</section>
         <div class="home-top-grid">
             <div class="home-left-box">
                 <div>
