@@ -1495,15 +1495,14 @@
     background: #0f2c59;
     color: #fff;
 }
-@media screen and (min-width: 769px) {
+    @media screen and (min-width: 769px) {
     .home-board-more {
-        width: 100% !important;
-        text-align: right !important;
-    }
-
-    .home-board-more button {
-        margin-left: auto !important;
-        margin-right: 0 !important;
+        width: 100vw !important;
+        margin-left: calc(50% - 50vw) !important;
+        display: flex !important;
+        justify-content: flex-end !important;
+        padding-right: max(20px, calc((100vw - 1200px) / 2)) !important;
+        box-sizing: border-box !important;
     }
 }
     </style>
