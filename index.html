@@ -1601,7 +1601,7 @@
                 <h3>주간 체험낚시</h3>
                 <p>초보자와 가족 누구나 즐길 수 있는 서귀포 앞바다 체험낚시</p>
                 <div class="home-product-price">30,000원~</div>
-                <button type="button" onclick="goToBooking()">예약하기</button>
+                <button type="button" onclick="goToBooking('30000_주간 체험 2시간')">예약하기</button>
             </div>
         </div>
 
@@ -1614,7 +1614,7 @@
                 <h3>한치낚시</h3>
                 <p>제주 밤바다에서 즐기는 짜릿한 한치 손맛</p>
                 <div class="home-product-price">60,000원~</div>
-                <button type="button" onclick="goToBooking()">예약하기</button>
+                <button type="button" onclick="goToBooking('60000_야간 한치 체험낚시')">예약하기</button>
             </div>
         </div>
 
@@ -1627,7 +1627,7 @@
                 <h3>갈치낚시</h3>
                 <p>제주 밤바다의 대표 낚시, 갈치와 고등어를 함께 즐겨보세요.</p>
                 <div class="home-product-price">90,000원~</div>
-                <button type="button" onclick="goToBooking()">예약하기</button>
+                <button type="button" onclick="goToBooking('90000_야간 갈치낚시')">예약하기</button>
             </div>
                     </div>
 <!-- 지깅낚시 -->
@@ -1642,9 +1642,7 @@
 
         <div class="home-product-price">90,000원</div>
 
-        <button type="button" onclick="goToBooking()">
-            예약하기
-        </button>
+        <button type="button" onclick="goToBooking('90000_지깅체험 4시간')">예약하기</button>
     </div>
 </div>
     </div>
@@ -3738,9 +3736,16 @@ if (adminTouchTarget) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function goToBooking() {
-        switchCategory('cat-booking', document.getElementById('nav-booking'));
+function goToBooking(courseValue) {
+    switchCategory('cat-booking', document.getElementById('nav-booking'));
+
+    const courseSelect = document.getElementById('courseSelect');
+
+    if (courseSelect) {
+        courseSelect.value = courseValue;
+        updateOptions();
     }
+}
 
     function setLanguage(lang, btnEl) {
         currentLang = lang;
