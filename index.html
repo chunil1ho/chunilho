@@ -191,7 +191,13 @@
         .feature-card p { font-size: 0.92rem; color: var(--text-sub); }
 
         .section-title { font-size: 1.6rem; color: var(--primary-color); text-align: center; margin-bottom: 2rem; font-weight: 800; letter-spacing: -0.5px; position: relative; }
-        .section-title::after { content: ''; display: block; width: 45px; height: 3px; background: var(--accent-color); margin: 10px auto 0; border-radius: 2px; }
+        #gal-title {
+    font-size: 2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 900;
+}
+    .section-title::after { content: ''; display: block; width: 45px; height: 3px; background: var(--accent-color); margin: 10px auto 0; border-radius: 2px; }
 
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.8rem; margin-bottom: 3rem; }
     /* =========================================
@@ -1642,7 +1648,7 @@
             </div>
         </div>
 
-        <h2 class="section-title" id="gal-title" data-i18n="galTitle">오늘의 조</h2>
+        <h2 class="section-title" id="gal-title" data-i18n="galTitle">오늘의 조황</h2>
         <div class="gallery-grid">
             <div class="gallery-card">
                 <img src="image/pic1.jpg" alt="주간 체험 낚시" onerror="this.src='https://via.placeholder.com/320x250?text=Chunilho'">
@@ -1657,6 +1663,30 @@
                 <div class="card-caption" id="gal-3" data-i18n="gal3">여름밤의 보석, 야간 한치 체험 낚시 (6~9월)</div>
             </div>
         </div>
+                <h2 class="section-title" id="gal-title" data-i18n="galTitle">오늘의 조황</h2>
+        <div class="gallery-grid">
+            <div class="gallery-card">
+                <img src="image/pic1.jpg" alt="주간 체험 낚시" onerror="this.src='https://via.placeholder.com/320x250?text=Chunilho'">
+                <div class="card-caption" id="gal-1" data-i18n="gal1">아이들과 함께 웃음 가득한 주간 체험 낚시</div>
+            </div>
+            <div class="gallery-card">
+                <img src="image/pic2.jpg" alt="야간 갈치·고등어 낚시" onerror="this.src='https://via.placeholder.com/320x250?text=Chunilho+Night'">
+                <div class="card-caption" id="gal-2" data-i18n="gal2">밤바다의 낭만, 야간 갈치·고등어 낚시 (8~11월)</div>
+            </div>
+            <div class="gallery-card">
+                <img src="image/pic3.jpg" alt="야간 한치 체험 낚시" onerror="this.src='https://via.placeholder.com/320x250?text=Chunilho+Hanchi'">
+                <div class="card-caption" id="gal-3" data-i18n="gal3">여름밤의 보석, 야간 한치 체험 낚시 (6~9월)</div>
+            </div>
+                    </div>
+        <div class="home-board-more">
+            <button type="button"
+                    onclick="switchCategory('cat-board', document.querySelector('#navBoard'))">
+                조황게시판 더보기 →
+            </button>
+        </div>
+
+    </div>
+
     </div>
 
     <!-- 2. 운항안내 카테고리 -->
