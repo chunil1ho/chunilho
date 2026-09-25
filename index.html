@@ -3737,6 +3737,32 @@ if (adminTouchTarget) {
     }
 
 function goToBooking(courseValue) {
+    const today = new Date();
+    const m = today.getMonth() + 1;
+    const d = today.getDate();
+
+    const isGalchiSeason =
+        (m > 8 && m < 11) ||
+        (m === 8) ||
+        (m === 11 && d <= 15);
+
+    const isHanchiSeason =
+        (m > 6 && m < 9) ||
+        (m === 6 && d >= 15) ||
+        (m === 9 && d <= 5);
+
+    // 한치 시즌 종료
+    if (courseValue.includes('한치') && !isHanchiSeason) {
+        alert('야간 한치 체험낚시는 현재 시즌이 종료되었습니다.');
+        return;
+    }
+
+    // 갈치 시즌 종료
+    if (courseValue.includes('갈치') && !isGalchiSeason) {
+        alert('야간 갈치낚시는 현재 시즌이 종료되었습니다.');
+        return;
+    }
+
     switchCategory('cat-booking', document.getElementById('nav-booking'));
 
     const courseSelect = document.getElementById('courseSelect');
