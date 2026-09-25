@@ -141,6 +141,76 @@
         .hero-content p { font-size: 1.2rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 4px rgba(0,0,0,0.5); margin-bottom: 1.5rem; min-height: 2.4rem; }
         .btn-go-book { display: inline-block; background: var(--accent-color); color: #fff; padding: 1rem 3rem; font-weight: 700; border: none; border-radius: 12px; cursor: pointer; font-size: 1.05rem; box-shadow: 0 6px 20px rgba(255,127,63,0.4); transition: all 0.25s; }
         .btn-go-book:hover { background: var(--accent-hover); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255,127,63,0.5); }
+    .hero-action-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 1rem;
+    flex-wrap: nowrap;
+}
+
+.hero-action-row .btn-go-book {
+    margin: 0;
+    min-width: 240px;
+    height: 58px;
+    padding: 0 28px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    white-space: nowrap;
+}
+
+.hero-contact-item {
+    height: 58px;
+    min-width: 155px;
+    padding: 0 18px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border-radius: 12px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.45);
+    background: rgba(15,44,89,0.72);
+    color: #fff;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.hero-contact-item .contact-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.hero-contact-item span:not(.contact-icon) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.15;
+}
+
+.hero-contact-item small {
+    font-size: 0.72rem;
+    font-weight: 600;
+    opacity: 0.9;
+    margin-bottom: 3px;
+}
+
+.hero-contact-item strong {
+    font-size: 0.9rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.hero-contact-item.kakao {
+    background: #fee500;
+    border-color: #fee500;
+    color: #191919;
+}
+
+.hero-contact-item:hover {
+    transform: translateY(-2px);
+}
     /* =========================================
    히어로 전화 / 카카오톡 버튼
    ========================================= */
@@ -1587,15 +1657,32 @@
                 <span class="hero-badge" id="hero-badge-text" data-i18n="heroBadgeText">제주 서귀포 필수 여행 코스</span>
                 <h1 id="hero-title" data-i18n="heroTitle">바다 위에서 맞이하는 가장 찬란한 순간</h1>
                 <p id="hero-sub" data-i18n="heroSub">초보자도, 아이도 누구나 손쉽게 손맛을 즐기는 서귀포 앞바다 힐링 배낚시</p>
-                <button type="button" class="btn-go-book" id="hero-btn" onclick="goToBooking()" data-i18n="heroBtn">설레는 예약 시작하기 ✨</button>
-                <div class="hero-contact-buttons">
-    <a href="tel:01077685913" class="hero-contact-btn phone">
-        📞 전화 문의
+<div class="hero-action-row">
+
+    <button type="button"
+            class="btn-go-book"
+            id="hero-btn"
+            onclick="goToBooking()"
+            data-i18n="heroBtn">
+        실시간 예약하기 →
+    </button>
+
+    <a href="tel:01077685913" class="hero-contact-item phone">
+        <span class="contact-icon">📞</span>
+        <span>
+            <small>전화문의</small>
+            <strong>010-7768-5913</strong>
+        </span>
     </a>
 
-    <button type="button" class="hero-contact-btn kakao"
+    <button type="button"
+            class="hero-contact-item kakao"
             onclick="alert('카카오톡 ID : chunil1ho')">
-        💬 카카오톡
+        <span class="contact-icon">💬</span>
+        <span>
+            <small>카카오톡문의</small>
+            <strong>chunil1ho</strong>
+        </span>
     </button>
 </div>
             </div>
