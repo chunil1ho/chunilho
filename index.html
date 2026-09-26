@@ -1649,6 +1649,200 @@
         height: 480px;
     }
 }
+    /* =========================================
+   1번 디자인 스타일의 상단 헤더
+   ========================================= */
+
+.top-header {
+    width: 100%;
+    height: 82px;
+    background: #fff;
+    border-bottom: 1px solid #e8e8e8;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1000;
+}
+
+.top-header-inner {
+    width: 100%;
+    max-width: 1400px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 28px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+/* 로고 */
+.top-header .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    text-decoration: none;
+    color: inherit;
+}
+
+.top-header .logo-img {
+    width: 105px;
+    height: auto;
+    max-height: 58px;
+    object-fit: contain;
+}
+
+.top-header .logo-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.top-header .logo-text h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 900;
+    line-height: 1.1;
+    color: #0f2c59;
+}
+
+.top-header .logo-text p {
+    margin: 4px 0 0;
+    font-size: 9px;
+    color: #8a96a8;
+    letter-spacing: 0.2px;
+}
+
+/* 메뉴 */
+.top-nav {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+}
+
+.top-nav .nav-btn {
+    border: none;
+    background: transparent;
+    padding: 10px 13px;
+    color: #25344a;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.top-nav .nav-btn:hover {
+    background: #f3f6fa;
+    color: #0f2c59;
+}
+
+.top-nav .nav-btn.active {
+    color: #ff7f3f;
+    background: transparent;
+}
+
+/* 언어 */
+.top-header .lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+}
+
+.top-header .lang-btn {
+    border: none;
+    background: transparent;
+    padding: 4px 5px;
+    color: #a0a7b1;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.top-header .lang-btn.active {
+    color: #0f2c59;
+    font-weight: 800;
+}
+
+/* 전화 */
+.header-phone {
+    height: 38px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    background: #0f2c59;
+    color: #fff;
+    border-radius: 20px;
+
+    text-decoration: none;
+    font-size: 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.header-phone span {
+    font-size: 14px;
+}
+
+.header-phone strong {
+    font-size: 12px;
+    font-weight: 800;
+}
+    @media (max-width: 768px) {
+
+    .top-header {
+        height: auto;
+        min-height: 70px;
+    }
+
+    .top-header-inner {
+        padding: 8px 14px;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .top-header .logo-img {
+        width: 72px;
+    }
+
+    .top-header .logo-text h2 {
+        font-size: 15px;
+    }
+
+    .top-header .logo-text p {
+        font-size: 7px;
+    }
+
+    .top-nav {
+        order: 3;
+        width: 100%;
+        flex-basis: 100%;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 4px;
+    }
+
+    .top-nav .nav-btn {
+        padding: 7px 10px;
+        font-size: 11px;
+    }
+
+    .top-header .lang-switcher {
+        margin-left: auto;
+    }
+
+    .header-phone {
+        display: none;
+    }
+}
     </style>
 </head>
 <body id="mainBody">
@@ -1662,34 +1856,125 @@
     </div>
 </div>
 
-<header>
-    <div class="header-inner">
-        <a href="#" class="logo-area" onclick="switchCategory('cat-home', document.querySelectorAll('.nav-btn')[0]); return false;">
-            <img src="image/logo.png" alt="서귀포 체험 배낚시 천일호" class="logo-img" onerror="this.style.display='none'">
+<header class="top-header">
+    <div class="top-header-inner">
+
+        <!-- 로고 -->
+        <a href="#"
+           class="logo-area"
+           onclick="switchCategory('cat-home', document.querySelector('#nav-home')); return false;">
+
+            <img src="image/logo.png"
+                 alt="서귀포 체험 배낚시 천일호"
+                 class="logo-img"
+                 onerror="this.style.display='none'">
+
             <div class="logo-text">
-                <h2 id="logo-main-text" data-i18n="logoMainText">서귀포배낚시 천일호</h2>
-                <p data-i18n="logoSubText">Seogwipo Chunilho Fishing</p>
+                <h2 id="logo-main-text" data-i18n="logoMainText">
+                    서귀포배낚시 천일호
+                </h2>
+                <p data-i18n="logoSubText">
+                    Seogwipo Chunilho Fishing
+                </p>
             </div>
         </a>
+
+        <!-- 메뉴 -->
+        <nav class="top-nav">
+            <button type="button"
+                    class="nav-btn active"
+                    id="nav-home"
+                    onclick="switchCategory('cat-home', this)"
+                    data-i18n="navHome">
+                홈
+            </button>
+
+            <button type="button"
+                    class="nav-btn"
+                    id="nav-booking"
+                    onclick="switchCategory('cat-booking', this)"
+                    data-i18n="navBooking">
+                실시간예약
+            </button>
+
+            <button type="button"
+                    class="nav-btn"
+                    id="nav-board"
+                    onclick="switchCategory('cat-board', this)"
+                    data-i18n="navBoard">
+                조황게시판
+            </button>
+
+            <button type="button"
+                    class="nav-btn"
+                    id="nav-info"
+                    onclick="switchCategory('cat-info', this)"
+                    data-i18n="navInfo">
+                운항안내
+            </button>
+
+            <button type="button"
+                    class="nav-btn"
+                    id="nav-location"
+                    onclick="switchCategory('cat-location', this)"
+                    data-i18n="navLocation">
+                찾아오시는 길
+            </button>
+
+            <button type="button"
+                    class="nav-btn"
+                    id="nav-qna"
+                    onclick="switchCategory('cat-qna', this)"
+                    data-i18n="navQna">
+                Q&A
+            </button>
+
+            <!-- 관리자 -->
+            <button type="button"
+                    class="nav-btn"
+                    id="nav-admin"
+                    onclick="checkAdminAccess()"
+                    data-i18n="navAdmin"
+                    style="display:none;">
+                관리자센터
+            </button>
+        </nav>
+
+        <!-- 언어 -->
         <div class="lang-switcher">
-            <button type="button" class="lang-btn active" onclick="setLanguage('ko', this)">한국어</button>
-            <button type="button" class="lang-btn" onclick="setLanguage('en', this)">English</button>
-            <button type="button" class="lang-btn" onclick="setLanguage('ja', this)">日本語</button>
-            <button type="button" class="lang-btn" onclick="setLanguage('zh', this)">中文</button>
+            <button type="button"
+                    class="lang-btn active"
+                    onclick="setLanguage('ko', this)">
+                한국어
+            </button>
+
+            <button type="button"
+                    class="lang-btn"
+                    onclick="setLanguage('en', this)">
+                English
+            </button>
+
+            <button type="button"
+                    class="lang-btn"
+                    onclick="setLanguage('ja', this)">
+                日本語
+            </button>
+
+            <button type="button"
+                    class="lang-btn"
+                    onclick="setLanguage('zh', this)">
+                中文
+            </button>
         </div>
+
+        <!-- 전화 -->
+        <a href="tel:01077685913" class="header-phone">
+            <span>📞</span>
+            <strong>010-7768-5913</strong>
+        </a>
+
     </div>
 </header>
-
-<div class="main-nav">
-    <ul class="nav-inner">
-        <li><button type="button" class="nav-btn active" id="nav-home" onclick="switchCategory('cat-home', this)" data-i18n="navHome">홈</button></li>
-        <li><button type="button" class="nav-btn" id="nav-info" onclick="switchCategory('cat-info', this)" data-i18n="navInfo">운항안내</button></li>
-        <li><button type="button" class="nav-btn" id="nav-location" onclick="switchCategory('cat-location', this)" data-i18n="navLocation">찾아오시는 길</button></li>
-        <li><button type="button" class="nav-btn" id="nav-booking" onclick="switchCategory('cat-booking', this)" data-i18n="navBooking">실시간예약</button></li>
-               <li><button type="button" class="nav-btn" id="nav-board" onclick="switchCategory('cat-board', this)" data-i18n="navBoard">조황게시판</button></li>
-        <li id="nav-admin-li" style="display: none;"><button type="button" class="nav-btn" id="nav-admin" onclick="checkAdminAccess()" data-i18n="navAdmin">관리자센터</button></li>
-    </ul>
-</div>
 
 <div class="container">
 
