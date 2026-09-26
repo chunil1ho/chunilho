@@ -574,8 +574,63 @@
         @media (max-width: 768px) {
             .booking-layout { grid-template-columns: 1fr; }
             .summary-card { position: static; }
-            .header-inner { flex-direction: column; gap: 12px; }
+            .header-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+}
             .nav-btn { font-size: 0.82rem; padding: 1rem 0; }
+            .main-nav {
+    display: none;
+}
+            .main-nav.mobile-open {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    z-index: 1000;
+}
+
+.main-nav.mobile-open .nav-inner {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+}
+
+.main-nav.mobile-open .nav-inner li {
+    width: 100%;
+}
+
+.main-nav.mobile-open .nav-btn {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+}
+            #mobileMenuToggle {
+    display: block;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: #000;
+    font-size: 26px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
             .hero { height: 360px; }
             .hero-bg-container { flex-direction: column; }
             .hero-bg1 { border-right: none; border-bottom: 2px solid rgba(255, 255, 255, 0.2); }
@@ -1802,6 +1857,12 @@
             <button type="button" class="lang-btn" onclick="setLanguage('ja', this)">日本語</button>
             <button type="button" class="lang-btn" onclick="setLanguage('zh', this)">中文</button>
         </div>
+                <!-- 모바일 메뉴 버튼 -->
+        <button type="button"
+                id="mobileMenuToggle"
+                aria-label="메뉴 열기">
+            ☰
+        </button>
     </div>
 </header>
 
@@ -6172,7 +6233,25 @@ function formatBoardText(command) {
     return template.innerHTML
         .replace(/\n/g, '<br>');
 }
-    
+ // =========================================
+// 모바일 메뉴 열기 / 닫기
+// =========================================
+document.addEventListener('DOMContentLoaded', function () {
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mainNav = document.querySelector('.main-nav');
+
+    if (!mobileMenuToggle || !mainNav) return;
+
+    mobileMenuToggle.addEventListener('click', function () {
+        const isOpen = mainNav.classList.toggle('mobile-open');
+
+        mobileMenuToggle.textContent = isOpen ? '✕' : '☰';
+        mobileMenuToggle.setAttribute(
+            'aria-label',
+            isOpen ? '메뉴 닫기' : '메뉴 열기'
+        );
+    });
+});   
 </script>
 <script type="text/javascript"
         src="/smarteditor2/js/service/HuskyEZCreator.js"
