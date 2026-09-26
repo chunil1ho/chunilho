@@ -66,7 +66,7 @@
         .top-bar-links { display: flex; gap: 20px; align-items: center; }
         .top-bar-links span { color: #f8fafc; font-weight: 500; }
 
-        header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1001; border-bottom: 1px solid var(--border-color); }
+        header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1001;}
       .header-inner {
     max-width: 1400px;
     margin: 0 auto;
@@ -87,8 +87,33 @@
     flex-wrap: nowrap;
     flex-shrink: 0;
 }
-        .lang-btn { background: #f1f5f9; border: 1px solid #cbd5e1; padding: 5px 8px; font-size: 0.75rem; font-weight: 600; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
-        .lang-btn:hover, .lang-btn.active { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
+.lang-btn {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 2px 4px;
+    margin: 0;
+    color: #555;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.lang-btn:hover {
+    color: var(--primary-color);
+}
+
+.lang-btn.active {
+    color: var(--primary-color);
+    font-weight: 800;
+}
+
+.lang-divider {
+    color: #bbb;
+    font-size: 0.75rem;
+    user-select: none;
+}
 
         .main-nav {
     background: transparent;
@@ -136,6 +161,10 @@
     margin: 2.5rem auto;
     padding: 0 1rem;
     min-height: 550px;
+}
+/* 헤더 바로 아래 홈 화면은 여백 제거 */
+#cat-home {
+    margin-top: -2.5rem;
 }
         .category-sec { display: none; animation: fadeIn 0.4s ease-in-out; }
         .category-sec.active { display: block !important; }
@@ -190,17 +219,49 @@
 
 .hero-bg1 {
     background-image: url('image/hero.jpg');
+    display: block;
+    width: 50%;
 }
 
 .hero-bg2 {
-    display: none;
+    background-image: url('image/hero2.jpg');
+    display: block;
+    width: 50%;
+}
+.hero-bg-container {
+    display: flex !important;
+    width: 100% !important;
+    height: 100% !important;
 }
 
+.hero-bg {
+    display: block !important;
+    width: 50% !important;
+    height: 100% !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
         .hero-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(180deg, rgba(15,44,89,0.15) 0%, rgba(11,25,44,0.65) 100%); z-index: 1; }
         .hero-content { position: relative; z-index: 2;padding: 0 1.5rem 0 8%; max-width: 700px; }
         .hero-badge { display: inline-block; background: rgba(255, 127, 63, 0.95); color: #fff; font-size: 0.8rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; margin-bottom: 1rem; letter-spacing: 1px; }
-        .hero-content h1 { font-size: 2.8rem; font-weight: 900; margin-bottom: 0.8rem; text-shadow: 0 2px 8px rgba(0,0,0,0.5); letter-spacing: -1px; min-height: 3.4rem; }
-        .hero-content p { font-size: 1.2rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 4px rgba(0,0,0,0.5); margin-bottom: 1.5rem; min-height: 2.4rem; }
+        ..hero-content h1 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 900;
+    margin-bottom: 0.8rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    letter-spacing: -1px;
+    min-height: 3.4rem;
+    white-space: nowrap;
+}
+.hero-content p {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    font-weight: 400;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    margin-bottom: 1.5rem;
+    min-height: 2.4rem;
+}
         .btn-go-book { display: inline-block; background: var(--accent-color); color: #fff; padding: 1rem 3rem; font-weight: 700; border: none; border-radius: 12px; cursor: pointer; font-size: 1.05rem; box-shadow: 0 6px 20px rgba(255,127,63,0.4); transition: all 0.25s; }
         .btn-go-book:hover { background: var(--accent-hover); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255,127,63,0.5); }
     .hero-action-row {
@@ -580,7 +641,7 @@
             .summary-card { position: static; }
 .header-inner {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     gap: 4px;
     padding: 8px 8px;
@@ -591,7 +652,7 @@
 }
 
 .logo-area {
-    flex: 0 1 auto;
+    flex: 1 1 auto;
     min-width: 0;
 }
 
@@ -602,9 +663,20 @@
 }
 
 .logo-text {
-    display: none;
+    display: block;
+    min-width: 0;
 }
 
+.logo-text h2 {
+    display: block;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    margin: 0;
+}
+
+.logo-text p {
+    display: none;
+}
 .lang-switcher {
     display: flex;
     flex: 0 1 auto;
@@ -676,8 +748,22 @@
 }
             .hero { height: 360px; }
             .hero-bg-container { flex-direction: column; }
+.hero-bg {
+    width: 100% !important;
+    height: 50% !important;
+    flex: 0 0 50%;
+}
+
+.hero-bg1,
+.hero-bg2 {
+    width: 100% !important;
+}
             .hero-bg1 { border-right: none; border-bottom: 2px solid rgba(255, 255, 255, 0.2); }
-            .hero-content h1 { font-size: 1.8rem; }
+            .hero-content h1 {
+    font-size: clamp(1.25rem, 5vw, 1.5rem);
+    white-space: nowrap;
+    letter-spacing: -1px;
+}
             .hero-content p { font-size: 0.95rem; }
         }
         .board-detail-images {
@@ -1894,12 +1980,18 @@
                 </li>
             </ul>
         </div>
-        <div class="lang-switcher">
-            <button type="button" class="lang-btn active" onclick="setLanguage('ko', this)">한국어</button>
-            <button type="button" class="lang-btn" onclick="setLanguage('en', this)">English</button>
-            <button type="button" class="lang-btn" onclick="setLanguage('ja', this)">日本語</button>
-            <button type="button" class="lang-btn" onclick="setLanguage('zh', this)">中文</button>
-        </div>
+<div class="lang-switcher">
+    <button type="button" class="lang-btn active" onclick="setLanguage('ko', this)">KO</button>
+    <span class="lang-divider">|</span>
+
+    <button type="button" class="lang-btn" onclick="setLanguage('en', this)">EN</button>
+    <span class="lang-divider">|</span>
+
+    <button type="button" class="lang-btn" onclick="setLanguage('ja', this)">JA</button>
+    <span class="lang-divider">|</span>
+
+    <button type="button" class="lang-btn" onclick="setLanguage('zh', this)">ZH</button>
+</div>
                 <!-- 모바일 메뉴 버튼 -->
         <button type="button"
                 id="mobileMenuToggle"
@@ -1923,7 +2015,7 @@
             <div class="hero-content">
                 <span class="hero-badge" id="hero-badge-text" data-i18n="heroBadgeText">제주 서귀포 필수 여행 코스</span>
                 <h1 id="hero-title" data-i18n="heroTitle">바다 위에서 맞이하는 가장 찬란한 순간</h1>
-                <p id="hero-sub" data-i18n="heroSub">초보자도, 아이도 누구나 손쉽게 손맛을 즐기는 서귀포 앞바다 힐링 배낚시</p>
+                <p id="hero-sub" data-i18n="heroSub">초보자도, 아이도 누구나 손쉽게 손맛을 즐기는<br> 서귀포 앞바다 힐링 배낚시</p>
 <div class="hero-action-row">
 
     <button type="button"
@@ -1958,8 +2050,8 @@
 <section class="home-products">
     <div class="home-products-header">
         <span>CHUNILHO FISHING</span>
-        <h2>천일호 낚시 상품</h2>
-        <p>원하는 낚시를 선택하고 간편하게 예약하세요.</p>
+        <h2 data-i18n="productTitle">천일호 낚시 상품</h2>
+        <p data-i18n="productSub">원하는 낚시를 선택하고 간편하게 예약하세요.</p>
     </div>
 
     <div class="home-product-grid">
@@ -1967,11 +2059,11 @@
         <!-- 주간 체험낚시 -->
         <div class="home-product-card">
             <div class="home-product-image">
-                <img src="image/pic1.jpg" alt="주간 체험낚시">
+                <img src="image/pic1.jpg" alt="주간 체험낚시" data-i18n="productDayAlt">
             </div>
             <div class="home-product-body">
-                <h3>주간 체험낚시</h3>
-                <p>초보자와 가족 누구나 즐길 수 있는 서귀포 앞바다 체험낚시</p>
+                <h3 data-i18n="productDayTitle">주간 체험낚시</h3>
+                <p data-i18n="productDayDesc">초보자와 가족 누구나 즐길 수 있는 서귀포 앞바다 체험낚시</p>
                 <div class="home-product-price">30,000원~</div>
                 <button type="button" onclick="goToBooking('30000_주간 체험 2시간')">→</button>
             </div>
@@ -1980,11 +2072,11 @@
         <!-- 한치낚시 -->
         <div class="home-product-card">
             <div class="home-product-image">
-                <img src="image/pic3.jpg" alt="한치낚시"> 
+                <img src="image/pic3.jpg" alt="한치낚시" data-i18n="productSquidAlt">
             </div>
             <div class="home-product-body">
-                <h3>한치낚시</h3>
-                <p>제주 밤바다에서 즐기는 짜릿한 한치 손맛</p>
+                <h3 data-i18n="productSquidTitle">한치낚시</h3>
+                <p data-i18n="productSquidDesc">제주 밤바다에서 즐기는 짜릿한 한치 손맛</p>
                 <div class="home-product-price">60,000원~</div>
                 <button type="button" onclick="goToBooking('60000_야간 한치 체험낚시')">→</button>
             </div>
@@ -1993,31 +2085,34 @@
         <!-- 갈치낚시 -->
         <div class="home-product-card">
             <div class="home-product-image">
-                <img src="image/pic2.jpg" alt="갈치낚시">
+                <img src="image/pic2.jpg" alt="갈치낚시" data-i18n="productHairtailAlt">
             </div>
             <div class="home-product-body">
-                <h3>갈치낚시</h3>
-                <p>제주 밤바다의 대표 낚시, 갈치와 고등어를 함께 즐겨보세요.</p>
+                <h3 data-i18n="productHairtailTitle">갈치낚시</h3>
+                <p data-i18n="productHairtailDesc">제주 밤바다의 대표 낚시, 갈치와 고등어를 함께 즐겨보세요.</p>
                 <div class="home-product-price">90,000원~</div>
                 <button type="button" onclick="goToBooking('90000_야간 갈치낚시')">→</button>
             </div>
-                    </div>
-<!-- 지깅낚시 -->
-<div class="home-product-card">
-    <div class="home-product-image">
-        <img src="image/pic6.jpg" alt="지깅낚시">
-    </div>
+        </div>
 
-    <div class="home-product-body">
-        <h3>지깅낚시</h3>
-        <p>제주 앞바다에서 즐기는 짜릿한 지깅 체험</p>
+        <!-- 지깅낚시 -->
+        <div class="home-product-card">
+            <div class="home-product-image">
+                <img src="image/pic6.jpg" alt="지깅낚시" data-i18n="productJiggingAlt">
+            </div>
 
-        <div class="home-product-price">90,000원</div>
+            <div class="home-product-body">
+                <h3 data-i18n="productJiggingTitle">지깅낚시</h3>
+                <p data-i18n="productJiggingDesc">제주 앞바다에서 즐기는 짜릿한 지깅 체험</p>
 
-        <button type="button" onclick="goToBooking('90000_지깅체험 4시간')">→</button>
+                <div class="home-product-price">90,000원</div>
+
+                <button type="button" onclick="goToBooking('90000_지깅체험 4시간')">→</button>
+            </div>
+        </div>
+
     </div>
-</div>
-    </div>
+</section>
                   <h2 class="section-title" id="gal-title" data-i18n="galTitle">오늘의 조황</h2>
         
 <div class="home-board-more"
@@ -2028,20 +2123,13 @@
     조황게시판 더보기 →
 </button>
 </div>
-        <div class="gallery-grid">
-            <div class="gallery-card">
-                <img src="image/pic1.jpg" alt="주간 체험 낚시" onerror="this.src='https://via.placeholder.com/320x250?text=Chunilho'">
-                <div class="card-caption" id="gal-1" data-i18n="gal1">아이들과 함께 웃음 가득한 주간 체험 낚시</div>
-            </div>
-            <div class="gallery-card">
-                <img src="image/pic2.jpg" alt="야간 갈치·고등어 낚시" onerror="this.src='https://via.placeholder.com/320x250?text=Chunilho+Night'">
-                <div class="card-caption" id="gal-2" data-i18n="gal2">밤바다의 낭만, 야간 갈치·고등어 낚시 (8~11월)</div>
-            </div>
-            <div class="gallery-card">
-                <img src="image/pic3.jpg" alt="야간 한치 체험 낚시" onerror="this.src='https://via.placeholder.com/320x250?text=Chunilho+Hanchi'">
-                <div class="card-caption" id="gal-3" data-i18n="gal3">여름밤의 보석, 야간 한치 체험 낚시 (6~9월)</div>
-            </div>
-                    </div>
+<div class="gallery-grid" id="home-board-gallery">
+    <div class="gallery-card">
+        <div class="card-caption">
+            조황 정보를 불러오는 중입니다...
+        </div>
+    </div>
+</div>
 </section>
         <div class="home-top-grid">
             <div class="home-left-box">
@@ -3385,6 +3473,81 @@ box-sizing:border-box !important;
         list.innerHTML = `
             <div class="board-empty">
                 조황게시판을 불러오지 못했습니다.
+            </div>
+        `;
+    }
+}
+// =========================================
+// 홈 화면 - 최신 조황 3개 불러오기
+// =========================================
+async function loadHomeBoardPosts() {
+    const gallery = document.getElementById('home-board-gallery');
+
+    if (!gallery) return;
+
+    try {
+        const data = await apiRequest('/board');
+        const posts = Array.isArray(data.posts) ? data.posts : [];
+
+        // 최신 글 3개만 사용
+        const latestPosts = posts.slice(0, 3);
+
+        if (latestPosts.length === 0) {
+            gallery.innerHTML = `
+                <div class="gallery-card">
+                    <div class="card-caption">
+                        등록된 조황글이 없습니다.
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        gallery.innerHTML = latestPosts.map(function(post) {
+
+            const title = escapeHtml(post.title || '조황 게시글');
+
+            const date = post.createdAt
+                ? new Date(post.createdAt).toLocaleDateString('ko-KR')
+                : '';
+
+            const images = Array.isArray(post.images)
+                ? post.images
+                : [];
+
+            const image = images.length > 0
+                ? images[0]
+                : 'image/logo.png';
+
+            return `
+                <div class="gallery-card"
+                     onclick="showBoardDetail('${post.id}')"
+                     style="cursor:pointer;">
+
+                    <img
+                        src="${image}"
+                        alt="${title}"
+                        onerror="this.src='image/logo.png'"
+                    >
+
+                    <div class="card-caption">
+                        ${title}
+                        ${date ? `<small>${date}</small>` : ''}
+                    </div>
+
+                </div>
+            `;
+
+        }).join('');
+
+    } catch (error) {
+        console.error('홈 조황 불러오기 오류:', error);
+
+        gallery.innerHTML = `
+            <div class="gallery-card">
+                <div class="card-caption">
+                    조황 정보를 불러오지 못했습니다.
+                </div>
             </div>
         `;
     }
@@ -4749,6 +4912,7 @@ try {
 document.addEventListener('DOMContentLoaded', function () {
     setupBoardImagePreview();
     loadBoardPosts();
+    loadHomeBoardPosts();
 });
     async function completeBookingRegistration(orderNo, date, course, time, count, name, tel, price, impUid = '', paymentStatus = 'paid') {
         const cleanTel = normalizeTel(tel);
@@ -5549,6 +5713,24 @@ footerCopy: "천일호. All Rights Reserved.",
             heroTitle: "바다 위에서 맞이하는 가장 찬란한 순간",
             heroSub: "초보자도, 아이도 누구나 손쉽게 손맛을 즐기는 서귀포 앞바다 힐링 배낚시",
             heroBtn: "설레는 예약 시작하기 ✨",
+productTitle: "천일호 낚시 상품",
+productSub: "원하는 낚시를 선택하고 간편하게 예약하세요.",
+
+productDayAlt: "주간 체험낚시",
+productDayTitle: "주간 체험낚시",
+productDayDesc: "초보자와 가족 누구나 즐길 수 있는 서귀포 앞바다 체험낚시",
+
+productSquidAlt: "한치낚시",
+productSquidTitle: "한치낚시",
+productSquidDesc: "제주 밤바다에서 즐기는 짜릿한 한치 손맛",
+
+productHairtailAlt: "갈치낚시",
+productHairtailTitle: "갈치낚시",
+productHairtailDesc: "제주 밤바다의 대표 낚시, 갈치와 고등어를 함께 즐겨보세요.",
+
+productJiggingAlt: "지깅낚시",
+productJiggingTitle: "지깅낚시",
+productJiggingDesc: "제주 앞바다에서 즐기는 짜릿한 지깅 체험",
             hLeftTitle: "👤 예약 안내",
             hLeftTelT: "예약 및 고객 센터",
             hLeftDesc: "상품 구매 후 반드시 전화 또는 카카오톡(ID: chunil1ho)으로 연락하여 예약 확정을 받으셔야 합니다.",
@@ -5562,7 +5744,7 @@ footerCopy: "천일호. All Rights Reserved.",
             featD3: "푸른 바다 위에서 내가 직접 잡은 싱싱한 물고기를 그 즉시 회로 맛보는 감동!",
             featT4: "소중한 사람과의 추억",
             featD4: "가족, 연인, 친구들과 함께 웃음이 끊이지 않는 특별한 제주 추억을 만들어보세요.",
-            galTitle: "오늘의 조",
+            galTitle: "오늘의 조황",
             gal1: "아이들과 함께 웃음 가득한 주간 체험 낚시",
             gal2: "밤바다의 낭만, 야간 갈치·고등어 낚시 (8~11월)",
             gal3: "여름밤의 보석, 야간 한치 체험 낚시 (6~9월)",
@@ -5711,6 +5893,24 @@ footerCopy: "Chunil-ho. All Rights Reserved.",
             heroTitle: "The Most Brilliant Moment on the Ocean",
             heroSub: "Healing boat fishing in Seogwipo where beginners and kids can easily enjoy catching fish",
             heroBtn: "Start Exciting Booking ✨",
+productTitle: "Chunilho Fishing Products",
+productSub: "Choose your preferred fishing experience and book easily.",
+
+productDayAlt: "Daytime Fishing Experience",
+productDayTitle: "Daytime Fishing",
+productDayDesc: "A fun fishing experience in Seogwipo for beginners and families.",
+
+productSquidAlt: "Squid Fishing",
+productSquidTitle: "Squid Fishing",
+productSquidDesc: "Enjoy an exciting squid fishing experience in Jeju's night sea.",
+
+productHairtailAlt: "Hairtail Fishing",
+productHairtailTitle: "Hairtail Fishing",
+productHairtailDesc: "A signature Jeju night fishing experience with hairtail and mackerel.",
+
+productJiggingAlt: "Jigging Fishing",
+productJiggingTitle: "Jigging Fishing",
+productJiggingDesc: "Enjoy an exciting jigging experience in the waters of Jeju.",
             hLeftTitle: "👤 Booking Guide",
             hLeftTelT: "Reservation & Customer Center",
             hLeftDesc: "After purchasing the product, you must contact us via phone or KakaoTalk (ID: chunil1ho) to confirm your reservation.",
@@ -5873,6 +6073,24 @@ footerCopy: "千日号。All Rights Reserved.",
             heroTitle: "海の上で迎える最も輝かしい瞬間",
             heroSub: "初心者もお子様も、誰でも簡単に手軽に楽しめる西帰浦沖のヒーリング船釣り",
             heroBtn: "ワクワクする予約を始める ✨",
+productTitle: "千日号フィッシング商品",
+productSub: "お好みの釣りを選んで簡単にご予約ください。",
+
+productDayAlt: "昼間体験釣り",
+productDayTitle: "昼間体験釣り",
+productDayDesc: "初心者やご家族でも楽しめる西帰浦沖の体験釣り",
+
+productSquidAlt: "ヤリイカ釣り",
+productSquidTitle: "ヤリイカ釣り",
+productSquidDesc: "済州の夜の海で楽しむスリル満点のイカ釣り",
+
+productHairtailAlt: "タチウオ釣り",
+productHairtailTitle: "タチウオ釣り",
+productHairtailDesc: "済州の代表的な夜釣り。タチウオとサバ釣りを一緒に楽しめます。",
+
+productJiggingAlt: "ジギング釣り",
+productJiggingTitle: "ジギング釣り",
+productJiggingDesc: "済州沖で楽しむスリル満点のジギング体験",
             hLeftTitle: "👤 予約案内",
             hLeftTelT: "予約およびカスタマーセンター",
             hLeftDesc: "商品購入後、必ずお電話またはカカオトーク（ID：chunil1ho）にてご連絡いただき、予約確定を受けてください。",
@@ -6034,6 +6252,24 @@ footerCopy: "千日号。All Rights Reserved.",
             heroTitle: "在海面上迎接最灿烂的瞬间",
             heroSub: "新手和儿童也能轻松享受手感的西归浦近海治愈船钓",
             heroBtn: "开始心动预约 ✨",
+productTitle: "千日号钓鱼项目",
+productSub: "选择您喜欢的钓鱼项目，轻松预约。",
+
+productDayAlt: "日间体验钓鱼",
+productDayTitle: "日间体验钓鱼",
+productDayDesc: "初学者和家庭都可以享受的西归浦近海体验钓鱼",
+
+productSquidAlt: "鱿鱼钓鱼",
+productSquidTitle: "鱿鱼钓鱼",
+productSquidDesc: "在济州夜海体验刺激的鱿鱼钓鱼",
+
+productHairtailAlt: "带鱼钓鱼",
+productHairtailTitle: "带鱼钓鱼",
+productHairtailDesc: "济州代表性的夜间钓鱼，同时享受带鱼和鲭鱼钓鱼。",
+
+productJiggingAlt: "铁板钓鱼",
+productJiggingTitle: "铁板钓鱼",
+productJiggingDesc: "在济州近海享受刺激的铁板钓鱼体验",
             hLeftTitle: "👤 预约指南",
             hLeftTelT: "预约及客户中心",
             hLeftDesc: "购买商品后，必须通过电话或KakaoTalk（ID：chunil1ho）联系我们以确认预约。",
