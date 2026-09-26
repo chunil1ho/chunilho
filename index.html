@@ -1857,6 +1857,86 @@
         font-size: 8px;
     }
 }
+    /* PC 상단 헤더 가로 고정 */
+@media (min-width: 769px) {
+
+    .top-header {
+        width: 100% !important;
+        height: 64px !important;
+        display: block !important;
+    }
+
+    .top-header-inner {
+        width: 100% !important;
+        height: 64px !important;
+        max-width: 1500px !important;
+        margin: 0 auto !important;
+        padding: 0 22px !important;
+
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+
+        box-sizing: border-box !important;
+    }
+
+    .top-header .logo-area {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
+        width: auto !important;
+    }
+
+    .top-header .logo-text {
+        display: none !important;
+    }
+
+    .top-nav {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        flex: 1 1 auto !important;
+        width: auto !important;
+        min-width: 0 !important;
+    }
+
+    .top-nav .nav-btn {
+        display: inline-flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        width: auto !important;
+        white-space: nowrap !important;
+    }
+
+    .top-header .lang-switcher {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        width: auto !important;
+        flex-shrink: 0 !important;
+    }
+
+    .top-header .lang-btn {
+        display: inline-block !important;
+        width: auto !important;
+        white-space: nowrap !important;
+    }
+
+    .header-phone {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        width: auto !important;
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
+    }
+}
     </style>
 </head>
 <body id="mainBody">
