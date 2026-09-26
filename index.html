@@ -574,22 +574,7 @@
         @media (max-width: 768px) {
             .booking-layout { grid-template-columns: 1fr; }
             .summary-card { position: static; }
-            .header-inner {
-    flex-direction: row;
-    gap: 8px;
-}     
-            .logo-area {
-        flex: 1;
-        min-width: 0;
-    }
-
-    .logo-text {
-        display: none;
-    }
-
-    .mobile-menu-toggle {
-        flex-shrink: 0;
-    }
+            .header-inner { flex-direction: column; gap: 12px; }
             .nav-btn { font-size: 0.82rem; padding: 1rem 0; }
             .hero { height: 360px; }
             .hero-bg-container { flex-direction: column; }
@@ -1726,47 +1711,6 @@
         height: 480px;
     }
 }
-/* 모바일 메뉴 버튼 */
-.mobile-menu-toggle {
-    display: none !important;
-    background: none;
-    border: none;
-    font-size: 24px;
-    line-height: 1;
-    padding: 4px;
-    cursor: pointer;
-    color: #000;
-}
-    /* 모바일 메뉴 최종 설정 */
-.mobile-menu-toggle {
-    display: none !important;
-}
-
-@media (max-width: 768px) {
-    .mobile-menu-toggle {
-        display: block !important;
-    }
-
-    .main-nav {
-        display: none !important;
-    }
-}
-    /* PC에서는 모바일 메뉴 버튼 숨김 */
-@media (min-width: 769px) {
-    #mobileMenuToggle {
-        display: none !important;
-        visibility: hidden !important;
-    }
-}
-    #mobileMenuToggle {
-    display: none !important;
-}
-
-@media (max-width: 768px) {
-    #mobileMenuToggle {
-        display: block !important;
-    }
-}
     </style>
 </head>
 <body id="mainBody">
@@ -1858,12 +1802,6 @@
             <button type="button" class="lang-btn" onclick="setLanguage('ja', this)">日本語</button>
             <button type="button" class="lang-btn" onclick="setLanguage('zh', this)">中文</button>
         </div>
-<button type="button"
-        id="mobileMenuToggle"
-        onclick="toggleMobileMenu()"
-        aria-label="메뉴 열기">
-    ☰
-</button>
     </div>
 </header>
 
