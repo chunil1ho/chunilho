@@ -61,11 +61,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Pretendard', 'Noto Sans KR', sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.7; }
 
-        .top-bar { background: #0b192c; color: #94a3b8; font-size: 0.82rem; padding: 8px 1rem; }
-        .top-bar-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .top-bar-links { display: flex; gap: 20px; align-items: center; }
-        .top-bar-links span { color: #f8fafc; font-weight: 500; }
-
         header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1001;}
       .header-inner {
     max-width: 1400px;
@@ -2034,64 +2029,15 @@
     transform: scale(0.92);
     transform-origin: center;
 }
-.top-bar-inner {
-    justify-content: center;
-}
-
-#top-bar-address,
-.top-bar-links {
-    display: none;
-}
-
-.mobile-top-contact {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.mobile-top-contact a,
-.mobile-top-contact button {
-    height: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0 4px;
-    border: none;
-    background: transparent;
-    color: #fff;
-    font-size: 0.68rem;
-    font-weight: 700;
-    line-height: 1.15;
-    text-decoration: none;
-    font-family: inherit;
-    cursor: pointer;
+@media (max-width: 768px) {
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
 }
     </style>
 </head>
 <body id="mainBody">
-
-<div class="top-bar">
-    <div class="top-bar-inner">
-        <div id="top-bar-address" data-i18n="topBarAddress">🌊 제주 서귀포시 남성중로 25 (천일호)</div>
-        <div class="top-bar-links">
-            <span id="top-bar-inquiry" data-i18n="topBarInquiry">📞 예약문의: 010-7768-5913</span>
-        </div>
-<div class="mobile-top-contact">
-    <a href="tel:01077685913">
-        📞 전화문의<br>
-        010-7768-5913
-    </a>
-
-    <button type="button"
-            onclick="alert('카카오톡 ID : chunil1ho')">
-        💬 카카오톡문의<br>
-        chunil1ho
-    </button>
-</div>
-    </div>
-</div>
 
 <header>
     <div class="header-inner">
@@ -2308,25 +2254,25 @@
     </div>
 </div>
 </section>
-        <div class="home-top-grid">
-            <div class="home-left-box">
-                <div>
-                    <h3 id="h-left-title" data-i18n="hLeftTitle">👤 예약 안내</h3>
-                    <div class="info-box-item">
-                        <strong id="h-left-tel-t" data-i18n="hLeftTelT">예약 및 고객 센터</strong>
-                        <span id="h-left-tel-d" style="font-size:1.15rem; font-weight:700; color:var(--accent-color);">📞 +82 010-7768-5913</span>
-                        <p style="font-size: 0.92rem; color: var(--text-sub); margin-top: 0.5rem;" id="h-left-desc" data-i18n="hLeftDesc">상품 구매 후 반드시 전화 또는 카카오톡(ID: chunil1ho)으로 연락하여 예약 확정을 받으셔야 합니다.</p>
-                    </div>
-                </div>
-                <div class="info-box-item" style="margin-bottom:0;">
-                    <strong id="h-left-bank-t" data-i18n="hLeftBankT">입금 계좌번호 안내</strong>
-                    <div class="account-highlight">
-                        수협 0000-1982-0812<br><span style="font-size:0.85rem; color:var(--text-sub);" id="h-bank-owner" data-i18n="hBankOwner">예금주: 강주연</span>
-                    </div>
-                </div>
+<div class="home-top-grid">
+    <div class="home-left-box">
+        <div>
+            <h3 id="h-left-title" data-i18n="hLeftTitle">👤 예약 안내</h3>
+            <div class="info-box-item">
+                <strong id="h-left-tel-t" data-i18n="hLeftTelT">예약 및 고객 센터</strong>
+                <span id="h-left-tel-d" style="font-size:1.15rem; font-weight:700; color:var(--accent-color);">📞 +82 010-7768-5913</span>
+                <p style="font-size: 0.92rem; color: var(--text-sub); margin-top: 0.5rem;" id="h-left-desc" data-i18n="hLeftDesc">상품 구매 후 반드시 전화 또는 카카오톡(ID: chunil1ho)으로 연락하여 예약 확정을 받으셔야 합니다.</p>
             </div>
         </div>
-
+        <div class="info-box-item" style="margin-bottom:0;">
+            <strong id="h-left-bank-t" data-i18n="hLeftBankT">입금 계좌번호 안내</strong>
+            <div class="account-highlight">
+                수협 0000-1982-0812<br>
+                <span style="font-size:0.85rem; color:var(--text-sub);" id="h-bank-owner" data-i18n="hBankOwner">예금주: 강주연</span>
+            </div>
+        </div>
+    </div>
+</div>
         <div class="features-grid">
             <div class="feature-card">
                 <div class="icon-wrap">🎣</div>
