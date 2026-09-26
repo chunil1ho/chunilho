@@ -1918,6 +1918,77 @@
         height: 480px;
     }
 }
+@media (max-width: 768px) {
+    /* 천일호 낚시 상품 - 모바일 전체 카드 정사각형 */
+    .home-product-card {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        box-sizing: border-box;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .home-product-image {
+        width: 100%;
+        height: 50%;
+        flex-shrink: 0;
+    }
+
+    .home-product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .home-product-body {
+        flex: 1;
+        min-height: 0;
+        box-sizing: border-box;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .home-product-body h3 {
+        margin: 0 0 4px;
+        font-size: 0.95rem;
+    }
+
+    .home-product-body p {
+        margin: 0;
+        font-size: 0.72rem;
+        line-height: 1.4;
+    }
+
+.home-product-price {
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+.home-product-body {
+    position: relative;
+}
+
+.home-product-body button {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+    min-height: 30px;
+    padding: 0;
+    margin: 0;
+
+    border-radius: 50%;
+}
+}
     </style>
 </head>
 <body id="mainBody">
