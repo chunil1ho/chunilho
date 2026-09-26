@@ -3226,7 +3226,11 @@ function initBoardSmartEditor(onReady) {
     ) {
         const editor =
             boardSmartEditor.getById["board-content"];
-
+        
+editor.exec(
+    'SET_IR',
+    ['']
+);
         if (typeof onReady === 'function') {
             onReady(editor);
         }
