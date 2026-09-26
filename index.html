@@ -67,28 +67,76 @@
         .top-bar-links span { color: #f8fafc; font-weight: 500; }
 
         header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1001; border-bottom: 1px solid var(--border-color); }
-        .header-inner { max-width: 1100px; margin: 0 auto; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
-        .logo-area { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+      .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+        .logo-area { display: flex; align-items: center; gap: 14px; text-decoration: none; flex-shrink: 0;}
         .logo-img { height: 50px; width: auto; object-fit: contain; }
         .logo-text h2 { font-size: 1.25rem; color: var(--primary-color); font-weight: 800; letter-spacing: -0.5px; }
         .logo-text p { font-size: 0.75rem; color: var(--text-sub); letter-spacing: 0.5px; }
 
-        .lang-switcher { display: flex; gap: 5px; flex-wrap: wrap; }
+        .lang-switcher {
+    display: flex;
+    gap: 5px;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+}
         .lang-btn { background: #f1f5f9; border: 1px solid #cbd5e1; padding: 5px 8px; font-size: 0.75rem; font-weight: 600; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
         .lang-btn:hover, .lang-btn.active { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
 
-        .main-nav { background: var(--primary-color); box-shadow: 0 4px 20px rgba(15, 44, 89, 0.15); overflow-x: auto; }
-        .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; list-style: none; flex-wrap: nowrap; }
-        .nav-inner li { flex: 0 0 auto; text-align: center; min-width: 90px; }
-        .nav-btn {
-            background: none; border: none; outline: none; width: 100%; padding: 1.1rem 0.5rem;
-            color: #cbd5e1; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease;
-            position: relative; white-space: nowrap;
-        }
-        .nav-btn:hover, .nav-btn.active { color: #fff; background: rgba(255, 255, 255, 0.05); }
+        .main-nav {
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
+    flex: 1;
+}
+        .nav-inner {
+    max-width: none;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    flex-wrap: nowrap;
+    gap: 18px;
+}
+        .nav-inner li {
+    flex: 0 0 auto;
+    text-align: center;
+}
+.nav-btn {
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 0.8rem 0.65rem;
+    color: #000000;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    white-space: nowrap;
+}
+        .nav-btn:hover,
+.nav-btn.active {
+    color: #808080;
+    background: rgba(255, 255, 255, 0.05);
+}
         .nav-btn.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: var(--accent-color); }
 
-        .container { max-width: 1100px; margin: 2.5rem auto; padding: 0 1rem; min-height: 550px; }
+        .container {
+    max-width: 1400px;
+    margin: 2.5rem auto;
+    padding: 0 1rem;
+    min-height: 550px;
+}
         .category-sec { display: none; animation: fadeIn 0.4s ease-in-out; }
         .category-sec.active { display: block !important; }
 
@@ -105,7 +153,21 @@
         .info-box-item strong { display: block; color: var(--primary-color); margin-bottom: 0.2rem; font-size: 0.95rem; }
         .account-highlight { background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px dashed #cbd5e1; font-weight: 700; color: var(--accent-color); font-size: 0.95rem; text-align: center; margin-top: 0.5rem; }
 
-        .hero { position: relative; width: 100%; height: 520px; overflow: hidden; display: flex; align-items: center; justify-content: flex-start; color: #fff; text-align: left; border-radius: 16px; margin-bottom: 2rem; box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+.hero {
+    position: relative;
+    width: 100vw;
+    height: 520px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: #fff;
+    text-align: left;
+    border-radius: 0;
+    margin-left: calc(50% - 50vw);
+    margin-bottom: 2rem;
+    box-shadow: none;
+}
 .hero-bg-container {
     position: absolute;
     top: 0;
@@ -1671,6 +1733,69 @@
                 <p data-i18n="logoSubText">Seogwipo Chunilho Fishing</p>
             </div>
         </a>
+        <div class="main-nav">
+            <ul class="nav-inner">
+                <li>
+                    <button type="button"
+                            class="nav-btn active"
+                            id="nav-home"
+                            onclick="switchCategory('cat-home', this)"
+                            data-i18n="navHome">
+                        홈
+                    </button>
+                </li>
+
+                <li>
+                    <button type="button"
+                            class="nav-btn"
+                            id="nav-info"
+                            onclick="switchCategory('cat-info', this)"
+                            data-i18n="navInfo">
+                        운항안내
+                    </button>
+                </li>
+
+                <li>
+                    <button type="button"
+                            class="nav-btn"
+                            id="nav-location"
+                            onclick="switchCategory('cat-location', this)"
+                            data-i18n="navLocation">
+                        찾아오시는 길
+                    </button>
+                </li>
+
+                <li>
+                    <button type="button"
+                            class="nav-btn"
+                            id="nav-booking"
+                            onclick="switchCategory('cat-booking', this)"
+                            data-i18n="navBooking">
+                        실시간예약
+                    </button>
+                </li>
+
+                <li>
+                    <button type="button"
+                            class="nav-btn"
+                            id="nav-board"
+                            onclick="switchCategory('cat-board', this)"
+                            data-i18n="navBoard">
+                        조황게시판
+                    </button>
+                </li>
+
+                <li id="nav-admin-li" style="display:none;">
+                    <button type="button"
+                            class="nav-btn"
+                            id="nav-admin"
+                            onclick="checkAdminAccess()"
+                            data-i18n="navAdmin">
+                        관리자센터
+                    </button>
+                </li>
+            </ul>
+        </div>
         <div class="lang-switcher">
             <button type="button" class="lang-btn active" onclick="setLanguage('ko', this)">한국어</button>
             <button type="button" class="lang-btn" onclick="setLanguage('en', this)">English</button>
@@ -1680,16 +1805,6 @@
     </div>
 </header>
 
-<div class="main-nav">
-    <ul class="nav-inner">
-        <li><button type="button" class="nav-btn active" id="nav-home" onclick="switchCategory('cat-home', this)" data-i18n="navHome">홈</button></li>
-        <li><button type="button" class="nav-btn" id="nav-info" onclick="switchCategory('cat-info', this)" data-i18n="navInfo">운항안내</button></li>
-        <li><button type="button" class="nav-btn" id="nav-location" onclick="switchCategory('cat-location', this)" data-i18n="navLocation">찾아오시는 길</button></li>
-        <li><button type="button" class="nav-btn" id="nav-booking" onclick="switchCategory('cat-booking', this)" data-i18n="navBooking">실시간예약</button></li>
-               <li><button type="button" class="nav-btn" id="nav-board" onclick="switchCategory('cat-board', this)" data-i18n="navBoard">조황게시판</button></li>
-        <li id="nav-admin-li" style="display: none;"><button type="button" class="nav-btn" id="nav-admin" onclick="checkAdminAccess()" data-i18n="navAdmin">관리자센터</button></li>
-    </ul>
-</div>
 
 <div class="container">
 
