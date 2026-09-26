@@ -581,6 +581,9 @@
             .hero-bg1 { border-right: none; border-bottom: 2px solid rgba(255, 255, 255, 0.2); }
             .hero-content h1 { font-size: 1.8rem; }
             .hero-content p { font-size: 0.95rem; }
+    .mobile-menu-toggle {
+        display: block;
+    }
         }
         .board-detail-images {
     display: grid;
@@ -1711,6 +1714,17 @@
         height: 480px;
     }
 }
+/* 모바일 메뉴 버튼 */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    padding: 4px;
+    cursor: pointer;
+    color: #000;
+}
     </style>
 </head>
 <body id="mainBody">
@@ -1802,6 +1816,12 @@
             <button type="button" class="lang-btn" onclick="setLanguage('ja', this)">日本語</button>
             <button type="button" class="lang-btn" onclick="setLanguage('zh', this)">中文</button>
         </div>
+<button type="button"
+        class="mobile-menu-toggle"
+        onclick="toggleMobileMenu()"
+        aria-label="메뉴 열기">
+    ☰
+</button>
     </div>
 </header>
 
