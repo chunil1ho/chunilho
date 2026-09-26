@@ -1650,122 +1650,115 @@
     }
 }
     /* =========================================
-   1번 디자인 스타일의 상단 헤더
+   최상단 한 줄 헤더
+   로고 → 메뉴 → 번역 → 전화번호
    ========================================= */
 
 .top-header {
     width: 100%;
-    height: 82px;
+    height: 64px;
     background: #fff;
-    border-bottom: 1px solid #e8e8e8;
-    box-sizing: border-box;
+    border-bottom: 1px solid #e5e8ec;
     position: relative;
     z-index: 1000;
+    box-sizing: border-box;
 }
 
 .top-header-inner {
     width: 100%;
-    max-width: 1400px;
     height: 100%;
+    max-width: 1500px;
     margin: 0 auto;
-    padding: 0 28px;
-    box-sizing: border-box;
+    padding: 0 22px;
 
-    display: flex;
-        flex-direction: row !important;
+    display: flex !important;
+    flex-direction: row !important;
     flex-wrap: nowrap !important;
     align-items: center;
-    gap: 28px;
+    gap: 18px;
+
+    box-sizing: border-box;
 }
 
 /* 로고 */
 .top-header .logo-area {
-    display: flex;
+    display: flex !important;
+    flex-direction: row !important;
     align-items: center;
-    gap: 8px;
     flex-shrink: 0;
     text-decoration: none;
-    color: inherit;
 }
 
 .top-header .logo-img {
     width: 105px;
-    height: auto;
-    max-height: 58px;
+    height: 52px;
     object-fit: contain;
 }
 
 .top-header .logo-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    white-space: nowrap;
-}
-
-.top-header .logo-text h2 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 900;
-    line-height: 1.1;
-    color: #0f2c59;
-}
-
-.top-header .logo-text p {
-    margin: 4px 0 0;
-    font-size: 9px;
-    color: #8a96a8;
-    letter-spacing: 0.2px;
+    display: none !important;
 }
 
 /* 메뉴 */
 .top-nav {
-    flex: 1;
+    flex: 1 1 auto;
+
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: nowrap !important;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+
+    gap: 2px;
     min-width: 0;
 }
 
 .top-nav .nav-btn {
-    border: none;
+    flex: 0 0 auto;
+
+    border: 0;
     background: transparent;
-    padding: 10px 13px;
-    color: #25344a;
-    font-size: 13px;
+
+    padding: 8px 12px;
+
+    color: #24344d;
+    font-size: 12px;
     font-weight: 700;
+
     white-space: nowrap;
     cursor: pointer;
-    border-radius: 6px;
-    transition: 0.2s;
+    border-radius: 5px;
 }
 
 .top-nav .nav-btn:hover {
     background: #f3f6fa;
-    color: #0f2c59;
 }
 
 .top-nav .nav-btn.active {
     color: #ff7f3f;
-    background: transparent;
 }
 
-/* 언어 */
+/* 번역 */
 .top-header .lang-switcher {
-    display: flex;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
     align-items: center;
-    gap: 2px;
+
+    gap: 0;
     flex-shrink: 0;
 }
 
 .top-header .lang-btn {
-    border: none;
+    border: 0;
     background: transparent;
-    padding: 4px 5px;
+
+    padding: 3px 4px;
+
     color: #a0a7b1;
-    font-size: 10px;
+    font-size: 9px;
+
+    white-space: nowrap;
     cursor: pointer;
 }
 
@@ -1774,77 +1767,94 @@
     font-weight: 800;
 }
 
-/* 전화 */
+/* 전화번호 */
 .header-phone {
-    height: 38px;
-    padding: 0 14px;
-    display: flex;
+    height: 34px;
+
+    padding: 0 13px;
+
+    display: flex !important;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
+    gap: 5px;
+
+    flex-shrink: 0;
 
     background: #0f2c59;
     color: #fff;
-    border-radius: 20px;
+
+    border-radius: 18px;
 
     text-decoration: none;
-    font-size: 12px;
     white-space: nowrap;
-    flex-shrink: 0;
 }
 
 .header-phone span {
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .header-phone strong {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 800;
 }
     @media (max-width: 768px) {
 
     .top-header {
-        height: auto;
-        min-height: 70px;
+        height: 52px;
     }
 
     .top-header-inner {
-        padding: 8px 14px;
-        gap: 10px;
-        flex-wrap: wrap;
+        padding: 0 7px;
+        gap: 4px;
     }
 
+    /* 모바일 로고 */
     .top-header .logo-img {
-        width: 72px;
+        width: 62px;
+        height: 42px;
     }
 
-    .top-header .logo-text h2 {
-        font-size: 15px;
-    }
-
-    .top-header .logo-text p {
-        font-size: 7px;
-    }
-
+    /* 모바일 메뉴 */
     .top-nav {
-        order: 3;
-        width: 100%;
-        flex-basis: 100%;
-        overflow-x: auto;
         justify-content: flex-start;
-        padding-bottom: 4px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        gap: 0;
+    }
+
+    .top-nav::-webkit-scrollbar {
+        display: none;
     }
 
     .top-nav .nav-btn {
-        padding: 7px 10px;
-        font-size: 11px;
+        padding: 6px 6px;
+        font-size: 9px;
     }
 
+    /* 번역 */
     .top-header .lang-switcher {
-        margin-left: auto;
+        flex-shrink: 0;
     }
 
+    .top-header .lang-btn {
+        padding: 2px;
+        font-size: 7px;
+    }
+
+    /* 전화번호 */
     .header-phone {
-        display: none;
+        height: 28px;
+        padding: 0 7px;
+        border-radius: 15px;
+        gap: 2px;
+    }
+
+    .header-phone span {
+        font-size: 9px;
+    }
+
+    .header-phone strong {
+        font-size: 8px;
     }
 }
     </style>
