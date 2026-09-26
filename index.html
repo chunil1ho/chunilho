@@ -1672,6 +1672,8 @@
     box-sizing: border-box;
 
     display: flex;
+        flex-direction: row !important;
+    flex-wrap: nowrap !important;
     align-items: center;
     gap: 28px;
 }
@@ -1718,7 +1720,9 @@
 /* 메뉴 */
 .top-nav {
     flex: 1;
-    display: flex;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
     align-items: center;
     justify-content: center;
     gap: 4px;
