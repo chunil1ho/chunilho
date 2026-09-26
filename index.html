@@ -2131,6 +2131,34 @@ padding: 0 14px;
         transform: translateY(20px);
     }
 }
+    /* 모바일 조황게시판 작성폼 잘림 방지 */
+@media screen and (max-width: 768px) {
+
+    #cat-board #board-write-form {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 20px 0 0 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
+    }
+
+    #cat-board #board-write-form .board-form-box {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 15px !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
+    }
+
+    #cat-board #board-write-form input,
+    #cat-board #board-write-form textarea {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+}
     </style>
 </head>
 <body id="mainBody">
