@@ -2034,6 +2034,40 @@
     transform: scale(0.92);
     transform-origin: center;
 }
+.top-bar-inner {
+    justify-content: center;
+}
+
+#top-bar-address,
+.top-bar-links {
+    display: none;
+}
+
+.mobile-top-contact {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mobile-top-contact a,
+.mobile-top-contact button {
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1.15;
+    text-decoration: none;
+    font-family: inherit;
+    cursor: pointer;
+}
     </style>
 </head>
 <body id="mainBody">
@@ -2044,6 +2078,18 @@
         <div class="top-bar-links">
             <span id="top-bar-inquiry" data-i18n="topBarInquiry">📞 예약문의: 010-7768-5913</span>
         </div>
+<div class="mobile-top-contact">
+    <a href="tel:01077685913">
+        📞 전화문의<br>
+        010-7768-5913
+    </a>
+
+    <button type="button"
+            onclick="alert('카카오톡 ID : chunil1ho')">
+        💬 카카오톡문의<br>
+        chunil1ho
+    </button>
+</div>
     </div>
 </div>
 
