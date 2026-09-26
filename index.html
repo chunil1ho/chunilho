@@ -3521,8 +3521,8 @@ async function loadHomeBoardPosts() {
 
             return `
                 <div class="gallery-card"
-                     onclick="showBoardDetail('${post.id}')"
-                     style="cursor:pointer;">
+     onclick="switchCategory('cat-board', document.querySelector('#navBoard')); setTimeout(function(){ showBoardDetail('${post.id}'); }, 100);"
+     style="cursor:pointer;">
 
                     <img
                         src="${image}"
