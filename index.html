@@ -515,20 +515,28 @@
 }
 
 .home-product-price {
-    margin-bottom: 0.8rem;
+    margin-bottom: 0;
     color: var(--accent-color);
     font-size: 1rem;
     font-weight: 800;
 }
 
+.home-product-body {
+    position: relative;
+}
+
+.home-product-price {
+    display: inline-flex;
+    align-items: center;
+}
 .home-product-body button {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 40px;
     height: 40px;
-    margin-left: auto;
-    margin-top: 5px;
+    margin-left: 10px;
+    margin-top: 0;
     padding: 0;
     border: 2px solid var(--primary-color);
     border-radius: 50%;
@@ -549,6 +557,23 @@
 
 .home-product-body button:hover {
     background: var(--accent-color);
+}
+@media (min-width: 769px) {
+    .home-product-body {
+        position: relative;
+    }
+
+    .home-product-price {
+        display: inline-block;
+        margin-bottom: 0;
+    }
+
+    .home-product-body > button {
+        position: absolute;
+        right: 1.1rem;
+        bottom: 1.1rem;
+        margin: 0;
+    }
 }
         .gallery-card { background: var(--card-bg); border-radius: 14px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.04); border: 1px solid var(--border-color); transition: all 0.3s; }
         .gallery-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
@@ -1946,6 +1971,21 @@
     .home-product-body button {
         margin-top: 0;
     }
+}
+.home-product-body {
+    position: relative;
+}
+
+.home-product-price {
+    display: inline-block;
+    margin-bottom: 0;
+}
+
+.home-product-body > button {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    margin: 0;
 }
     </style>
 </head>
