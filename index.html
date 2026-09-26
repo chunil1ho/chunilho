@@ -6276,7 +6276,7 @@ function formatBoardText(command) {
     return template.innerHTML
         .replace(/\n/g, '<br>');
 }
- // =========================================
+// =========================================
 // 모바일 메뉴 열기 / 닫기
 // =========================================
 document.addEventListener('DOMContentLoaded', function () {
@@ -6285,6 +6285,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (!mobileMenuToggle || !mainNav) return;
 
+    // 햄버거 버튼
     mobileMenuToggle.addEventListener('click', function () {
         const isOpen = mainNav.classList.toggle('mobile-open');
 
@@ -6294,7 +6295,20 @@ document.addEventListener('DOMContentLoaded', function () {
             isOpen ? '메뉴 닫기' : '메뉴 열기'
         );
     });
-});   
+
+    // 메뉴 항목을 선택하면 모바일 메뉴 자동 닫기
+    mainNav.querySelectorAll('.nav-btn').forEach(function (navButton) {
+        navButton.addEventListener('click', function () {
+            mainNav.classList.remove('mobile-open');
+
+            mobileMenuToggle.textContent = '☰';
+            mobileMenuToggle.setAttribute(
+                'aria-label',
+                '메뉴 열기'
+            );
+        });
+    });
+});
 </script>
 <script type="text/javascript"
         src="/smarteditor2/js/service/HuskyEZCreator.js"
