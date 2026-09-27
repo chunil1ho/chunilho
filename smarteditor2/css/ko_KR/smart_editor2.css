@@ -296,16 +296,17 @@ body,#smart_editor2,#smart_editor2 p,#smart_editor2 h1,#smart_editor2 h2,#smart_
 
 #smart_editor2 .se2_text_tool .se2_layer {
     display: none;
-    position: fixed !important;
+    position: absolute !important;
 
-    z-index: 2147483647 !important;
+    top: 21px !important;
+    left: 0 !important;
+
+    z-index: 999999 !important;
 
     box-sizing: border-box !important;
 
-    /* 팝업 자체 크기는 SmartEditor2 원본 유지 */
     max-width: none !important;
 
-    /* 팝업 내용이 잘리지 않도록 */
     overflow: visible !important;
 }
 
