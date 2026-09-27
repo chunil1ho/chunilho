@@ -1374,10 +1374,6 @@ padding: 0 14px;
     }
 }
 /* =========================
-   PC 조황게시판 작성/수정폼 확대
-   ========================= */
-
-/* =========================
    PC 조황게시판 작성 / 수정폼
    ========================= */
 @media screen and (min-width: 769px) {
@@ -3345,22 +3341,54 @@ editor.exec(
             I18N_LOCALE: "ko_KR"
         },
 
-        fOnAppLoad: function () {
+fOnAppLoad: function () {
 
-            const editor =
-                boardSmartEditor.getById["board-content"];
+    const editor =
+        boardSmartEditor.getById["board-content"];
 
-            console.log(
-                'SmartEditor2 로딩 완료'
-            );
+    console.log(
+        'SmartEditor2 로딩 완료'
+    );
 
-            if (
-                typeof onReady === 'function' &&
-                editor
-            ) {
-                onReady(editor);
+    /* 모바일 SmartEditor 폭 강제 조정 */
+    if (window.innerWidth <= 768) {
+
+        setTimeout(function () {
+
+            const textarea =
+                document.getElementById('board-content');
+
+            if (!textarea) return;
+
+            const editorFrame =
+                textarea.parentElement.querySelector('iframe');
+
+            if (editorFrame) {
+
+                editorFrame.style.width = '100%';
+                editorFrame.style.maxWidth = '100%';
+                editorFrame.style.minWidth = '0';
+                editorFrame.style.boxSizing = 'border-box';
+
+                if (editorFrame.parentElement) {
+                    editorFrame.parentElement.style.width = '100%';
+                    editorFrame.parentElement.style.maxWidth = '100%';
+                    editorFrame.parentElement.style.minWidth = '0';
+                    editorFrame.parentElement.style.boxSizing = 'border-box';
+                }
+
             }
-        },
+
+        }, 100);
+    }
+
+    if (
+        typeof onReady === 'function' &&
+        editor
+    ) {
+        onReady(editor);
+    }
+},
 
         fCreator: "createSEditor2"
     });
