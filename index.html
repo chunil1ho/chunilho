@@ -1374,6 +1374,10 @@ padding: 0 14px;
     }
 }
 /* =========================
+   PC 조황게시판 작성/수정폼 확대
+   ========================= */
+
+/* =========================
    PC 조황게시판 작성 / 수정폼
    ========================= */
 @media screen and (min-width: 769px) {
@@ -2189,97 +2193,6 @@ padding: 0 14px;
         box-sizing: border-box !important;
     }
 
-}
-    /* 모바일 조황게시판 SmartEditor 강제 폭 맞춤 */
-@media screen and (max-width: 768px) {
-
-    #cat-board #board-write-form,
-    #cat-board #board-write-form .board-form-box,
-    #cat-board #board-write-form .board-form-group {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        box-sizing: border-box !important;
-    }
-
-    #cat-board #board-content {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        box-sizing: border-box !important;
-    }
-
-    #cat-board #board-content + iframe,
-    #cat-board iframe {
-        width: 100% !important;
-        max-width: 100% !important;
-        box-sizing: border-box !important;
-    }
-
-}
-    /* 모바일 조황게시판 작성폼 최종 폭 수정 */
-@media screen and (max-width: 768px) {
-
-    #cat-board #board-write-form {
-        display: block !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        margin: 15px 0 !important;
-        padding: 0 !important;
-        box-sizing: border-box !important;
-    }
-
-    #cat-board #board-write-form .board-form-box {
-        display: block !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        margin: 0 !important;
-        padding: 15px !important;
-        box-sizing: border-box !important;
-    }
-}
-    /* 조황게시판 작성폼 반응형 자동 크기 */
-#cat-board #board-write-form {
-    width: 100% !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-}
-
-#cat-board #board-write-form .board-form-box {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
-}
-
-@media screen and (max-width: 768px) {
-
-    #cat-board #board-write-form {
-        width: 100% !important;
-        max-width: 100% !important;
-        margin: 15px 0 !important;
-        padding: 0 !important;
-    }
-
-    #cat-board #board-write-form .board-form-box {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        padding: 15px !important;
-        margin: 0 !important;
-    }
-
-    #cat-board #board-write-form .board-form-group {
-        width: 100% !important;
-        min-width: 0 !important;
-    }
-
-    #cat-board #board-write-form input,
-    #cat-board #board-write-form iframe {
-        max-width: 100% !important;
-        box-sizing: border-box !important;
-    }
 }
     </style>
 </head>
@@ -3405,22 +3318,22 @@ editor.exec(
             I18N_LOCALE: "ko_KR"
         },
 
-fOnAppLoad: function () {
+        fOnAppLoad: function () {
 
-    const editor =
-        boardSmartEditor.getById["board-content"];
+            const editor =
+                boardSmartEditor.getById["board-content"];
 
-    console.log(
-        'SmartEditor2 로딩 완료'
-    );
+            console.log(
+                'SmartEditor2 로딩 완료'
+            );
 
-    if (
-        typeof onReady === 'function' &&
-        editor
-    ) {
-        onReady(editor);
-    }
-},
+            if (
+                typeof onReady === 'function' &&
+                editor
+            ) {
+                onReady(editor);
+            }
+        },
 
         fCreator: "createSEditor2"
     });
