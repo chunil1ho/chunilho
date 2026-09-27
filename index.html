@@ -3326,7 +3326,14 @@ editor.exec(
             console.log(
                 'SmartEditor2 로딩 완료'
             );
+    const seFrame = document.querySelector(
+        '#board-write-form iframe'
+    );
 
+    if (seFrame) {
+        seFrame.style.width = '100%';
+        seFrame.style.maxWidth = '100%';
+    }
             if (
                 typeof onReady === 'function' &&
                 editor
