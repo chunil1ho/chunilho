@@ -3318,23 +3318,29 @@ editor.exec(
             I18N_LOCALE: "ko_KR"
         },
 
-        fOnAppLoad: function () {
+fOnAppLoad: function () {
 
-            const editor =
-                boardSmartEditor.getById["board-content"];
+    const editor =
+        boardSmartEditor.getById["board-content"];
 
-            console.log(
-                'SmartEditor2 로딩 완료'
-            );
+    console.log('SmartEditor2 로딩 완료');
 
-            if (
-                typeof onReady === 'function' &&
-                editor
-            ) {
-                onReady(editor);
-            }
-        },
+    /* SmartEditor2 팝업 자동 위치 조정 시작 */
+    setTimeout(function () {
+        observeSmartEditorPopups();
+    }, 100);
 
+    if (typeof onReady === 'function' && editor) {
+        onReady(editor);
+    }
+},
+window.addEventListener('resize', function () {
+
+    requestAnimationFrame(function () {
+        fixSmartEditorPopups();
+    });
+
+});
         fCreator: "createSEditor2"
     });
 }
@@ -3383,6 +3389,137 @@ if (form) {
 initBoardSmartEditor();
 }
 
+
+/* =========================================
+   SmartEditor2 모바일 팝업 자동 위치 조정
+   ========================================= */
+
+function fixSmartEditorPopups() {
+
+    const editor = document.getElementById('smart_editor2');
+
+    if (!editor) return;
+
+    const toolbar = editor.querySelector('.se2_text_tool');
+
+    if (!toolbar) return;
+
+    const activeLayers =
+        toolbar.querySelectorAll('li.active > .se2_layer');
+
+    activeLayers.forEach(function(layer) {
+
+        const parentLi = layer.parentElement;
+
+        if (!parentLi) return;
+
+        /* 팝업을 잠시 화면 기준으로 계산 */
+        layer.style.position = 'fixed';
+
+        const triggerRect =
+            parentLi.getBoundingClientRect();
+
+        const viewportWidth =
+            document.documentElement.clientWidth;
+
+        const viewportHeight =
+            document.documentElement.clientHeight;
+
+        /* 팝업 실제 크기 */
+        const layerRect =
+            layer.getBoundingClientRect();
+
+        const popupWidth =
+            layerRect.width;
+
+        const popupHeight =
+            layerRect.height;
+
+        const margin = 8;
+
+        /* 기본 위치 */
+        let left = triggerRect.left;
+
+        let top = triggerRect.bottom + 2;
+
+        /* ---------------------------------
+           오른쪽으로 넘어가면 왼쪽으로 이동
+           --------------------------------- */
+        if (left + popupWidth > viewportWidth - margin) {
+
+            left =
+                viewportWidth -
+                popupWidth -
+                margin;
+        }
+
+        /* ---------------------------------
+           왼쪽으로 넘어가면 화면 안쪽으로
+           --------------------------------- */
+        if (left < margin) {
+            left = margin;
+        }
+
+        /* ---------------------------------
+           아래쪽으로 넘어가면 위쪽으로 이동
+           --------------------------------- */
+        if (top + popupHeight > viewportHeight - margin) {
+
+            top =
+                triggerRect.top -
+                popupHeight -
+                2;
+        }
+
+        /* ---------------------------------
+           위쪽으로도 넘어가면 화면 상단 고정
+           --------------------------------- */
+        if (top < margin) {
+            top = margin;
+        }
+
+        layer.style.left = left + 'px';
+        layer.style.top = top + 'px';
+    });
+}
+
+
+/* SmartEditor2 팝업 감시 */
+function observeSmartEditorPopups() {
+
+    const editor = document.getElementById('smart_editor2');
+
+    if (!editor) return;
+
+    const toolbar =
+        editor.querySelector('.se2_text_tool');
+
+    if (!toolbar) return;
+
+    if (toolbar.__popupObserver) {
+        return;
+    }
+
+    const observer =
+        new MutationObserver(function() {
+
+            requestAnimationFrame(function() {
+                fixSmartEditorPopups();
+            });
+
+        });
+
+    observer.observe(toolbar, {
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['class']
+    });
+
+    toolbar.__popupObserver = observer;
+
+    /* 처음 한 번 */
+    fixSmartEditorPopups();
+}    
 async function editBoardPost(postId) {
     const list = document.getElementById('board-list');
     const detail = document.getElementById('board-detail');
