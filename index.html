@@ -2217,6 +2217,39 @@ padding: 0 14px;
     }
 
 }
+    /* 모바일 조황게시판 전체 폭 정상화 */
+@media screen and (max-width: 768px) {
+
+    #cat-board {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
+    }
+
+    #cat-board #board-write-form {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    #cat-board #board-write-form .board-form-box {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        box-sizing: border-box !important;
+    }
+}
     </style>
 </head>
 <body id="mainBody">
@@ -3349,38 +3382,6 @@ fOnAppLoad: function () {
     console.log(
         'SmartEditor2 로딩 완료'
     );
-
-    /* 모바일 SmartEditor 폭 강제 조정 */
-    if (window.innerWidth <= 768) {
-
-        setTimeout(function () {
-
-            const textarea =
-                document.getElementById('board-content');
-
-            if (!textarea) return;
-
-            const editorFrame =
-                textarea.parentElement.querySelector('iframe');
-
-            if (editorFrame) {
-
-                editorFrame.style.width = '100%';
-                editorFrame.style.maxWidth = '100%';
-                editorFrame.style.minWidth = '0';
-                editorFrame.style.boxSizing = 'border-box';
-
-                if (editorFrame.parentElement) {
-                    editorFrame.parentElement.style.width = '100%';
-                    editorFrame.parentElement.style.maxWidth = '100%';
-                    editorFrame.parentElement.style.minWidth = '0';
-                    editorFrame.parentElement.style.boxSizing = 'border-box';
-                }
-
-            }
-
-        }, 100);
-    }
 
     if (
         typeof onReady === 'function' &&
