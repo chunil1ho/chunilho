@@ -200,7 +200,11 @@ body,#smart_editor2,#smart_editor2 p,#smart_editor2 h1,#smart_editor2 h2,#smart_
 #smart_editor2 .se2_text_tool .hover .se2_text_tool_more{background-position:-13px -41px}
 #smart_editor2 .se2_text_tool .active .se2_text_tool_more{background-position:-26px -41px}
 /* =========================================
-   SmartEditor2 모바일 반응형
+   SmartEditor2 모바일 완성형 반응형
+   - 툴바 자동 줄바꿈
+   - 팝업 잘림 방지
+   - 팝업 최상단 표시
+   - 입력창 모바일 폭 맞춤
    ========================================= */
 
 @media screen and (max-width: 768px) {
@@ -215,14 +219,27 @@ body,#smart_editor2,#smart_editor2 p,#smart_editor2 h1,#smart_editor2 h2,#smart_
     }
 
     #smart_editor2 #smart_editor2_content {
+        position: relative !important;
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
         box-sizing: border-box !important;
+        overflow: visible !important;
+    }
+
+    /* SmartEditor2 툴 영역 */
+    #smart_editor2 .se2_tool {
+        position: relative !important;
+        z-index: 99999 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
     }
 
     /* 툴바 */
     #smart_editor2 .se2_text_tool {
+        position: relative !important;
         display: flex !important;
         flex-wrap: wrap !important;
         align-items: flex-start !important;
@@ -232,16 +249,20 @@ body,#smart_editor2,#smart_editor2 p,#smart_editor2 h1,#smart_editor2 h2,#smart_
         min-width: 0 !important;
 
         height: auto !important;
+        min-height: 29px !important;
+
+        padding: 4px 0 4px 3px !important;
+
+        box-sizing: border-box !important;
 
         overflow: visible !important;
 
-        box-sizing: border-box !important;
+        z-index: 100000 !important;
     }
 
     /* 툴바 그룹 */
     #smart_editor2 .se2_text_tool > ul {
         float: none !important;
-
         display: flex !important;
         flex-wrap: wrap !important;
         align-items: flex-start !important;
@@ -256,43 +277,75 @@ body,#smart_editor2,#smart_editor2 p,#smart_editor2 h1,#smart_editor2 h2,#smart_
         white-space: normal !important;
 
         box-sizing: border-box !important;
-        
     }
 
-    /* 버튼 */
+    /* 각 버튼 */
     #smart_editor2 .se2_text_tool > ul > li {
         float: none !important;
         display: block !important;
+
         flex: 0 0 auto !important;
+
         position: relative !important;
+        z-index: 100001 !important;
     }
 
-/* SmartEditor2 팝업 최상단 표시 */
-#smart_editor2 .se2_tool {
-    position: relative !important;
-    z-index: 99999 !important;
-}
+    /* =========================================
+       모든 SmartEditor2 팝업
+       ========================================= */
 
-#smart_editor2 .se2_text_tool {
-    position: relative !important;
-    z-index: 100000 !important;
-    overflow: visible !important;
-}
+    #smart_editor2 .se2_text_tool .se2_layer {
+        display: none;
+        position: absolute !important;
 
-#smart_editor2 .se2_text_tool li.active {
-    position: relative !important;
-    z-index: 100001 !important;
-}
+        top: 21px !important;
+        left: 0 !important;
 
-#smart_editor2 .se2_text_tool .se2_layer {
-    position: absolute !important;
-    z-index: 100002 !important;
-}
+        z-index: 999999 !important;
+
+        box-sizing: border-box !important;
+
+        /* 팝업 자체 크기는 SmartEditor2 원본 유지 */
+        max-width: none !important;
+
+        /* 팝업 내용이 잘리지 않도록 */
+        overflow: visible !important;
+    }
+
+    /* 열린 팝업 */
+    #smart_editor2 .se2_text_tool li.active {
+        position: relative !important;
+        z-index: 1000000 !important;
+    }
+
+    #smart_editor2 .se2_text_tool li.active .se2_layer {
+        display: block !important;
+        z-index: 1000001 !important;
+    }
+
+    /* 팝업 내부 */
+    #smart_editor2 .se2_text_tool .se2_layer .se2_in_layer {
+        position: relative !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
+    }
+
+    /* =========================================
+       특수기호 / 이모티콘 / 표 등
+       ========================================= */
+
+    #smart_editor2 .se2_layer,
+    #smart_editor2 .se2_sub_text_tool {
+        overflow: visible !important;
+    }
+
     /* 다중 메뉴 */
     #smart_editor2 .se2_text_tool .se2_multy {
         position: static !important;
         float: none !important;
+
         max-width: 100% !important;
+
         box-sizing: border-box !important;
     }
 
@@ -305,19 +358,27 @@ body,#smart_editor2,#smart_editor2 p,#smart_editor2 h1,#smart_editor2 h2,#smart_
         margin-left: 0 !important;
     }
 
-    /* 입력 영역 */
+    /* =========================================
+       입력 영역
+       ========================================= */
+
     #smart_editor2 .se2_input_area {
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
+
         box-sizing: border-box !important;
+
+        overflow: visible !important;
     }
 
     #smart_editor2 #se2_iframe {
         display: block !important;
+
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
+
         box-sizing: border-box !important;
     }
 }
