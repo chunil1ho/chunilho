@@ -2194,6 +2194,33 @@ padding: 0 14px;
     }
 
 }
+    /* 모바일 조황게시판 SmartEditor 강제 폭 맞춤 */
+@media screen and (max-width: 768px) {
+
+    #cat-board #board-write-form,
+    #cat-board #board-write-form .board-form-box,
+    #cat-board #board-write-form .board-form-group {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    #cat-board #board-content {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    #cat-board #board-content + iframe,
+    #cat-board iframe {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+}
     </style>
 </head>
 <body id="mainBody">
