@@ -3080,6 +3080,37 @@ min-height: 9px !important;
     }
 
 }    
+    /* =========================================
+   색상 팔레트 버튼 크기 강제 재설정
+   ========================================= */
+
+#board-editor-toolbar .board-palette-grid {
+    display: grid !important;
+    grid-template-columns: repeat(16, minmax(0, 1fr)) !important;
+    gap: 1px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+}
+
+
+#board-editor-toolbar .board-palette-grid button {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+
+    height: 20px !important;
+    min-height: 20px !important;
+    max-height: 20px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    border: 1px solid #fff !important;
+    border-radius: 0 !important;
+
+    box-sizing: border-box !important;
+}
     </style>
 </head>
 <body id="mainBody">
