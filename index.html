@@ -4249,59 +4249,93 @@ function applyBoardFontSize(size) {
     }
 
     /*
-     * 선택 영역의 기존 글자 크기 span 제거
+     * 선택 영역을 기존 위치에서 분리
      */
     const contents = range.extractContents();
 
-    function removeFontSizeSpans(node) {
+    /*
+     * 기존 font-size span 제거
+     */
+    function removeFontSizeSpanStyles(node) {
 
         if (node.nodeType !== Node.ELEMENT_NODE) {
             return;
         }
 
-        const children =
-            Array.from(node.children);
+        if (
+            node.tagName === 'SPAN' &&
+            node.style.fontSize
+        ) {
+            node.style.removeProperty('font-size');
+            node.style.removeProperty('line-height');
+        }
 
-        children.forEach(function (child) {
-
-            removeFontSizeSpans(child);
-
-            if (
-                child.tagName === 'SPAN' &&
-                child.style.fontSize
-            ) {
-
-                const parent = child.parentNode;
-
-                while (child.firstChild) {
-                    parent.insertBefore(
-                        child.firstChild,
-                        child
-                    );
-                }
-
-                parent.removeChild(child);
-            }
+        Array.from(node.children).forEach(function (child) {
+            removeFontSizeSpanStyles(child);
         });
     }
 
-    removeFontSizeSpans(contents);
+    removeFontSizeSpanStyles(contents);
 
     /*
-     * 새로운 글자 크기 하나만 적용
+     * 새로운 글자 크기 적용
      */
-const span =
-    document.createElement('span');
+    const span = document.createElement('span');
 
-span.style.fontSize = size;
-span.style.lineHeight = 'inherit';
+    span.style.fontSize = size;
+    span.style.lineHeight = 'inherit';
 
     span.appendChild(contents);
 
     range.insertNode(span);
 
     /*
-     * 적용된 글자 다시 선택
+     * 새 span 바깥에 남아 있는
+     * 기존 font-size span 제거
+     */
+    let parent = span.parentElement;
+
+    while (
+        parent &&
+        parent !== editor
+    ) {
+
+        if (
+            parent.tagName === 'SPAN' &&
+            parent.style.fontSize
+        ) {
+
+            const grandParent =
+                parent.parentNode;
+
+            while (parent.firstChild) {
+                grandParent.insertBefore(
+                    parent.firstChild,
+                    parent
+                );
+            }
+
+            grandParent.removeChild(parent);
+
+        } else {
+            parent = parent.parentElement;
+        }
+    }
+
+    /*
+     * 빈 font-size span 정리
+     */
+    editor
+        .querySelectorAll('span[style*="font-size"]')
+        .forEach(function (oldSpan) {
+
+            if (!oldSpan.textContent.trim()) {
+                oldSpan.remove();
+            }
+        });
+
+    /*
+     * 적용된 영역 다시 선택
      */
     selection.removeAllRanges();
 
