@@ -4164,7 +4164,10 @@ const fontSize =
     document.getElementById('board-font-size');
 
 if (fontSize) {
-
+    /* 크기 선택창을 누르기 전에 선택 영역 저장 */
+    fontSize.addEventListener('mousedown', function () {
+        saveBoardEditorSelection();
+    });
     fontSize.addEventListener('change', function () {
 
         const value = this.value;
