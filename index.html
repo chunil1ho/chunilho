@@ -3515,24 +3515,204 @@ padding: 0 14px;
     <option value="custom">직접 입력...</option>
 </select>
 
-<div class="board-color-button board-text-color-button" title="글자색">
-    <span>가</span>
-    <input
-        type="color"
-        id="board-text-color"
-        value="#000000"
-        aria-label="글자색"
+<!-- 글자색 -->
+<div class="board-color-picker board-text-color-picker">
+
+    <button
+        type="button"
+        class="board-color-button board-text-color-button"
+        title="글자색"
     >
+        <span>가</span>
+    </button>
+
+    <div
+        class="board-color-palette"
+        id="board-text-color-palette"
+    >
+
+        <div class="board-palette-preview">
+            <span>가나다</span>
+        </div>
+
+        <div class="board-palette-grid">
+
+            <!-- 빨강 계열 -->
+            <button type="button" data-color="#ff0000"></button>
+            <button type="button" data-color="#ffcccc"></button>
+            <button type="button" data-color="#e57373"></button>
+            <button type="button" data-color="#b71c1c"></button>
+
+            <!-- 주황 -->
+            <button type="button" data-color="#ff6600"></button>
+            <button type="button" data-color="#ffe0cc"></button>
+            <button type="button" data-color="#d98b5f"></button>
+            <button type="button" data-color="#7a3e1d"></button>
+
+            <!-- 노랑 -->
+            <button type="button" data-color="#ffb52e"></button>
+            <button type="button" data-color="#fff0cc"></button>
+            <button type="button" data-color="#d6b656"></button>
+            <button type="button" data-color="#806b24"></button>
+
+            <!-- 연두 -->
+            <button type="button" data-color="#ffff00"></button>
+            <button type="button" data-color="#ffffcc"></button>
+            <button type="button" data-color="#b8cc4a"></button>
+            <button type="button" data-color="#59661f"></button>
+
+            <!-- 초록 -->
+            <button type="button" data-color="#4ca338"></button>
+            <button type="button" data-color="#d9f0d2"></button>
+            <button type="button" data-color="#73b879"></button>
+            <button type="button" data-color="#245c2b"></button>
+
+            <!-- 청록 -->
+            <button type="button" data-color="#4ca3a3"></button>
+            <button type="button" data-color="#d5eeee"></button>
+            <button type="button" data-color="#68a9a9"></button>
+            <button type="button" data-color="#245959"></button>
+
+            <!-- 파랑 -->
+            <button type="button" data-color="#337ab7"></button>
+            <button type="button" data-color="#d6e7f7"></button>
+            <button type="button" data-color="#668fbd"></button>
+            <button type="button" data-color="#23466f"></button>
+
+            <!-- 남색 -->
+            <button type="button" data-color="#3935b9"></button>
+            <button type="button" data-color="#d9d8f5"></button>
+            <button type="button" data-color="#6764b0"></button>
+            <button type="button" data-color="#24215f"></button>
+
+            <!-- 보라 -->
+            <button type="button" data-color="#7629b8"></button>
+            <button type="button" data-color="#e4d2f2"></button>
+            <button type="button" data-color="#9559bd"></button>
+            <button type="button" data-color="#45205e"></button>
+
+            <!-- 분홍 -->
+            <button type="button" data-color="#d92f7d"></button>
+            <button type="button" data-color="#f1d1df"></button>
+            <button type="button" data-color="#ca78a2"></button>
+            <button type="button" data-color="#702143"></button>
+
+            <!-- 회색 계열 -->
+            <button type="button" data-color="#222222"></button>
+            <button type="button" data-color="#444444"></button>
+            <button type="button" data-color="#666666"></button>
+            <button type="button" data-color="#888888"></button>
+            <button type="button" data-color="#aaaaaa"></button>
+            <button type="button" data-color="#cccccc"></button>
+            <button type="button" data-color="#dddddd"></button>
+            <button type="button" data-color="#eeeeee"></button>
+            <button type="button" data-color="#ffffff"></button>
+
+        </div>
+
+        <button
+            type="button"
+            class="board-palette-more"
+        >
+            더보기 ▼
+        </button>
+
+    </div>
 </div>
 
-<div class="board-color-button board-bg-color-button" title="배경색">
-    <span>가</span>
-    <input
-        type="color"
-        id="board-bg-color"
-        value="#ffff00"
-        aria-label="배경색"
+
+<!-- 배경색 -->
+<div class="board-color-picker board-bg-color-picker">
+
+    <button
+        type="button"
+        class="board-color-button board-bg-color-button"
+        title="배경색"
     >
+        <span>가</span>
+    </button>
+
+    <div
+        class="board-color-palette"
+        id="board-bg-color-palette"
+    >
+
+        <div class="board-palette-preview">
+            <span>가나다</span>
+        </div>
+
+        <div class="board-palette-grid">
+
+            <button type="button" data-color="#ff0000"></button>
+            <button type="button" data-color="#ffcccc"></button>
+            <button type="button" data-color="#e57373"></button>
+            <button type="button" data-color="#b71c1c"></button>
+
+            <button type="button" data-color="#ff6600"></button>
+            <button type="button" data-color="#ffe0cc"></button>
+            <button type="button" data-color="#d98b5f"></button>
+            <button type="button" data-color="#7a3e1d"></button>
+
+            <button type="button" data-color="#ffb52e"></button>
+            <button type="button" data-color="#fff0cc"></button>
+            <button type="button" data-color="#d6b656"></button>
+            <button type="button" data-color="#806b24"></button>
+
+            <button type="button" data-color="#ffff00"></button>
+            <button type="button" data-color="#ffffcc"></button>
+            <button type="button" data-color="#b8cc4a"></button>
+            <button type="button" data-color="#59661f"></button>
+
+            <button type="button" data-color="#4ca338"></button>
+            <button type="button" data-color="#d9f0d2"></button>
+            <button type="button" data-color="#73b879"></button>
+            <button type="button" data-color="#245c2b"></button>
+
+            <button type="button" data-color="#4ca3a3"></button>
+            <button type="button" data-color="#d5eeee"></button>
+            <button type="button" data-color="#68a9a9"></button>
+            <button type="button" data-color="#245959"></button>
+
+            <button type="button" data-color="#337ab7"></button>
+            <button type="button" data-color="#d6e7f7"></button>
+            <button type="button" data-color="#668fbd"></button>
+            <button type="button" data-color="#23466f"></button>
+
+            <button type="button" data-color="#3935b9"></button>
+            <button type="button" data-color="#d9d8f5"></button>
+            <button type="button" data-color="#6764b0"></button>
+            <button type="button" data-color="#24215f"></button>
+
+            <button type="button" data-color="#7629b8"></button>
+            <button type="button" data-color="#e4d2f2"></button>
+            <button type="button" data-color="#9559bd"></button>
+            <button type="button" data-color="#45205e"></button>
+
+            <button type="button" data-color="#d92f7d"></button>
+            <button type="button" data-color="#f1d1df"></button>
+            <button type="button" data-color="#ca78a2"></button>
+            <button type="button" data-color="#702143"></button>
+
+            <button type="button" data-color="#222222"></button>
+            <button type="button" data-color="#444444"></button>
+            <button type="button" data-color="#666666"></button>
+            <button type="button" data-color="#888888"></button>
+            <button type="button" data-color="#aaaaaa"></button>
+            <button type="button" data-color="#cccccc"></button>
+            <button type="button" data-color="#dddddd"></button>
+            <button type="button" data-color="#eeeeee"></button>
+            <button type="button" data-color="#ffffff"></button>
+
+        </div>
+
+        <button
+            type="button"
+            class="board-palette-more"
+        >
+            더보기 ▼
+        </button>
+
+    </div>
 </div>
 
     <button type="button" data-command="justifyLeft" title="왼쪽 정렬">
