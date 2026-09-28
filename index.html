@@ -3557,31 +3557,8 @@ function updateBoardWriteButton() {
     writeButton.style.display = isAdminLoggedIn ? 'inline-block' : 'none';
 }
     function normalizeTel(tel) { return String(tel || '').replace(/\D/g, ''); }
-    let boardSmartEditor = [];
-
-function initBoardSmartEditor(onReady) {
-
-    // 이미 SmartEditor2가 만들어져 있으면 바로 전달
-    if (
-        boardSmartEditor.getById &&
-        boardSmartEditor.getById["board-content"]
-    ) {
-        const editor =
-            boardSmartEditor.getById["board-content"];
-        
-editor.exec(
-    'SET_IR',
-    ['']
-);
-        if (typeof onReady === 'function') {
-            onReady(editor);
-        }
-
-        return;
-    }
-
-
-function showBoardWriteForm() {
+    
+    function showBoardWriteForm() {
     const list = document.getElementById('board-list');
     const detail = document.getElementById('board-detail');
     const form = document.getElementById('board-write-form');
@@ -3602,13 +3579,14 @@ function showBoardWriteForm() {
     if (titleInput) {
         titleInput.value = '';
     }
+const editorContent =
+    document.getElementById('board-editor-content');
 
+if (editorContent) {
+    editorContent.innerHTML = '';
+}
     if (contentInput) {
         contentInput.value = '';
-    }
-
-    if (editor) {
-        editor.innerHTML = '';
     }
 
     if (list) {
@@ -4365,12 +4343,6 @@ document.addEventListener('click', function (event) {
 
     if (titleInput) titleInput.value = '';
     if (contentInput) contentInput.value = '';
-
-const editor = document.getElementById('board-editor');
-
-if (editor) {
-    editor.innerHTML = '';
-}
 
     if (imageInput) imageInput.value = '';
     if (preview) preview.innerHTML = '';
