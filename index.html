@@ -179,6 +179,7 @@
         .account-highlight { background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px dashed #cbd5e1; font-weight: 700; color: var(--accent-color); font-size: 0.95rem; text-align: center; margin-top: 0.5rem; }
 
 .hero {
+    position: relative;
     width: 100vw;
     height: 360px;
     overflow: hidden;
@@ -761,9 +762,6 @@ padding: 0 14px;
             .main-nav {
     display: none;
 }
-            header {
-    position: relative;
-}
             .main-nav.mobile-open {
     display: block;
     position: absolute;
@@ -791,13 +789,10 @@ padding: 0 14px;
 .main-nav.mobile-open .nav-btn {
     display: block;
     width: 100%;
-    padding: 11px 20px;
-    margin: 0;
+    padding: 15px 20px;
     text-align: left;
     border-bottom: 1px solid #eee;
-    font-size: 15px;
-    line-height: 1.4;
-    box-sizing: border-box;
+    font-size: 16px;
 }
             #mobileMenuToggle {
     display: block;
@@ -2245,7 +2240,8 @@ padding: 0 14px;
 #board-editor-toolbar select {
     padding: 0 6px;
 }
- input[type="color"] {
+
+#board-editor-toolbar input[type="color"] {
     width: 32px;
     height: 32px;
     padding: 2px;
@@ -2292,24 +2288,24 @@ padding: 0 14px;
 
 @media screen and (max-width: 768px) {
 
-     {
+    #board-editor-toolbar {
         gap: 3px;
         padding: 5px;
     }
 
-     button,
-     select,
-     input[type="color"] {
+    #board-editor-toolbar button,
+    #board-editor-toolbar select,
+    #board-editor-toolbar input[type="color"] {
         height: 30px;
     }
 
-#board-editor-toolbar button {
-    min-width: 30px;
-    padding: 0 6px;
-    font-size: 13px;
-}
+    #board-editor-toolbar button {
+        min-width: 30px;
+        padding: 0 6px;
+        font-size: 13px;
+    }
 
-     select {
+    #board-editor-toolbar select {
         max-width: 105px;
     }
 
@@ -2772,445 +2768,6 @@ padding: 0 14px;
 #board-editor-toolbar button.active:hover {
     background: #ddd !important;
 }
-/* =========================================
-   게시판 색상 팔레트
-   ========================================= */
-
-.board-palette-wrap {
-    position: relative !important;
-    display: inline-flex !important;
-    flex: 0 0 34px !important;
-    width: 34px !important;
-    height: 32px !important;
-    box-sizing: border-box !important;
-}
-
-
-/* 색상 버튼 */
-.board-palette-trigger {
-    position: relative !important;
-
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-
-    width: 34px !important;
-    height: 32px !important;
-
-    padding: 0 !important;
-    margin: 0 !important;
-
-    background: #fff !important;
-    border: 1px solid #ccc !important;
-    border-radius: 4px !important;
-
-    font-size: 17px !important;
-    font-weight: 700 !important;
-
-    cursor: pointer !important;
-    box-sizing: border-box !important;
-}
-
-
-/* 글자색 버튼 아래 색상 표시 */
-.board-text-palette-trigger::after {
-    content: "" !important;
-
-    position: absolute !important;
-
-    left: 6px !important;
-    right: 6px !important;
-    bottom: 3px !important;
-
-    height: 3px !important;
-
-    background: #000 !important;
-
-    pointer-events: none !important;
-}
-
-
-/* 배경색 버튼의 기본 노란색 */
-.board-bg-palette-trigger span {
-    background: #ffff00 !important;
-    padding: 1px 2px !important;
-}
-
-
-/* =========================================
-   팔레트 본체
-   ========================================= */
-
-.board-color-palette {
-    position: absolute !important;
-
-    top: calc(100% + 6px) !important;
-    left: 0 !important;
-
-    z-index: 99999 !important;
-
-    display: none !important;
-
-    width: 155px !important;
-
-    padding: 7px !important;
-
-    background: #fff !important;
-
-    border: 1px solid #ccc !important;
-    border-radius: 7px !important;
-
-    box-shadow: 0 5px 18px rgba(0,0,0,.18) !important;
-
-    box-sizing: border-box !important;
-}
-
-
-/* 팔레트 열림 */
-.board-palette-wrap.open .board-color-palette {
-    display: block !important;
-}
-
-
-/* =========================================
-   미리보기
-   ========================================= */
-
-.board-palette-preview {
-    width: 100% !important;
-    height: 24px !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-
-    margin-bottom: 4px !important;
-
-    background: #fff !important;
-
-    border: 1px solid #ddd !important;
-    border-radius: 2px !important;
-
-    box-sizing: border-box !important;
-
-    font-size: 12px !important;
-    font-weight: 600 !important;
-}
-
-
-/* 배경색 팔레트 미리보기 */
-.board-bg-preview {
-    background: #ffff00 !important;
-}
-
-
-/* =========================================
-   색상 격자
-   ========================================= */
-
-.board-palette-grid {
-    display: grid !important;
-    grid-template-columns: repeat(13, 1fr) !important;
-    gap: 1px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-}
-
-
-.board-palette-grid button {
-    width: 100% !important;
-    height: 9px !important;
-min-height: 9px !important;
-    min-width: 0 !important;
-    min-height: 28px !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    border: 1px solid #fff !important;
-    border-radius: 0 !important;
-    cursor: pointer !important;
-    box-sizing: border-box !important;
-}
-
-.board-palette-grid button:hover {
-    transform: scale(1.12) !important;
-    border-color: #333 !important;
-    z-index: 2 !important;
-}
-
-
-/* =========================================
-   더보기
-   ========================================= */
-
-.board-palette-more {
-    width: 50% !important;
-    height: 14px !important;
-
-    margin: 3px 0 0 0 !important;
-    padding: 0 !important;
-
-    background: #fff !important;
-
-    border: none !important;
-
-    font-size: 10px !important;
-    line-height: 18px !important;
-    color: #555 !important;
-
-    cursor: pointer !important;
-
-    text-align: right !important;
-
-    white-space: nowrap !important;
-
-    box-sizing: border-box !important;
-}
-
-.board-palette-more:hover {
-    background: #f5f5f5 !important;
-}
-
-
-.board-palette-more:hover {
-    background: #eee !important;
-}
-
-
-/* =========================================
-   직접 색상 선택
-   ========================================= */
-
-.board-palette-custom {
-    display: none !important;
-
-    align-items: center !important;
-    gap: 5px !important;
-
-    margin-top: 8px !important;
-
-    box-sizing: border-box !important;
-}
-
-
-/* 더보기 눌렀을 때 */
-.board-color-palette.custom-open .board-palette-custom {
-    display: flex !important;
-}
-
-
-/* 직접 색상 선택 버튼 */
-.board-custom-color-input {
-    width: 34px !important;
-    height: 32px !important;
-
-    padding: 2px !important;
-    margin: 0 !important;
-
-    background: #fff !important;
-
-    border: 1px solid #ccc !important;
-    border-radius: 4px !important;
-
-    cursor: pointer !important;
-
-    box-sizing: border-box !important;
-}
-
-
-/* HEX 입력 */
-.board-custom-color-hex {
-    flex: 1 !important;
-
-    min-width: 0 !important;
-
-    height: 32px !important;
-
-    padding: 0 8px !important;
-
-    border: 1px solid #ccc !important;
-    border-radius: 4px !important;
-
-    font-size: 13px !important;
-
-    box-sizing: border-box !important;
-}
-
-
-/* 적용 버튼 */
-.board-custom-color-apply {
-    height: 32px !important;
-
-    padding: 0 10px !important;
-
-    background: #333 !important;
-    color: #fff !important;
-
-    border: none !important;
-    border-radius: 4px !important;
-
-    font-size: 13px !important;
-
-    cursor: pointer !important;
-
-    white-space: nowrap !important;
-}
-
-
-.board-custom-color-apply:hover {
-    background: #222 !important;
-}
-
-
-/* =========================================
-   모바일
-   ========================================= */
-
-@media (max-width: 768px) {
-
-    .board-palette-wrap {
-        flex: 0 0 34px !important;
-
-        width: 34px !important;
-        min-width: 34px !important;
-        max-width: 34px !important;
-
-        height: 32px !important;
-    }
-
-    .board-color-palette {
-        width: 155px !important;
-        left: 0 !important;
-         padding: 4px !important;
-    }
-
-}    
-    /* =========================================
-   색상 팔레트 버튼 크기 강제 재설정
-   ========================================= */
-
-/* =========================================
-   색상 팔레트 최종 크기
-   ========================================= */
-
-#board-editor-toolbar .board-palette-grid {
-    display: grid !important;
-
-    grid-template-columns: repeat(16, 1fr) !important;
-
-    gap: 2px !important;
-
-    width: 100% !important;
-    min-width: 0 !important;
-
-    box-sizing: border-box !important;
-}
-
-
-#board-editor-toolbar .board-palette-grid button {
-    width: 100% !important;
-
-    height: 13px !important;
-    min-width: 0 !important;
-    min-height: 13px !important;
-    max-width: none !important;
-    max-height: 13px !important;
-
-    padding: 0 !important;
-    margin: 0 !important;
-
-    border: 0 !important;
-    border-radius: 0 !important;
-
-    box-sizing: border-box !important;
-}
-#board-editor-toolbar .board-color-palette .board-palette-grid {
-    display: grid !important;
-    grid-template-columns: repeat(13, 1fr) !important;
-    gap: 1px !important;
-
-    width: 100% !important;
-    min-width: 0 !important;
-
-    box-sizing: border-box !important;
-}
-
-#board-editor-toolbar .board-color-palette .board-palette-grid button {
-    width: 10px !important;
-    min-width: 10px !important;
-    max-width: 10px !important;
-
-    height: 10px !important;
-    min-height: 10px !important;
-    max-height: 10px !important;
-
-    padding: 0 !important;
-    margin: 0 !important;
-
-    border: 0 !important;
-    border-radius: 0 !important;
-
-    aspect-ratio: 1 / 1 !important;
-
-    box-sizing: border-box !important;
-}
-    #board-editor-toolbar .board-palette-more {
-    display: block !important;
-
-    width: 30px !important;
-    min-width: 30px !important;
-    max-width: 30px !important;
-
-    height: 14px !important;
-    min-height: 14px !important;
-    max-height: 14px !important;
-
-    margin: 2px 0 0 0 !important;
-    padding: 0 !important;
-
-    background: #fff !important;
-
-    border: 0 !important;
-    border-radius: 0 !important;
-
-    font-size: 8px !important;
-    line-height: 14px !important;
-
-    text-align: left !important;
-    white-space: nowrap !important;
-
-    box-sizing: border-box !important;
-}
-    @media (max-width: 768px) {
-
-    #board-editor-toolbar .board-color-palette {
-        width: 155px !important;
-        max-width: 155px !important;
-    }
-
-    #board-editor-toolbar .board-palette-more {
-        width: 30px !important;
-        min-width: 30px !important;
-        max-width: 30px !important;
-    }
-}
- @media (max-width: 768px) {
-
-    #cat-booking .form-box {
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    #cat-booking .form-group input,
-    #cat-booking .form-group select,
-    #cat-booking .form-group textarea {
-        width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
-        padding: 0.85rem 1rem;
-        font-size: 16px;
-    }
-
-}   
     </style>
 </head>
 <body id="mainBody">
@@ -3958,255 +3515,24 @@ min-height: 9px !important;
     <option value="custom">직접 입력...</option>
 </select>
 
-<!-- 글자색 -->
-<div class="board-palette-wrap board-text-palette-wrap">
-
-    <button
-        type="button"
-        class="board-palette-trigger board-text-palette-trigger"
-        title="글자색"
+<div class="board-color-button board-text-color-button" title="글자색">
+    <span>가</span>
+    <input
+        type="color"
+        id="board-text-color"
+        value="#000000"
+        aria-label="글자색"
     >
-        <span>가</span>
-    </button>
-
-    <div class="board-color-palette board-text-color-palette">
-
-        <div class="board-palette-preview">
-            <span>글자색</span>
-        </div>
-
-        <div class="board-palette-grid">
-
-    <!-- 1줄 -->
-    <button type="button" data-color="#FF0000"></button>
-    <button type="button" data-color="#FF6600"></button>
-    <button type="button" data-color="#FF9900"></button>
-    <button type="button" data-color="#FFFF00"></button>
-    <button type="button" data-color="#99CC00"></button>
-    <button type="button" data-color="#00CC00"></button>
-    <button type="button" data-color="#00CCCC"></button>
-    <button type="button" data-color="#0099FF"></button>
-    <button type="button" data-color="#0066FF"></button>
-    <button type="button" data-color="#0000FF"></button>
-    <button type="button" data-color="#6600FF"></button>
-    <button type="button" data-color="#9900FF"></button>
-    <button type="button" data-color="#FF00FF"></button>
-    <button type="button" data-color="#FF0099"></button>
-    <button type="button" data-color="#CC0000"></button>
-    <button type="button" data-color="#990000"></button>
-
-    <!-- 2줄 -->
-    <button type="button" data-color="#FFCCCC"></button>
-    <button type="button" data-color="#FFE0CC"></button>
-    <button type="button" data-color="#FFF2CC"></button>
-    <button type="button" data-color="#FFFFCC"></button>
-    <button type="button" data-color="#E6F2CC"></button>
-    <button type="button" data-color="#CCFFCC"></button>
-    <button type="button" data-color="#CCFFFF"></button>
-    <button type="button" data-color="#CCE5FF"></button>
-    <button type="button" data-color="#CCCCFF"></button>
-    <button type="button" data-color="#E5CCFF"></button>
-    <button type="button" data-color="#FFCCFF"></button>
-    <button type="button" data-color="#FFCCE5"></button>
-    <button type="button" data-color="#EEEEEE"></button>
-    <button type="button" data-color="#DDDDDD"></button>
-    <button type="button" data-color="#CCCCCC"></button>
-    <button type="button" data-color="#BBBBBB"></button>
-
-    <!-- 3줄 -->
-    <button type="button" data-color="#E06666"></button>
-    <button type="button" data-color="#F6B26B"></button>
-    <button type="button" data-color="#FFD966"></button>
-    <button type="button" data-color="#93C47D"></button>
-    <button type="button" data-color="#6AA84F"></button>
-    <button type="button" data-color="#76A5AF"></button>
-    <button type="button" data-color="#6FA8DC"></button>
-    <button type="button" data-color="#6D9EEB"></button>
-    <button type="button" data-color="#8E7CC3"></button>
-    <button type="button" data-color="#A64D79"></button>
-    <button type="button" data-color="#CC6699"></button>
-    <button type="button" data-color="#999999"></button>
-    <button type="button" data-color="#888888"></button>
-    <button type="button" data-color="#777777"></button>
-    <button type="button" data-color="#666666"></button>
-    <button type="button" data-color="#555555"></button>
-
-    <!-- 4줄 -->
-    <button type="button" data-color="#990000"></button>
-    <button type="button" data-color="#783F04"></button>
-    <button type="button" data-color="#7F6000"></button>
-    <button type="button" data-color="#274E13"></button>
-    <button type="button" data-color="#0B5394"></button>
-    <button type="button" data-color="#134F5C"></button>
-    <button type="button" data-color="#1C4587"></button>
-    <button type="button" data-color="#20124D"></button>
-    <button type="button" data-color="#351C75"></button>
-    <button type="button" data-color="#741B47"></button>
-    <button type="button" data-color="#434343"></button>
-    <button type="button" data-color="#333333"></button>
-    <button type="button" data-color="#222222"></button>
-    <button type="button" data-color="#111111"></button>
-    <button type="button" data-color="#000000"></button>
-    <button type="button" data-color="#FFFFFF"></button>
-
 </div>
 
-        <button
-            type="button"
-            class="board-palette-more"
-        >
-            더보기 ▼
-        </button>
-
-        <div class="board-palette-custom">
-            <input
-                type="color"
-                class="board-custom-color-input"
-                value="#000000"
-            >
-
-            <input
-                type="text"
-                class="board-custom-color-hex"
-                value="#000000"
-                maxlength="7"
-            >
-
-            <button
-                type="button"
-                class="board-custom-color-apply"
-            >
-                적용
-            </button>
-        </div>
-
-    </div>
-</div>
-
-
-<!-- 배경색 -->
-<div class="board-palette-wrap board-bg-palette-wrap">
-
-    <button
-        type="button"
-        class="board-palette-trigger board-bg-palette-trigger"
-        title="배경색"
+<div class="board-color-button board-bg-color-button" title="배경색">
+    <span>가</span>
+    <input
+        type="color"
+        id="board-bg-color"
+        value="#ffff00"
+        aria-label="배경색"
     >
-        <span>가</span>
-    </button>
-
-    <div class="board-color-palette board-bg-color-palette">
-
-        <div class="board-palette-preview board-bg-preview">
-            <span>글자배경</span>
-        </div>
-
-       <div class="board-palette-grid">
-
-    <!-- 1줄 -->
-    <button type="button" data-color="#F04432"></button>
-    <button type="button" data-color="#ED7D31"></button>
-    <button type="button" data-color="#F5B63D"></button>
-    <button type="button" data-color="#FFF24A"></button>
-    <button type="button" data-color="#A8C83A"></button>
-    <button type="button" data-color="#439C3A"></button>
-    <button type="button" data-color="#4AA7A0"></button>
-    <button type="button" data-color="#377BB8"></button>
-    <button type="button" data-color="#3939B5"></button>
-    <button type="button" data-color="#7030A0"></button>
-    <button type="button" data-color="#D52D78"></button>
-    <button type="button" data-color="#000000"></button>
-    <button type="button" data-color="#222222"></button>
-    <button type="button" data-color="#444444"></button>
-    <button type="button" data-color="#666666"></button>
-    <button type="button" data-color="#888888"></button>
-
-    <!-- 2줄 -->
-    <button type="button" data-color="#FCE4E0"></button>
-    <button type="button" data-color="#FBE7D7"></button>
-    <button type="button" data-color="#FBECCB"></button>
-    <button type="button" data-color="#FFF8B8"></button>
-    <button type="button" data-color="#E5F0C4"></button>
-    <button type="button" data-color="#DCEEDB"></button>
-    <button type="button" data-color="#D5EDEA"></button>
-    <button type="button" data-color="#D6E5F5"></button>
-    <button type="button" data-color="#DCDCF2"></button>
-    <button type="button" data-color="#E8D8F2"></button>
-    <button type="button" data-color="#F0D5E2"></button>
-    <button type="button" data-color="#AAAAAA"></button>
-    <button type="button" data-color="#BBBBBB"></button>
-    <button type="button" data-color="#CCCCCC"></button>
-    <button type="button" data-color="#DDDDDD"></button>
-    <button type="button" data-color="#EEEEEE"></button>
-
-    <!-- 3줄 -->
-    <button type="button" data-color="#D8847D"></button>
-    <button type="button" data-color="#D09B72"></button>
-    <button type="button" data-color="#C7B17B"></button>
-    <button type="button" data-color="#C8C8A0"></button>
-    <button type="button" data-color="#C4C89D"></button>
-    <button type="button" data-color="#7EB47A"></button>
-    <button type="button" data-color="#67A9A2"></button>
-    <button type="button" data-color="#6790B3"></button>
-    <button type="button" data-color="#6869A7"></button>
-    <button type="button" data-color="#8C5AB8"></button>
-    <button type="button" data-color="#C46D9E"></button>
-    <button type="button" data-color="#55504D"></button>
-    <button type="button" data-color="#666A73"></button>
-    <button type="button" data-color="#777777"></button>
-    <button type="button" data-color="#888888"></button>
-    <button type="button" data-color="#999999"></button>
-
-    <!-- 4줄 -->
-    <button type="button" data-color="#9E1D1D"></button>
-    <button type="button" data-color="#633A22"></button>
-    <button type="button" data-color="#756331"></button>
-    <button type="button" data-color="#55572C"></button>
-    <button type="button" data-color="#4B5227"></button>
-    <button type="button" data-color="#23452D"></button>
-    <button type="button" data-color="#24504C"></button>
-    <button type="button" data-color="#294C69"></button>
-    <button type="button" data-color="#282852"></button>
-    <button type="button" data-color="#45265C"></button>
-    <button type="button" data-color="#632046"></button>
-    <button type="button" data-color="#383431"></button>
-    <button type="button" data-color="#44474D"></button>
-    <button type="button" data-color="#555555"></button>
-    <button type="button" data-color="#666666"></button>
-    <button type="button" data-color="#777777"></button>
-
-</div>
-
-        <button
-            type="button"
-            class="board-palette-more"
-        >
-            더보기 ▼
-        </button>
-
-        <div class="board-palette-custom">
-            <input
-                type="color"
-                class="board-custom-color-input"
-                value="#ffff00"
-            >
-
-            <input
-                type="text"
-                class="board-custom-color-hex"
-                value="#ffff00"
-                maxlength="7"
-            >
-
-            <button
-                type="button"
-                class="board-custom-color-apply"
-            >
-                적용
-            </button>
-        </div>
-
-    </div>
 </div>
 
     <button type="button" data-command="justifyLeft" title="왼쪽 정렬">
@@ -5027,417 +4353,49 @@ function applyBoardFontSize(size) {
 
     saveBoardEditorSelection();
 }
-/* =========================================
-   색상 팔레트
-   ========================================= */
-
-const textPaletteWrap =
-    document.querySelector('.board-text-palette-wrap');
-
-const bgPaletteWrap =
-    document.querySelector('.board-bg-palette-wrap');
-
-
-/* 팔레트 열기 */
-function toggleBoardColorPalette(wrap) {
-
-    if (!wrap) return;
-
-    const isOpen =
-        wrap.classList.contains('open');
-
-    /* 다른 팔레트 닫기 */
-    document
-        .querySelectorAll('.board-palette-wrap')
-        .forEach(function (item) {
-
-            item.classList.remove('open');
-            item
-                .querySelector('.board-color-palette')
-                ?.classList.remove('custom-open');
-
-        });
-
-    if (!isOpen) {
-        wrap.classList.add('open');
-    }
-}
-
-
-/* 글자색 팔레트 버튼 */
-if (textPaletteWrap) {
-
-    const trigger =
-        textPaletteWrap.querySelector(
-            '.board-text-palette-trigger'
-        );
-
-    if (trigger) {
-
-        trigger.addEventListener(
-            'mousedown',
-            function (e) {
-
-                e.preventDefault();
-
-                saveBoardEditorSelection();
-
-                toggleBoardColorPalette(
-                    textPaletteWrap
-                );
-            }
-        );
-    }
-}
-
-
-/* 배경색 팔레트 버튼 */
-if (bgPaletteWrap) {
-
-    const trigger =
-        bgPaletteWrap.querySelector(
-            '.board-bg-palette-trigger'
-        );
-
-    if (trigger) {
-
-        trigger.addEventListener(
-            'mousedown',
-            function (e) {
-
-                e.preventDefault();
-
-                saveBoardEditorSelection();
-
-                toggleBoardColorPalette(
-                    bgPaletteWrap
-                );
-            }
-        );
-    }
-}
-
-
-/* =========================================
-   색상 적용 함수
-   ========================================= */
-
-function applyBoardPaletteColor(
-    color,
-    type
-) {
-
-    if (!color) return;
-
-    restoreBoardEditorSelection();
-
-    if (type === 'text') {
-
-        execBoardCommand(
-            'foreColor',
-            color
-        );
-
-    } else if (type === 'background') {
-
-        execBoardCommand(
-            'hiliteColor',
-            color
-        );
-    }
-}
-
-
-/* =========================================
-   글자색 팔레트
-   ========================================= */
-
-if (textPaletteWrap) {
-
-    textPaletteWrap
-        .querySelectorAll(
-            '.board-palette-grid button'
-        )
-        .forEach(function (button) {
-
-            button.addEventListener(
-                'mousedown',
-                function (e) {
-
-                    e.preventDefault();
-
-                    saveBoardEditorSelection();
-
-                    const color =
-                        button.dataset.color;
-
-                    applyBoardPaletteColor(
-                        color,
-                        'text'
-                    );
-
-                    textPaletteWrap
-                        .classList.remove('open');
-                }
-            );
-        });
-}
-
-
-/* =========================================
-   배경색 팔레트
-   ========================================= */
-
-if (bgPaletteWrap) {
-
-    bgPaletteWrap
-        .querySelectorAll(
-            '.board-palette-grid button'
-        )
-        .forEach(function (button) {
-
-            button.addEventListener(
-                'mousedown',
-                function (e) {
-
-                    e.preventDefault();
-
-                    saveBoardEditorSelection();
-
-                    const color =
-                        button.dataset.color;
-
-                    applyBoardPaletteColor(
-                        color,
-                        'background'
-                    );
-
-                    bgPaletteWrap
-                        .classList.remove('open');
-                }
-            );
-        });
-}
-
-
-/* =========================================
-   팔레트 색상 표시
-   ========================================= */
-
-document
-    .querySelectorAll(
-        '.board-palette-grid button[data-color]'
-    )
-    .forEach(function (button) {
-
-button.style.setProperty(
-    'background-color',
-    button.dataset.color,
-    'important'
-);
-    });
-
-
-/* =========================================
-   더보기
-   ========================================= */
-
-document
-    .querySelectorAll(
-        '.board-palette-wrap'
-    )
-    .forEach(function (wrap) {
-
-        const moreButton =
-            wrap.querySelector(
-                '.board-palette-more'
-            );
-
-        const palette =
-            wrap.querySelector(
-                '.board-color-palette'
-            );
-
-        if (!moreButton || !palette) return;
-
-        moreButton.addEventListener(
-            'mousedown',
-            function (e) {
-
-                e.preventDefault();
-
-                saveBoardEditorSelection();
-
-                palette.classList.toggle(
-                    'custom-open'
-                );
-            }
-        );
-    });
-
-
-/* =========================================
-   직접 색상 선택
-   ========================================= */
-
-document
-    .querySelectorAll(
-        '.board-palette-wrap'
-    )
-    .forEach(function (wrap) {
-
-        const colorInput =
-            wrap.querySelector(
-                '.board-custom-color-input'
-            );
-
-        const hexInput =
-            wrap.querySelector(
-                '.board-custom-color-hex'
-            );
-
-        const applyButton =
-            wrap.querySelector(
-                '.board-custom-color-apply'
-            );
-
-        if (
-            !colorInput ||
-            !hexInput ||
-            !applyButton
-        ) {
-            return;
+/* 글자색 */
+const textColor =
+    document.getElementById('board-text-color');
+    
+if (textColor) {
+
+    /* 색상 선택 전에 선택 영역 저장 */
+    textColor.addEventListener(
+        'mousedown',
+        function () {
+            saveBoardEditorSelection();
         }
+    );
 
+    textColor.addEventListener(
+        'change',
+        function () {
 
-        /* 색상 선택기를 바꾸면 HEX도 변경 */
-        colorInput.addEventListener(
-            'input',
+                execBoardCommand(
+                    'foreColor',
+                    this.value
+                );
+            }
+        );
+    }
+
+    /* 배경색 */
+    const bgColor =
+        document.getElementById('board-bg-color');
+
+    if (bgColor) {
+
+        bgColor.addEventListener(
+            'change',
             function () {
 
-                hexInput.value =
-                    this.value.toUpperCase();
-            }
-        );
-
-
-        /* HEX 입력 */
-        hexInput.addEventListener(
-            'input',
-            function () {
-
-                let value =
-                    this.value.trim();
-
-                if (
-                    !value.startsWith('#')
-                ) {
-                    value = '#' + value;
-                }
-
-                if (
-                    /^#[0-9A-Fa-f]{6}$/.test(value)
-                ) {
-
-                    colorInput.value =
-                        value;
-
-                }
-            }
-        );
-
-
-        /* 적용 */
-        applyButton.addEventListener(
-            'mousedown',
-            function (e) {
-
-                e.preventDefault();
-
-                const value =
-                    hexInput.value.trim();
-
-                if (
-                    !/^#[0-9A-Fa-f]{6}$/.test(value)
-                ) {
-                    return;
-                }
-
-                saveBoardEditorSelection();
-
-                const isText =
-                    wrap.classList.contains(
-                        'board-text-palette-wrap'
-                    );
-
-                applyBoardPaletteColor(
-                    value,
-                    isText
-                        ? 'text'
-                        : 'background'
+                execBoardCommand(
+                    'hiliteColor',
+                    this.value
                 );
-
-                wrap.classList.remove(
-                    'open'
-                );
-
-                const palette =
-                    wrap.querySelector(
-                        '.board-color-palette'
-                    );
-
-                if (palette) {
-
-                    palette.classList.remove(
-                        'custom-open'
-                    );
-                }
             }
         );
-
-    });
-
-
-/* =========================================
-   바깥쪽 클릭 → 팔레트 닫기
-   ========================================= */
-
-document.addEventListener(
-    'mousedown',
-    function (e) {
-
-        if (
-            !e.target.closest(
-                '.board-palette-wrap'
-            )
-        ) {
-
-            document
-                .querySelectorAll(
-                    '.board-palette-wrap'
-                )
-                .forEach(function (wrap) {
-
-                    wrap.classList.remove(
-                        'open'
-                    );
-
-                    const palette =
-                        wrap.querySelector(
-                            '.board-color-palette'
-                        );
-
-                    if (palette) {
-
-                        palette.classList.remove(
-                            'custom-open'
-                        );
-                    }
-
-                });
-        }
     }
-);
 
     /* 링크 */
     const linkButton =
