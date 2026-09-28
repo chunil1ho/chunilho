@@ -3361,36 +3361,55 @@ padding: 0 14px;
 <div id="board-editor-toolbar" class="board-editor-toolbar">
 
     <button type="button" data-command="bold" title="굵게">
-        <b>B</b>
+        <b>가</b>
     </button>
 
     <button type="button" data-command="italic" title="기울임">
-        <i>I</i>
+        <i>가</i>
     </button>
 
     <button type="button" data-command="underline" title="밑줄">
-        <u>U</u>
+        <u>가</u>
     </button>
+    
+<button type="button" data-command="strikeThrough" title="취소선">
+    <s>가</s>
+</button>
+    
+<select id="board-font-size" title="글자 크기">
+    <option value="10">10pt</option>
+    <option value="11">11pt</option>
+    <option value="12">12pt</option>
+    <option value="13">13pt</option>
+    <option value="14">14pt</option>
+    <option value="15">15pt</option>
+    <option value="16">16pt</option>
+    <option value="17">17pt</option>
+    <option value="18">18pt</option>
+    <option value="19">19pt</option>
+    <option value="20">20pt</option>
+    <option value="custom">직접 입력...</option>
+</select>
 
-    <select id="board-font-size" title="글자 크기">
-        <option value="">글자 크기</option>
-        <option value="1">작게</option>
-        <option value="3">보통</option>
-        <option value="5">크게</option>
-        <option value="7">아주 크게</option>
-    </select>
-
+<div class="board-color-button board-text-color-button" title="글자색">
+    <span>가</span>
     <input
         type="color"
         id="board-text-color"
-        title="글자색"
+        value="#000000"
+        aria-label="글자색"
     >
+</div>
 
+<div class="board-color-button board-bg-color-button" title="배경색">
+    <span>가</span>
     <input
         type="color"
         id="board-bg-color"
-        title="배경색"
+        value="#ffff00"
+        aria-label="배경색"
     >
+</div>
 
     <button type="button" data-command="justifyLeft" title="왼쪽 정렬">
         ☰
