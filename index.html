@@ -2907,9 +2907,9 @@ padding: 0 14px;
 .board-palette-grid {
     display: grid !important;
 
-    grid-template-columns: repeat(9, 1fr) !important;
+    grid-template-columns: repeat(16, 1fr) !important;
 
-    gap: 4px !important;
+    gap: 2px !important;
 
     width: 100% !important;
 
@@ -2919,21 +2919,23 @@ padding: 0 14px;
 
 .board-palette-grid button {
     width: 100% !important;
-    aspect-ratio: 1 / 1 !important;
+
+    height: 28px !important;
 
     min-width: 0 !important;
+    min-height: 28px !important;
 
     padding: 0 !important;
     margin: 0 !important;
 
-    border: 1px solid rgba(0,0,0,.15) !important;
-    border-radius: 2px !important;
+    border: 1px solid #fff !important;
+
+    border-radius: 0 !important;
 
     cursor: pointer !important;
 
     box-sizing: border-box !important;
 }
-
 
 .board-palette-grid button:hover {
     transform: scale(1.12) !important;
@@ -2949,19 +2951,29 @@ padding: 0 14px;
    ========================================= */
 
 .board-palette-more {
-    width: 100% !important;
+    width: 70px !important;
+    height: 28px !important;
 
-    margin-top: 10px !important;
-    padding: 7px 0 !important;
+    margin: 2px 0 0 6px !important;
+    padding: 0 !important;
 
-    background: #f7f7f7 !important;
+    background: #fff !important;
 
-    border: 1px solid #ddd !important;
-    border-radius: 4px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 3px !important;
 
-    font-size: 13px !important;
+    font-size: 12px !important;
+    color: #333 !important;
 
     cursor: pointer !important;
+
+    white-space: nowrap !important;
+
+    box-sizing: border-box !important;
+}
+
+.board-palette-more:hover {
+    background: #f3f3f3 !important;
 }
 
 
@@ -3844,37 +3856,79 @@ padding: 0 14px;
 
         <div class="board-palette-grid">
 
-            <button type="button" data-color="#000000"></button>
-            <button type="button" data-color="#434343"></button>
-            <button type="button" data-color="#666666"></button>
-            <button type="button" data-color="#999999"></button>
-            <button type="button" data-color="#B7B7B7"></button>
-            <button type="button" data-color="#CCCCCC"></button>
-            <button type="button" data-color="#D9D9D9"></button>
-            <button type="button" data-color="#EFEFEF"></button>
-            <button type="button" data-color="#FFFFFF"></button>
+    <!-- 1줄 -->
+    <button type="button" data-color="#FF0000"></button>
+    <button type="button" data-color="#FF6600"></button>
+    <button type="button" data-color="#FF9900"></button>
+    <button type="button" data-color="#FFFF00"></button>
+    <button type="button" data-color="#99CC00"></button>
+    <button type="button" data-color="#00CC00"></button>
+    <button type="button" data-color="#00CCCC"></button>
+    <button type="button" data-color="#0099FF"></button>
+    <button type="button" data-color="#0066FF"></button>
+    <button type="button" data-color="#0000FF"></button>
+    <button type="button" data-color="#6600FF"></button>
+    <button type="button" data-color="#9900FF"></button>
+    <button type="button" data-color="#FF00FF"></button>
+    <button type="button" data-color="#FF0099"></button>
+    <button type="button" data-color="#CC0000"></button>
+    <button type="button" data-color="#990000"></button>
 
-            <button type="button" data-color="#980000"></button>
-            <button type="button" data-color="#FF0000"></button>
-            <button type="button" data-color="#FF9900"></button>
-            <button type="button" data-color="#FFFF00"></button>
-            <button type="button" data-color="#00FF00"></button>
-            <button type="button" data-color="#00FFFF"></button>
-            <button type="button" data-color="#4A86E8"></button>
-            <button type="button" data-color="#0000FF"></button>
-            <button type="button" data-color="#9900FF"></button>
+    <!-- 2줄 -->
+    <button type="button" data-color="#FFCCCC"></button>
+    <button type="button" data-color="#FFE0CC"></button>
+    <button type="button" data-color="#FFF2CC"></button>
+    <button type="button" data-color="#FFFFCC"></button>
+    <button type="button" data-color="#E6F2CC"></button>
+    <button type="button" data-color="#CCFFCC"></button>
+    <button type="button" data-color="#CCFFFF"></button>
+    <button type="button" data-color="#CCE5FF"></button>
+    <button type="button" data-color="#CCCCFF"></button>
+    <button type="button" data-color="#E5CCFF"></button>
+    <button type="button" data-color="#FFCCFF"></button>
+    <button type="button" data-color="#FFCCE5"></button>
+    <button type="button" data-color="#EEEEEE"></button>
+    <button type="button" data-color="#DDDDDD"></button>
+    <button type="button" data-color="#CCCCCC"></button>
+    <button type="button" data-color="#BBBBBB"></button>
 
-            <button type="button" data-color="#E6B8AF"></button>
-            <button type="button" data-color="#F4CCCC"></button>
-            <button type="button" data-color="#FCE5CD"></button>
-            <button type="button" data-color="#FFF2CC"></button>
-            <button type="button" data-color="#D9EAD3"></button>
-            <button type="button" data-color="#D0E0E3"></button>
-            <button type="button" data-color="#C9DAF8"></button>
-            <button type="button" data-color="#CFE2F3"></button>
-            <button type="button" data-color="#D9D2E9"></button>
+    <!-- 3줄 -->
+    <button type="button" data-color="#E06666"></button>
+    <button type="button" data-color="#F6B26B"></button>
+    <button type="button" data-color="#FFD966"></button>
+    <button type="button" data-color="#93C47D"></button>
+    <button type="button" data-color="#6AA84F"></button>
+    <button type="button" data-color="#76A5AF"></button>
+    <button type="button" data-color="#6FA8DC"></button>
+    <button type="button" data-color="#6D9EEB"></button>
+    <button type="button" data-color="#8E7CC3"></button>
+    <button type="button" data-color="#A64D79"></button>
+    <button type="button" data-color="#CC6699"></button>
+    <button type="button" data-color="#999999"></button>
+    <button type="button" data-color="#888888"></button>
+    <button type="button" data-color="#777777"></button>
+    <button type="button" data-color="#666666"></button>
+    <button type="button" data-color="#555555"></button>
 
-        </div>
+    <!-- 4줄 -->
+    <button type="button" data-color="#990000"></button>
+    <button type="button" data-color="#783F04"></button>
+    <button type="button" data-color="#7F6000"></button>
+    <button type="button" data-color="#274E13"></button>
+    <button type="button" data-color="#0B5394"></button>
+    <button type="button" data-color="#134F5C"></button>
+    <button type="button" data-color="#1C4587"></button>
+    <button type="button" data-color="#20124D"></button>
+    <button type="button" data-color="#351C75"></button>
+    <button type="button" data-color="#741B47"></button>
+    <button type="button" data-color="#434343"></button>
+    <button type="button" data-color="#333333"></button>
+    <button type="button" data-color="#222222"></button>
+    <button type="button" data-color="#111111"></button>
+    <button type="button" data-color="#000000"></button>
+    <button type="button" data-color="#FFFFFF"></button>
+
+</div>
 
         <button
             type="button"
@@ -3926,39 +3980,81 @@ padding: 0 14px;
             <span>가나다</span>
         </div>
 
-        <div class="board-palette-grid">
+       <div class="board-palette-grid">
 
-            <button type="button" data-color="#000000"></button>
-            <button type="button" data-color="#434343"></button>
-            <button type="button" data-color="#666666"></button>
-            <button type="button" data-color="#999999"></button>
-            <button type="button" data-color="#B7B7B7"></button>
-            <button type="button" data-color="#CCCCCC"></button>
-            <button type="button" data-color="#D9D9D9"></button>
-            <button type="button" data-color="#EFEFEF"></button>
-            <button type="button" data-color="#FFFFFF"></button>
+    <!-- 1줄 -->
+    <button type="button" data-color="#F04432"></button>
+    <button type="button" data-color="#ED7D31"></button>
+    <button type="button" data-color="#F5B63D"></button>
+    <button type="button" data-color="#FFF24A"></button>
+    <button type="button" data-color="#A8C83A"></button>
+    <button type="button" data-color="#439C3A"></button>
+    <button type="button" data-color="#4AA7A0"></button>
+    <button type="button" data-color="#377BB8"></button>
+    <button type="button" data-color="#3939B5"></button>
+    <button type="button" data-color="#7030A0"></button>
+    <button type="button" data-color="#D52D78"></button>
+    <button type="button" data-color="#000000"></button>
+    <button type="button" data-color="#222222"></button>
+    <button type="button" data-color="#444444"></button>
+    <button type="button" data-color="#666666"></button>
+    <button type="button" data-color="#888888"></button>
 
-            <button type="button" data-color="#980000"></button>
-            <button type="button" data-color="#FF0000"></button>
-            <button type="button" data-color="#FF9900"></button>
-            <button type="button" data-color="#FFFF00"></button>
-            <button type="button" data-color="#00FF00"></button>
-            <button type="button" data-color="#00FFFF"></button>
-            <button type="button" data-color="#4A86E8"></button>
-            <button type="button" data-color="#0000FF"></button>
-            <button type="button" data-color="#9900FF"></button>
+    <!-- 2줄 -->
+    <button type="button" data-color="#FCE4E0"></button>
+    <button type="button" data-color="#FBE7D7"></button>
+    <button type="button" data-color="#FBECCB"></button>
+    <button type="button" data-color="#FFF8B8"></button>
+    <button type="button" data-color="#E5F0C4"></button>
+    <button type="button" data-color="#DCEEDB"></button>
+    <button type="button" data-color="#D5EDEA"></button>
+    <button type="button" data-color="#D6E5F5"></button>
+    <button type="button" data-color="#DCDCF2"></button>
+    <button type="button" data-color="#E8D8F2"></button>
+    <button type="button" data-color="#F0D5E2"></button>
+    <button type="button" data-color="#AAAAAA"></button>
+    <button type="button" data-color="#BBBBBB"></button>
+    <button type="button" data-color="#CCCCCC"></button>
+    <button type="button" data-color="#DDDDDD"></button>
+    <button type="button" data-color="#EEEEEE"></button>
 
-            <button type="button" data-color="#E6B8AF"></button>
-            <button type="button" data-color="#F4CCCC"></button>
-            <button type="button" data-color="#FCE5CD"></button>
-            <button type="button" data-color="#FFF2CC"></button>
-            <button type="button" data-color="#D9EAD3"></button>
-            <button type="button" data-color="#D0E0E3"></button>
-            <button type="button" data-color="#C9DAF8"></button>
-            <button type="button" data-color="#CFE2F3"></button>
-            <button type="button" data-color="#D9D2E9"></button>
+    <!-- 3줄 -->
+    <button type="button" data-color="#D8847D"></button>
+    <button type="button" data-color="#D09B72"></button>
+    <button type="button" data-color="#C7B17B"></button>
+    <button type="button" data-color="#C8C8A0"></button>
+    <button type="button" data-color="#C4C89D"></button>
+    <button type="button" data-color="#7EB47A"></button>
+    <button type="button" data-color="#67A9A2"></button>
+    <button type="button" data-color="#6790B3"></button>
+    <button type="button" data-color="#6869A7"></button>
+    <button type="button" data-color="#8C5AB8"></button>
+    <button type="button" data-color="#C46D9E"></button>
+    <button type="button" data-color="#55504D"></button>
+    <button type="button" data-color="#666A73"></button>
+    <button type="button" data-color="#777777"></button>
+    <button type="button" data-color="#888888"></button>
+    <button type="button" data-color="#999999"></button>
 
-        </div>
+    <!-- 4줄 -->
+    <button type="button" data-color="#9E1D1D"></button>
+    <button type="button" data-color="#633A22"></button>
+    <button type="button" data-color="#756331"></button>
+    <button type="button" data-color="#55572C"></button>
+    <button type="button" data-color="#4B5227"></button>
+    <button type="button" data-color="#23452D"></button>
+    <button type="button" data-color="#24504C"></button>
+    <button type="button" data-color="#294C69"></button>
+    <button type="button" data-color="#282852"></button>
+    <button type="button" data-color="#45265C"></button>
+    <button type="button" data-color="#632046"></button>
+    <button type="button" data-color="#383431"></button>
+    <button type="button" data-color="#44474D"></button>
+    <button type="button" data-color="#555555"></button>
+    <button type="button" data-color="#666666"></button>
+    <button type="button" data-color="#777777"></button>
+
+</div>
 
         <button
             type="button"
@@ -5013,8 +5109,11 @@ document
     )
     .forEach(function (button) {
 
-        button.style.backgroundColor =
-            button.dataset.color;
+button.style.setProperty(
+    'background-color',
+    button.dataset.color,
+    'important'
+);
     });
 
 
