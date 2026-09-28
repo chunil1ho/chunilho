@@ -4281,10 +4281,11 @@ function applyBoardFontSize(size) {
     /*
      * 새로운 글자 크기 하나만 적용
      */
-    const span =
-        document.createElement('span');
+const span =
+    document.createElement('span');
 
-    span.style.fontSize = size;
+span.style.fontSize = size;
+span.style.lineHeight = '1.0';
 
     span.appendChild(contents);
 
