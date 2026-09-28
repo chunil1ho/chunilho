@@ -4240,44 +4240,59 @@ function applyBoardFontSize(size) {
     }
 
     /*
-     * 선택한 내용만 가져오기
-     * 기존 span을 그대로 중첩시키지 않고
-     * 새로운 span 하나로 다시 구성한다.
+     * 선택 영역의 기존 글자 크기 span 제거
      */
     const contents = range.extractContents();
 
-    const span = document.createElement('span');
+    function removeFontSizeSpans(node) {
 
-    span.style.fontSize = size;
-
-    /*
-     * 기존 글자크기 span이 선택 영역 안에 있으면
-     * 그 안쪽 내용만 꺼내서 다시 구성한다.
-     */
-    const oldSpans =
-        contents.querySelectorAll(
-            'span[style*="font-size"]'
-        );
-
-    oldSpans.forEach(function (oldSpan) {
-
-        const parent = oldSpan.parentNode;
-
-        while (oldSpan.firstChild) {
-            parent.insertBefore(
-                oldSpan.firstChild,
-                oldSpan
-            );
+        if (node.nodeType !== Node.ELEMENT_NODE) {
+            return;
         }
 
-        parent.removeChild(oldSpan);
-    });
+        const children =
+            Array.from(node.children);
+
+        children.forEach(function (child) {
+
+            removeFontSizeSpans(child);
+
+            if (
+                child.tagName === 'SPAN' &&
+                child.style.fontSize
+            ) {
+
+                const parent = child.parentNode;
+
+                while (child.firstChild) {
+                    parent.insertBefore(
+                        child.firstChild,
+                        child
+                    );
+                }
+
+                parent.removeChild(child);
+            }
+        });
+    }
+
+    removeFontSizeSpans(contents);
+
+    /*
+     * 새로운 글자 크기 하나만 적용
+     */
+    const span =
+        document.createElement('span');
+
+    span.style.fontSize = size;
 
     span.appendChild(contents);
 
     range.insertNode(span);
 
-    /* 적용된 영역 다시 선택 */
+    /*
+     * 적용된 글자 다시 선택
+     */
     selection.removeAllRanges();
 
     const newRange =
