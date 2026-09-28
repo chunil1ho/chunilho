@@ -2768,165 +2768,6 @@ padding: 0 14px;
 #board-editor-toolbar button.active:hover {
     background: #ddd !important;
 }
-    /* =========================================
-   조황게시판 색상 팔레트
-   ========================================= */
-
-.board-color-picker {
-    position: relative !important;
-    display: inline-flex !important;
-    width: 34px !important;
-    height: 32px !important;
-    flex: 0 0 34px !important;
-    box-sizing: border-box !important;
-}
-
-/* 기존 가 버튼 */
-.board-color-picker > .board-color-button {
-    position: relative !important;
-    width: 34px !important;
-    min-width: 34px !important;
-    height: 32px !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: #fff !important;
-    border: 1px solid #ccc !important;
-    border-radius: 4px !important;
-    box-sizing: border-box !important;
-    cursor: pointer !important;
-}
-
-/* 글자 가 */
-.board-text-color-button span {
-    font-size: 17px !important;
-    font-weight: 700 !important;
-    line-height: 1 !important;
-}
-
-/* 배경색 가 */
-.board-bg-color-button span {
-    font-size: 17px !important;
-    font-weight: 700 !important;
-    line-height: 1 !important;
-    background: #ffff00 !important;
-    padding: 1px 2px !important;
-}
-
-/* 팔레트 */
-.board-color-palette {
-    display: none !important;
-
-    position: absolute !important;
-    top: 38px !important;
-    left: 0 !important;
-
-    width: 310px !important;
-    padding: 10px !important;
-
-    background: #fff !important;
-    border: 1px solid #bbb !important;
-    box-shadow: 0 3px 12px rgba(0,0,0,.22) !important;
-
-    z-index: 99999 !important;
-    box-sizing: border-box !important;
-}
-
-/* 열려 있을 때 */
-.board-color-picker.open .board-color-palette {
-    display: block !important;
-}
-
-/* 위쪽 미리보기 */
-.board-palette-preview {
-    width: 100% !important;
-    height: 42px !important;
-    margin-bottom: 8px !important;
-
-    display: flex !important;
-    align-items: center !important;
-    padding: 0 10px !important;
-
-    background: #fff !important;
-    box-sizing: border-box !important;
-}
-
-.board-palette-preview span {
-    font-size: 24px !important;
-    font-weight: 400 !important;
-}
-
-/* 색상표 */
-.board-palette-grid {
-    display: grid !important;
-    grid-template-columns: repeat(10, 1fr) !important;
-    gap: 2px !important;
-    width: 100% !important;
-}
-
-/* 색상 버튼 */
-.board-palette-grid button {
-    width: 27px !important;
-    height: 27px !important;
-
-    padding: 0 !important;
-    margin: 0 !important;
-
-    border: 1px solid rgba(0,0,0,.08) !important;
-    border-radius: 0 !important;
-
-    background: #fff !important;
-    cursor: pointer !important;
-
-    box-sizing: border-box !important;
-}
-
-/* 마우스를 올렸을 때 */
-.board-palette-grid button:hover {
-    outline: 2px solid #333 !important;
-    outline-offset: -2px !important;
-}
-
-/* 더보기 */
-.board-palette-more {
-    display: block !important;
-
-    width: 100% !important;
-    height: 32px !important;
-
-    margin-top: 8px !important;
-
-    background: #fff !important;
-    border: 1px solid #bbb !important;
-    border-radius: 3px !important;
-
-    font-size: 13px !important;
-    cursor: pointer !important;
-}
-
-.board-palette-more:hover {
-    background: #f0f0f0 !important;
-}
-
-/* 모바일 */
-@media (max-width: 768px) {
-
-    .board-color-palette {
-        width: 290px !important;
-        max-width: calc(100vw - 20px) !important;
-    }
-
-    .board-palette-grid {
-        grid-template-columns: repeat(10, 1fr) !important;
-    }
-
-    .board-palette-grid button {
-        width: 25px !important;
-        height: 25px !important;
-    }
-}
     </style>
 </head>
 <body id="mainBody">
@@ -3674,204 +3515,24 @@ padding: 0 14px;
     <option value="custom">직접 입력...</option>
 </select>
 
-<!-- 글자색 -->
-<div class="board-color-picker board-text-color-picker">
-
-    <button
-        type="button"
-        class="board-color-button board-text-color-button"
-        title="글자색"
+<div class="board-color-button board-text-color-button" title="글자색">
+    <span>가</span>
+    <input
+        type="color"
+        id="board-text-color"
+        value="#000000"
+        aria-label="글자색"
     >
-        <span>가</span>
-    </button>
-
-    <div
-        class="board-color-palette"
-        id="board-text-color-palette"
-    >
-
-        <div class="board-palette-preview">
-            <span>가나다</span>
-        </div>
-
-        <div class="board-palette-grid">
-
-            <!-- 빨강 계열 -->
-            <button type="button" data-color="#ff0000"></button>
-            <button type="button" data-color="#ffcccc"></button>
-            <button type="button" data-color="#e57373"></button>
-            <button type="button" data-color="#b71c1c"></button>
-
-            <!-- 주황 -->
-            <button type="button" data-color="#ff6600"></button>
-            <button type="button" data-color="#ffe0cc"></button>
-            <button type="button" data-color="#d98b5f"></button>
-            <button type="button" data-color="#7a3e1d"></button>
-
-            <!-- 노랑 -->
-            <button type="button" data-color="#ffb52e"></button>
-            <button type="button" data-color="#fff0cc"></button>
-            <button type="button" data-color="#d6b656"></button>
-            <button type="button" data-color="#806b24"></button>
-
-            <!-- 연두 -->
-            <button type="button" data-color="#ffff00"></button>
-            <button type="button" data-color="#ffffcc"></button>
-            <button type="button" data-color="#b8cc4a"></button>
-            <button type="button" data-color="#59661f"></button>
-
-            <!-- 초록 -->
-            <button type="button" data-color="#4ca338"></button>
-            <button type="button" data-color="#d9f0d2"></button>
-            <button type="button" data-color="#73b879"></button>
-            <button type="button" data-color="#245c2b"></button>
-
-            <!-- 청록 -->
-            <button type="button" data-color="#4ca3a3"></button>
-            <button type="button" data-color="#d5eeee"></button>
-            <button type="button" data-color="#68a9a9"></button>
-            <button type="button" data-color="#245959"></button>
-
-            <!-- 파랑 -->
-            <button type="button" data-color="#337ab7"></button>
-            <button type="button" data-color="#d6e7f7"></button>
-            <button type="button" data-color="#668fbd"></button>
-            <button type="button" data-color="#23466f"></button>
-
-            <!-- 남색 -->
-            <button type="button" data-color="#3935b9"></button>
-            <button type="button" data-color="#d9d8f5"></button>
-            <button type="button" data-color="#6764b0"></button>
-            <button type="button" data-color="#24215f"></button>
-
-            <!-- 보라 -->
-            <button type="button" data-color="#7629b8"></button>
-            <button type="button" data-color="#e4d2f2"></button>
-            <button type="button" data-color="#9559bd"></button>
-            <button type="button" data-color="#45205e"></button>
-
-            <!-- 분홍 -->
-            <button type="button" data-color="#d92f7d"></button>
-            <button type="button" data-color="#f1d1df"></button>
-            <button type="button" data-color="#ca78a2"></button>
-            <button type="button" data-color="#702143"></button>
-
-            <!-- 회색 계열 -->
-            <button type="button" data-color="#222222"></button>
-            <button type="button" data-color="#444444"></button>
-            <button type="button" data-color="#666666"></button>
-            <button type="button" data-color="#888888"></button>
-            <button type="button" data-color="#aaaaaa"></button>
-            <button type="button" data-color="#cccccc"></button>
-            <button type="button" data-color="#dddddd"></button>
-            <button type="button" data-color="#eeeeee"></button>
-            <button type="button" data-color="#ffffff"></button>
-
-        </div>
-
-        <button
-            type="button"
-            class="board-palette-more"
-        >
-            더보기 ▼
-        </button>
-
-    </div>
 </div>
 
-
-<!-- 배경색 -->
-<div class="board-color-picker board-bg-color-picker">
-
-    <button
-        type="button"
-        class="board-color-button board-bg-color-button"
-        title="배경색"
+<div class="board-color-button board-bg-color-button" title="배경색">
+    <span>가</span>
+    <input
+        type="color"
+        id="board-bg-color"
+        value="#ffff00"
+        aria-label="배경색"
     >
-        <span>가</span>
-    </button>
-
-    <div
-        class="board-color-palette"
-        id="board-bg-color-palette"
-    >
-
-        <div class="board-palette-preview">
-            <span>가나다</span>
-        </div>
-
-        <div class="board-palette-grid">
-
-            <button type="button" data-color="#ff0000"></button>
-            <button type="button" data-color="#ffcccc"></button>
-            <button type="button" data-color="#e57373"></button>
-            <button type="button" data-color="#b71c1c"></button>
-
-            <button type="button" data-color="#ff6600"></button>
-            <button type="button" data-color="#ffe0cc"></button>
-            <button type="button" data-color="#d98b5f"></button>
-            <button type="button" data-color="#7a3e1d"></button>
-
-            <button type="button" data-color="#ffb52e"></button>
-            <button type="button" data-color="#fff0cc"></button>
-            <button type="button" data-color="#d6b656"></button>
-            <button type="button" data-color="#806b24"></button>
-
-            <button type="button" data-color="#ffff00"></button>
-            <button type="button" data-color="#ffffcc"></button>
-            <button type="button" data-color="#b8cc4a"></button>
-            <button type="button" data-color="#59661f"></button>
-
-            <button type="button" data-color="#4ca338"></button>
-            <button type="button" data-color="#d9f0d2"></button>
-            <button type="button" data-color="#73b879"></button>
-            <button type="button" data-color="#245c2b"></button>
-
-            <button type="button" data-color="#4ca3a3"></button>
-            <button type="button" data-color="#d5eeee"></button>
-            <button type="button" data-color="#68a9a9"></button>
-            <button type="button" data-color="#245959"></button>
-
-            <button type="button" data-color="#337ab7"></button>
-            <button type="button" data-color="#d6e7f7"></button>
-            <button type="button" data-color="#668fbd"></button>
-            <button type="button" data-color="#23466f"></button>
-
-            <button type="button" data-color="#3935b9"></button>
-            <button type="button" data-color="#d9d8f5"></button>
-            <button type="button" data-color="#6764b0"></button>
-            <button type="button" data-color="#24215f"></button>
-
-            <button type="button" data-color="#7629b8"></button>
-            <button type="button" data-color="#e4d2f2"></button>
-            <button type="button" data-color="#9559bd"></button>
-            <button type="button" data-color="#45205e"></button>
-
-            <button type="button" data-color="#d92f7d"></button>
-            <button type="button" data-color="#f1d1df"></button>
-            <button type="button" data-color="#ca78a2"></button>
-            <button type="button" data-color="#702143"></button>
-
-            <button type="button" data-color="#222222"></button>
-            <button type="button" data-color="#444444"></button>
-            <button type="button" data-color="#666666"></button>
-            <button type="button" data-color="#888888"></button>
-            <button type="button" data-color="#aaaaaa"></button>
-            <button type="button" data-color="#cccccc"></button>
-            <button type="button" data-color="#dddddd"></button>
-            <button type="button" data-color="#eeeeee"></button>
-            <button type="button" data-color="#ffffff"></button>
-
-        </div>
-
-        <button
-            type="button"
-            class="board-palette-more"
-        >
-            더보기 ▼
-        </button>
-
-    </div>
 </div>
 
     <button type="button" data-command="justifyLeft" title="왼쪽 정렬">
@@ -4692,7 +4353,10 @@ function applyBoardFontSize(size) {
 
     saveBoardEditorSelection();
 }
-
+/* 글자색 */
+const textColor =
+    document.getElementById('board-text-color');
+    
 if (textColor) {
 
     /* 색상 선택 전에 선택 영역 저장 */
