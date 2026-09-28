@@ -2559,6 +2559,91 @@ padding: 0 14px;
         font-size: 16px !important;
     }
 }
+    /* =========================================
+   모바일 에디터 툴바 정리
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    #board-editor-toolbar {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        gap: 5px !important;
+
+        width: 100% !important;
+        padding: 6px !important;
+
+        box-sizing: border-box !important;
+    }
+
+    /* 모든 버튼 */
+    #board-editor-toolbar button {
+        flex: 0 0 34px !important;
+
+        width: 34px !important;
+        min-width: 34px !important;
+        max-width: 34px !important;
+
+        height: 32px !important;
+        min-height: 32px !important;
+        max-height: 32px !important;
+
+        padding: 0 !important;
+        margin: 0 !important;
+
+        box-sizing: border-box !important;
+    }
+
+    /* 글자 크기 */
+    #board-editor-toolbar select {
+        flex: 0 0 auto !important;
+
+        width: 105px !important;
+        min-width: 105px !important;
+        max-width: 105px !important;
+
+        height: 32px !important;
+
+        padding: 0 7px !important;
+        margin: 0 !important;
+
+        box-sizing: border-box !important;
+    }
+
+    /* ★ 색상 선택 버튼 */
+    #board-editor-toolbar input[type="color"] {
+        flex: 0 0 34px !important;
+
+        width: 34px !important;
+        min-width: 34px !important;
+        max-width: 34px !important;
+
+        height: 32px !important;
+        min-height: 32px !important;
+        max-height: 32px !important;
+
+        padding: 2px !important;
+        margin: 0 !important;
+
+        box-sizing: border-box !important;
+
+        border: 1px solid #ccc !important;
+        border-radius: 4px !important;
+
+        background: #fff !important;
+    }
+
+    /* 색상 내부 스와치 */
+    #board-editor-toolbar input[type="color"]::-webkit-color-swatch-wrapper {
+        padding: 0 !important;
+    }
+
+    #board-editor-toolbar input[type="color"]::-webkit-color-swatch {
+        border: none !important;
+        border-radius: 2px !important;
+    }
+}
     </style>
 </head>
 <body id="mainBody">
