@@ -2738,6 +2738,36 @@ padding: 0 14px;
         max-height: 32px !important;
     }
 }
+    /* =========================================
+   에디터 서식 버튼 선택 상태
+   ========================================= */
+
+#board-editor-toolbar button.active {
+    background: #e5e5e5 !important;
+    border-color: #777 !important;
+
+    box-shadow:
+        inset 0 0 0 1px #999 !important;
+
+    transform: none !important;
+}
+
+#board-editor-toolbar button.active b,
+#board-editor-toolbar button.active i,
+#board-editor-toolbar button.active u,
+#board-editor-toolbar button.active s {
+    color: #111 !important;
+}
+
+/* 마우스를 올렸을 때 */
+#board-editor-toolbar button:hover {
+    background: #f0f0f0 !important;
+}
+
+/* 선택된 상태에서 마우스를 올렸을 때 */
+#board-editor-toolbar button.active:hover {
+    background: #ddd !important;
+}
     </style>
 </head>
 <body id="mainBody">
@@ -4082,27 +4112,96 @@ function initBoardEditor() {
 
             });
     }
+const fontSize =
+    document.getElementById('board-font-size');
 
-    /* 글자 크기 */
-    const fontSize =
-        document.getElementById('board-font-size');
+if (fontSize) {
+    fontSize.addEventListener('change', function () {
 
-    if (fontSize) {
+        const value = this.value;
 
-        fontSize.addEventListener(
-            'change',
-            function () {
+        /* 직접 입력 */
+        if (value === 'custom') {
 
-                execBoardCommand(
-                    'fontSize',
-                    this.value
-                );
+            const input = prompt(
+                '글자 크기를 입력하세요. (pt)',
+                '25'
+            );
 
-                this.value = '';
+            if (input === null) {
+                this.value = '10';
+                return;
             }
-        );
+
+            const size = parseFloat(input);
+
+            if (!Number.isFinite(size) || size <= 0) {
+                alert('올바른 글자 크기를 입력하세요.');
+                this.value = '10';
+                return;
+            }
+
+            applyBoardFontSize(size + 'pt');
+
+            this.value = '10';
+            return;
+        }
+
+        /* 10~20pt */
+        if (value) {
+            applyBoardFontSize(value + 'pt');
+        }
+    });
+}
+function applyBoardFontSize(size) {
+
+    const editor = getBoardEditor();
+
+    if (!editor) return;
+
+    editor.focus();
+
+    restoreBoardEditorSelection();
+
+    const selection = window.getSelection();
+
+    if (!selection || selection.rangeCount === 0) {
+        return;
     }
 
+    const range = selection.getRangeAt(0);
+
+    if (!editor.contains(range.commonAncestorContainer)) {
+        return;
+    }
+
+    /* 선택 영역이 없는 경우 */
+    if (range.collapsed) {
+        alert('먼저 크기를 변경할 글자를 선택해주세요.');
+        return;
+    }
+
+    const span = document.createElement('span');
+
+    span.style.fontSize = size;
+
+    const contents = range.extractContents();
+
+    span.appendChild(contents);
+
+    range.insertNode(span);
+
+    /* 적용된 영역 다시 선택 */
+    selection.removeAllRanges();
+
+    const newRange = document.createRange();
+    newRange.selectNodeContents(span);
+
+    selection.addRange(newRange);
+
+    syncBoardEditor();
+    saveBoardEditorSelection();
+}
     /* 글자색 */
     const textColor =
         document.getElementById('board-text-color');
