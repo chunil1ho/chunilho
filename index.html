@@ -2233,15 +2233,15 @@ padding: 0 14px;
     font-size: 14px;
 }
 
-#board-editor-toolbar button:hover {
+ button:hover {
     background: #eeeeee;
 }
 
-#board-editor-toolbar select {
+ select {
     padding: 0 6px;
 }
 
-#board-editor-toolbar input[type="color"] {
+ input[type="color"] {
     width: 32px;
     height: 32px;
     padding: 2px;
@@ -2288,24 +2288,24 @@ padding: 0 14px;
 
 @media screen and (max-width: 768px) {
 
-    #board-editor-toolbar {
+     {
         gap: 3px;
         padding: 5px;
     }
 
-    #board-editor-toolbar button,
-    #board-editor-toolbar select,
-    #board-editor-toolbar input[type="color"] {
+     button,
+     select,
+     input[type="color"] {
         height: 30px;
     }
 
-    #board-editor-toolbar button {
+     button {
         min-width: 30px;
         padding: 0 6px;
         font-size: 13px;
     }
 
-    #board-editor-toolbar select {
+     select {
         max-width: 105px;
     }
 
@@ -3118,6 +3118,76 @@ min-height: 9px !important;
     border-radius: 0 !important;
 
     box-sizing: border-box !important;
+}
+#board-editor-toolbar .board-color-palette .board-palette-grid {
+    display: grid !important;
+    grid-template-columns: repeat(13, 1fr) !important;
+    gap: 1px !important;
+
+    width: 100% !important;
+    min-width: 0 !important;
+
+    box-sizing: border-box !important;
+}
+
+#board-editor-toolbar .board-color-palette .board-palette-grid button {
+    width: 10px !important;
+    min-width: 10px !important;
+    max-width: 10px !important;
+
+    height: 10px !important;
+    min-height: 10px !important;
+    max-height: 10px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    aspect-ratio: 1 / 1 !important;
+
+    box-sizing: border-box !important;
+}
+    #board-editor-toolbar .board-palette-more {
+    display: block !important;
+
+    width: 30px !important;
+    min-width: 30px !important;
+    max-width: 30px !important;
+
+    height: 14px !important;
+    min-height: 14px !important;
+    max-height: 14px !important;
+
+    margin: 2px 0 0 0 !important;
+    padding: 0 !important;
+
+    background: #fff !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    font-size: 8px !important;
+    line-height: 14px !important;
+
+    text-align: left !important;
+    white-space: nowrap !important;
+
+    box-sizing: border-box !important;
+}
+    @media (max-width: 768px) {
+
+    #board-editor-toolbar .board-color-palette {
+        width: 155px !important;
+        max-width: 155px !important;
+    }
+
+    #board-editor-toolbar .board-palette-more {
+        width: 30px !important;
+        min-width: 30px !important;
+        max-width: 30px !important;
+    }
 }
     </style>
 </head>
@@ -4006,7 +4076,7 @@ min-height: 9px !important;
     <div class="board-color-palette board-bg-color-palette">
 
         <div class="board-palette-preview board-bg-preview">
-            <span>가나다</span>
+            <span>글자배경</span>
         </div>
 
        <div class="board-palette-grid">
