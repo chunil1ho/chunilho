@@ -220,12 +220,15 @@ body,#smart_editor2,#smart_editor2 p,#smart_editor2 h1,#smart_editor2 h2,#smart_
 
     #smart_editor2 #smart_editor2_content {
         position: relative !important;
+        z-index: 9999999 !important;
+        position: relative !important;
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
         box-sizing: border-box !important;
         overflow: visible !important;
     }
+    
 
     /* SmartEditor2 툴 영역 */
     #smart_editor2 .se2_tool {
