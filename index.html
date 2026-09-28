@@ -179,7 +179,6 @@
         .account-highlight { background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px dashed #cbd5e1; font-weight: 700; color: var(--accent-color); font-size: 0.95rem; text-align: center; margin-top: 0.5rem; }
 
 .hero {
-    position: relative;
     width: 100vw;
     height: 360px;
     overflow: hidden;
@@ -762,6 +761,9 @@ padding: 0 14px;
             .main-nav {
     display: none;
 }
+            header {
+    position: relative;
+}
             .main-nav.mobile-open {
     display: block;
     position: absolute;
@@ -789,10 +791,13 @@ padding: 0 14px;
 .main-nav.mobile-open .nav-btn {
     display: block;
     width: 100%;
-    padding: 15px 20px;
+    padding: 11px 20px;
+    margin: 0;
     text-align: left;
     border-bottom: 1px solid #eee;
-    font-size: 16px;
+    font-size: 15px;
+    line-height: 1.4;
+    box-sizing: border-box;
 }
             #mobileMenuToggle {
     display: block;
@@ -3188,6 +3193,24 @@ min-height: 9px !important;
         max-width: 30px !important;
     }
 }
+ @media (max-width: 768px) {
+
+    #cat-booking .form-box {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #cat-booking .form-group input,
+    #cat-booking .form-group select,
+    #cat-booking .form-group textarea {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        padding: 0.85rem 1rem;
+        font-size: 16px;
+    }
+
+}   
     </style>
 </head>
 <body id="mainBody">
