@@ -2768,6 +2768,316 @@ padding: 0 14px;
 #board-editor-toolbar button.active:hover {
     background: #ddd !important;
 }
+/* =========================================
+   게시판 색상 팔레트
+   ========================================= */
+
+.board-palette-wrap {
+    position: relative !important;
+    display: inline-flex !important;
+    flex: 0 0 34px !important;
+    width: 34px !important;
+    height: 32px !important;
+    box-sizing: border-box !important;
+}
+
+
+/* 색상 버튼 */
+.board-palette-trigger {
+    position: relative !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 34px !important;
+    height: 32px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    background: #fff !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+
+    font-size: 17px !important;
+    font-weight: 700 !important;
+
+    cursor: pointer !important;
+    box-sizing: border-box !important;
+}
+
+
+/* 글자색 버튼 아래 색상 표시 */
+.board-text-palette-trigger::after {
+    content: "" !important;
+
+    position: absolute !important;
+
+    left: 6px !important;
+    right: 6px !important;
+    bottom: 3px !important;
+
+    height: 3px !important;
+
+    background: #000 !important;
+
+    pointer-events: none !important;
+}
+
+
+/* 배경색 버튼의 기본 노란색 */
+.board-bg-palette-trigger span {
+    background: #ffff00 !important;
+    padding: 1px 2px !important;
+}
+
+
+/* =========================================
+   팔레트 본체
+   ========================================= */
+
+.board-color-palette {
+    position: absolute !important;
+
+    top: calc(100% + 6px) !important;
+    left: 0 !important;
+
+    z-index: 99999 !important;
+
+    display: none !important;
+
+    width: 270px !important;
+
+    padding: 12px !important;
+
+    background: #fff !important;
+
+    border: 1px solid #ccc !important;
+    border-radius: 7px !important;
+
+    box-shadow: 0 5px 18px rgba(0,0,0,.18) !important;
+
+    box-sizing: border-box !important;
+}
+
+
+/* 팔레트 열림 */
+.board-palette-wrap.open .board-color-palette {
+    display: block !important;
+}
+
+
+/* =========================================
+   미리보기
+   ========================================= */
+
+.board-palette-preview {
+    width: 100% !important;
+    height: 48px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    margin-bottom: 10px !important;
+
+    background: #fff !important;
+
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+
+    box-sizing: border-box !important;
+
+    font-size: 20px !important;
+    font-weight: 600 !important;
+}
+
+
+/* 배경색 팔레트 미리보기 */
+.board-bg-preview {
+    background: #ffff00 !important;
+}
+
+
+/* =========================================
+   색상 격자
+   ========================================= */
+
+.board-palette-grid {
+    display: grid !important;
+
+    grid-template-columns: repeat(9, 1fr) !important;
+
+    gap: 4px !important;
+
+    width: 100% !important;
+
+    box-sizing: border-box !important;
+}
+
+
+.board-palette-grid button {
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+
+    min-width: 0 !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    border: 1px solid rgba(0,0,0,.15) !important;
+    border-radius: 2px !important;
+
+    cursor: pointer !important;
+
+    box-sizing: border-box !important;
+}
+
+
+.board-palette-grid button:hover {
+    transform: scale(1.12) !important;
+
+    border-color: #333 !important;
+
+    z-index: 2 !important;
+}
+
+
+/* =========================================
+   더보기
+   ========================================= */
+
+.board-palette-more {
+    width: 100% !important;
+
+    margin-top: 10px !important;
+    padding: 7px 0 !important;
+
+    background: #f7f7f7 !important;
+
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+
+    font-size: 13px !important;
+
+    cursor: pointer !important;
+}
+
+
+.board-palette-more:hover {
+    background: #eee !important;
+}
+
+
+/* =========================================
+   직접 색상 선택
+   ========================================= */
+
+.board-palette-custom {
+    display: none !important;
+
+    align-items: center !important;
+    gap: 5px !important;
+
+    margin-top: 8px !important;
+
+    box-sizing: border-box !important;
+}
+
+
+/* 더보기 눌렀을 때 */
+.board-color-palette.custom-open .board-palette-custom {
+    display: flex !important;
+}
+
+
+/* 직접 색상 선택 버튼 */
+.board-custom-color-input {
+    width: 34px !important;
+    height: 32px !important;
+
+    padding: 2px !important;
+    margin: 0 !important;
+
+    background: #fff !important;
+
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+
+    cursor: pointer !important;
+
+    box-sizing: border-box !important;
+}
+
+
+/* HEX 입력 */
+.board-custom-color-hex {
+    flex: 1 !important;
+
+    min-width: 0 !important;
+
+    height: 32px !important;
+
+    padding: 0 8px !important;
+
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+
+    font-size: 13px !important;
+
+    box-sizing: border-box !important;
+}
+
+
+/* 적용 버튼 */
+.board-custom-color-apply {
+    height: 32px !important;
+
+    padding: 0 10px !important;
+
+    background: #333 !important;
+    color: #fff !important;
+
+    border: none !important;
+    border-radius: 4px !important;
+
+    font-size: 13px !important;
+
+    cursor: pointer !important;
+
+    white-space: nowrap !important;
+}
+
+
+.board-custom-color-apply:hover {
+    background: #222 !important;
+}
+
+
+/* =========================================
+   모바일
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    .board-palette-wrap {
+        flex: 0 0 34px !important;
+
+        width: 34px !important;
+        min-width: 34px !important;
+        max-width: 34px !important;
+
+        height: 32px !important;
+    }
+
+    .board-color-palette {
+        width: 270px !important;
+
+        left: 0 !important;
+    }
+
+}    
     </style>
 </head>
 <body id="mainBody">
@@ -3515,24 +3825,171 @@ padding: 0 14px;
     <option value="custom">직접 입력...</option>
 </select>
 
-<div class="board-color-button board-text-color-button" title="글자색">
-    <span>가</span>
-    <input
-        type="color"
-        id="board-text-color"
-        value="#000000"
-        aria-label="글자색"
+<!-- 글자색 -->
+<div class="board-palette-wrap board-text-palette-wrap">
+
+    <button
+        type="button"
+        class="board-palette-trigger board-text-palette-trigger"
+        title="글자색"
     >
+        <span>가</span>
+    </button>
+
+    <div class="board-color-palette board-text-color-palette">
+
+        <div class="board-palette-preview">
+            <span>가나다</span>
+        </div>
+
+        <div class="board-palette-grid">
+
+            <button type="button" data-color="#000000"></button>
+            <button type="button" data-color="#434343"></button>
+            <button type="button" data-color="#666666"></button>
+            <button type="button" data-color="#999999"></button>
+            <button type="button" data-color="#B7B7B7"></button>
+            <button type="button" data-color="#CCCCCC"></button>
+            <button type="button" data-color="#D9D9D9"></button>
+            <button type="button" data-color="#EFEFEF"></button>
+            <button type="button" data-color="#FFFFFF"></button>
+
+            <button type="button" data-color="#980000"></button>
+            <button type="button" data-color="#FF0000"></button>
+            <button type="button" data-color="#FF9900"></button>
+            <button type="button" data-color="#FFFF00"></button>
+            <button type="button" data-color="#00FF00"></button>
+            <button type="button" data-color="#00FFFF"></button>
+            <button type="button" data-color="#4A86E8"></button>
+            <button type="button" data-color="#0000FF"></button>
+            <button type="button" data-color="#9900FF"></button>
+
+            <button type="button" data-color="#E6B8AF"></button>
+            <button type="button" data-color="#F4CCCC"></button>
+            <button type="button" data-color="#FCE5CD"></button>
+            <button type="button" data-color="#FFF2CC"></button>
+            <button type="button" data-color="#D9EAD3"></button>
+            <button type="button" data-color="#D0E0E3"></button>
+            <button type="button" data-color="#C9DAF8"></button>
+            <button type="button" data-color="#CFE2F3"></button>
+            <button type="button" data-color="#D9D2E9"></button>
+
+        </div>
+
+        <button
+            type="button"
+            class="board-palette-more"
+        >
+            더보기 ▼
+        </button>
+
+        <div class="board-palette-custom">
+            <input
+                type="color"
+                class="board-custom-color-input"
+                value="#000000"
+            >
+
+            <input
+                type="text"
+                class="board-custom-color-hex"
+                value="#000000"
+                maxlength="7"
+            >
+
+            <button
+                type="button"
+                class="board-custom-color-apply"
+            >
+                적용
+            </button>
+        </div>
+
+    </div>
 </div>
 
-<div class="board-color-button board-bg-color-button" title="배경색">
-    <span>가</span>
-    <input
-        type="color"
-        id="board-bg-color"
-        value="#ffff00"
-        aria-label="배경색"
+
+<!-- 배경색 -->
+<div class="board-palette-wrap board-bg-palette-wrap">
+
+    <button
+        type="button"
+        class="board-palette-trigger board-bg-palette-trigger"
+        title="배경색"
     >
+        <span>가</span>
+    </button>
+
+    <div class="board-color-palette board-bg-color-palette">
+
+        <div class="board-palette-preview board-bg-preview">
+            <span>가나다</span>
+        </div>
+
+        <div class="board-palette-grid">
+
+            <button type="button" data-color="#000000"></button>
+            <button type="button" data-color="#434343"></button>
+            <button type="button" data-color="#666666"></button>
+            <button type="button" data-color="#999999"></button>
+            <button type="button" data-color="#B7B7B7"></button>
+            <button type="button" data-color="#CCCCCC"></button>
+            <button type="button" data-color="#D9D9D9"></button>
+            <button type="button" data-color="#EFEFEF"></button>
+            <button type="button" data-color="#FFFFFF"></button>
+
+            <button type="button" data-color="#980000"></button>
+            <button type="button" data-color="#FF0000"></button>
+            <button type="button" data-color="#FF9900"></button>
+            <button type="button" data-color="#FFFF00"></button>
+            <button type="button" data-color="#00FF00"></button>
+            <button type="button" data-color="#00FFFF"></button>
+            <button type="button" data-color="#4A86E8"></button>
+            <button type="button" data-color="#0000FF"></button>
+            <button type="button" data-color="#9900FF"></button>
+
+            <button type="button" data-color="#E6B8AF"></button>
+            <button type="button" data-color="#F4CCCC"></button>
+            <button type="button" data-color="#FCE5CD"></button>
+            <button type="button" data-color="#FFF2CC"></button>
+            <button type="button" data-color="#D9EAD3"></button>
+            <button type="button" data-color="#D0E0E3"></button>
+            <button type="button" data-color="#C9DAF8"></button>
+            <button type="button" data-color="#CFE2F3"></button>
+            <button type="button" data-color="#D9D2E9"></button>
+
+        </div>
+
+        <button
+            type="button"
+            class="board-palette-more"
+        >
+            더보기 ▼
+        </button>
+
+        <div class="board-palette-custom">
+            <input
+                type="color"
+                class="board-custom-color-input"
+                value="#ffff00"
+            >
+
+            <input
+                type="text"
+                class="board-custom-color-hex"
+                value="#ffff00"
+                maxlength="7"
+            >
+
+            <button
+                type="button"
+                class="board-custom-color-apply"
+            >
+                적용
+            </button>
+        </div>
+
+    </div>
 </div>
 
     <button type="button" data-command="justifyLeft" title="왼쪽 정렬">
@@ -4353,49 +4810,414 @@ function applyBoardFontSize(size) {
 
     saveBoardEditorSelection();
 }
-/* 글자색 */
-const textColor =
-    document.getElementById('board-text-color');
-    
-if (textColor) {
+/* =========================================
+   색상 팔레트
+   ========================================= */
 
-    /* 색상 선택 전에 선택 영역 저장 */
-    textColor.addEventListener(
-        'mousedown',
-        function () {
-            saveBoardEditorSelection();
-        }
-    );
+const textPaletteWrap =
+    document.querySelector('.board-text-palette-wrap');
 
-    textColor.addEventListener(
-        'change',
-        function () {
+const bgPaletteWrap =
+    document.querySelector('.board-bg-palette-wrap');
 
-                execBoardCommand(
-                    'foreColor',
-                    this.value
+
+/* 팔레트 열기 */
+function toggleBoardColorPalette(wrap) {
+
+    if (!wrap) return;
+
+    const isOpen =
+        wrap.classList.contains('open');
+
+    /* 다른 팔레트 닫기 */
+    document
+        .querySelectorAll('.board-palette-wrap')
+        .forEach(function (item) {
+
+            item.classList.remove('open');
+            item
+                .querySelector('.board-color-palette')
+                ?.classList.remove('custom-open');
+
+        });
+
+    if (!isOpen) {
+        wrap.classList.add('open');
+    }
+}
+
+
+/* 글자색 팔레트 버튼 */
+if (textPaletteWrap) {
+
+    const trigger =
+        textPaletteWrap.querySelector(
+            '.board-text-palette-trigger'
+        );
+
+    if (trigger) {
+
+        trigger.addEventListener(
+            'mousedown',
+            function (e) {
+
+                e.preventDefault();
+
+                saveBoardEditorSelection();
+
+                toggleBoardColorPalette(
+                    textPaletteWrap
                 );
             }
         );
     }
+}
 
-    /* 배경색 */
-    const bgColor =
-        document.getElementById('board-bg-color');
 
-    if (bgColor) {
+/* 배경색 팔레트 버튼 */
+if (bgPaletteWrap) {
 
-        bgColor.addEventListener(
-            'change',
+    const trigger =
+        bgPaletteWrap.querySelector(
+            '.board-bg-palette-trigger'
+        );
+
+    if (trigger) {
+
+        trigger.addEventListener(
+            'mousedown',
+            function (e) {
+
+                e.preventDefault();
+
+                saveBoardEditorSelection();
+
+                toggleBoardColorPalette(
+                    bgPaletteWrap
+                );
+            }
+        );
+    }
+}
+
+
+/* =========================================
+   색상 적용 함수
+   ========================================= */
+
+function applyBoardPaletteColor(
+    color,
+    type
+) {
+
+    if (!color) return;
+
+    restoreBoardEditorSelection();
+
+    if (type === 'text') {
+
+        execBoardCommand(
+            'foreColor',
+            color
+        );
+
+    } else if (type === 'background') {
+
+        execBoardCommand(
+            'hiliteColor',
+            color
+        );
+    }
+}
+
+
+/* =========================================
+   글자색 팔레트
+   ========================================= */
+
+if (textPaletteWrap) {
+
+    textPaletteWrap
+        .querySelectorAll(
+            '.board-palette-grid button'
+        )
+        .forEach(function (button) {
+
+            button.addEventListener(
+                'mousedown',
+                function (e) {
+
+                    e.preventDefault();
+
+                    saveBoardEditorSelection();
+
+                    const color =
+                        button.dataset.color;
+
+                    applyBoardPaletteColor(
+                        color,
+                        'text'
+                    );
+
+                    textPaletteWrap
+                        .classList.remove('open');
+                }
+            );
+        });
+}
+
+
+/* =========================================
+   배경색 팔레트
+   ========================================= */
+
+if (bgPaletteWrap) {
+
+    bgPaletteWrap
+        .querySelectorAll(
+            '.board-palette-grid button'
+        )
+        .forEach(function (button) {
+
+            button.addEventListener(
+                'mousedown',
+                function (e) {
+
+                    e.preventDefault();
+
+                    saveBoardEditorSelection();
+
+                    const color =
+                        button.dataset.color;
+
+                    applyBoardPaletteColor(
+                        color,
+                        'background'
+                    );
+
+                    bgPaletteWrap
+                        .classList.remove('open');
+                }
+            );
+        });
+}
+
+
+/* =========================================
+   팔레트 색상 표시
+   ========================================= */
+
+document
+    .querySelectorAll(
+        '.board-palette-grid button[data-color]'
+    )
+    .forEach(function (button) {
+
+        button.style.backgroundColor =
+            button.dataset.color;
+    });
+
+
+/* =========================================
+   더보기
+   ========================================= */
+
+document
+    .querySelectorAll(
+        '.board-palette-wrap'
+    )
+    .forEach(function (wrap) {
+
+        const moreButton =
+            wrap.querySelector(
+                '.board-palette-more'
+            );
+
+        const palette =
+            wrap.querySelector(
+                '.board-color-palette'
+            );
+
+        if (!moreButton || !palette) return;
+
+        moreButton.addEventListener(
+            'mousedown',
+            function (e) {
+
+                e.preventDefault();
+
+                saveBoardEditorSelection();
+
+                palette.classList.toggle(
+                    'custom-open'
+                );
+            }
+        );
+    });
+
+
+/* =========================================
+   직접 색상 선택
+   ========================================= */
+
+document
+    .querySelectorAll(
+        '.board-palette-wrap'
+    )
+    .forEach(function (wrap) {
+
+        const colorInput =
+            wrap.querySelector(
+                '.board-custom-color-input'
+            );
+
+        const hexInput =
+            wrap.querySelector(
+                '.board-custom-color-hex'
+            );
+
+        const applyButton =
+            wrap.querySelector(
+                '.board-custom-color-apply'
+            );
+
+        if (
+            !colorInput ||
+            !hexInput ||
+            !applyButton
+        ) {
+            return;
+        }
+
+
+        /* 색상 선택기를 바꾸면 HEX도 변경 */
+        colorInput.addEventListener(
+            'input',
             function () {
 
-                execBoardCommand(
-                    'hiliteColor',
-                    this.value
-                );
+                hexInput.value =
+                    this.value.toUpperCase();
             }
         );
+
+
+        /* HEX 입력 */
+        hexInput.addEventListener(
+            'input',
+            function () {
+
+                let value =
+                    this.value.trim();
+
+                if (
+                    !value.startsWith('#')
+                ) {
+                    value = '#' + value;
+                }
+
+                if (
+                    /^#[0-9A-Fa-f]{6}$/.test(value)
+                ) {
+
+                    colorInput.value =
+                        value;
+
+                }
+            }
+        );
+
+
+        /* 적용 */
+        applyButton.addEventListener(
+            'mousedown',
+            function (e) {
+
+                e.preventDefault();
+
+                const value =
+                    hexInput.value.trim();
+
+                if (
+                    !/^#[0-9A-Fa-f]{6}$/.test(value)
+                ) {
+                    return;
+                }
+
+                saveBoardEditorSelection();
+
+                const isText =
+                    wrap.classList.contains(
+                        'board-text-palette-wrap'
+                    );
+
+                applyBoardPaletteColor(
+                    value,
+                    isText
+                        ? 'text'
+                        : 'background'
+                );
+
+                wrap.classList.remove(
+                    'open'
+                );
+
+                const palette =
+                    wrap.querySelector(
+                        '.board-color-palette'
+                    );
+
+                if (palette) {
+
+                    palette.classList.remove(
+                        'custom-open'
+                    );
+                }
+            }
+        );
+
+    });
+
+
+/* =========================================
+   바깥쪽 클릭 → 팔레트 닫기
+   ========================================= */
+
+document.addEventListener(
+    'mousedown',
+    function (e) {
+
+        if (
+            !e.target.closest(
+                '.board-palette-wrap'
+            )
+        ) {
+
+            document
+                .querySelectorAll(
+                    '.board-palette-wrap'
+                )
+                .forEach(function (wrap) {
+
+                    wrap.classList.remove(
+                        'open'
+                    );
+
+                    const palette =
+                        wrap.querySelector(
+                            '.board-color-palette'
+                        );
+
+                    if (palette) {
+
+                        palette.classList.remove(
+                            'custom-open'
+                        );
+                    }
+
+                });
+        }
     }
+);
 
     /* 링크 */
     const linkButton =
