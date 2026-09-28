@@ -4155,37 +4155,56 @@ const fontSize =
     document.getElementById('board-font-size');
 
 if (fontSize) {
+
     fontSize.addEventListener('change', function () {
 
         const value = this.value;
 
-        /* 직접 입력 */
-        if (value === 'custom') {
+/* 직접 입력 */
+if (value === 'custom') {
 
-            const input = prompt(
-                '글자 크기를 입력하세요. (pt)',
-                '25'
-            );
+    const input = prompt(
+        '글자 크기를 입력하세요. (pt)',
+        '25'
+    );
 
-            if (input === null) {
-                this.value = '10';
-                return;
-            }
+    if (input === null) {
+        return;
+    }
 
-            const size = parseFloat(input);
+    const size = parseFloat(input);
 
-            if (!Number.isFinite(size) || size <= 0) {
-                alert('올바른 글자 크기를 입력하세요.');
-                this.value = '10';
-                return;
-            }
+    if (!Number.isFinite(size) || size <= 0) {
+        alert('올바른 글자 크기를 입력하세요.');
+        return;
+    }
 
-            applyBoardFontSize(size + 'pt');
+    applyBoardFontSize(size + 'pt');
 
-            this.value = '10';
-            return;
-        }
+    /* 직접 입력한 크기를 선택 목록에 추가 */
+    let customOption =
+        this.querySelector(
+            'option[data-custom-size="true"]'
+        );
 
+    if (!customOption) {
+
+        customOption =
+            document.createElement('option');
+
+        customOption.dataset.customSize = 'true';
+
+        this.appendChild(customOption);
+    }
+
+    customOption.value = String(size);
+    customOption.textContent = size + 'pt';
+
+    /* 화면에는 입력한 크기 표시 */
+    this.value = String(size);
+
+    return;
+}
         /* 10~20pt */
         if (value) {
             applyBoardFontSize(value + 'pt');
@@ -4220,11 +4239,39 @@ function applyBoardFontSize(size) {
         return;
     }
 
+    /*
+     * 선택한 내용만 가져오기
+     * 기존 span을 그대로 중첩시키지 않고
+     * 새로운 span 하나로 다시 구성한다.
+     */
+    const contents = range.extractContents();
+
     const span = document.createElement('span');
 
     span.style.fontSize = size;
 
-    const contents = range.extractContents();
+    /*
+     * 기존 글자크기 span이 선택 영역 안에 있으면
+     * 그 안쪽 내용만 꺼내서 다시 구성한다.
+     */
+    const oldSpans =
+        contents.querySelectorAll(
+            'span[style*="font-size"]'
+        );
+
+    oldSpans.forEach(function (oldSpan) {
+
+        const parent = oldSpan.parentNode;
+
+        while (oldSpan.firstChild) {
+            parent.insertBefore(
+                oldSpan.firstChild,
+                oldSpan
+            );
+        }
+
+        parent.removeChild(oldSpan);
+    });
 
     span.appendChild(contents);
 
@@ -4233,12 +4280,15 @@ function applyBoardFontSize(size) {
     /* 적용된 영역 다시 선택 */
     selection.removeAllRanges();
 
-    const newRange = document.createRange();
+    const newRange =
+        document.createRange();
+
     newRange.selectNodeContents(span);
 
     selection.addRange(newRange);
 
     syncBoardEditor();
+
     saveBoardEditorSelection();
 }
     /* 글자색 */
