@@ -2193,18 +2193,127 @@ padding: 0 14px;
         box-sizing: border-box !important;
     }
 
-}
-    /* =========================================
-   모바일 SmartEditor2 팝업 최상단
+}/* =========================================
+   직접 만든 조황게시판 에디터
    ========================================= */
+
+#board-editor-wrap {
+    width: 100%;
+    border: 1px solid #cfcfcf;
+    border-radius: 6px;
+    background: #fff;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+#board-editor-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    padding: 6px;
+    background: #f7f7f7;
+    border-bottom: 1px solid #d9d9d9;
+    box-sizing: border-box;
+}
+
+#board-editor-toolbar button,
+#board-editor-toolbar select {
+    height: 32px;
+    min-width: 32px;
+    border: 1px solid #cfcfcf;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+#board-editor-toolbar button {
+    padding: 0 8px;
+    font-size: 14px;
+}
+
+#board-editor-toolbar button:hover {
+    background: #eeeeee;
+}
+
+#board-editor-toolbar select {
+    padding: 0 6px;
+}
+
+#board-editor-toolbar input[type="color"] {
+    width: 32px;
+    height: 32px;
+    padding: 2px;
+    border: 1px solid #cfcfcf;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+#board-editor-area {
+    width: 100%;
+    min-height: 450px;
+    padding: 16px;
+    box-sizing: border-box;
+
+    background: #fff;
+    color: #222;
+
+    font-family: "맑은 고딕", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+
+    outline: none;
+    overflow-y: auto;
+    word-break: break-word;
+}
+
+#board-editor-area:focus {
+    box-shadow: inset 0 0 0 1px #0f2c59;
+}
+
+#board-editor-area table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#board-editor-area table td,
+#board-editor-area table th {
+    border: 1px solid #999;
+    padding: 6px;
+    min-width: 60px;
+}
+
 @media screen and (max-width: 768px) {
 
-    #cat-board #board-write-form .board-form-group {
-        position: relative !important;
-        z-index: 10000 !important;
-        overflow: visible !important;
+    #board-editor-toolbar {
+        gap: 3px;
+        padding: 5px;
     }
 
+    #board-editor-toolbar button,
+    #board-editor-toolbar select,
+    #board-editor-toolbar input[type="color"] {
+        height: 30px;
+    }
+
+    #board-editor-toolbar button {
+        min-width: 30px;
+        padding: 0 6px;
+        font-size: 13px;
+    }
+
+    #board-editor-toolbar select {
+        max-width: 105px;
+    }
+
+    #board-editor-area {
+        min-height: 400px;
+        padding: 12px;
+        font-size: 16px;
+    }
 }
     </style>
 </head>
@@ -2916,17 +3025,185 @@ padding: 0 14px;
     <label for="board-content" data-i18n="boardPostContent">
         내용
     </label>
-         <textarea
+
+    <!-- 직접 만든 에디터 -->
+    <div id="board-editor-wrap">
+
+        <!-- 에디터 툴바 -->
+        <div id="board-editor-toolbar">
+
+            <select id="board-editor-font">
+                <option value="맑은 고딕">맑은 고딕</option>
+                <option value="굴림">굴림</option>
+                <option value="바탕">바탕</option>
+                <option value="궁서">궁서</option>
+                <option value="Arial">Arial</option>
+            </select>
+
+            <select id="board-editor-size">
+                <option value="3">16px</option>
+                <option value="2">14px</option>
+                <option value="4">18px</option>
+                <option value="5">20px</option>
+                <option value="6">24px</option>
+                <option value="7">28px</option>
+            </select>
+
+            <button type="button" data-editor-command="bold" title="굵게">
+                <b>B</b>
+            </button>
+
+            <button type="button" data-editor-command="italic" title="기울임">
+                <i>I</i>
+            </button>
+
+            <button type="button" data-editor-command="underline" title="밑줄">
+                <u>U</u>
+            </button>
+
+            <button type="button" data-editor-command="strikeThrough" title="취소선">
+                <s>S</s>
+            </button>
+
+            <input
+                type="color"
+                id="board-editor-color"
+                title="글자색"
+                value="#000000"
+            >
+
+            <input
+                type="color"
+                id="board-editor-bgcolor"
+                title="배경색"
+                value="#ffff00"
+            >
+
+            <button type="button" data-editor-command="justifyLeft" title="왼쪽 정렬">
+                ≡
+            </button>
+
+            <button type="button" data-editor-command="justifyCenter" title="가운데 정렬">
+                ≡
+            </button>
+
+            <button type="button" data-editor-command="justifyRight" title="오른쪽 정렬">
+                ≡
+            </button>
+
+            <button type="button" data-editor-command="insertUnorderedList" title="목록">
+                • 목록
+            </button>
+
+            <button type="button" id="board-editor-link-btn" title="링크">
+                🔗
+            </button>
+
+            <button type="button" id="board-editor-table-btn" title="표">
+                ▦
+            </button>
+
+            <button type="button" id="board-editor-symbol-btn" title="특수문자">
+                Ω
+            </button>
+
+            <button type="button" id="board-editor-clear-btn" title="서식 지우기">
+                지우기
+            </button>
+
+        </div>
+
+        <!-- 실제 글 작성 영역 -->
+        <div
+            id="board-editor-area"
+            contenteditable="true"
+            spellcheck="false"
+        ></div>
+
+    </div>
+
+<div id="board-editor" class="board-editor">
+
+<!-- 에디터 툴바 -->
+<div id="board-editor-toolbar" class="board-editor-toolbar">
+2
+    <button type="button" data-command="bold" title="굵게">
+        <b>B</b>
+    </button>
+
+    <button type="button" data-command="italic" title="기울임">
+        <i>I</i>
+    </button>
+
+    <button type="button" data-command="underline" title="밑줄">
+        <u>U</u>
+    </button>
+
+    <select id="board-font-size" title="글자 크기">
+        <option value="">글자 크기</option>
+        <option value="1">작게</option>
+        <option value="3">보통</option>
+        <option value="5">크게</option>
+        <option value="7">아주 크게</option>
+    </select>
+
+    <input
+        type="color"
+        id="board-text-color"
+        title="글자색"
+    >
+
+    <input
+        type="color"
+        id="board-bg-color"
+        title="배경색"
+    >
+
+    <button type="button" data-command="justifyLeft" title="왼쪽 정렬">
+        ☰
+    </button>
+
+    <button type="button" data-command="justifyCenter" title="가운데 정렬">
+        ≡
+    </button>
+
+    <button type="button" data-command="justifyRight" title="오른쪽 정렬">
+        ☷
+    </button>
+
+    <button type="button" id="board-link-btn" title="링크">
+        🔗
+    </button>
+
+    <button type="button" id="board-table-btn" title="표">
+        ▦
+    </button>
+
+    <button type="button" id="board-symbol-btn" title="특수문자">
+        Ω
+    </button>
+
+</div>
+
+<!-- 직접 작성하는 본문 영역 -->
+<div
+    id="board-editor-content"
+    class="board-editor-content"
+    contenteditable="true"
+    data-placeholder="내용을 입력하세요."
+></div>
+
+<!-- 기존 저장 로직과 연결할 실제 값 -->
+<textarea
     id="board-content"
     name="board-content"
-    rows="10"
-    cols="100"
-    style="
-        width:100%;
-        height:450px;
-        display:none;
-    "
+    hidden
 ></textarea>
+
+
+</div>
+
+
 </div>
             <div class="board-form-group">
                 <label for="board-images" data-i18n="boardPhotos">
@@ -3303,48 +3580,7 @@ editor.exec(
         return;
     }
 
-    // SmartEditor2 엔진 확인
-    if (
-        typeof nhn === 'undefined' ||
-        !nhn.husky ||
-        !nhn.husky.EZCreator
-    ) {
-        console.error(
-            'SmartEditor2 엔진을 찾을 수 없습니다.'
-        );
-        return;
-    }
 
-    nhn.husky.EZCreator.createInIFrame({
-        oAppRef: boardSmartEditor,
-
-        elPlaceHolder: "board-content",
-
-        sSkinURI:
-            "/smarteditor2/SmartEditor2Skin.html",
-
-        htParams: {
-            bUseToolbar: true,
-            bUseVerticalResizer: true,
-            bUseModeChanger: true,
-            I18N_LOCALE: "ko_KR"
-        },
-
-fOnAppLoad: function () {
-
-    const editor =
-        boardSmartEditor.getById["board-content"];
-
-    console.log('SmartEditor2 로딩 완료');
-
-    if (typeof onReady === 'function' && editor) {
-        onReady(editor);
-    }
-},
-
-fCreator: "createSEditor2"
-    });
-}
 function showBoardWriteForm() {
     const list = document.getElementById('board-list');
     const detail = document.getElementById('board-detail');
@@ -3386,9 +3622,277 @@ function showBoardWriteForm() {
 if (form) {
     form.style.display = 'block';
 }
-
-initBoardSmartEditor();
+   
 }
+/* =========================================
+직접 제작 조황게시판 에디터
+========================================= */
+
+(function () {
+
+
+function getBoardEditor() {
+    return document.getElementById('board-editor-content');
+}
+
+function getBoardContent() {
+    return document.getElementById('board-content');
+}
+
+/* 본문 내용을 기존 textarea에 동기화 */
+function syncBoardEditor() {
+
+    const editor = getBoardEditor();
+    const content = getBoardContent();
+
+    if (!editor || !content) return;
+
+    content.value = editor.innerHTML;
+}
+
+/* 현재 선택 영역 유지 */
+function saveBoardEditorSelection() {
+
+    const editor = getBoardEditor();
+
+    if (!editor) return;
+
+    const selection = window.getSelection();
+
+    if (
+        selection &&
+        selection.rangeCount > 0 &&
+        editor.contains(selection.anchorNode)
+    ) {
+        window.boardEditorRange =
+            selection.getRangeAt(0).cloneRange();
+    }
+}
+
+/* 저장된 선택 영역 복원 */
+function restoreBoardEditorSelection() {
+
+    const editor = getBoardEditor();
+
+    if (!editor || !window.boardEditorRange) return;
+
+    const selection = window.getSelection();
+
+    selection.removeAllRanges();
+    selection.addRange(window.boardEditorRange);
+}
+
+/* 명령 실행 */
+function execBoardCommand(command, value = null) {
+
+    const editor = getBoardEditor();
+
+    if (!editor) return;
+
+    editor.focus();
+
+    restoreBoardEditorSelection();
+
+    document.execCommand(
+        command,
+        false,
+        value
+    );
+
+    syncBoardEditor();
+
+    saveBoardEditorSelection();
+}
+
+/* 툴바 초기화 */
+function initBoardEditor() {
+
+    const editor = getBoardEditor();
+
+    if (!editor) return;
+
+    /* 중복 초기화 방지 */
+    if (editor.dataset.initialized === 'true') {
+        return;
+    }
+
+    editor.dataset.initialized = 'true';
+
+    /* 본문 입력 */
+    editor.addEventListener('input', function () {
+        syncBoardEditor();
+    });
+
+    /* 선택 영역 저장 */
+    editor.addEventListener('mouseup', function () {
+        saveBoardEditorSelection();
+    });
+
+    editor.addEventListener('keyup', function () {
+        saveBoardEditorSelection();
+    });
+
+    /* 툴바 버튼 */
+    const toolbar =
+        document.getElementById('board-editor-toolbar');
+
+    if (toolbar) {
+
+        toolbar
+            .querySelectorAll('[data-command]')
+            .forEach(function (button) {
+
+                button.addEventListener(
+                    'mousedown',
+                    function (e) {
+
+                        e.preventDefault();
+
+                        saveBoardEditorSelection();
+
+                        execBoardCommand(
+                            button.dataset.command
+                        );
+                    }
+                );
+
+            });
+    }
+
+    /* 글자 크기 */
+    const fontSize =
+        document.getElementById('board-font-size');
+
+    if (fontSize) {
+
+        fontSize.addEventListener(
+            'change',
+            function () {
+
+                execBoardCommand(
+                    'fontSize',
+                    this.value
+                );
+
+                this.value = '';
+            }
+        );
+    }
+
+    /* 글자색 */
+    const textColor =
+        document.getElementById('board-text-color');
+
+    if (textColor) {
+
+        textColor.addEventListener(
+            'change',
+            function () {
+
+                execBoardCommand(
+                    'foreColor',
+                    this.value
+                );
+            }
+        );
+    }
+
+    /* 배경색 */
+    const bgColor =
+        document.getElementById('board-bg-color');
+
+    if (bgColor) {
+
+        bgColor.addEventListener(
+            'change',
+            function () {
+
+                execBoardCommand(
+                    'hiliteColor',
+                    this.value
+                );
+            }
+        );
+    }
+
+    /* 링크 */
+    const linkButton =
+        document.getElementById('board-link-btn');
+
+    if (linkButton) {
+
+        linkButton.addEventListener(
+            'mousedown',
+            function (e) {
+
+                e.preventDefault();
+
+                saveBoardEditorSelection();
+
+                const url =
+                    prompt(
+                        '링크 주소를 입력하세요.',
+                        'https://'
+                    );
+
+                if (!url) return;
+
+                execBoardCommand(
+                    'createLink',
+                    url
+                );
+            }
+        );
+    }
+
+    /* 특수문자 */
+    const symbolButton =
+        document.getElementById('board-symbol-btn');
+
+    if (symbolButton) {
+
+        symbolButton.addEventListener(
+            'mousedown',
+            function (e) {
+
+                e.preventDefault();
+
+                saveBoardEditorSelection();
+
+                const symbol =
+                    prompt(
+                        '특수문자를 입력하세요.',
+                        '★'
+                    );
+
+                if (!symbol) return;
+
+                restoreBoardEditorSelection();
+
+                document.execCommand(
+                    'insertText',
+                    false,
+                    symbol
+                );
+
+                syncBoardEditor();
+
+                saveBoardEditorSelection();
+            }
+        );
+    }
+
+    console.log('직접 제작 에디터 초기화 완료');
+}
+
+/*
+ * 게시판 작성폼이 열릴 때마다 에디터 초기화
+ */
+window.initBoardEditor = initBoardEditor;
+
+})();
+
+initBoardEditor();
 
 async function editBoardPost(postId) {
     const list = document.getElementById('board-list');
@@ -3422,25 +3926,24 @@ async function editBoardPost(postId) {
 titleInput.value = post.title || '';
 contentInput.value = post.content || '';
 
+const editorContent =
+    document.getElementById('board-editor-content');
+
+if (editorContent) {
+    editorContent.innerHTML = post.content || '';
+}
+
+if (typeof initBoardEditor === 'function') {
+    initBoardEditor();
+}
+        
         // 목록과 상세화면 숨기기
         if (list) list.style.display = 'none';
         if (detail) detail.style.display = 'none';
 
         // 수정 폼 표시
         form.style.display = 'block';
-// SmartEditor2에 기존 내용 불러오기
-setTimeout(function () {
-
-    initBoardSmartEditor(function (editor) {
-
-editor.exec(
-    'SET_IR',
-    [post.content || '']
-);
-
-    });
-
-}, 100);
+        
         // 폼 제목 변경
         const formTitle = form.querySelector('.board-form-title h3');
 
