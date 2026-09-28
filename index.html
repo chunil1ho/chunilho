@@ -4077,15 +4077,13 @@ function initBoardEditor() {
         syncBoardEditor();
     });
 
-/* 선택 영역 저장 + 현재 서식 상태 확인 */
+/* 선택 영역 저장 */
 editor.addEventListener('mouseup', function () {
     saveBoardEditorSelection();
-    updateBoardEditorToolbarState();
 });
 
 editor.addEventListener('keyup', function () {
     saveBoardEditorSelection();
-    updateBoardEditorToolbarState();
 });
 
     /* 툴바 버튼 */
@@ -4109,8 +4107,6 @@ toolbar
 execBoardCommand(
     button.dataset.command
 );
-
-updateBoardEditorToolbarState();
         );
 
     });
@@ -4319,58 +4315,6 @@ window.initBoardEditor = initBoardEditor;
 })();
 
 initBoardEditor();
-    
-function updateBoardEditorToolbarState() {
-
-    const editor = getBoardEditor();
-
-    if (!editor) return;
-
-    const selection = window.getSelection();
-
-    if (!selection || selection.rangeCount === 0) {
-        return;
-    }
-
-    if (!editor.contains(selection.anchorNode)) {
-        return;
-    }
-
-    const toolbar =
-        document.getElementById('board-editor-toolbar');
-
-    if (!toolbar) return;
-
-    const commands = [
-        'bold',
-        'italic',
-        'underline',
-        'strikeThrough'
-    ];
-
-    commands.forEach(function (command) {
-
-        const button =
-            toolbar.querySelector(
-                '[data-command="' + command + '"]'
-            );
-
-        if (!button) return;
-
-        let active = false;
-
-        try {
-            active = document.queryCommandState(command);
-        } catch (e) {
-            active = false;
-        }
-
-        button.classList.toggle(
-            'active',
-            active
-        );
-    });
-}
     
 async function editBoardPost(postId) {
     const list = document.getElementById('board-list');
