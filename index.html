@@ -4077,14 +4077,16 @@ function initBoardEditor() {
         syncBoardEditor();
     });
 
-    /* 선택 영역 저장 */
-    editor.addEventListener('mouseup', function () {
-        saveBoardEditorSelection();
-    });
+/* 선택 영역 저장 + 현재 서식 상태 확인 */
+editor.addEventListener('mouseup', function () {
+    saveBoardEditorSelection();
+    updateBoardEditorToolbarState();
+});
 
-    editor.addEventListener('keyup', function () {
-        saveBoardEditorSelection();
-    });
+editor.addEventListener('keyup', function () {
+    saveBoardEditorSelection();
+    updateBoardEditorToolbarState();
+});
 
     /* 툴바 버튼 */
     const toolbar =
@@ -4092,25 +4094,26 @@ function initBoardEditor() {
 
     if (toolbar) {
 
-        toolbar
-            .querySelectorAll('[data-command]')
-            .forEach(function (button) {
+toolbar
+    .querySelectorAll('[data-command]')
+    .forEach(function (button) {
 
-                button.addEventListener(
-                    'mousedown',
-                    function (e) {
+        button.addEventListener(
+            'mousedown',
+            function (e) {
 
-                        e.preventDefault();
+                e.preventDefault();
 
-                        saveBoardEditorSelection();
+                saveBoardEditorSelection();
 
-                        execBoardCommand(
-                            button.dataset.command
-                        );
-                    }
-                );
+execBoardCommand(
+    button.dataset.command
+);
 
-            });
+updateBoardEditorToolbarState();
+        );
+
+    });
     }
 const fontSize =
     document.getElementById('board-font-size');
@@ -4316,7 +4319,59 @@ window.initBoardEditor = initBoardEditor;
 })();
 
 initBoardEditor();
+    
+function updateBoardEditorToolbarState() {
 
+    const editor = getBoardEditor();
+
+    if (!editor) return;
+
+    const selection = window.getSelection();
+
+    if (!selection || selection.rangeCount === 0) {
+        return;
+    }
+
+    if (!editor.contains(selection.anchorNode)) {
+        return;
+    }
+
+    const toolbar =
+        document.getElementById('board-editor-toolbar');
+
+    if (!toolbar) return;
+
+    const commands = [
+        'bold',
+        'italic',
+        'underline',
+        'strikeThrough'
+    ];
+
+    commands.forEach(function (command) {
+
+        const button =
+            toolbar.querySelector(
+                '[data-command="' + command + '"]'
+            );
+
+        if (!button) return;
+
+        let active = false;
+
+        try {
+            active = document.queryCommandState(command);
+        } catch (e) {
+            active = false;
+        }
+
+        button.classList.toggle(
+            'active',
+            active
+        );
+    });
+}
+    
 async function editBoardPost(postId) {
     const list = document.getElementById('board-list');
     const detail = document.getElementById('board-detail');
