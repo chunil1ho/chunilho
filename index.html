@@ -2768,6 +2768,165 @@ padding: 0 14px;
 #board-editor-toolbar button.active:hover {
     background: #ddd !important;
 }
+    /* =========================================
+   조황게시판 색상 팔레트
+   ========================================= */
+
+.board-color-picker {
+    position: relative !important;
+    display: inline-flex !important;
+    width: 34px !important;
+    height: 32px !important;
+    flex: 0 0 34px !important;
+    box-sizing: border-box !important;
+}
+
+/* 기존 가 버튼 */
+.board-color-picker > .board-color-button {
+    position: relative !important;
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 32px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #fff !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    box-sizing: border-box !important;
+    cursor: pointer !important;
+}
+
+/* 글자 가 */
+.board-text-color-button span {
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+}
+
+/* 배경색 가 */
+.board-bg-color-button span {
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    background: #ffff00 !important;
+    padding: 1px 2px !important;
+}
+
+/* 팔레트 */
+.board-color-palette {
+    display: none !important;
+
+    position: absolute !important;
+    top: 38px !important;
+    left: 0 !important;
+
+    width: 310px !important;
+    padding: 10px !important;
+
+    background: #fff !important;
+    border: 1px solid #bbb !important;
+    box-shadow: 0 3px 12px rgba(0,0,0,.22) !important;
+
+    z-index: 99999 !important;
+    box-sizing: border-box !important;
+}
+
+/* 열려 있을 때 */
+.board-color-picker.open .board-color-palette {
+    display: block !important;
+}
+
+/* 위쪽 미리보기 */
+.board-palette-preview {
+    width: 100% !important;
+    height: 42px !important;
+    margin-bottom: 8px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 10px !important;
+
+    background: #fff !important;
+    box-sizing: border-box !important;
+}
+
+.board-palette-preview span {
+    font-size: 24px !important;
+    font-weight: 400 !important;
+}
+
+/* 색상표 */
+.board-palette-grid {
+    display: grid !important;
+    grid-template-columns: repeat(10, 1fr) !important;
+    gap: 2px !important;
+    width: 100% !important;
+}
+
+/* 색상 버튼 */
+.board-palette-grid button {
+    width: 27px !important;
+    height: 27px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    border: 1px solid rgba(0,0,0,.08) !important;
+    border-radius: 0 !important;
+
+    background: #fff !important;
+    cursor: pointer !important;
+
+    box-sizing: border-box !important;
+}
+
+/* 마우스를 올렸을 때 */
+.board-palette-grid button:hover {
+    outline: 2px solid #333 !important;
+    outline-offset: -2px !important;
+}
+
+/* 더보기 */
+.board-palette-more {
+    display: block !important;
+
+    width: 100% !important;
+    height: 32px !important;
+
+    margin-top: 8px !important;
+
+    background: #fff !important;
+    border: 1px solid #bbb !important;
+    border-radius: 3px !important;
+
+    font-size: 13px !important;
+    cursor: pointer !important;
+}
+
+.board-palette-more:hover {
+    background: #f0f0f0 !important;
+}
+
+/* 모바일 */
+@media (max-width: 768px) {
+
+    .board-color-palette {
+        width: 290px !important;
+        max-width: calc(100vw - 20px) !important;
+    }
+
+    .board-palette-grid {
+        grid-template-columns: repeat(10, 1fr) !important;
+    }
+
+    .board-palette-grid button {
+        width: 25px !important;
+        height: 25px !important;
+    }
+}
     </style>
 </head>
 <body id="mainBody">
@@ -4533,9 +4692,6 @@ function applyBoardFontSize(size) {
 
     saveBoardEditorSelection();
 }
-    /* 글자색 */
-    const textColor =
-        document.getElementById('board-text-color');
 
 if (textColor) {
 
