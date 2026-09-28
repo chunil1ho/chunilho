@@ -4527,19 +4527,6 @@ const titleInput =
 const contentInput =
     document.getElementById('board-content');
 
-// SmartEditor2 내용을 textarea에 반영
-if (
-    boardSmartEditor.getById &&
-    boardSmartEditor.getById['board-content']
-) {
-    boardSmartEditor
-        .getById['board-content']
-        .exec(
-            'UPDATE_CONTENTS_FIELD',
-            []
-        );
-}
-
 const title =
     titleInput?.value.trim() || '';
 
