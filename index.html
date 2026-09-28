@@ -2712,7 +2712,7 @@ padding: 0 14px;
 
     height: 3px !important;
 
-    background: #000 !important;
+    background: var(--board-text-color, #000) !important;
 
     pointer-events: none !important;
 }
@@ -4357,11 +4357,19 @@ function applyBoardFontSize(size) {
     const textColor =
         document.getElementById('board-text-color');
 
-    if (textColor) {
+if (textColor) {
 
-        textColor.addEventListener(
-            'change',
-            function () {
+    /* 색상 선택 전에 선택 영역 저장 */
+    textColor.addEventListener(
+        'mousedown',
+        function () {
+            saveBoardEditorSelection();
+        }
+    );
+
+    textColor.addEventListener(
+        'change',
+        function () {
 
                 execBoardCommand(
                     'foreColor',
