@@ -380,3 +380,33 @@ body,#smart_editor2,#smart_editor2 p,#smart_editor2 h1,#smart_editor2 h2,#smart_
         box-sizing: border-box !important;
     }
 }
+/* =========================================
+   SmartEditor2 팝업이 다른 요소 뒤로 가지 않도록
+   ========================================= */
+
+#smart_editor2 {
+    position: relative !important;
+    z-index: 999999 !important;
+}
+
+#smart_editor2 .se2_tool {
+    position: relative !important;
+    z-index: 1000000 !important;
+    overflow: visible !important;
+}
+
+#smart_editor2 .se2_text_tool {
+    position: relative !important;
+    z-index: 1000001 !important;
+    overflow: visible !important;
+}
+
+#smart_editor2 .se2_text_tool li.active {
+    position: relative !important;
+    z-index: 1000002 !important;
+}
+
+#smart_editor2 .se2_text_tool li.active .se2_layer {
+    position: absolute !important;
+    z-index: 1000003 !important;
+}
