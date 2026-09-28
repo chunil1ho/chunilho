@@ -4054,6 +4054,15 @@ document.execCommand(
 );
 
 syncBoardEditor();
+/* 크기 변경 후 비어 있는 글자 크기 span 제거 */
+editor
+    .querySelectorAll('span[style*="font-size"]')
+    .forEach(function (span) {
+
+        if (!span.textContent.trim()) {
+            span.remove();
+        }
+    });
 
 saveBoardEditorSelection();
 
