@@ -2808,8 +2808,6 @@ padding: 0 14px;
 
     box-sizing: border-box !important;
     cursor: pointer !important;
-
-    background: var(--palette-swatch-color) !important;
 }
 
 /* 마우스를 올렸을 때 */
@@ -4658,9 +4656,7 @@ function createBoardColorPalettes() {
 
                 button.type = 'button';
 
-                button.style.setProperty(
-                    '--palette-swatch-color',
-                    color
+                button.style.backgroundColor = color;
                 );
 
                 button.dataset.color = color;
