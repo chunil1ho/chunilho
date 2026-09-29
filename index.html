@@ -2756,8 +2756,8 @@ padding: 0 14px;
 
     display: none !important;
 
-    width: 260px !important;
-    max-width: calc(100vw - 16px) !important;
+    width:230px !important;
+    max-width:calc(100vw - 20px) !important;
 
     padding: 8px !important;
 
@@ -2786,29 +2786,20 @@ padding: 0 14px;
 
 .board-palette-grid {
     display: grid !important;
-
-    /*
-       화면 폭에 맞춰 자동으로 열 개수 변경
-       각 칸은 정사각형
-    */
-    grid-template-columns:
-        repeat(auto-fit, minmax(10px, 1fr)) !important;
-
+    grid-template-columns: repeat(auto-fill, minmax(14px, 1fr)) !important;
     gap: 2px !important;
-
     width: 100% !important;
-
     box-sizing: border-box !important;
 }
 
-
-/* 색상 하나하나 */
 .board-palette-grid button {
-    width: 100% !important;
-    min-width: 0 !important;
-    aspect-ratio: 1 / 1 !important;
-    height: auto !important;
-    min-height: 0 !important;
+    width: 14px !important;
+    height: 14px !important;
+    min-width: 14px !important;
+    min-height: 14px !important;
+    max-width: 14px !important;
+    max-height: 14px !important;
+
     padding: 0 !important;
     margin: 0 !important;
 
@@ -2818,10 +2809,8 @@ padding: 0 14px;
     box-sizing: border-box !important;
     cursor: pointer !important;
 
-    display: block !important;
-    background-color: var(--palette-swatch-color) !important;
+    background: var(--palette-swatch-color) !important;
 }
-
 
 /* 마우스를 올렸을 때 */
 .board-palette-grid button:hover {
@@ -2963,19 +2952,14 @@ padding: 0 14px;
 
 @media (max-width: 768px) {
 
-    .board-color-palette {
-        width: 230px !important;
-        max-width: calc(100vw - 16px) !important;
-
-        padding: 7px !important;
-    }
-
-    .board-palette-grid {
-        grid-template-columns:
-            repeat(auto-fit, minmax(10px, 1fr)) !important;
-
-        gap: 2px !important;
-    }
+.board-color-palette {
+    width:230px !important;
+    max-width:calc(100vw - 20px) !important;
+    left:auto !important;
+    right:0 !important;
+    padding:7px !important;
+    box-sizing:border-box !important;
+}
 
 }
     </style>
