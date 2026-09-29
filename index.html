@@ -2792,9 +2792,12 @@ padding: 0 14px;
     box-sizing: border-box !important;
 }
 
-.board-palette-grid button {
+#board-editor-toolbar .board-palette-grid button {
+    display: block !important;
+
     width: 14px !important;
     height: 14px !important;
+
     min-width: 14px !important;
     min-height: 14px !important;
     max-width: 14px !important;
@@ -4656,7 +4659,11 @@ function createBoardColorPalettes() {
 
                 button.type = 'button';
 
-                button.style.backgroundColor = color;
+                button.style.setProperty(
+    'background-color',
+    color,
+    'important'
+);
                
                 button.dataset.color = color;
 
