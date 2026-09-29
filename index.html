@@ -4540,30 +4540,28 @@ editor.addEventListener('keyup', function () {
     const toolbar =
         document.getElementById('board-editor-toolbar');
 
-    if (toolbar) {
+ if (toolbar) {
 
-toolbar
-    .querySelectorAll('[data-command]')
-    .forEach(function (button) {
+    toolbar
+        .querySelectorAll('[data-command]')
+        .forEach(function (button) {
 
-        button.addEventListener(
-            'mousedown',
-            function (e) {
+            button.addEventListener(
+                'mousedown',
+                function (e) {
 
-                e.preventDefault();
+                    e.preventDefault();
 
-                saveBoardEditorSelection();
+                    saveBoardEditorSelection();
 
-execBoardCommand(
-    button.dataset.command
-);
+                    execBoardCommand(
+                        button.dataset.command
+                    );
+                }
+            );
 
-            }
-        );
-
-    });
-    }   
-    
+        });
+}
 const fontSize =
     document.getElementById('board-font-size');
 
@@ -5240,19 +5238,56 @@ function createBoardSymbolPalette() {
                 e.preventDefault();
                 e.stopPropagation();
 
-                restoreBoardEditorSelection();
+const editor =
+    getBoardEditor();
 
-                document.execCommand(
-                    'insertText',
-                    false,
-                    symbol
-                );
+if (!editor) return;
 
-                syncBoardEditor();
+editor.focus();
 
-                saveBoardEditorSelection();
+restoreBoardEditorSelection();
 
-                palette.classList.remove('open');
+const selection =
+    window.getSelection();
+
+if (
+    !selection ||
+    selection.rangeCount === 0
+) {
+    return;
+}
+
+const range =
+    selection.getRangeAt(0);
+
+if (
+    !editor.contains(
+        range.commonAncestorContainer
+    )
+) {
+    return;
+}
+
+/* 선택된 글자가 있으면 교체 */
+range.deleteContents();
+
+/* 특수문자 삽입 */
+const textNode =
+    document.createTextNode(symbol);
+
+range.insertNode(textNode);
+
+/* 특수문자 뒤로 커서 이동 */
+range.setStartAfter(textNode);
+range.collapse(true);
+
+selection.removeAllRanges();
+selection.addRange(range);
+
+syncBoardEditor();
+saveBoardEditorSelection();
+
+palette.classList.remove('open');
             }
         );
 
@@ -5265,8 +5300,6 @@ function createBoardSymbolPalette() {
 
     return palette;
 }
-
-
 /* 특수문자 버튼 */
 const symbolButton =
     document.getElementById('board-symbol-btn');
