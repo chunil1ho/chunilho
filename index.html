@@ -2792,7 +2792,7 @@ padding: 0 14px;
        각 칸은 정사각형
     */
     grid-template-columns:
-        repeat(auto-fit, minmax(20px, 1fr)) !important;
+        repeat(auto-fit, minmax(10px, 1fr)) !important;
 
     gap: 2px !important;
 
@@ -2806,21 +2806,19 @@ padding: 0 14px;
 .board-palette-grid button {
     width: 100% !important;
     min-width: 0 !important;
-
     aspect-ratio: 1 / 1 !important;
-
     height: auto !important;
     min-height: 0 !important;
-
     padding: 0 !important;
     margin: 0 !important;
 
-    border: 1px solid #fff !important;
+    border: 1px solid #ccc !important;
     border-radius: 0 !important;
 
     box-sizing: border-box !important;
-
     cursor: pointer !important;
+
+    display: block !important;
 }
 
 
@@ -2973,7 +2971,7 @@ padding: 0 14px;
 
     .board-palette-grid {
         grid-template-columns:
-            repeat(auto-fit, minmax(20px, 1fr)) !important;
+            repeat(auto-fit, minmax(10px, 1fr)) !important;
 
         gap: 2px !important;
     }
@@ -4675,7 +4673,10 @@ function createBoardColorPalettes() {
 
                 button.type = 'button';
 
-                button.style.backgroundColor = color;
+                button.style.setProperty(
+                    '--palette-swatch-color',
+                    color
+                );
 
                 button.dataset.color = color;
 
@@ -4685,8 +4686,6 @@ function createBoardColorPalettes() {
             });
         });
 }
-
-
 /* 팔레트 열기 / 닫기 */
 document
     .querySelectorAll('.board-palette-wrap')
