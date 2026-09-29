@@ -4836,13 +4836,17 @@ document.addEventListener(
                     '.board-bg-palette-trigger span'
                 );
 
-if (trigger) {
-    trigger.style.setProperty(
-        '--board-bg-palette-color',
-        color
-    );
+            if (trigger) {
+                trigger.style.setProperty(
+                    '--board-bg-palette-color',
+                    color
+                );
+            }
+        }
+
+        wrap.classList.remove('open');
     }
-wrap.classList.remove('open');
+);
 
 /* 더보기 */
 document.addEventListener(
@@ -8488,6 +8492,7 @@ function formatBoardText(command) {
     return template.innerHTML
         .replace(/\n/g, '<br>');
 }
+    
 // =========================================
 // 모바일 메뉴 열기 / 닫기
 // =========================================
