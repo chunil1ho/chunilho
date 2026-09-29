@@ -5175,7 +5175,99 @@ createBoardColorPalettes();
         );
     }
 
-  /* 특수문자 */
+/* =========================================
+   특수문자 팔레트
+   ========================================= */
+
+const boardSymbols = [
+    '⌁','·','•','··','••','¨','”','–','—','∥','╲','∼','‘','’','“',
+    '„','〔','〕','〈','〉','《','》','「','」','『','』','【','】','±','×','÷',
+    '≠','≤','≥','∞','∴','°','′','″','℃','Å','Æ','£','¥','♂','♀','∠',
+    '⊥','∩','∂','▽','≡','≒','§','※','☆','★','○','●','◎','◇','◆','□',
+    '■','△','▲','▽','▼','→','←','↑','↓','↔','＝','≪','≫','√','～','∞',
+    '∴','∫','∬','∈','∋','⊂','⊃','⊆','⊇','∪','∩','∧','∨','¬','⌐','⌙',
+    '©','®','™','℠','℃','℉','‰','※','†','‡','§','¶','♠','♣','♥','♦',
+    '♤','♧','♡','♢','♩','♪','♫','♬','☎','☏','☀','☁','☂','☃','☄','☾',
+    '♨','✈','✉','✓','✔','✕','✖','★','☆','⚠','☑','☒','☞','☜','☝','☟',
+    '←','→','↖','↗','↘','↙','↔','↕','⇐','⇒','⇑','⇓','⇔','⇕','➜','➤',
+    '♡','♥','❤','💛','💚','💙','💜','🖤','🤍','❀','✿','❁','❃','❋','✦','✧'
+];
+
+function createBoardSymbolPalette() {
+
+    let palette =
+        document.getElementById('board-symbol-palette');
+
+    if (palette) {
+        return palette;
+    }
+
+    palette =
+        document.createElement('div');
+
+    palette.id =
+        'board-symbol-palette';
+
+    palette.className =
+        'board-symbol-palette';
+
+    const grid =
+        document.createElement('div');
+
+    grid.className =
+        'board-symbol-grid';
+
+    boardSymbols.forEach(function (symbol) {
+
+        const button =
+            document.createElement('button');
+
+        button.type = 'button';
+
+        button.className =
+            'board-symbol-item';
+
+        button.textContent =
+            symbol;
+
+        button.title =
+            symbol;
+
+        button.addEventListener(
+            'mousedown',
+            function (e) {
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                restoreBoardEditorSelection();
+
+                document.execCommand(
+                    'insertText',
+                    false,
+                    symbol
+                );
+
+                syncBoardEditor();
+
+                saveBoardEditorSelection();
+
+                palette.classList.remove('open');
+            }
+        );
+
+        grid.appendChild(button);
+    });
+
+    palette.appendChild(grid);
+
+    document.body.appendChild(palette);
+
+    return palette;
+}
+
+
+/* 특수문자 버튼 */
 const symbolButton =
     document.getElementById('board-symbol-btn');
 
@@ -5189,28 +5281,99 @@ if (symbolButton) {
 
             saveBoardEditorSelection();
 
-            const symbol =
-                prompt(
-                    '특수문자를 입력하세요.',
-                    '★'
-                );
+            const palette =
+                createBoardSymbolPalette();
 
-            if (!symbol) return;
+            const isOpen =
+                palette.classList.contains('open');
 
-            restoreBoardEditorSelection();
+            if (isOpen) {
 
-            document.execCommand(
-                'insertText',
-                false,
-                symbol
-            );
+                palette.classList.remove('open');
 
-            syncBoardEditor();
+                return;
+            }
 
-            saveBoardEditorSelection();
+            palette.classList.add('open');
+
+            const rect =
+                symbolButton.getBoundingClientRect();
+
+            requestAnimationFrame(function () {
+
+                const paletteRect =
+                    palette.getBoundingClientRect();
+
+                const margin = 8;
+
+                let left =
+                    rect.left;
+
+                let top =
+                    rect.bottom + 6;
+
+                /* 오른쪽 화면 밖 방지 */
+                if (
+                    left + paletteRect.width >
+                    window.innerWidth - margin
+                ) {
+                    left =
+                        window.innerWidth -
+                        margin -
+                        paletteRect.width;
+                }
+
+                /* 왼쪽 화면 밖 방지 */
+                if (left < margin) {
+                    left = margin;
+                }
+
+                /* 아래쪽 화면 밖이면 위쪽으로 */
+                if (
+                    top + paletteRect.height >
+                    window.innerHeight - margin
+                ) {
+                    top =
+                        rect.top -
+                        paletteRect.height -
+                        6;
+                }
+
+                if (top < margin) {
+                    top = margin;
+                }
+
+                palette.style.left =
+                    left + 'px';
+
+                palette.style.top =
+                    top + 'px';
+            });
         }
     );
 }
+
+
+/* 팔레트 바깥 클릭하면 닫기 */
+document.addEventListener(
+    'mousedown',
+    function (e) {
+
+        const palette =
+            document.getElementById(
+                'board-symbol-palette'
+            );
+
+        if (!palette) return;
+
+        if (
+            !palette.contains(e.target) &&
+            e.target !== symbolButton
+        ) {
+            palette.classList.remove('open');
+        }
+    }
+);
     console.log('직접 제작 에디터 초기화 완료');
 }
 
