@@ -3104,6 +3104,96 @@ padding: 0 14px;
         box-sizing: border-box !important;
     }
 }
+    /* =========================================
+   정렬 버튼 아이콘
+   ========================================= */
+
+#board-editor-toolbar .board-align-btn {
+    position: relative !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    gap: 3px !important;
+
+    width: 34px !important;
+    height: 32px !important;
+
+    padding: 5px 6px !important;
+    box-sizing: border-box !important;
+}
+
+#board-editor-toolbar .board-align-btn span {
+    display: block !important;
+
+    height: 2px !important;
+
+    background: #444 !important;
+
+    border-radius: 1px !important;
+}
+
+
+/* 왼쪽 정렬 */
+#board-editor-toolbar .board-align-left {
+    align-items: flex-start !important;
+}
+
+#board-editor-toolbar .board-align-left span:nth-child(1) {
+    width: 20px !important;
+}
+
+#board-editor-toolbar .board-align-left span:nth-child(2) {
+    width: 16px !important;
+}
+
+#board-editor-toolbar .board-align-left span:nth-child(3) {
+    width: 20px !important;
+}
+
+#board-editor-toolbar .board-align-left span:nth-child(4) {
+    width: 13px !important;
+}
+
+
+/* 가운데 정렬 */
+#board-editor-toolbar .board-align-center span:nth-child(1),
+#board-editor-toolbar .board-align-center span:nth-child(3) {
+    width: 20px !important;
+}
+
+#board-editor-toolbar .board-align-center span:nth-child(2) {
+    width: 14px !important;
+}
+
+#board-editor-toolbar .board-align-center span:nth-child(4) {
+    width: 17px !important;
+}
+
+
+/* 오른쪽 정렬 */
+#board-editor-toolbar .board-align-right {
+    align-items: flex-end !important;
+}
+
+#board-editor-toolbar .board-align-right span:nth-child(1) {
+    width: 20px !important;
+}
+
+#board-editor-toolbar .board-align-right span:nth-child(2) {
+    width: 15px !important;
+}
+
+#board-editor-toolbar .board-align-right span:nth-child(3) {
+    width: 20px !important;
+}
+
+#board-editor-toolbar .board-align-right span:nth-child(4) {
+    width: 13px !important;
+}
     </style>
 </head>
 <body id="mainBody">
@@ -3939,28 +4029,44 @@ padding: 0 14px;
 
     </div>
 </div>
-    <button type="button" data-command="justifyLeft" title="왼쪽 정렬">
-        ☰
-    </button>
+<!-- 왼쪽 정렬 -->
+<button
+    type="button"
+    class="board-align-btn board-align-left"
+    data-command="justifyLeft"
+    title="왼쪽 정렬">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
 
-    <button type="button" data-command="justifyCenter" title="가운데 정렬">
-        ≡
-    </button>
+<!-- 가운데 정렬 -->
+<button
+    type="button"
+    class="board-align-btn board-align-center"
+    data-command="justifyCenter"
+    title="가운데 정렬">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
 
-    <button type="button" data-command="justifyRight" title="오른쪽 정렬">
-        ☷
-    </button>
-
-    <button type="button" id="board-link-btn" title="링크">
-        🔗
-    </button>
-
-    <button type="button" id="board-table-btn" title="표">
-        ▦
-    </button>
+<!-- 오른쪽 정렬 -->
+<button
+    type="button"
+    class="board-align-btn board-align-right"
+    data-command="justifyRight"
+    title="오른쪽 정렬">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
 
     <button type="button" id="board-symbol-btn" title="특수문자">
-        Ω
+        ※
     </button>
 
 </div>
