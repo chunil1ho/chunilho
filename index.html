@@ -5224,7 +5224,124 @@ let resizeHandle = null;
 let resizeStartX = 0;
 let resizeStartWidth = 0;
 let resizeStartHeight = 0;
-    
+
+    /* =========================================
+   본문 사진 드래그 순서 변경
+   ========================================= */
+
+let draggedBoardImage = null;
+
+/* 사진 드래그 시작 */
+editor.addEventListener('dragstart', function (e) {
+
+    if (
+        e.target.tagName !== 'IMG' ||
+        !editor.contains(e.target)
+    ) {
+        return;
+    }
+
+    /* 크기 조절 핸들을 드래그하는 경우 제외 */
+    if (
+        resizeHandle &&
+        e.target === resizeHandle
+    ) {
+        return;
+    }
+
+    draggedBoardImage = e.target;
+
+    e.dataTransfer.effectAllowed = 'move';
+
+    e.dataTransfer.setData(
+        'text/plain',
+        'board-image'
+    );
+
+    e.target.style.opacity = '0.5';
+});
+
+
+/* 사진 위로 이동 */
+editor.addEventListener('dragover', function (e) {
+
+    if (!draggedBoardImage) return;
+
+    const target = e.target;
+
+    if (
+        target.tagName !== 'IMG' ||
+        target === draggedBoardImage
+    ) {
+        return;
+    }
+
+    e.preventDefault();
+
+    e.dataTransfer.dropEffect = 'move';
+});
+
+
+/* 사진 놓기 */
+editor.addEventListener('drop', function (e) {
+
+    if (!draggedBoardImage) return;
+
+    const target = e.target;
+
+    if (
+        target.tagName !== 'IMG' ||
+        target === draggedBoardImage
+    ) {
+        return;
+    }
+
+    e.preventDefault();
+
+    const rect =
+        target.getBoundingClientRect();
+
+    const mouseX =
+        e.clientX - rect.left;
+
+    /*
+     * 사진의 왼쪽에 놓으면 앞쪽
+     * 오른쪽에 놓으면 뒤쪽
+     */
+    if (mouseX < rect.width / 2) {
+
+        target.parentNode.insertBefore(
+            draggedBoardImage,
+            target
+        );
+
+    } else {
+
+        target.parentNode.insertBefore(
+            draggedBoardImage,
+            target.nextSibling
+        );
+    }
+
+    draggedBoardImage.style.opacity = '';
+
+    syncBoardEditor();
+});
+
+
+/* 드래그 종료 */
+editor.addEventListener('dragend', function () {
+
+    if (draggedBoardImage) {
+
+        draggedBoardImage.style.opacity = '';
+
+    }
+
+    draggedBoardImage = null;
+
+    syncBoardEditor();
+});
 /* 사진 클릭 */
 editor.addEventListener('click', function (e) {
 
@@ -6456,6 +6573,7 @@ if (inlineImageButton && inlineImageInput) {
                      * 커서를 이미지 뒤에 위치
                      */
                     img.style.cursor = 'pointer';
+                    img.draggable = true;
 
                     /* 현재 커서 위치에 삽입 */
                     const selection =
