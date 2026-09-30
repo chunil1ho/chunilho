@@ -3672,6 +3672,37 @@ padding: 0 14px;
         border-radius: 5px !important;
     }
 }
+    /* =========================================
+   본문 사진 선택 / 크기 조절
+   ========================================= */
+
+#cat-board #board-editor-content img.board-image-selected {
+    outline: 2px solid #3b82f6 !important;
+    outline-offset: 2px !important;
+}
+
+
+/* 오른쪽 아래 크기 조절점 */
+#cat-board #board-editor-content .board-image-resize-handle {
+    position: absolute !important;
+
+    width: 12px !important;
+    height: 12px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    background: #ffffff !important;
+
+    border: 2px solid #3b82f6 !important;
+    border-radius: 3px !important;
+
+    box-sizing: border-box !important;
+
+    cursor: nwse-resize !important;
+
+    z-index: 9999 !important;
+}
     </style>
 </head>
 <body id="mainBody">
@@ -5131,6 +5162,275 @@ editor.addEventListener('keyup', function () {
     saveBoardEditorSelection();
     updateBoardEditorToolbarState();
 });
+    /* =========================================
+   본문 사진 마우스 크기 조절
+   ========================================= */
+
+let selectedBoardImage = null;
+let resizeHandle = null;
+let resizeStartX = 0;
+let resizeStartWidth = 0;
+
+/* 사진 클릭 */
+editor.addEventListener('click', function (e) {
+
+    const target = e.target;
+
+    /* 다른 곳을 클릭하면 선택 해제 */
+    if (
+        selectedBoardImage &&
+        target !== selectedBoardImage
+    ) {
+        removeBoardImageResize();
+    }
+
+    /* 사진이 아니면 종료 */
+    if (
+        target.tagName !== 'IMG' ||
+        !editor.contains(target)
+    ) {
+        return;
+    }
+
+    e.preventDefault();
+
+    selectedBoardImage = target;
+
+    /* 기존 선택 표시 제거 */
+    editor
+        .querySelectorAll('img.board-image-selected')
+        .forEach(function (img) {
+            img.classList.remove(
+                'board-image-selected'
+            );
+        });
+
+    selectedBoardImage.classList.add(
+        'board-image-selected'
+    );
+
+    /* 크기 조절 핸들 생성 */
+    createBoardImageResizeHandle(
+        selectedBoardImage
+    );
+});
+
+
+/* 크기 조절 핸들 생성 */
+function createBoardImageResizeHandle(img) {
+
+    removeBoardImageResize();
+
+    selectedBoardImage = img;
+
+    resizeHandle =
+        document.createElement('span');
+
+    resizeHandle.className =
+        'board-image-resize-handle';
+
+    resizeHandle.title =
+        '드래그하여 사진 크기 조절';
+
+    /*
+     * 사진의 부모를 기준으로
+     * 오른쪽 아래에 핸들 표시
+     */
+    const parent = img.parentElement;
+
+    if (!parent) return;
+
+    if (
+        getComputedStyle(parent).position ===
+        'static'
+    ) {
+        parent.style.position = 'relative';
+    }
+
+    parent.appendChild(resizeHandle);
+
+    positionBoardImageHandle();
+}
+
+
+/* 핸들 위치 */
+function positionBoardImageHandle() {
+
+    if (
+        !selectedBoardImage ||
+        !resizeHandle
+    ) {
+        return;
+    }
+
+    const imgRect =
+        selectedBoardImage.getBoundingClientRect();
+
+    const parentRect =
+        selectedBoardImage.parentElement
+            .getBoundingClientRect();
+
+    resizeHandle.style.left =
+        (
+            imgRect.right -
+            parentRect.left -
+            7
+        ) + 'px';
+
+    resizeHandle.style.top =
+        (
+            imgRect.bottom -
+            parentRect.top -
+            7
+        ) + 'px';
+}
+
+
+/* 크기 조절 시작 */
+document.addEventListener(
+    'mousedown',
+    function (e) {
+
+        if (
+            !resizeHandle ||
+            e.target !== resizeHandle ||
+            !selectedBoardImage
+        ) {
+            return;
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        resizeStartX = e.clientX;
+
+        resizeStartWidth =
+            selectedBoardImage.getBoundingClientRect()
+                .width;
+
+        document.body.style.userSelect =
+            'none';
+
+        document.addEventListener(
+            'mousemove',
+            resizeBoardImage
+        );
+
+        document.addEventListener(
+            'mouseup',
+            stopBoardImageResize
+        );
+    }
+);
+
+
+/* 실제 크기 변경 */
+function resizeBoardImage(e) {
+
+    if (!selectedBoardImage) return;
+
+    const difference =
+        e.clientX - resizeStartX;
+
+    let newWidth =
+        resizeStartWidth + difference;
+
+    /*
+     * 최소 크기
+     */
+    const minWidth = 100;
+
+    /*
+     * 에디터 너비 이상으로 커지지 않도록
+     */
+    const editorWidth =
+        editor.clientWidth;
+
+    const maxWidth =
+        Math.max(
+            minWidth,
+            editorWidth
+        );
+
+    newWidth =
+        Math.max(
+            minWidth,
+            Math.min(
+                newWidth,
+                maxWidth
+            )
+        );
+
+    /*
+     * 가로 크기만 변경
+     * height는 auto라서 비율 유지
+     */
+    selectedBoardImage.style.width =
+        Math.round(newWidth) + 'px';
+
+    selectedBoardImage.style.height =
+        'auto';
+
+    selectedBoardImage.style.maxWidth =
+        '100%';
+
+    positionBoardImageHandle();
+
+    syncBoardEditor();
+}
+
+
+/* 크기 조절 종료 */
+function stopBoardImageResize() {
+
+    document.body.style.userSelect =
+        '';
+
+    document.removeEventListener(
+        'mousemove',
+        resizeBoardImage
+    );
+
+    document.removeEventListener(
+        'mouseup',
+        stopBoardImageResize
+    );
+
+    syncBoardEditor();
+}
+
+
+/* 선택 해제 */
+function removeBoardImageResize() {
+
+    if (resizeHandle) {
+
+        resizeHandle.remove();
+
+        resizeHandle = null;
+    }
+
+    if (selectedBoardImage) {
+
+        selectedBoardImage.classList.remove(
+            'board-image-selected'
+        );
+    }
+
+    selectedBoardImage = null;
+}
+
+
+/* 화면 크기가 변경되면 핸들 위치 다시 계산 */
+window.addEventListener(
+    'resize',
+    function () {
+
+        if (selectedBoardImage) {
+            positionBoardImageHandle();
+        }
+    }
+);
     /* 툴바 버튼 */
     const toolbar =
         document.getElementById('board-editor-toolbar');
@@ -9520,6 +9820,7 @@ function formatBoardText(command) {
         'P',
         'DIV',
         'SPAN'
+        'IMG'
     ];
 
     const elements =
@@ -9537,29 +9838,96 @@ function formatBoardText(command) {
         }
 
         // 허용할 속성만 유지
-        [...element.attributes].forEach(attr => {
+[...element.attributes].forEach(attr => {
 
-            if (attr.name !== 'style') {
-                element.removeAttribute(attr.name);
-            }
-
-        });
-
-        if (element.hasAttribute('style')) {
-            const textAlign =
-                element.style.textAlign;
-
-            element.removeAttribute('style');
-
-            if (
-                textAlign === 'left' ||
-                textAlign === 'center' ||
-                textAlign === 'right'
-            ) {
-                element.style.textAlign =
-                    textAlign;
-            }
+    /* IMG의 src는 허용 */
+    if (
+        element.tagName === 'IMG' &&
+        attr.name === 'src'
+    ) {
+        if (
+            attr.value.startsWith('data:image/')
+        ) {
+            return;
         }
+
+        element.removeAttribute(attr.name);
+        return;
+    }
+
+    /* IMG의 alt는 허용 */
+    if (
+        element.tagName === 'IMG' &&
+        attr.name === 'alt'
+    ) {
+        return;
+    }
+
+    /* 나머지는 style만 허용 */
+    if (attr.name !== 'style') {
+        element.removeAttribute(attr.name);
+    }
+
+});
+if (element.tagName === 'IMG') {
+
+    /* 사진 크기 관련 스타일 유지 */
+    const width =
+        element.style.width;
+
+    const height =
+        element.style.height;
+
+    const maxWidth =
+        element.style.maxWidth;
+
+    const display =
+        element.style.display;
+
+    const margin =
+        element.style.margin;
+
+    /* 기존 style 제거 */
+    element.removeAttribute('style');
+
+    /* 필요한 스타일만 다시 적용 */
+    if (width) {
+        element.style.width = width;
+    }
+
+    if (height) {
+        element.style.height = height;
+    }
+
+    if (maxWidth) {
+        element.style.maxWidth = maxWidth;
+    }
+
+    if (display) {
+        element.style.display = display;
+    }
+
+    if (margin) {
+        element.style.margin = margin;
+    }
+
+} else if (element.hasAttribute('style')) {
+
+    /* 일반 글자는 기존 정렬만 유지 */
+    const textAlign =
+        element.style.textAlign;
+
+    element.removeAttribute('style');
+
+    if (
+        textAlign === 'left' ||
+        textAlign === 'center' ||
+        textAlign === 'right'
+    ) {
+        element.style.textAlign =
+            textAlign;
+    }
+}
     });
 
     return template.innerHTML
