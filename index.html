@@ -4241,6 +4241,50 @@ padding: 0 14px;
     line-height: 1.4 !important;
     white-space: nowrap !important;
 }
+    /* =========================================
+   특징 카드 제목 / 설명 강제 세로 정렬
+   ========================================= */
+
+#cat-home .features-grid .feature-card {
+    display: grid !important;
+
+    grid-template-columns: 42px minmax(0, 1fr) !important;
+    grid-template-rows: auto auto !important;
+
+    column-gap: 12px !important;
+    align-items: center !important;
+
+    text-align: left !important;
+}
+
+#cat-home .features-grid .feature-card .icon-wrap {
+    grid-column: 1 !important;
+    grid-row: 1 / 3 !important;
+}
+
+#cat-home .features-grid .feature-card h3 {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+
+    margin: 0 0 3px 0 !important;
+
+    font-size: 14px !important;
+    line-height: 1.3 !important;
+
+    white-space: nowrap !important;
+}
+
+#cat-home .features-grid .feature-card p {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+
+    margin: 0 !important;
+
+    font-size: 11px !important;
+    line-height: 1.35 !important;
+
+    white-space: nowrap !important;
+}
     </style>
 </head>
 <body id="mainBody">
@@ -4502,31 +4546,6 @@ padding: 0 14px;
         </div>
     </div>
 </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="icon-wrap">🎣</div>
-                <h3 id="feat-t1" data-i18n="featT1">초보자 맞춤 친절 강습</h3>
-                <p id="feat-d1" data-i18n="featD1">낚싯대 잡는 법부터 미끼 끼우기까지 선장님이 다정하게 알려드려요.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon-wrap">✨</div>
-                <h3 id="feat-t2" data-i18n="featT2">주간체험 장비 & 도구</h3>
-                <p id="feat-d2" data-i18n="featD2">무거운 장비 준비 끝! 낚싯대, 채비, 미끼, 구명조끼까지 모두 무상 대여해 드립니다.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon-wrap">🐟</div>
-                <h3 id="feat-t3" data-i18n="featT3">싱싱한 즉석회</h3>
-                <p id="feat-d3" data-i18n="featD3">푸른 바다 위에서 내가 직접 잡은 싱싱한 물고기를 그 즉시 회로 맛보는 감동!</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon-wrap">👨‍👩‍👧‍👦</div>
-                <h3 id="feat-t4" data-i18n="featT4">소중한 사람과의 추억</h3>
-                <p id="feat-d4" data-i18n="featD4">가족, 연인, 친구들과 함께 웃음이 끊이지 않는 특별한 제주 추억을 만들어보세요.</p>
-            </div>
-        </div>     
-    </div>
-        
-
     <!-- 2. 운항안내 카테고리 -->
     <div id="cat-info" class="category-sec">
         <div class="schedule-box">
