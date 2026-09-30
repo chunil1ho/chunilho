@@ -4021,6 +4021,81 @@ padding: 0 14px;
         white-space: normal !important;
     }
 }    
+    /* =========================================
+   찾아오시는길 안내 사진
+   ========================================= */
+
+#cat-location .location-photo {
+    width: 100% !important;
+    margin-top: 20px !important;
+    overflow: hidden !important;
+    border-radius: 8px !important;
+}
+
+#cat-location .location-photo img {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    border-radius: 8px !important;
+}
+
+/* 모바일 */
+@media (max-width: 600px) {
+
+    #cat-location .location-photo {
+        margin-top: 16px !important;
+    }
+
+    #cat-location .location-photo img {
+        width: 100% !important;
+        height: auto !important;
+    }
+}
+    /* =========================================
+   찾아오시는길 사진 크기 정리
+   ========================================= */
+
+#cat-location .location-photo {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    margin: 20px 0 0 0 !important;
+
+    border-radius: 10px !important;
+    overflow: hidden !important;
+}
+
+#cat-location .location-photo img {
+    display: block !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+
+    height: 360px !important;
+    object-fit: cover !important;
+    object-position: center !important;
+
+    border-radius: 10px !important;
+}
+
+
+/* 모바일 */
+@media (max-width: 600px) {
+
+    #cat-location .location-photo {
+        margin-top: 16px !important;
+    }
+
+    #cat-location .location-photo img {
+        width: 100% !important;
+        height: auto !important;
+
+        object-fit: contain !important;
+        border-radius: 8px !important;
+    }
+}
     </style>
 </head>
 <body id="mainBody">
@@ -4447,7 +4522,12 @@ padding: 0 14px;
                     <li><strong data-i18n="locWayLabel">찾아오는 방법:</strong> <span data-i18n="locWayVal">서귀포유람선 주차장입구 좌측에 있는 서귀포배낚시천일호 표지판을 보고 찾아 내려오시면 됩니다.</span></li>
                     <li><strong data-i18n="locNearLabel">주변 참고:</strong> <span data-i18n="locNearVal">하영올레 1코스 인증스탬프(새연교) 및 서귀포항 인근</span></li>
                 </ul>
-                <div style="margin-top: 30px;">
+                <div class="location-photo">
+    <img
+        src="image/location-guide.png"
+        alt="서귀포배낚시 천일호 찾아오시는 길">
+</div>
+                <div style="margin-top: 18px;">
                     <a href="https://maps.google.com/?q=33.2435,126.5615" target="_blank" class="map-btn" data-i18n="mapBtnText">구글 지도에서 크게 보기</a>
                 </div>
             </div>
