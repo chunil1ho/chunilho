@@ -2,7 +2,122 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=0.5">
+    <meta name="viewport" content="width/* =========================================
+   천일호 낚시상품 특징
+   ========================================= */
+
+#cat-home .home-features {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    width: 100%;
+    margin: 14px 0 30px 0;
+    padding: 18px 20px;
+
+    box-sizing: border-box;
+
+    background: #f3f9fd;
+    border-radius: 10px;
+}
+
+#cat-home .home-feature-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+    min-width: 0;
+}
+
+#cat-home .home-feature-icon {
+    width: 38px !important;
+    height: 38px !important;
+
+    min-width: 38px !important;
+    max-width: 38px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    flex: 0 0 38px !important;
+}
+
+#cat-home .home-feature-icon svg {
+    display: block !important;
+
+    width: 38px !important;
+    height: 38px !important;
+
+    min-width: 38px !important;
+    min-height: 38px !important;
+
+    max-width: 38px !important;
+    max-height: 38px !important;
+}
+
+#cat-home .home-feature-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+#cat-home .home-feature-text strong {
+    font-size: 15px;
+    font-weight: 700;
+    color: #172033;
+}
+
+#cat-home .home-feature-text span {
+    font-size: 12px;
+    color: #667085;
+    line-height: 1.4;
+}
+
+
+/* 모바일 */
+@media (max-width: 600px) {
+
+    #cat-home .home-features {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px 8px;
+        padding: 16px 10px;
+    }
+
+    #cat-home .home-feature-item {
+        justify-content: flex-start;
+        gap: 7px;
+    }
+
+    #cat-home .home-feature-icon {
+        width: 30px !important;
+        height: 30px !important;
+
+        min-width: 30px !important;
+        max-width: 30px !important;
+
+        flex-basis: 30px !important;
+    }
+
+    #cat-home .home-feature-icon svg {
+        width: 30px !important;
+        height: 30px !important;
+
+        min-width: 30px !important;
+        min-height: 30px !important;
+
+        max-width: 30px !important;
+        max-height: 30px !important;
+    }
+
+    #cat-home .home-feature-text strong {
+        font-size: 13px;
+    }
+
+    #cat-home .home-feature-text span {
+        font-size: 11px;
+    }
+}=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=0.5">
     <title>서귀포 체험 배낚시 천일호 - Chunilho Fishing</title>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>    <style>
         :root {
@@ -4101,8 +4216,19 @@ padding: 0 14px;
    ========================================= */
 
 #cat-home .home-features {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    grid-auto-flow: row !important;
+
+    width: 100% !important;
+    margin: 14px 0 30px 0 !important;
+    padding: 18px 20px !important;
+
+    box-sizing: border-box !important;
+
+    background: #f3f9fd;
+    border-radius: 10px;
+}
 
     width: 100%;
     margin: 14px 0 30px 0;
@@ -4211,6 +4337,20 @@ padding: 0 14px;
     #cat-home .home-feature-text span {
         font-size: 11px;
     }
+}
+    /* =========================================
+   특징 아이콘 파란색 채움
+   ========================================= */
+
+#cat-home .home-feature-icon svg {
+    fill: #1685e5 !important;
+    stroke: #1685e5 !important;
+}
+
+/* 내부 선이 필요한 부분은 흰색으로 */
+#cat-home .home-feature-icon svg path,
+#cat-home .home-feature-icon svg circle {
+    stroke: #1685e5 !important;
 }
     </style>
 </head>
