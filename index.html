@@ -5170,7 +5170,8 @@ let selectedBoardImage = null;
 let resizeHandle = null;
 let resizeStartX = 0;
 let resizeStartWidth = 0;
-
+let resizeStartHeight = 0;
+    
 /* 사진 클릭 */
 editor.addEventListener('click', function (e) {
 
@@ -5307,7 +5308,11 @@ document.addEventListener(
         resizeStartWidth =
             selectedBoardImage.getBoundingClientRect()
                 .width;
-
+        
+resizeStartHeight =
+    selectedBoardImage.getBoundingClientRect()
+        .height;
+        
         document.body.style.userSelect =
             'none';
 
@@ -5323,8 +5328,7 @@ document.addEventListener(
     }
 );
 
-
-/* 실제 크기 변경 */
+    /* 실제 크기 변경 */
 function resizeBoardImage(e) {
 
     if (!selectedBoardImage) return;
@@ -5335,14 +5339,12 @@ function resizeBoardImage(e) {
     let newWidth =
         resizeStartWidth + difference;
 
-    /*
-     * 최소 크기
-     */
+
+    /* 최소 크기 */
     const minWidth = 100;
 
-    /*
-     * 에디터 너비 이상으로 커지지 않도록
-     */
+
+    /* 에디터 최대 너비 */
     const editorWidth =
         editor.clientWidth;
 
@@ -5351,6 +5353,7 @@ function resizeBoardImage(e) {
             minWidth,
             editorWidth
         );
+
 
     newWidth =
         Math.max(
@@ -5361,24 +5364,39 @@ function resizeBoardImage(e) {
             )
         );
 
-    /*
-     * 가로 크기만 변경
-     * height는 auto라서 비율 유지
-     */
+
+    /* =========================================
+       원본 비율 유지
+       ========================================= */
+
+    const aspectRatio =
+        resizeStartHeight /
+        resizeStartWidth;
+
+    const newHeight =
+        Math.round(
+            newWidth * aspectRatio
+        );
+
+
+    /* 실제 크기 적용 */
     selectedBoardImage.style.width =
         Math.round(newWidth) + 'px';
 
     selectedBoardImage.style.height =
-        'auto';
+        newHeight + 'px';
 
     selectedBoardImage.style.maxWidth =
         '100%';
 
+
+    /* 조절점 위치 갱신 */
     positionBoardImageHandle();
 
+
+    /* 저장할 내용 동기화 */
     syncBoardEditor();
 }
-
 
 /* 크기 조절 종료 */
 function stopBoardImageResize() {
