@@ -5587,7 +5587,159 @@ function stopBoardImageResize() {
     syncBoardEditor();
 }
 
+/* =========================================
+   모바일 터치 사진 크기 조절
+   ========================================= */
 
+let touchResizeStartX = 0;
+
+
+/* 모바일에서 조절점 터치 시작 */
+document.addEventListener(
+    'touchstart',
+    function (e) {
+
+        if (
+            !resizeHandle ||
+            e.target !== resizeHandle ||
+            !selectedBoardImage
+        ) {
+            return;
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        const touch =
+            e.touches[0];
+
+        touchResizeStartX =
+            touch.clientX;
+
+        resizeStartWidth =
+            selectedBoardImage
+                .getBoundingClientRect()
+                .width;
+
+        resizeStartHeight =
+            selectedBoardImage
+                .getBoundingClientRect()
+                .height;
+
+        document.body.style.userSelect =
+            'none';
+
+        document.addEventListener(
+            'touchmove',
+            resizeBoardImageTouch,
+            { passive: false }
+        );
+
+        document.addEventListener(
+            'touchend',
+            stopBoardImageResizeTouch
+        );
+    },
+    { passive: false }
+);
+
+
+/* 모바일 실제 크기 변경 */
+function resizeBoardImageTouch(e) {
+
+    if (
+        !selectedBoardImage ||
+        !e.touches.length
+    ) {
+        return;
+    }
+
+    e.preventDefault();
+
+    const touch =
+        e.touches[0];
+
+    const difference =
+        touch.clientX -
+        touchResizeStartX;
+
+    let newWidth =
+        resizeStartWidth +
+        difference;
+
+
+    /* 최소 크기 */
+    const minWidth = 100;
+
+
+    /* 에디터 최대 너비 */
+    const editorWidth =
+        editor.clientWidth;
+
+    const maxWidth =
+        Math.max(
+            minWidth,
+            editorWidth
+        );
+
+
+    newWidth =
+        Math.max(
+            minWidth,
+            Math.min(
+                newWidth,
+                maxWidth
+            )
+        );
+
+
+    /* 원본 비율 유지 */
+    const aspectRatio =
+        resizeStartHeight /
+        resizeStartWidth;
+
+    const newHeight =
+        Math.round(
+            newWidth *
+            aspectRatio
+        );
+
+
+    selectedBoardImage.style.width =
+        Math.round(newWidth) + 'px';
+
+    selectedBoardImage.style.height =
+        newHeight + 'px';
+
+    selectedBoardImage.style.maxWidth =
+        '100%';
+
+
+    /* 조절점 위치 갱신 */
+    positionBoardImageHandle();
+
+    syncBoardEditor();
+}
+
+
+/* 모바일 크기 조절 종료 */
+function stopBoardImageResizeTouch() {
+
+    document.body.style.userSelect =
+        '';
+
+    document.removeEventListener(
+        'touchmove',
+        resizeBoardImageTouch
+    );
+
+    document.removeEventListener(
+        'touchend',
+        stopBoardImageResizeTouch
+    );
+
+    syncBoardEditor();
+}
 /* 선택 해제 */
 function removeBoardImageResize() {
 
