@@ -4073,7 +4073,7 @@ padding: 0 14px;
     width: 100% !important;
     max-width: 100% !important;
 
-    height: 360px !important;
+    height: 320px !important;
     object-fit: cover !important;
     object-position: center !important;
 
@@ -4094,6 +4094,36 @@ padding: 0 14px;
 
         object-fit: contain !important;
         border-radius: 8px !important;
+    }
+}
+    /* =========================================
+   찾아오시는길 좌우 영역 높이 맞춤
+   ========================================= */
+
+@media (min-width: 601px) {
+
+    #cat-location .map-section-wrapper {
+        align-items: stretch !important;
+    }
+
+    #cat-location .map-info-box,
+    #cat-location .map-box {
+        height: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    #cat-location .map-info-box {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    #cat-location .map-info-box .location-photo {
+        margin-top: 18px !important;
+    }
+
+    #cat-location .map-box {
+        height: auto !important;
+        min-height: 0 !important;
     }
 }
     </style>
