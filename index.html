@@ -6394,8 +6394,9 @@ if (inlineImageButton && inlineImageInput) {
                     img.style.width = '600px';
                     img.style.height = 'auto';
 
-                    img.style.display = 'block';
-                    img.style.margin = '10px 0';
+                    img.style.display = 'inline-block';
+                    img.style.verticalAlign = 'middle';
+                    img.style.margin = '10px 6px 10px 0';
 
                     /*
                      * 이미지 클릭 시 선택 가능하도록
@@ -6430,17 +6431,6 @@ if (inlineImageButton && inlineImageInput) {
 
                         editor.appendChild(img);
                     }
-
-                    /* 다음 줄에서 글을 계속 쓸 수 있도록 */
-                    const br =
-                        document.createElement('div');
-
-                    br.innerHTML = '<br>';
-
-                    img.parentNode.insertBefore(
-                        br,
-                        img.nextSibling
-                    );
 
                     /* 내용 동기화 */
                     syncBoardEditor();
