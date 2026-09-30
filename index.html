@@ -4096,6 +4096,118 @@ padding: 0 14px;
         border-radius: 8px !important;
     }
 }
+    /* =========================================
+   홈 특징 안내 - 낚시상품 아래 가로형
+   ========================================= */
+
+#cat-home .features-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+
+    width: 100% !important;
+    margin: 0 0 28px 0 !important;
+    padding: 14px 24px !important;
+
+    gap: 0 !important;
+
+    box-sizing: border-box !important;
+
+    background: #f2f9ff !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+#cat-home .features-grid .feature-card {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+
+    min-width: 0 !important;
+    height: 58px !important;
+
+    padding: 0 20px !important;
+    margin: 0 !important;
+
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    text-align: left !important;
+}
+
+#cat-home .features-grid .icon-wrap {
+    flex: 0 0 42px !important;
+
+    width: 42px !important;
+    height: 42px !important;
+
+    margin: 0 12px 0 0 !important;
+
+    background: transparent !important;
+    border-radius: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    font-size: 32px !important;
+}
+
+#cat-home .features-grid .feature-card h3 {
+    margin: 0 0 3px 0 !important;
+
+    font-size: 14px !important;
+    line-height: 1.3 !important;
+
+    color: #0f2c59 !important;
+    white-space: nowrap !important;
+}
+
+#cat-home .features-grid .feature-card p {
+    margin: 0 !important;
+
+    font-size: 11px !important;
+    line-height: 1.35 !important;
+
+    color: #667085 !important;
+}
+
+
+/* 모바일 */
+@media (max-width: 600px) {
+
+    #cat-home .features-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        padding: 12px 8px !important;
+        gap: 8px 0 !important;
+    }
+
+    #cat-home .features-grid .feature-card {
+        height: 52px !important;
+        padding: 0 6px !important;
+    }
+
+    #cat-home .features-grid .icon-wrap {
+        flex: 0 0 30px !important;
+
+        width: 30px !important;
+        height: 30px !important;
+
+        margin-right: 7px !important;
+
+        font-size: 23px !important;
+    }
+
+    #cat-home .features-grid .feature-card h3 {
+        font-size: 12px !important;
+    }
+
+    #cat-home .features-grid .feature-card p {
+        font-size: 10px !important;
+    }
+}
     </style>
 </head>
 <body id="mainBody">
@@ -4297,6 +4409,29 @@ padding: 0 14px;
 
     </div>
 </section>
+              <div class="features-grid">
+            <div class="feature-card">
+                <div class="icon-wrap">🎣</div>
+                <h3 id="feat-t1" data-i18n="featT1">초보자 맞춤 친절 강습</h3>
+                <p id="feat-d1" data-i18n="featD1">낚싯대 잡는 법부터 미끼 끼우기까지 선장님이 다정하게 알려드려요.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-wrap">✨</div>
+                <h3 id="feat-t2" data-i18n="featT2">주간체험 장비 & 도구</h3>
+                <p id="feat-d2" data-i18n="featD2">무거운 장비 준비 끝! 낚싯대, 채비, 미끼, 구명조끼까지 모두 무상 대여해 드립니다.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-wrap">🐟</div>
+                <h3 id="feat-t3" data-i18n="featT3">싱싱한 즉석회</h3>
+                <p id="feat-d3" data-i18n="featD3">푸른 바다 위에서 내가 직접 잡은 싱싱한 물고기를 그 즉시 회로 맛보는 감동!</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-wrap">👨‍👩‍👧‍👦</div>
+                <h3 id="feat-t4" data-i18n="featT4">소중한 사람과의 추억</h3>
+                <p id="feat-d4" data-i18n="featD4">가족, 연인, 친구들과 함께 웃음이 끊이지 않는 특별한 제주 추억을 만들어보세요.</p>
+            </div>
+        </div>     
+    </div>
                   <h2 class="section-title" id="gal-title" data-i18n="galTitle">오늘의 조황</h2>
         
 <div class="home-board-more"
