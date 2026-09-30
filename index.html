@@ -4277,6 +4277,35 @@ padding: 0 14px;
         margin: 0 !important;
     }
 }
+    /* 모바일 - 지깅낚시 가격을 카드 하단에 고정 */
+@media (max-width: 768px) {
+
+    #cat-home .home-product-card:nth-child(4) {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    #cat-home .home-product-card:nth-child(4) .home-product-body {
+        flex: 1 !important;
+        min-height: 0 !important;
+        position: relative !important;
+    }
+
+    #cat-home .home-product-card:nth-child(4) .home-product-price {
+        position: absolute !important;
+        left: 0.5rem !important;
+        bottom: 0.5rem !important;
+
+        margin: 0 !important;
+        display: block !important;
+    }
+
+    #cat-home .home-product-card:nth-child(4) .home-product-body > button {
+        right: 0.5rem !important;
+        bottom: 0.5rem !important;
+        margin: 0 !important;
+    }
+}
     </style>
 </head>
 <body id="mainBody">
