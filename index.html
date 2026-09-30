@@ -3431,6 +3431,183 @@ padding: 0 14px;
     background: #eeeeee !important;
     border-color: #aaaaaa !important;
 }
+    /* =========================================
+   조황게시판 상세페이지
+   제목 / 날짜 / 내용 구분선
+   ========================================= */
+
+#cat-board #board-detail-content .board-detail-header {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* 제목 영역 */
+#cat-board #board-detail-content .board-detail-header h2 {
+    width: 100% !important;
+
+    margin: 0 !important;
+    padding: 4px 0 18px 0 !important;
+
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+    color: #111827 !important;
+
+    border-bottom: 1px solid #d9d9d9 !important;
+
+    box-sizing: border-box !important;
+}
+
+/* 날짜 + 수정/삭제 영역 */
+#cat-board #board-detail-content .board-detail-actions {
+    width: 100% !important;
+
+    min-height: 52px !important;
+
+    margin: 0 !important;
+    padding: 10px 0 !important;
+
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    gap: 6px !important;
+
+    border-bottom: 1px solid #e2e2e2 !important;
+
+    box-sizing: border-box !important;
+}
+
+/* 날짜 */
+#cat-board #board-detail-content .board-detail-date {
+    color: #777 !important;
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+}
+
+/* 내용 영역 */
+#cat-board #board-detail-content .board-detail-body {
+    width: 100% !important;
+
+    margin: 0 !important;
+    padding: 28px 0 10px 0 !important;
+
+    box-sizing: border-box !important;
+
+    color: #222 !important;
+    font-size: 16px !important;
+    line-height: 1.8 !important;
+}
+
+/* 내용 안의 첫 요소가 위쪽 여백을 너무 많이 만들지 않도록 */
+#cat-board #board-detail-content .board-detail-body > :first-child {
+    margin-top: 0 !important;
+}
+
+/* 내용 안의 마지막 요소 */
+#cat-board #board-detail-content .board-detail-body > :last-child {
+    margin-bottom: 0 !important;
+}
+
+
+/* 모바일 */
+@media (max-width: 600px) {
+
+    #cat-board #board-detail-content .board-detail-header h2 {
+        padding: 2px 0 14px 0 !important;
+        font-size: 22px !important;
+        line-height: 1.45 !important;
+    }
+
+    #cat-board #board-detail-content .board-detail-actions {
+        min-height: 46px !important;
+        padding: 8px 0 !important;
+    }
+
+    #cat-board #board-detail-content .board-detail-date {
+        font-size: 12px !important;
+    }
+
+    #cat-board #board-detail-content .board-detail-body {
+        padding: 22px 0 8px 0 !important;
+        font-size: 15px !important;
+        line-height: 1.75 !important;
+    }
+}
+/* =========================================
+   상세 게시글 날짜 / 관리 버튼 정렬
+   ========================================= */
+
+#cat-board #board-detail-content .board-detail-actions {
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+/* 날짜는 왼쪽 */
+#cat-board #board-detail-content .board-detail-date {
+    margin-right: auto !important;
+    text-align: left !important;
+}
+
+/* 수정 / 삭제 버튼은 오른쪽 */
+#cat-board #board-detail-content .board-detail-actions .board-edit-btn,
+#cat-board #board-detail-content .board-detail-actions .board-delete-btn {
+    margin-top: 0 !important;
+}
+
+/* 모바일에서도 동일하게 */
+@media (max-width: 600px) {
+    #cat-board #board-detail-content .board-detail-actions {
+        justify-content: space-between !important;
+    }
+
+    #cat-board #board-detail-content .board-detail-date {
+        margin-right: auto !important;
+        text-align: left !important;
+    }
+}
+/* =========================================
+   조황게시판 상세 본문 여백 정리
+   ========================================= */
+
+#cat-board #board-detail-content .board-detail-body {
+    padding-top: 24px !important;
+    padding-bottom: 12px !important;
+
+    font-size: 16px !important;
+    line-height: 1.8 !important;
+
+    color: #222 !important;
+    text-align: left !important;
+}
+
+/* 본문 안의 문단 */
+#cat-board #board-detail-content .board-detail-body p {
+    margin-top: 0 !important;
+    margin-bottom: 14px !important;
+}
+
+/* 마지막 문단은 불필요한 아래 여백 제거 */
+#cat-board #board-detail-content .board-detail-body p:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* 모바일 */
+@media (max-width: 600px) {
+
+    #cat-board #board-detail-content .board-detail-body {
+        padding-top: 20px !important;
+        padding-bottom: 10px !important;
+
+        font-size: 15px !important;
+        line-height: 1.75 !important;
+    }
+
+    #cat-board #board-detail-content .board-detail-body p {
+        margin-bottom: 12px !important;
+    }
+}    
     </style>
 </head>
 <body id="mainBody">
