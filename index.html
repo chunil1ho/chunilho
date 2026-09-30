@@ -3722,6 +3722,70 @@ padding: 0 14px;
     box-sizing: border-box !important;
     max-width: 100% !important;
 }
+    /* =========================================
+   조황게시판 상세페이지 목록으로 버튼
+   ========================================= */
+
+#cat-board #board-detail-content .secondary-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    height: 42px !important;
+    min-width: 100px !important;
+
+    padding: 0 20px !important;
+    margin: 0 0 20px 0 !important;
+
+    box-sizing: border-box !important;
+
+    background: #ffffff !important;
+    border: 1px solid #d5d9df !important;
+    border-radius: 8px !important;
+
+    color: #374151 !important;
+
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 1 !important;
+
+    cursor: pointer !important;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.15s ease !important;
+}
+
+/* 마우스를 올렸을 때 */
+#cat-board #board-detail-content .secondary-btn:hover {
+    background: #f5f7fa !important;
+    border-color: #bfc5ce !important;
+    color: #111827 !important;
+}
+
+/* 눌렀을 때 */
+#cat-board #board-detail-content .secondary-btn:active {
+    transform: translateY(1px) !important;
+}
+
+
+/* 모바일 */
+@media (max-width: 600px) {
+
+    #cat-board #board-detail-content .secondary-btn {
+        height: 38px !important;
+        min-width: 88px !important;
+
+        padding: 0 16px !important;
+        margin-bottom: 16px !important;
+
+        border-radius: 7px !important;
+
+        font-size: 13px !important;
+    }
+}
     </style>
 </head>
 <body id="mainBody">
