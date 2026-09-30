@@ -5771,6 +5771,156 @@ window.addEventListener(
         }
     }
 );
+    /* =========================================
+   모바일 사진 순서 이동
+   ========================================= */
+
+let touchDraggedBoardImage = null;
+let touchDragStartX = 0;
+let touchDragStartY = 0;
+let touchDragMoved = false;
+
+
+/* 사진 터치 시작 */
+editor.addEventListener(
+    'touchstart',
+    function (e) {
+
+        const target = e.target;
+
+        if (
+            target.tagName !== 'IMG' ||
+            !editor.contains(target)
+        ) {
+            return;
+        }
+
+        /* 크기 조절점 터치는 제외 */
+        if (
+            resizeHandle &&
+            e.target === resizeHandle
+        ) {
+            return;
+        }
+
+        touchDraggedBoardImage = target;
+
+        const touch = e.touches[0];
+
+        touchDragStartX =
+            touch.clientX;
+
+        touchDragStartY =
+            touch.clientY;
+
+        touchDragMoved = false;
+    },
+    { passive: true }
+);
+
+
+/* 사진 이동 */
+editor.addEventListener(
+    'touchmove',
+    function (e) {
+
+        if (!touchDraggedBoardImage) {
+            return;
+        }
+
+        const touch = e.touches[0];
+
+        const moveX =
+            Math.abs(
+                touch.clientX -
+                touchDragStartX
+            );
+
+        const moveY =
+            Math.abs(
+                touch.clientY -
+                touchDragStartY
+            );
+
+        /* 아주 조금 움직인 것은 무시 */
+        if (
+            moveX < 10 &&
+            moveY < 10
+        ) {
+            return;
+        }
+
+        touchDragMoved = true;
+
+        const target =
+            document.elementFromPoint(
+                touch.clientX,
+                touch.clientY
+            );
+
+        if (
+            !target ||
+            target.tagName !== 'IMG' ||
+            target === touchDraggedBoardImage
+        ) {
+            return;
+        }
+
+        e.preventDefault();
+
+        const rect =
+            target.getBoundingClientRect();
+
+        const mouseX =
+            touch.clientX -
+            rect.left;
+
+
+        /* 왼쪽 */
+        if (
+            mouseX <
+            rect.width / 2
+        ) {
+
+            target.parentNode.insertBefore(
+                touchDraggedBoardImage,
+                target
+            );
+
+        }
+
+        /* 오른쪽 */
+        else {
+
+            target.parentNode.insertBefore(
+                touchDraggedBoardImage,
+                target.nextSibling
+            );
+        }
+
+        syncBoardEditor();
+    },
+    { passive: false }
+);
+
+
+/* 이동 종료 */
+editor.addEventListener(
+    'touchend',
+    function () {
+
+        if (
+            !touchDraggedBoardImage
+        ) {
+            return;
+        }
+
+        syncBoardEditor();
+
+        touchDraggedBoardImage = null;
+        touchDragMoved = false;
+    }
+);
     /* 툴바 버튼 */
     const toolbar =
         document.getElementById('board-editor-toolbar');
