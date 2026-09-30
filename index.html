@@ -9802,8 +9802,10 @@ function formatBoardText(command) {
         null
     );
 }    
-    function sanitizeBoardContent(html) {
-    const template = document.createElement('template');
+function sanitizeBoardContent(html) {
+
+    const template =
+        document.createElement('template');
 
     template.innerHTML = html || '';
 
@@ -9819,115 +9821,149 @@ function formatBoardText(command) {
         'BR',
         'P',
         'DIV',
-        'SPAN'
+        'SPAN',
         'IMG'
     ];
 
     const elements =
         template.content.querySelectorAll('*');
 
-    elements.forEach(element => {
+    elements.forEach(function (element) {
 
+        /* 허용하지 않은 태그 제거 */
         if (!allowedTags.includes(element.tagName)) {
+
             element.replaceWith(
                 document.createTextNode(
                     element.textContent || ''
                 )
             );
+
             return;
         }
 
-        // 허용할 속성만 유지
-[...element.attributes].forEach(attr => {
 
-    /* IMG의 src는 허용 */
-    if (
-        element.tagName === 'IMG' &&
-        attr.name === 'src'
-    ) {
-        if (
-            attr.value.startsWith('data:image/')
+        /* =========================================
+           허용할 속성
+           ========================================= */
+
+        [
+            ...element.attributes
+        ].forEach(function (attr) {
+
+            /* IMG의 src 허용 */
+            if (
+                element.tagName === 'IMG' &&
+                attr.name === 'src'
+            ) {
+
+                if (
+                    attr.value.startsWith(
+                        'data:image/'
+                    )
+                ) {
+                    return;
+                }
+
+                element.removeAttribute(
+                    attr.name
+                );
+
+                return;
+            }
+
+
+            /* IMG의 alt 허용 */
+            if (
+                element.tagName === 'IMG' &&
+                attr.name === 'alt'
+            ) {
+                return;
+            }
+
+
+            /* 나머지는 style만 허용 */
+            if (attr.name !== 'style') {
+
+                element.removeAttribute(
+                    attr.name
+                );
+            }
+
+        });
+
+
+        /* =========================================
+           IMG 스타일
+           사진 크기 유지
+           ========================================= */
+
+        if (element.tagName === 'IMG') {
+
+            const width =
+                element.style.width;
+
+            const height =
+                element.style.height;
+
+            const maxWidth =
+                element.style.maxWidth;
+
+            const display =
+                element.style.display;
+
+            const margin =
+                element.style.margin;
+
+            element.removeAttribute('style');
+
+            if (width) {
+                element.style.width = width;
+            }
+
+            if (height) {
+                element.style.height = height;
+            }
+
+            if (maxWidth) {
+                element.style.maxWidth = maxWidth;
+            }
+
+            if (display) {
+                element.style.display = display;
+            }
+
+            if (margin) {
+                element.style.margin = margin;
+            }
+
+        }
+
+        /* =========================================
+           일반 글자 스타일
+           기존 정렬만 유지
+           ========================================= */
+
+        else if (
+            element.hasAttribute('style')
         ) {
-            return;
+
+            const textAlign =
+                element.style.textAlign;
+
+            element.removeAttribute('style');
+
+            if (
+                textAlign === 'left' ||
+                textAlign === 'center' ||
+                textAlign === 'right'
+            ) {
+
+                element.style.textAlign =
+                    textAlign;
+            }
         }
 
-        element.removeAttribute(attr.name);
-        return;
-    }
-
-    /* IMG의 alt는 허용 */
-    if (
-        element.tagName === 'IMG' &&
-        attr.name === 'alt'
-    ) {
-        return;
-    }
-
-    /* 나머지는 style만 허용 */
-    if (attr.name !== 'style') {
-        element.removeAttribute(attr.name);
-    }
-
-});
-if (element.tagName === 'IMG') {
-
-    /* 사진 크기 관련 스타일 유지 */
-    const width =
-        element.style.width;
-
-    const height =
-        element.style.height;
-
-    const maxWidth =
-        element.style.maxWidth;
-
-    const display =
-        element.style.display;
-
-    const margin =
-        element.style.margin;
-
-    /* 기존 style 제거 */
-    element.removeAttribute('style');
-
-    /* 필요한 스타일만 다시 적용 */
-    if (width) {
-        element.style.width = width;
-    }
-
-    if (height) {
-        element.style.height = height;
-    }
-
-    if (maxWidth) {
-        element.style.maxWidth = maxWidth;
-    }
-
-    if (display) {
-        element.style.display = display;
-    }
-
-    if (margin) {
-        element.style.margin = margin;
-    }
-
-} else if (element.hasAttribute('style')) {
-
-    /* 일반 글자는 기존 정렬만 유지 */
-    const textAlign =
-        element.style.textAlign;
-
-    element.removeAttribute('style');
-
-    if (
-        textAlign === 'left' ||
-        textAlign === 'center' ||
-        textAlign === 'right'
-    ) {
-        element.style.textAlign =
-            textAlign;
-    }
-}
     });
 
     return template.innerHTML
