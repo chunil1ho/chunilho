@@ -3867,6 +3867,160 @@ padding: 0 14px;
 #cat-home #board-post-list {
     margin-top: 6px !important;
 }
+    /* =========================================
+   찾아오시는길 모바일 화면 맞춤
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    #cat-map,
+    #cat-map * {
+        box-sizing: border-box !important;
+    }
+
+    #cat-map {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+        overflow-x: hidden !important;
+    }
+
+    #cat-map img,
+    #cat-map iframe {
+        max-width: 100% !important;
+    }
+
+    #cat-map table {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    #cat-map input,
+    #cat-map select,
+    #cat-map textarea,
+    #cat-map button {
+        max-width: 100% !important;
+    }
+}
+    /* =========================================
+   찾아오시는길 모바일 지도 맞춤
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    #cat-map iframe {
+        display: block !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        height: 260px !important;
+
+        margin: 0 auto !important;
+
+        border: 0 !important;
+    }
+
+    #cat-map .map-container,
+    #cat-map .map-wrap,
+    #cat-map .map-box {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+}
+    /* =========================================
+   찾아오시는길 모바일 정보 영역
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    #cat-map .map-info,
+    #cat-map .contact-info,
+    #cat-map .address-info {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-wrap: break-word !important;
+        word-break: keep-all !important;
+    }
+
+    #cat-map .map-info *,
+    #cat-map .contact-info *,
+    #cat-map .address-info * {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    #cat-map a {
+        overflow-wrap: anywhere !important;
+    }
+}
+/* =========================================
+   찾아오시는길 모바일 실제 영역 정리
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    #cat-location {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+
+    #cat-location .map-section-wrapper {
+        display: flex !important;
+        flex-direction: column !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        padding: 14px !important;
+        gap: 14px !important;
+
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+    }
+
+    #cat-location .map-info-box {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+
+        padding: 18px !important;
+
+        box-sizing: border-box !important;
+    }
+
+    #cat-location .map-box {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+
+        height: 280px !important;
+
+        box-sizing: border-box !important;
+    }
+
+    #cat-location .map-info-box ul {
+        padding-left: 18px !important;
+        margin-left: 0 !important;
+    }
+
+    #cat-location .map-info-box li {
+        overflow-wrap: break-word !important;
+        word-break: keep-all !important;
+    }
+
+    #cat-location .map-btn {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        white-space: normal !important;
+    }
+}    
     </style>
 </head>
 <body id="mainBody">
