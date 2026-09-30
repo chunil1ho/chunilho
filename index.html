@@ -3703,6 +3703,25 @@ padding: 0 14px;
 
     z-index: 9999 !important;
 }
+    /* =========================================
+   조황게시판 본문 사진 가로 배치
+   ========================================= */
+
+#cat-board #board-editor-content img {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin: 10px 6px 10px 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* 상세페이지에서도 사진 가로 배치 */
+#cat-board #board-detail-content .board-detail-body img {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin: 10px 6px 10px 0 !important;
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+}
     </style>
 </head>
 <body id="mainBody">
@@ -5031,7 +5050,41 @@ function syncBoardEditor() {
 
     if (!editor || !content) return;
 
-    content.value = editor.innerHTML;
+
+    /* 에디터 내용을 복사 */
+    const clone =
+        editor.cloneNode(true);
+
+
+    /* 사진 크기 조절용 핸들은 저장하지 않음 */
+    clone
+        .querySelectorAll(
+            '.board-image-resize-handle'
+        )
+        .forEach(function (handle) {
+
+            handle.remove();
+
+        });
+
+
+    /* 사진 선택 표시도 저장하지 않음 */
+    clone
+        .querySelectorAll(
+            '.board-image-selected'
+        )
+        .forEach(function (img) {
+
+            img.classList.remove(
+                'board-image-selected'
+            );
+
+        });
+
+
+    /* 실제 저장 내용 */
+    content.value =
+        clone.innerHTML;
 }
 
 /* 현재 선택 영역 유지 */
