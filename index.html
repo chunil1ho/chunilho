@@ -2,33 +2,132 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width/* =========================================
-   천일호 낚시상품 특징
+    <meta name="viewport" content="width/
+
+/* =========================================
+   천일호 낚시상품 특징 - 가로 4개
    ========================================= */
 
 #cat-home .home-features {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
 
-    width: 100%;
-    margin: 14px 0 30px 0;
-    padding: 18px 20px;
+    width: 100% !important;
+    max-width: 100% !important;
 
-    box-sizing: border-box;
+    margin: 14px 0 30px 0 !important;
+    padding: 18px 20px !important;
 
-    background: #f3f9fd;
-    border-radius: 10px;
+    box-sizing: border-box !important;
+
+    background: #f3f9fd !important;
+    border-radius: 10px !important;
 }
 
 #cat-home .home-feature-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
 
-    gap: 12px;
-    min-width: 0;
+    flex: 1 1 25% !important;
+    width: 25% !important;
+    min-width: 0 !important;
+
+    gap: 12px !important;
+    box-sizing: border-box !important;
 }
 
+#cat-home .home-feature-icon {
+    flex: 0 0 38px !important;
+
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+#cat-home .home-feature-icon svg {
+    display: block !important;
+
+    width: 38px !important;
+    height: 38px !important;
+
+    min-width: 38px !important;
+    min-height: 38px !important;
+    max-width: 38px !important;
+    max-height: 38px !important;
+}
+
+#cat-home .home-feature-text {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    min-width: 0 !important;
+}
+
+#cat-home .home-feature-text strong {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: #172033 !important;
+    white-space: nowrap !important;
+}
+
+#cat-home .home-feature-text span {
+    font-size: 12px !important;
+    color: #667085 !important;
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+}
+
+
+/* 모바일 */
+@media (max-width: 600px) {
+
+    #cat-home .home-features {
+        flex-wrap: wrap !important;
+        padding: 16px 10px !important;
+        gap: 18px 0 !important;
+    }
+
+    #cat-home .home-feature-item {
+        flex: 0 0 50% !important;
+        width: 50% !important;
+        justify-content: flex-start !important;
+        gap: 7px !important;
+    }
+
+    #cat-home .home-feature-icon {
+        flex: 0 0 30px !important;
+
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        max-width: 30px !important;
+    }
+
+    #cat-home .home-feature-icon svg {
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        min-height: 30px !important;
+        max-width: 30px !important;
+        max-height: 30px !important;
+    }
+
+    #cat-home .home-feature-text strong {
+        font-size: 13px !important;
+    }
+
+    #cat-home .home-feature-text span {
+        font-size: 11px !important;
+    }
+}
 #cat-home .home-feature-icon {
     width: 38px !important;
     height: 38px !important;
