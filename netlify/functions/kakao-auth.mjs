@@ -1,4 +1,5 @@
-export default async () => {
+export async function handler(event) {
+
   const REST_API_KEY = process.env.KAKAO_REST_API_KEY;
   const REDIRECT_URI = process.env.KAKAO_REDIRECT_URI;
 
@@ -15,14 +16,17 @@ export default async () => {
   const kakaoAuthUrl =
     "https://kauth.kakao.com/oauth/authorize" +
     "?response_type=code" +
-    "&client_id=" + encodeURIComponent(REST_API_KEY) +
-    "&redirect_uri=" + encodeURIComponent(REDIRECT_URI) +
+    "&client_id=" +
+    encodeURIComponent(REST_API_KEY) +
+    "&redirect_uri=" +
+    encodeURIComponent(REDIRECT_URI) +
     "&scope=talk_message";
 
   return {
     statusCode: 302,
     headers: {
       Location: kakaoAuthUrl
-    }
+    },
+    body: ""
   };
-};
+}
