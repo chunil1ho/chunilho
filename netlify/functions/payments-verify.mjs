@@ -4,7 +4,93 @@ import {
   store,
   normalizeTel
 } from "./_lib.mjs";
+/*
+ * ==========================================
+ * 카카오톡 관리자 알림
+ * ==========================================
+ */
+async function sendKakaoAdminMessage(booking) {
+  try {
+    const tokenData = await store.get(
+      "kakao/admin-token",
+      { type: "json" }
+    );
 
+    if (!tokenData?.access_token) {
+      console.error(
+        "카카오 관리자 토큰이 없습니다."
+      );
+      return false;
+    }
+
+    const templateObject = {
+      object_type: "text",
+      text:
+        "🎣 천일호 신규 예약 알림\n\n" +
+        `예약번호: ${booking.orderNo}\n\n` +
+        `예약자: ${booking.name}\n` +
+        `전화번호: ${booking.tel}\n\n` +
+        `이용일: ${booking.date}\n` +
+        `상품: ${booking.course}\n` +
+        `시간: ${booking.time || "미정"}\n` +
+        `인원: ${booking.count}명\n\n` +
+        `결제금액: ${Number(booking.price).toLocaleString()}원\n\n` +
+        "✅ 결제 완료",
+      link: {
+        web_url: "https://chunilho.com",
+        mobile_web_url: "https://chunilho.com"
+      },
+      button_title: "천일호 홈페이지"
+    };
+
+    const response = await fetch(
+      "https://kapi.kakao.com/v2/api/talk/memo/default/send",
+      {
+        method: "POST",
+        headers: {
+          "Authorization":
+            `Bearer ${tokenData.access_token}`,
+          "Content-Type":
+            "application/x-www-form-urlencoded;charset=utf-8"
+        },
+        body: new URLSearchParams({
+          template_object:
+            JSON.stringify(templateObject)
+        })
+      }
+    );
+
+    const result = await response.json();
+
+    console.log(
+      "카카오 관리자 알림 결과:",
+      JSON.stringify({
+        ok: response.ok,
+        status: response.status,
+        result
+      })
+    );
+
+    if (!response.ok) {
+      console.error(
+        "카카오 관리자 알림 발송 실패:",
+        result
+      );
+
+      return false;
+    }
+
+    return true;
+
+  } catch (error) {
+    console.error(
+      "카카오 관리자 알림 오류:",
+      error
+    );
+
+    return false;
+  }
+}
 
 /*
  * ==========================================
@@ -577,8 +663,12 @@ console.log(
         data,
         payment
       );
+let kakaoNotified = false;
 
-
+if (!result.duplicate) {
+  kakaoNotified =
+    await sendKakaoAdminMessage(result.booking);
+}
     /*
      * ========================================
      * 11. 성공
