@@ -15,6 +15,12 @@ async function sendKakaoAdminMessage(booking) {
       "kakao/admin-token",
       { type: "json" }
     );
+    
+console.log("===== 카카오 토큰 확인 =====");
+console.log(
+  "토큰 존재:",
+  !!tokenData?.access_token
+);
 
     if (!tokenData?.access_token) {
       console.error(
@@ -663,6 +669,11 @@ console.log(
         data,
         payment
       );
+    
+console.log("===== 카카오 알림 호출 시작 =====");
+console.log("duplicate:", result.duplicate);
+console.log("booking:", JSON.stringify(result.booking));
+    
 let kakaoNotified = false;
 
 if (!result.duplicate) {
