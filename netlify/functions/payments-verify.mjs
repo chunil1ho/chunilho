@@ -4,111 +4,75 @@ import {
   store,
   normalizeTel
 } from "./_lib.mjs";
-/*
- * ==========================================
- * 카카오톡 관리자 알림
- * ==========================================
- */
 async function sendKakaoAdminMessage(booking) {
   try {
-    const tokenData = await store.get(
-      "kakao/admin-token",
-      { type: "json" }
-    );
-    
-console.log("===== 카카오 토큰 확인 =====");
-console.log(
-  "토큰 존재:",
-  !!tokenData?.access_token
-);
+    const apiKey = process.env.ALIGO_API_KEY;
+    const userId = process.env.ALIGO_USER_ID;
+    const senderKey = process.env.ALIGO_SENDER_KEY;
+    const templateCode = process.env.ALIGO_TEMPLATE_CODE;
 
-    if (!tokenData?.access_token) {
-      console.error(
-        "카카오 관리자 토큰이 없습니다."
-      );
+    if (!apiKey || !userId || !senderKey || !templateCode) {
+      console.error("알리고 환경변수가 없습니다.");
       return false;
     }
-// 카카오 인증 계정 확인용
-const meResponse = await fetch(
-  "https://kapi.kakao.com/v2/user/me",
-  {
-    method: "GET",
-    headers: {
-      "Authorization":
-        `Bearer ${tokenData.access_token}`
-    }
-  }
-);
 
-const meData = await meResponse.json();
+    const formData = new URLSearchParams();
 
-console.log(
-  "===== 카카오 인증 계정 확인 ====="
-);
+    formData.append("apikey", apiKey);
+    formData.append("userid", userId);
+    formData.append("senderkey", senderKey);
+    formData.append("tpl_code", templateCode);
+    formData.append("sender", booking.tel || "01000000000");
+    formData.append("receiver_1", booking.tel || "01077685913");
 
-console.log(
-  "카카오 사용자 ID:",
-  meData?.id || "조회 실패"
-);
+    formData.append(
+      "subject_1",
+      "천일호 예약 결제 완료"
+    );
 
-console.log(
-  "카카오 계정 조회 상태:",
-  meResponse.status
-);
-    const templateObject = {
-      object_type: "text",
-      text:
-        "🎣 천일호 신규 예약 알림\n\n" +
-        `예약번호: ${booking.orderNo}\n\n` +
-        `예약자: ${booking.name}\n` +
-        `전화번호: ${booking.tel}\n\n` +
-        `이용일: ${booking.date}\n` +
-        `상품: ${booking.course}\n` +
-        `시간: ${booking.time || "미정"}\n` +
-        `인원: ${booking.count}명\n\n` +
-        `결제금액: ${Number(booking.price).toLocaleString()}원\n\n` +
-        "✅ 결제 완료",
-      link: {
-        web_url: "https://chunilho.com",
-        mobile_web_url: "https://chunilho.com"
-      },
-      button_title: "천일호 홈페이지"
-    };
+    formData.append(
+      "message_1",
+      "🎣 천일호 예약 결제 완료\n" +
+      `예약번호: ${booking.orderNo}\n` +
+      `예약자: ${booking.name}\n` +
+      `전화번호: ${booking.tel}\n` +
+      `이용일: ${booking.date}\n` +
+      `상품: ${booking.course}\n` +
+      `시간: ${booking.time || "미정"}\n` +
+      `인원: ${booking.count}명\n` +
+      `결제금액: ${Number(booking.price).toLocaleString()}원\n` +
+      "결제가 완료되었습니다."
+    );
 
     const response = await fetch(
-      "https://kapi.kakao.com/v2/api/talk/memo/default/send",
+      "https://apis.aligo.in/send/",
       {
         method: "POST",
         headers: {
-          "Authorization":
-            `Bearer ${tokenData.access_token}`,
           "Content-Type":
-            "application/x-www-form-urlencoded;charset=utf-8"
+            "application/x-www-form-urlencoded"
         },
-        body: new URLSearchParams({
-          template_object:
-            JSON.stringify(templateObject)
-        })
+        body: formData
       }
     );
 
     const result = await response.json();
 
     console.log(
-      "카카오 관리자 알림 결과:",
+      "===== 알리고 카카오 알림 결과 ====="
+    );
+    console.log(
       JSON.stringify({
-        ok: response.ok,
         status: response.status,
         result
       })
     );
 
-    if (!response.ok) {
+    if (String(result.code) !== "0") {
       console.error(
-        "카카오 관리자 알림 발송 실패:",
+        "알리고 카카오 알림 발송 실패:",
         result
       );
-
       return false;
     }
 
@@ -116,14 +80,12 @@ console.log(
 
   } catch (error) {
     console.error(
-      "카카오 관리자 알림 오류:",
+      "알리고 카카오 알림 오류:",
       error
     );
-
     return false;
   }
 }
-
 /*
  * ==========================================
  * PortOne 인증 토큰 발급
