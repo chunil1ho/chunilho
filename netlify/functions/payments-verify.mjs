@@ -28,7 +28,33 @@ console.log(
       );
       return false;
     }
+// 카카오 인증 계정 확인용
+const meResponse = await fetch(
+  "https://kapi.kakao.com/v2/user/me",
+  {
+    method: "GET",
+    headers: {
+      "Authorization":
+        `Bearer ${tokenData.access_token}`
+    }
+  }
+);
 
+const meData = await meResponse.json();
+
+console.log(
+  "===== 카카오 인증 계정 확인 ====="
+);
+
+console.log(
+  "카카오 사용자 ID:",
+  meData?.id || "조회 실패"
+);
+
+console.log(
+  "카카오 계정 조회 상태:",
+  meResponse.status
+);
     const templateObject = {
       object_type: "text",
       text:
