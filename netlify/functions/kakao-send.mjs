@@ -14,7 +14,10 @@ export async function handler(event) {
     }
 
     // 저장된 카카오 토큰 가져오기
-    const tokenData = await store.getJSON("kakao/admin-token");
+    const tokenData = await store.get(
+  "kakao/admin-token",
+  { type: "json" }
+);
 
     if (!tokenData || !tokenData.access_token) {
       return {
