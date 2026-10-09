@@ -674,36 +674,19 @@ if (!result.duplicate) {
      * 11. 성공
      * ========================================
      */
-    return json(200, {
-
-      ok: true,
-
-      verified: true,
-
-      duplicate:
-        result.duplicate,
-
-      payment: {
-
-        impUid:
-          payment.imp_uid,
-
-        merchantUid:
-          payment.merchant_uid,
-
-        amount:
-          payment.amount,
-
-        status:
-          payment.status
-
-      },
-
-      booking:
-        result.booking
-
-    });
-
+return json(200, {
+  ok: true,
+  verified: true,
+  duplicate: result.duplicate,
+  kakaoNotified,
+  payment: {
+    impUid: requestData.impUid,
+    merchantUid: payment.merchant_uid,
+    amount: payment.amount,
+    status: payment.status
+  },
+  booking: result.booking
+});
 
   } catch (error) {
 
