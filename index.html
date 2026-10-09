@@ -9899,6 +9899,40 @@ async function adminCancelConfirmBooking(orderNo) {
         );
     }
 }
+async function adminCompleteBooking(orderNo) {
+    if (!isAdminLoggedIn || !adminToken) {
+        alert('관리자 로그인이 필요합니다.');
+        return;
+    }
+
+    if (!confirm(
+        '해당 예약을 이용완료 처리하시겠습니까?\n\n' +
+        '이용완료 처리 후에는 예약확정취소, 날짜/시간 변경, 취소/환불 등의 버튼이 사라집니다.'
+    )) {
+        return;
+    }
+
+    try {
+        await apiRequest(
+            '/bookings/' + encodeURIComponent(orderNo),
+            {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    status: '이용완료'
+                })
+            }
+        );
+
+        alert('예약이 이용완료 처리되었습니다.');
+        await updateAdminDashboard();
+
+    } catch (error) {
+        alert(
+            '이용완료 처리에 실패했습니다.\n' +
+            error.message
+        );
+    }
+}    
     function checkAdminAccess() {
         if (isAdminLoggedIn) {
             switchCategory('cat-admin', document.getElementById('nav-admin'));
@@ -10029,7 +10063,19 @@ if (b.status === '결제완료') {
                 onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}', ${Number(b.refundAmount || 0)})">
             취소/환불
         </button>
+
+        <!-- 이용완료 버튼 -->
+        <button type="button"
+                style="padding:4px 8px; font-size:0.8rem; margin-top:0; background:#16a34a; color:white; border:none; border-radius:5px; cursor:pointer;"
+                onclick="adminCompleteBooking('${b.orderNo}')">
+            이용완료
+        </button>
     `;
+
+} else if (b.status === '이용완료') {
+
+    actionBtn =
+        '<span style="color:#6b7280; font-weight:600;">이용완료</span>';
 
 } else if (b.status === '부분환불') {
     actionBtn = `
@@ -10055,7 +10101,7 @@ if (b.status === '결제완료') {
     actionBtn =
         `<span style="font-weight:600;">${b.status}</span>`;
 }
-
+            
 pgHtml += `
     <tr>
         <td>${b.orderNo}</td>
