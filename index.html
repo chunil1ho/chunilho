@@ -11909,9 +11909,10 @@ if (
            기존 정렬만 유지
            ========================================= */
 
-        else if (
-            element.hasAttribute('style')
-        ) {
+else if (
+    element.tagName !== 'VIDEO' &&
+    element.hasAttribute('style')
+) {
 
             const textAlign =
                 element.style.textAlign;
