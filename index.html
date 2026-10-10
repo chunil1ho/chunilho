@@ -7548,8 +7548,8 @@ if (inlineImageButton && inlineImageInput) {
         }
     );
 }  
-    /* =========================================
-   본문 동영상 삽입
+/* =========================================
+   본문 동영상 업로드
    ========================================= */
 
 const inlineVideoButton =
@@ -7574,74 +7574,176 @@ if (inlineVideoButton && inlineVideoInput) {
 
     inlineVideoInput.addEventListener(
         'change',
-        function () {
+        async function () {
 
             const file = this.files?.[0];
 
             if (!file) return;
 
             if (!file.type.startsWith('video/')) {
+
                 alert('동영상 파일만 선택할 수 있습니다.');
+
                 this.value = '';
+
                 return;
             }
 
-            const editor = getBoardEditor();
+            if (file.size > 4 * 1024 * 1024) {
+
+                alert('동영상은 4MB 이하만 업로드할 수 있습니다.');
+
+                this.value = '';
+
+                return;
+            }
+
+            const editor =
+                getBoardEditor();
 
             if (!editor) {
+
                 this.value = '';
+
                 return;
             }
 
-            restoreBoardEditorSelection();
+            try {
 
-            editor.focus();
+                restoreBoardEditorSelection();
 
-            const videoURL =
-                URL.createObjectURL(file);
+                editor.focus();
 
-            const video =
-                document.createElement('video');
+                /* 업로드 중 표시 */
+                alert('동영상을 업로드하고 있습니다.\n잠시만 기다려주세요.');
 
-            video.src = videoURL;
-            video.controls = true;
-            video.playsInline = true;
+                const response =
+                    await fetch(
+                        API_BASE + '/board-video',
+                        {
+                            method: 'POST',
 
-            video.style.display = 'block';
-            video.style.width = '600px';
-            video.style.maxWidth = '100%';
-            video.style.height = 'auto';
-            video.style.margin = '10px 0';
+                            headers: {
+                                'Content-Type':
+                                    file.type,
 
-            const selection =
-                window.getSelection();
+                                'Authorization':
+                                    'Bearer ' + adminToken
+                            },
 
-            if (
-                selection &&
-                selection.rangeCount > 0
-            ) {
+                            body: file
+                        }
+                    );
 
-                const range =
-                    selection.getRangeAt(0);
+                const data =
+                    await response.json();
 
-                range.deleteContents();
+                if (!response.ok) {
 
-                range.insertNode(video);
+                    throw new Error(
+                        data?.message ||
+                        '동영상 업로드에 실패했습니다.'
+                    );
+                }
 
-                range.setStartAfter(video);
-                range.collapse(true);
+                if (!data.url) {
 
-                selection.removeAllRanges();
-                selection.addRange(range);
+                    throw new Error(
+                        '동영상 주소를 받지 못했습니다.'
+                    );
+                }
 
-            } else {
 
-                editor.appendChild(video);
+                /* =========================================
+                   업로드된 동영상 삽입
+                   ========================================= */
+
+                const video =
+                    document.createElement('video');
+
+                video.src =
+                    data.url;
+
+                video.controls = true;
+
+                video.playsInline = true;
+
+                video.setAttribute(
+                    'controls',
+                    ''
+                );
+
+                video.setAttribute(
+                    'playsinline',
+                    ''
+                );
+
+                video.style.display =
+                    'block';
+
+                video.style.width =
+                    '600px';
+
+                video.style.maxWidth =
+                    '100%';
+
+                video.style.height =
+                    'auto';
+
+                video.style.margin =
+                    '10px 0';
+
+
+                const selection =
+                    window.getSelection();
+
+                if (
+                    selection &&
+                    selection.rangeCount > 0
+                ) {
+
+                    const range =
+                        selection.getRangeAt(0);
+
+                    range.deleteContents();
+
+                    range.insertNode(video);
+
+                    range.setStartAfter(video);
+
+                    range.collapse(true);
+
+                    selection.removeAllRanges();
+
+                    selection.addRange(range);
+
+                } else {
+
+                    editor.appendChild(video);
+                }
+
+
+                /* 내용 동기화 */
+                syncBoardEditor();
+
+                saveBoardEditorSelection();
+
+            } catch (error) {
+
+                console.error(
+                    '본문 동영상 업로드 오류:',
+                    error
+                );
+
+                alert(
+                    error?.message ||
+                    '동영상 업로드에 실패했습니다.'
+                );
+
+            } finally {
+
+                inlineVideoInput.value = '';
             }
-
-            syncBoardEditor();
-
-            inlineVideoInput.value = '';
         }
     );
 }
@@ -11043,7 +11145,8 @@ function sanitizeBoardContent(html) {
         'P',
         'DIV',
         'SPAN',
-        'IMG'
+        'IMG',
+        'VIDEO'
     ];
 
     const elements =
@@ -11101,8 +11204,45 @@ function sanitizeBoardContent(html) {
             ) {
                 return;
             }
+/* =========================================
+   VIDEO 속성 허용
+   ========================================= */
 
+if (
+    element.tagName === 'VIDEO' &&
+    attr.name === 'src'
+) {
 
+if (
+    attr.value.startsWith(
+        '/api/board-video?key='
+    ) ||
+    attr.value.startsWith(
+        'https://chunilho.netlify.app/api/board-video?key='
+    )
+) {
+    return;
+}
+
+    element.removeAttribute(attr.name);
+    return;
+}
+
+if (
+    element.tagName === 'VIDEO' &&
+    (
+        attr.name === 'controls' ||
+        attr.name === 'playsinline'
+    )
+) {
+    return;
+}
+if (
+    element.tagName === 'VIDEO' &&
+    attr.name === 'style'
+) {
+    return;
+}
             /* 나머지는 style만 허용 */
             if (attr.name !== 'style') {
 
