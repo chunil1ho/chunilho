@@ -3703,6 +3703,36 @@ padding: 0 14px;
 
     z-index: 9999 !important;
 }
+/* =========================================
+   본문 동영상 선택 / 크기 조절
+   ========================================= */
+
+#cat-board #board-editor-content video.board-video-selected {
+    outline: 2px solid #3b82f6 !important;
+    outline-offset: 2px !important;
+}
+
+/* 동영상 오른쪽 아래 크기 조절점 */
+#cat-board #board-editor-content .board-video-resize-handle {
+    position: absolute !important;
+
+    width: 12px !important;
+    height: 12px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    background: #ffffff !important;
+
+    border: 2px solid #3b82f6 !important;
+    border-radius: 3px !important;
+
+    box-sizing: border-box !important;
+
+    cursor: nwse-resize !important;
+
+    z-index: 9999 !important;
+}    
     /* =========================================
    조황게시판 본문 사진 가로 배치
    ========================================= */
@@ -4309,6 +4339,23 @@ padding: 0 14px;
     #cat-board #board-editor-content video.board-video-selected {
     outline: 3px solid #3b82f6 !important;
     outline-offset: 3px !important;
+}
+    #cat-board #board-editor-content video.board-video-selected {
+    outline: 3px solid #3b82f6 !important;
+    outline-offset: 3px !important;
+}
+
+#cat-board #board-editor-content .board-video-resize-handle {
+    position: absolute !important;
+    width: 14px !important;
+    height: 14px !important;
+    background: #3b82f6 !important;
+    border: 2px solid #fff !important;
+    border-radius: 50% !important;
+    cursor: nwse-resize !important;
+    z-index: 9999 !important;
+    box-sizing: border-box !important;
+    touch-action: none !important;
 }
     </style>
 </head>
@@ -5694,7 +5741,31 @@ function syncBoardEditor() {
 
         });
 
+    /* 동영상 크기 조절용 핸들은 저장하지 않음 */
+    clone
+        .querySelectorAll(
+            '.board-video-resize-handle'
+        )
+        .forEach(function (handle) {
 
+            handle.remove();
+
+        });
+
+
+    /* 동영상 선택 표시도 저장하지 않음 */
+    clone
+        .querySelectorAll(
+            '.board-video-selected'
+        )
+        .forEach(function (video) {
+
+            video.classList.remove(
+                'board-video-selected'
+            );
+
+        });
+    
     /* 실제 저장 내용 */
     content.value =
         clone.innerHTML;
@@ -5999,16 +6070,22 @@ editor.addEventListener('click', function (e) {
     );
 });
 /* =========================================
-   본문 동영상 선택 / 삭제
+   본문 동영상 선택 / 크기 조절 / 삭제
    ========================================= */
 
 let selectedBoardVideo = null;
+let videoResizeHandle = null;
 
+let videoResizeStartX = 0;
+let videoResizeStartWidth = 0;
+let videoResizeStartHeight = 0;
+
+
+/* 동영상 클릭 */
 editor.addEventListener('click', function (e) {
 
     const target = e.target;
 
-    /* 동영상이 아니면 종료 */
     if (
         target.tagName !== 'VIDEO' ||
         !editor.contains(target)
@@ -6017,52 +6094,434 @@ editor.addEventListener('click', function (e) {
     }
 
     e.preventDefault();
+    e.stopPropagation();
 
-    /* 기존 동영상 선택 해제 */
+    removeBoardVideoResize();
+
+    selectedBoardVideo = target;
+
     editor
-        .querySelectorAll('.board-video-selected')
+        .querySelectorAll('video.board-video-selected')
         .forEach(function (video) {
             video.classList.remove(
                 'board-video-selected'
             );
         });
 
-    selectedBoardVideo = target;
-
     selectedBoardVideo.classList.add(
         'board-video-selected'
+    );
+
+    createBoardVideoResizeHandle(
+        selectedBoardVideo
     );
 });
 
 
-/* 동영상 Delete / Backspace 삭제 */
-editor.addEventListener('keydown', function (e) {
+/* 동영상 크기 조절점 생성 */
+function createBoardVideoResizeHandle(video) {
+
+    removeBoardVideoResize();
+
+    selectedBoardVideo = video;
+
+    videoResizeHandle =
+        document.createElement('span');
+
+    videoResizeHandle.className =
+        'board-video-resize-handle';
+
+    videoResizeHandle.title =
+        '드래그하여 동영상 크기 조절';
+
+    const parent =
+        video.parentElement;
+
+    if (!parent) return;
+
+    if (
+        getComputedStyle(parent).position ===
+        'static'
+    ) {
+        parent.style.position =
+            'relative';
+    }
+
+    parent.appendChild(
+        videoResizeHandle
+    );
+
+    positionBoardVideoHandle();
+}
+
+
+/* 조절점 위치 */
+function positionBoardVideoHandle() {
+
+    if (
+        !selectedBoardVideo ||
+        !videoResizeHandle
+    ) {
+        return;
+    }
+
+    const videoRect =
+        selectedBoardVideo
+            .getBoundingClientRect();
+
+    const parentRect =
+        selectedBoardVideo
+            .parentElement
+            .getBoundingClientRect();
+
+    videoResizeHandle.style.left =
+        (
+            videoRect.right -
+            parentRect.left -
+            7
+        ) + 'px';
+
+    videoResizeHandle.style.top =
+        (
+            videoRect.bottom -
+            parentRect.top -
+            7
+        ) + 'px';
+}
+
+
+/* PC 크기 조절 시작 */
+document.addEventListener(
+    'mousedown',
+    function (e) {
+
+        if (
+            !videoResizeHandle ||
+            e.target !== videoResizeHandle ||
+            !selectedBoardVideo
+        ) {
+            return;
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        videoResizeStartX =
+            e.clientX;
+
+        videoResizeStartWidth =
+            selectedBoardVideo
+                .getBoundingClientRect()
+                .width;
+
+        videoResizeStartHeight =
+            selectedBoardVideo
+                .getBoundingClientRect()
+                .height;
+
+        document.body.style.userSelect =
+            'none';
+
+        document.addEventListener(
+            'mousemove',
+            resizeBoardVideo
+        );
+
+        document.addEventListener(
+            'mouseup',
+            stopBoardVideoResize
+        );
+    }
+);
+
+
+/* PC 실제 크기 변경 */
+function resizeBoardVideo(e) {
 
     if (!selectedBoardVideo) {
         return;
     }
 
-    if (
-        e.key !== 'Delete' &&
-        e.key !== 'Backspace'
-    ) {
-        return;
-    }
+    const difference =
+        e.clientX -
+        videoResizeStartX;
 
-    if (!editor.contains(selectedBoardVideo)) {
-        selectedBoardVideo = null;
+    const minWidth = 100;
+
+    const editorWidth =
+        editor.clientWidth;
+
+    const maxWidth =
+        Math.max(
+            minWidth,
+            editorWidth
+        );
+
+    let newWidth =
+        videoResizeStartWidth +
+        difference;
+
+    newWidth =
+        Math.max(
+            minWidth,
+            Math.min(
+                newWidth,
+                maxWidth
+            )
+        );
+
+    const aspectRatio =
+        videoResizeStartHeight /
+        videoResizeStartWidth;
+
+    const newHeight =
+        Math.round(
+            newWidth *
+            aspectRatio
+        );
+
+    selectedBoardVideo.style.width =
+        Math.round(newWidth) + 'px';
+
+    selectedBoardVideo.style.height =
+        newHeight + 'px';
+
+    selectedBoardVideo.style.maxWidth =
+        '100%';
+
+    positionBoardVideoHandle();
+
+    syncBoardEditor();
+}
+
+
+/* PC 크기 조절 종료 */
+function stopBoardVideoResize() {
+
+    document.body.style.userSelect =
+        '';
+
+    document.removeEventListener(
+        'mousemove',
+        resizeBoardVideo
+    );
+
+    document.removeEventListener(
+        'mouseup',
+        stopBoardVideoResize
+    );
+
+    syncBoardEditor();
+}
+
+
+/* 모바일 크기 조절 */
+document.addEventListener(
+    'touchstart',
+    function (e) {
+
+        if (
+            !videoResizeHandle ||
+            e.target !== videoResizeHandle ||
+            !selectedBoardVideo
+        ) {
+            return;
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        const touch =
+            e.touches[0];
+
+        videoResizeStartX =
+            touch.clientX;
+
+        videoResizeStartWidth =
+            selectedBoardVideo
+                .getBoundingClientRect()
+                .width;
+
+        videoResizeStartHeight =
+            selectedBoardVideo
+                .getBoundingClientRect()
+                .height;
+
+        document.body.style.userSelect =
+            'none';
+
+        document.addEventListener(
+            'touchmove',
+            resizeBoardVideoTouch,
+            { passive: false }
+        );
+
+        document.addEventListener(
+            'touchend',
+            stopBoardVideoResizeTouch
+        );
+    },
+    { passive: false }
+);
+
+
+/* 모바일 실제 크기 변경 */
+function resizeBoardVideoTouch(e) {
+
+    if (
+        !selectedBoardVideo ||
+        !e.touches.length
+    ) {
         return;
     }
 
     e.preventDefault();
 
-    selectedBoardVideo.remove();
+    const touch =
+        e.touches[0];
 
-    selectedBoardVideo = null;
+    const difference =
+        touch.clientX -
+        videoResizeStartX;
+
+    const minWidth = 100;
+
+    const editorWidth =
+        editor.clientWidth;
+
+    const maxWidth =
+        Math.max(
+            minWidth,
+            editorWidth
+        );
+
+    let newWidth =
+        videoResizeStartWidth +
+        difference;
+
+    newWidth =
+        Math.max(
+            minWidth,
+            Math.min(
+                newWidth,
+                maxWidth
+            )
+        );
+
+    const aspectRatio =
+        videoResizeStartHeight /
+        videoResizeStartWidth;
+
+    const newHeight =
+        Math.round(
+            newWidth *
+            aspectRatio
+        );
+
+    selectedBoardVideo.style.width =
+        Math.round(newWidth) + 'px';
+
+    selectedBoardVideo.style.height =
+        newHeight + 'px';
+
+    selectedBoardVideo.style.maxWidth =
+        '100%';
+
+    positionBoardVideoHandle();
 
     syncBoardEditor();
-});
+}
 
+
+/* 모바일 크기 조절 종료 */
+function stopBoardVideoResizeTouch() {
+
+    document.body.style.userSelect =
+        '';
+
+    document.removeEventListener(
+        'touchmove',
+        resizeBoardVideoTouch
+    );
+
+    document.removeEventListener(
+        'touchend',
+        stopBoardVideoResizeTouch
+    );
+
+    syncBoardEditor();
+}
+
+
+/* 동영상 선택 해제 */
+function removeBoardVideoResize() {
+
+    if (videoResizeHandle) {
+
+        videoResizeHandle.remove();
+
+        videoResizeHandle = null;
+    }
+
+    if (selectedBoardVideo) {
+
+        selectedBoardVideo.classList.remove(
+            'board-video-selected'
+        );
+    }
+
+    selectedBoardVideo = null;
+}
+
+
+/* Delete / Backspace로 동영상 삭제 */
+editor.addEventListener(
+    'keydown',
+    function (e) {
+
+        if (!selectedBoardVideo) {
+            return;
+        }
+
+        if (
+            e.key !== 'Delete' &&
+            e.key !== 'Backspace'
+        ) {
+            return;
+        }
+
+        if (
+            !editor.contains(
+                selectedBoardVideo
+            )
+        ) {
+            selectedBoardVideo = null;
+            return;
+        }
+
+        e.preventDefault();
+
+        selectedBoardVideo.pause();
+
+        selectedBoardVideo.remove();
+
+        removeBoardVideoResize();
+
+        syncBoardEditor();
+    }
+);
+
+
+/* 화면 크기 변경 */
+window.addEventListener(
+    'resize',
+    function () {
+
+        if (selectedBoardVideo) {
+            positionBoardVideoHandle();
+        }
+    }
+);
 /* 크기 조절 핸들 생성 */
 function createBoardImageResizeHandle(img) {
 
@@ -8067,6 +8526,12 @@ if (typeof window.resetBoardNewImages === 'function') {
     }
 }
 function showBoardList() {
+        document
+        .querySelectorAll('#board-detail video')
+        .forEach(function (video) {
+            video.pause();
+            video.currentTime = 0;
+        });
     const list = document.getElementById('board-list');
     const detail = document.getElementById('board-detail');
     const form = document.getElementById('board-write-form');
@@ -9017,6 +9482,12 @@ if (adminTouchTarget) {
 }
 
     function switchCategory(catId, btnEl) {
+            document
+        .querySelectorAll('video')
+        .forEach(function (video) {
+            video.pause();
+            video.currentTime = 0;
+        });
         document.querySelectorAll('.category-sec').forEach(sec => sec.classList.remove('active'));
         document.getElementById(catId).classList.add('active');
         if (btnEl) {
