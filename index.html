@@ -8345,6 +8345,7 @@ if (!data?.url) {
                 video.controls = true;
 
                 video.playsInline = true;
+                video.draggable = true;
 
                 video.setAttribute(
                     'controls',
@@ -8438,7 +8439,7 @@ window.enableBoardVideoEditing = function (editor) {
     editor
         .querySelectorAll('video')
         .forEach(function (video) {
-
+            video.draggable = true;
             video.dataset.boardVideoReady = 'true';
 
         });
