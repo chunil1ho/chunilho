@@ -4306,6 +4306,10 @@ padding: 0 14px;
         margin: 0 !important;
     }
 }
+    #cat-board #board-editor-content video.board-video-selected {
+    outline: 3px solid #3b82f6 !important;
+    outline-offset: 3px !important;
+}
     </style>
 </head>
 <body id="mainBody">
@@ -5994,7 +5998,70 @@ editor.addEventListener('click', function (e) {
         selectedBoardImage
     );
 });
+/* =========================================
+   본문 동영상 선택 / 삭제
+   ========================================= */
 
+let selectedBoardVideo = null;
+
+editor.addEventListener('click', function (e) {
+
+    const target = e.target;
+
+    /* 동영상이 아니면 종료 */
+    if (
+        target.tagName !== 'VIDEO' ||
+        !editor.contains(target)
+    ) {
+        return;
+    }
+
+    e.preventDefault();
+
+    /* 기존 동영상 선택 해제 */
+    editor
+        .querySelectorAll('.board-video-selected')
+        .forEach(function (video) {
+            video.classList.remove(
+                'board-video-selected'
+            );
+        });
+
+    selectedBoardVideo = target;
+
+    selectedBoardVideo.classList.add(
+        'board-video-selected'
+    );
+});
+
+
+/* 동영상 Delete / Backspace 삭제 */
+editor.addEventListener('keydown', function (e) {
+
+    if (!selectedBoardVideo) {
+        return;
+    }
+
+    if (
+        e.key !== 'Delete' &&
+        e.key !== 'Backspace'
+    ) {
+        return;
+    }
+
+    if (!editor.contains(selectedBoardVideo)) {
+        selectedBoardVideo = null;
+        return;
+    }
+
+    e.preventDefault();
+
+    selectedBoardVideo.remove();
+
+    selectedBoardVideo = null;
+
+    syncBoardEditor();
+});
 
 /* 크기 조절 핸들 생성 */
 function createBoardImageResizeHandle(img) {
