@@ -8484,7 +8484,12 @@ if (!data?.url) {
 
                 video.playsInline = true;
                 video.draggable = true;
-
+            
+video.setAttribute(
+    'draggable',
+    'true'
+);
+            
                 video.setAttribute(
                     'controls',
                     ''
@@ -8577,15 +8582,22 @@ window.enableBoardVideoEditing = function (editor) {
 
     if (!editor) return;
 
-    editor
-        .querySelectorAll('video')
-        .forEach(function (video) {
-            video.draggable = true;
-            video.style.userSelect = 'none';
-            video.dataset.boardVideoReady = 'true';
+editor
+    .querySelectorAll('video')
+    .forEach(function (video) {
 
-        });
-};
+        video.draggable = true;
+
+        video.setAttribute(
+            'draggable',
+            'true'
+        );
+
+        video.style.userSelect = 'none';
+
+        video.dataset.boardVideoReady = 'true';
+
+    });
 })();
 
 initBoardEditor();
