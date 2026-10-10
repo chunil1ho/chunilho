@@ -6648,9 +6648,117 @@ editor.addEventListener(
     }
 );
 
+/* =========================================
+   본문 동영상 드래그 순서 변경
+   ========================================= */
+
+editor.addEventListener('dragstart', function (e) {
+
+    if (
+        e.target.tagName !== 'VIDEO' ||
+        !editor.contains(e.target)
+    ) {
+        return;
+    }
+
+    draggedBoardVideo = e.target;
+
+    e.dataTransfer.effectAllowed = 'move';
+
+    e.dataTransfer.setData(
+        'text/plain',
+        'board-video'
+    );
+
+    e.target.style.opacity = '0.5';
+});
+
+
+/* 동영상 위로 이동 */
+editor.addEventListener('dragover', function (e) {
+
+    if (!draggedBoardVideo) return;
+
+    const target = e.target;
+
+    if (
+        target.tagName !== 'VIDEO' &&
+        target.tagName !== 'IMG'
+    ) {
+        return;
+    }
+
+    if (target === draggedBoardVideo) {
+        return;
+    }
+
+    e.preventDefault();
+
+    e.dataTransfer.dropEffect = 'move';
+});
+
+
+/* 동영상 놓기 */
+editor.addEventListener('drop', function (e) {
+
+    if (!draggedBoardVideo) return;
+
+    const target = e.target;
+
+    if (
+        target.tagName !== 'VIDEO' &&
+        target.tagName !== 'IMG'
+    ) {
+        return;
+    }
+
+    if (target === draggedBoardVideo) {
+        return;
+    }
+
+    e.preventDefault();
+
+    const rect =
+        target.getBoundingClientRect();
+
+    const mouseX =
+        e.clientX - rect.left;
+
+    if (mouseX < rect.width / 2) {
+
+        target.parentNode.insertBefore(
+            draggedBoardVideo,
+            target
+        );
+
+    } else {
+
+        target.parentNode.insertBefore(
+            draggedBoardVideo,
+            target.nextSibling
+        );
+    }
+
+    draggedBoardVideo.style.opacity = '';
+
+    syncBoardEditor();
+});
+
+
+/* 동영상 드래그 종료 */
+editor.addEventListener('dragend', function () {
+
+    if (draggedBoardVideo) {
+        draggedBoardVideo.style.opacity = '';
+    }
+
+    draggedBoardVideo = null;
+
+    syncBoardEditor();
+});
 /* 화면 크기 변경 */
 window.addEventListener(
-    'resize',ㅁ
+    'resize',
     function () {
 
         if (selectedBoardVideo) {
