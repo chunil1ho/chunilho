@@ -64,132 +64,150 @@ if (method === "OPTIONS") {
         body: ""
     };
 }
-        // ========================================
-        // POST : 동영상 업로드
-        // ========================================
-        if (method === "POST") {
+// ========================================
+// POST : 동영상 청크 업로드
+// ========================================
+if (method === "POST") {
 
-            // 관리자 확인
-            if (!verifyAdmin(event)) {
-                return corsJson(401, {
-                    message: "관리자 로그인이 필요합니다."
-                });
+    // 관리자 확인
+    if (!verifyAdmin(event)) {
+        return corsJson(401, {
+            message: "관리자 로그인이 필요합니다."
+        });
+    }
+
+    const uploadId =
+        event.headers?.["x-upload-id"] ||
+        event.headers?.["X-Upload-Id"];
+
+    const chunkIndex =
+        event.headers?.["x-chunk-index"] ||
+        event.headers?.["X-Chunk-Index"];
+
+    const totalChunks =
+        event.headers?.["x-total-chunks"] ||
+        event.headers?.["X-Total-Chunks"];
+
+    const contentType =
+        event.headers?.["content-type"] ||
+        event.headers?.["Content-Type"] ||
+        "";
+
+    if (!uploadId) {
+        return corsJson(400, {
+            message: "업로드 ID가 없습니다."
+        });
+    }
+
+    if (
+        chunkIndex === undefined ||
+        totalChunks === undefined
+    ) {
+        return corsJson(400, {
+            message: "동영상 청크 정보가 없습니다."
+        });
+    }
+
+    if (!event.body) {
+        return corsJson(400, {
+            message: "동영상 데이터가 없습니다."
+        });
+    }
+
+    if (!contentType.startsWith("video/")) {
+        return corsJson(400, {
+            message: "동영상 파일만 업로드할 수 있습니다."
+        });
+    }
+
+    const allowedTypes = [
+        "video/mp4",
+        "video/webm",
+        "video/quicktime"
+    ];
+
+    if (!allowedTypes.includes(contentType)) {
+        return corsJson(400, {
+            message:
+                "MP4, WebM, MOV 형식의 동영상만 업로드할 수 있습니다."
+        });
+    }
+
+    const index =
+        Number(chunkIndex);
+
+    const count =
+        Number(totalChunks);
+
+    if (
+        !Number.isInteger(index) ||
+        !Number.isInteger(count) ||
+        index < 0 ||
+        count < 1 ||
+        index >= count
+    ) {
+        return corsJson(400, {
+            message: "잘못된 청크 정보입니다."
+        });
+    }
+
+    // 1GB 제한
+    const MAX_VIDEO_SIZE =
+        1 * 1024 * 1024 * 1024;
+
+    // 청크 데이터 변환
+    const buffer =
+        event.isBase64Encoded
+            ? Buffer.from(event.body, "base64")
+            : Buffer.from(event.body);
+
+    // 청크 자체는 4MB 이하
+    if (
+        buffer.length >
+        4 * 1024 * 1024
+    ) {
+        return corsJson(413, {
+            message:
+                "동영상 청크가 너무 큽니다."
+        });
+    }
+
+    // 업로드 ID에 사용할 수 없는 문자 제거
+    const safeUploadId =
+        uploadId.replace(
+            /[^a-zA-Z0-9_-]/g,
+            ""
+        );
+
+    if (!safeUploadId) {
+        return corsJson(400, {
+            message: "잘못된 업로드 ID입니다."
+        });
+    }
+
+    // 청크 저장
+    const chunkKey =
+        safeUploadId +
+        "/chunk-" +
+        String(index).padStart(6, "0");
+
+    await videoStore.set(
+        chunkKey,
+        buffer,
+        {
+            metadata: {
+                contentType: contentType
             }
-
-            if (!event.body) {
-                return corsJson(400, {
-                    message: "동영상 파일이 없습니다."
-                });
-            }
-
-
-            // 동영상 크기 제한
-            const estimatedSize =
-                event.isBase64Encoded
-                    ? Math.floor(event.body.length * 0.75)
-                    : event.body.length;
-
-            if (estimatedSize > 4 * 1024 * 1024) {
-                return corsJson(413, {
-                    message: "동영상은 4MB 이하만 업로드할 수 있습니다."
-                });
-            }
-
-
-            // Content-Type 확인
-            const contentType =
-                event.headers?.["content-type"] ||
-                event.headers?.["Content-Type"] ||
-                "";
-
-
-            if (!contentType.startsWith("video/")) {
-                return corsJson(400, {
-                    message: "동영상 파일만 업로드할 수 있습니다."
-                });
-            }
-
-
-            // 허용 형식
-            const allowedTypes = [
-                "video/mp4",
-                "video/webm",
-                "video/quicktime"
-            ];
-
-            if (!allowedTypes.includes(contentType)) {
-                return corsJson(400, {
-                    message:
-                        "MP4, WebM, MOV 형식의 동영상만 업로드할 수 있습니다."
-                });
-            }
-
-
-            // 파일 데이터 변환
-            const buffer = event.isBase64Encoded
-                ? Buffer.from(event.body, "base64")
-                : Buffer.from(event.body);
-
-
-            // 고유 파일명
-            const extension =
-                contentType === "video/mp4"
-                    ? "mp4"
-                    : contentType === "video/webm"
-                        ? "webm"
-                        : "mov";
-
-            const key =
-                "video-" +
-                Date.now() +
-                "-" +
-                Math.random().toString(36).slice(2) +
-                "." +
-                extension;
-
-
-            // Netlify Blobs 저장
-            await videoStore.set(
-                key,
-                buffer,
-                {
-                    metadata: {
-                        contentType: contentType
-                    }
-                }
-            );
-
-
-            // 재생 주소
-            const videoUrl =
-                "/api/board-video?key=" +
-                encodeURIComponent(key);
-
-
-return {
-    statusCode: 200,
-
-    headers: {
-        "Content-Type":
-            "application/json",
-
-        "Access-Control-Allow-Origin":
-            "https://www.chunilho.com",
-
-        "Access-Control-Allow-Methods":
-            "GET, POST, OPTIONS",
-
-        "Access-Control-Allow-Headers":
-            "Content-Type, Authorization"
-    },
-
-    body: JSON.stringify({
-        success: true,
-        url: videoUrl,
-        key: key
-    })
-};
         }
+    );
+
+    return corsJson(200, {
+        success: true,
+        uploadId: safeUploadId,
+        chunkIndex: index,
+        totalChunks: count
+    });
+}
 
 
 // ========================================
