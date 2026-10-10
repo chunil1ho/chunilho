@@ -7575,7 +7575,7 @@ if (inlineVideoButton && inlineVideoInput) {
     inlineVideoInput.addEventListener(
         'change',
         async function () {
-
+        try {
             const file = this.files?.[0];
 
             if (!file) return;
