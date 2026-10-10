@@ -6071,16 +6071,21 @@ let videoResizeStartHeight = 0;
 editor.addEventListener('click', function (e) {
 
     const target = e.target;
-
+    
+/* 다른 곳을 클릭하면 동영상 선택 해제 */
+if (
+    selectedBoardVideo &&
+    target !== selectedBoardVideo &&
+    target !== videoResizeHandle
+) {
+    removeBoardVideoResize();
+}
     if (
         target.tagName !== 'VIDEO' ||
         !editor.contains(target)
     ) {
         return;
     }
-
-    e.preventDefault();
-    e.stopPropagation();
 
     removeBoardVideoResize();
 
@@ -8319,39 +8324,8 @@ window.enableBoardVideoEditing = function (editor) {
         .querySelectorAll('video')
         .forEach(function (video) {
 
-            if (video.dataset.boardVideoReady === 'true') {
-                return;
-            }
-
             video.dataset.boardVideoReady = 'true';
 
-            video.addEventListener('click', function (e) {
-
-                e.preventDefault();
-                e.stopPropagation();
-
-                removeBoardVideoResize();
-
-                selectedBoardVideo = video;
-
-                editor
-                    .querySelectorAll(
-                        'video.board-video-selected'
-                    )
-                    .forEach(function (item) {
-
-                        item.classList.remove(
-                            'board-video-selected'
-                        );
-
-                    });
-
-                video.classList.add(
-                    'board-video-selected'
-                );
-
-                createBoardVideoResizeHandle(video);
-            });
         });
 };
 })();
