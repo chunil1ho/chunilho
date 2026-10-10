@@ -6060,6 +6060,7 @@ editor.addEventListener('click', function (e) {
    ========================================= */
 
 let selectedBoardVideo = null;
+let draggedBoardVideo = null;    
 let videoResizeHandle = null;
 
 let videoResizeStartX = 0;
@@ -6443,7 +6444,121 @@ function stopBoardVideoResizeTouch() {
     syncBoardEditor();
 }
 
+/* 동영상 드래그 시작 */
+editor.addEventListener('dragstart', function (e) {
 
+    const target = e.target;
+
+    if (
+        target.tagName !== 'VIDEO' ||
+        !editor.contains(target)
+    ) {
+        return;
+    }
+
+    /* 크기 조절점에서는 이동하지 않음 */
+    if (
+        videoResizeHandle &&
+        e.target === videoResizeHandle
+    ) {
+        return;
+    }
+
+    draggedBoardVideo = target;
+
+    e.dataTransfer.effectAllowed = 'move';
+
+    e.dataTransfer.setData(
+        'text/plain',
+        'board-video'
+    );
+
+    target.style.opacity = '0.5';
+});
+    
+/* 동영상 위로 이동 */
+editor.addEventListener('dragover', function (e) {
+
+    if (!draggedBoardVideo) return;
+
+    const target = e.target;
+
+    if (
+        (
+            target.tagName !== 'VIDEO' &&
+            target.tagName !== 'IMG'
+        ) ||
+        target === draggedBoardVideo
+    ) {
+        return;
+    }
+
+    e.preventDefault();
+
+    e.dataTransfer.dropEffect = 'move';
+});    
+    
+ /* 동영상 놓기 */
+editor.addEventListener('drop', function (e) {
+
+    if (!draggedBoardVideo) return;
+
+    const target = e.target;
+
+    if (
+        (
+            target.tagName !== 'VIDEO' &&
+            target.tagName !== 'IMG'
+        ) ||
+        target === draggedBoardVideo
+    ) {
+        return;
+    }
+
+    e.preventDefault();
+
+    const rect =
+        target.getBoundingClientRect();
+
+    const mouseX =
+        e.clientX - rect.left;
+
+    /*
+     * 왼쪽에 놓으면 앞쪽
+     * 오른쪽에 놓으면 뒤쪽
+     */
+    if (mouseX < rect.width / 2) {
+
+        target.parentNode.insertBefore(
+            draggedBoardVideo,
+            target
+        );
+
+    } else {
+
+        target.parentNode.insertBefore(
+            draggedBoardVideo,
+            target.nextSibling
+        );
+    }
+
+    draggedBoardVideo.style.opacity = '';
+
+    syncBoardEditor();
+}); 
+    
+/* 동영상 드래그 종료 */
+editor.addEventListener('dragend', function () {
+
+    if (draggedBoardVideo) {
+        draggedBoardVideo.style.opacity = '';
+    }
+
+    draggedBoardVideo = null;
+
+    syncBoardEditor();
+});
+    
 /* 동영상 선택 해제 */
 function removeBoardVideoResize() {
 
@@ -6513,6 +6628,7 @@ window.addEventListener(
         }
     }
 );
+    
 /* 크기 조절 핸들 생성 */
 function createBoardImageResizeHandle(img) {
 
