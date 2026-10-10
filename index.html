@@ -8311,12 +8311,63 @@ if (!data?.url) {
  * 게시판 작성폼이 열릴 때마다 에디터 초기화
  */
 window.initBoardEditor = initBoardEditor;
+window.enableBoardVideoEditing = function (editor) {
 
+    if (!editor) return;
+
+    editor
+        .querySelectorAll('video')
+        .forEach(function (video) {
+
+            if (video.dataset.boardVideoReady === 'true') {
+                return;
+            }
+
+            video.dataset.boardVideoReady = 'true';
+
+            video.addEventListener('click', function (e) {
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                removeBoardVideoResize();
+
+                selectedBoardVideo = video;
+
+                editor
+                    .querySelectorAll(
+                        'video.board-video-selected'
+                    )
+                    .forEach(function (item) {
+
+                        item.classList.remove(
+                            'board-video-selected'
+                        );
+
+                    });
+
+                video.classList.add(
+                    'board-video-selected'
+                );
+
+                createBoardVideoResizeHandle(video);
+            });
+        });
+};
 })();
 
 initBoardEditor();
     
 async function editBoardPost(postId) {
+    
+    /* 게시글 수정으로 들어가면 모든 동영상 정지 */
+    document
+        .querySelectorAll('video')
+        .forEach(function (video) {
+            video.pause();
+            video.currentTime = 0;
+        });
+
     const list = document.getElementById('board-list');
     const detail = document.getElementById('board-detail');
     const form = document.getElementById('board-write-form');
@@ -8353,6 +8404,10 @@ const editorContent =
 
 if (editorContent) {
     editorContent.innerHTML = post.content || '';
+
+    if (typeof window.enableBoardVideoEditing === 'function') {
+        window.enableBoardVideoEditing(editorContent);
+    }
 }
 
 if (typeof initBoardEditor === 'function') {
@@ -8973,6 +9028,10 @@ console.log('삭제할 게시글 ID:', postId);
     }
 }
     document.getElementById('board-save-btn')?.addEventListener('click', async () => {
+        
+            /* 저장 직전에 에디터 내용을 다시 동기화 */
+    syncBoardEditor();
+        
 const titleInput =
     document.getElementById('board-title');
 
@@ -9477,7 +9536,8 @@ if (adminTouchTarget) {
             video.pause();
             video.currentTime = 0;
         });
-
+    const list = document.getElementById('board-list');
+        
         document.querySelectorAll('.category-sec').forEach(sec => sec.classList.remove('active'));
         document.getElementById(catId).classList.add('active');
         if (btnEl) {
