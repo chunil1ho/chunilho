@@ -3754,9 +3754,30 @@ padding: 0 14px;
 }
     /* 상세페이지 동영상 */
 #cat-board #board-detail-content .board-detail-body video {
-    display: block !important;
+    display: inline-block !important;
+    vertical-align: top !important;
+    box-sizing: border-box !important;
     max-width: 100% !important;
-    margin: 10px 0 !important;
+    margin: 10px 6px 10px 0 !important;
+}
+    /* =========================================
+   조황게시판 본문 사진 + 동영상 가로 배치
+   ========================================= */
+
+#cat-board #board-editor-content {
+    line-height: 0 !important;
+}
+
+#cat-board #board-editor-content img,
+#cat-board #board-editor-content video {
+    display: inline-block !important;
+    vertical-align: top !important;
+    box-sizing: border-box !important;
+}
+
+#cat-board #board-editor-content video {
+    margin: 10px 6px 10px 0 !important;
+    max-width: 100% !important;
 }
     /* =========================================
    조황게시판 상세페이지 목록으로 버튼
@@ -5939,12 +5960,16 @@ editor.addEventListener('dragover', function (e) {
 
     const target = e.target;
 
-    if (
-        target.tagName !== 'IMG' ||
-        target === draggedBoardImage
-    ) {
-        return;
-    }
+if (
+    target.tagName !== 'IMG' &&
+    target.tagName !== 'VIDEO'
+) {
+    return;
+}
+
+if (target === draggedBoardImage) {
+    return;
+}
 
     e.preventDefault();
 
@@ -5959,12 +5984,16 @@ editor.addEventListener('drop', function (e) {
 
     const target = e.target;
 
-    if (
-        target.tagName !== 'IMG' ||
-        target === draggedBoardImage
-    ) {
-        return;
-    }
+if (
+    target.tagName !== 'IMG' &&
+    target.tagName !== 'VIDEO'
+) {
+    return;
+}
+
+if (target === draggedBoardImage) {
+    return;
+}
 
     e.preventDefault();
 
@@ -5973,7 +6002,8 @@ editor.addEventListener('drop', function (e) {
 
     const mouseX =
         e.clientX - rect.left;
-
+const insertBefore =
+    mouseX < rect.width / 2;
     /*
      * 사진의 왼쪽에 놓으면 앞쪽
      * 오른쪽에 놓으면 뒤쪽
@@ -6618,7 +6648,114 @@ editor.addEventListener(
     }
 );
 
+/* =========================================
+   본문 동영상 드래그 순서 변경
+   ========================================= */
 
+editor.addEventListener('dragstart', function (e) {
+
+    if (
+        e.target.tagName !== 'VIDEO' ||
+        !editor.contains(e.target)
+    ) {
+        return;
+    }
+
+    draggedBoardVideo = e.target;
+
+    e.dataTransfer.effectAllowed = 'move';
+
+    e.dataTransfer.setData(
+        'text/plain',
+        'board-video'
+    );
+
+    e.target.style.opacity = '0.5';
+});
+
+
+/* 동영상 위로 이동 */
+editor.addEventListener('dragover', function (e) {
+
+    if (!draggedBoardVideo) return;
+
+    const target = e.target;
+
+    if (
+        target.tagName !== 'VIDEO' &&
+        target.tagName !== 'IMG'
+    ) {
+        return;
+    }
+
+    if (target === draggedBoardVideo) {
+        return;
+    }
+
+    e.preventDefault();
+
+    e.dataTransfer.dropEffect = 'move';
+});
+
+
+/* 동영상 놓기 */
+editor.addEventListener('drop', function (e) {
+
+    if (!draggedBoardVideo) return;
+
+    const target = e.target;
+
+    if (
+        target.tagName !== 'VIDEO' &&
+        target.tagName !== 'IMG'
+    ) {
+        return;
+    }
+
+    if (target === draggedBoardVideo) {
+        return;
+    }
+
+    e.preventDefault();
+
+    const rect =
+        target.getBoundingClientRect();
+
+    const mouseX =
+        e.clientX - rect.left;
+
+    if (mouseX < rect.width / 2) {
+
+        target.parentNode.insertBefore(
+            draggedBoardVideo,
+            target
+        );
+
+    } else {
+
+        target.parentNode.insertBefore(
+            draggedBoardVideo,
+            target.nextSibling
+        );
+    }
+
+    draggedBoardVideo.style.opacity = '';
+
+    syncBoardEditor();
+});
+
+
+/* 동영상 드래그 종료 */
+editor.addEventListener('dragend', function () {
+
+    if (draggedBoardVideo) {
+        draggedBoardVideo.style.opacity = '';
+    }
+
+    draggedBoardVideo = null;
+
+    syncBoardEditor();
+});
 /* 화면 크기 변경 */
 window.addEventListener(
     'resize',
@@ -8441,6 +8578,7 @@ window.enableBoardVideoEditing = function (editor) {
         .querySelectorAll('video')
         .forEach(function (video) {
             video.draggable = true;
+            video.style.userSelect = 'none';
             video.dataset.boardVideoReady = 'true';
 
         });
