@@ -6498,7 +6498,7 @@ editor.addEventListener('dragover', function (e) {
     e.dataTransfer.dropEffect = 'move';
 });    
     
- /* 동영상 놓기 */
+/* 동영상 놓기 */
 editor.addEventListener('drop', function (e) {
 
     if (!draggedBoardVideo) return;
@@ -6506,12 +6506,13 @@ editor.addEventListener('drop', function (e) {
     const target = e.target;
 
     if (
-        (
-            target.tagName !== 'VIDEO' &&
-            target.tagName !== 'IMG'
-        ) ||
-        target === draggedBoardVideo
+        target.tagName !== 'VIDEO' &&
+        target.tagName !== 'IMG'
     ) {
+        return;
+    }
+
+    if (target === draggedBoardVideo) {
         return;
     }
 
@@ -6523,10 +6524,7 @@ editor.addEventListener('drop', function (e) {
     const mouseX =
         e.clientX - rect.left;
 
-    /*
-     * 왼쪽에 놓으면 앞쪽
-     * 오른쪽에 놓으면 뒤쪽
-     */
+    /* 왼쪽 절반 → 대상 앞 */
     if (mouseX < rect.width / 2) {
 
         target.parentNode.insertBefore(
@@ -6534,7 +6532,10 @@ editor.addEventListener('drop', function (e) {
             target
         );
 
-    } else {
+    }
+
+    /* 오른쪽 절반 → 대상 뒤 */
+    else {
 
         target.parentNode.insertBefore(
             draggedBoardVideo,
@@ -6545,7 +6546,7 @@ editor.addEventListener('drop', function (e) {
     draggedBoardVideo.style.opacity = '';
 
     syncBoardEditor();
-}); 
+});
     
 /* 동영상 드래그 종료 */
 editor.addEventListener('dragend', function () {
