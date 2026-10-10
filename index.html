@@ -4342,27 +4342,7 @@ padding: 0 14px;
         margin: 0 !important;
     }
 }
-    #cat-board #board-editor-content video.board-video-selected {
-    outline: 3px solid #3b82f6 !important;
-    outline-offset: 3px !important;
-}
-    #cat-board #board-editor-content video.board-video-selected {
-    outline: 3px solid #3b82f6 !important;
-    outline-offset: 3px !important;
-}
 
-#cat-board #board-editor-content .board-video-resize-handle {
-    position: absolute !important;
-    width: 14px !important;
-    height: 14px !important;
-    background: #3b82f6 !important;
-    border: 2px solid #fff !important;
-    border-radius: 50% !important;
-    cursor: nwse-resize !important;
-    z-index: 9999 !important;
-    box-sizing: border-box !important;
-    touch-action: none !important;
-}
     </style>
 </head>
 <body id="mainBody">
@@ -8539,6 +8519,7 @@ function showBoardList() {
             video.pause();
             video.currentTime = 0;
         });
+    
     const list = document.getElementById('board-list');
     const detail = document.getElementById('board-detail');
     const form = document.getElementById('board-write-form');
@@ -9496,12 +9477,7 @@ if (adminTouchTarget) {
             video.pause();
             video.currentTime = 0;
         });
-            document
-        .querySelectorAll('video')
-        .forEach(function (video) {
-            video.pause();
-            video.currentTime = 0;
-        });
+
         document.querySelectorAll('.category-sec').forEach(sec => sec.classList.remove('active'));
         document.getElementById(catId).classList.add('active');
         if (btnEl) {
