@@ -3752,6 +3752,12 @@ padding: 0 14px;
     box-sizing: border-box !important;
     max-width: 100% !important;
 }
+    /* 상세페이지 동영상 */
+#cat-board #board-detail-content .board-detail-body video {
+    display: block !important;
+    max-width: 100% !important;
+    margin: 10px 0 !important;
+}
     /* =========================================
    조황게시판 상세페이지 목록으로 버튼
    ========================================= */
@@ -8526,7 +8532,8 @@ if (typeof window.resetBoardNewImages === 'function') {
     }
 }
 function showBoardList() {
-        document
+    /* 목록으로 돌아가면 동영상 정지 */
+    document
         .querySelectorAll('#board-detail video')
         .forEach(function (video) {
             video.pause();
@@ -9482,6 +9489,13 @@ if (adminTouchTarget) {
 }
 
     function switchCategory(catId, btnEl) {
+            /* 다른 메뉴로 이동하면 모든 동영상 정지 */
+    document
+        .querySelectorAll('video')
+        .forEach(function (video) {
+            video.pause();
+            video.currentTime = 0;
+        });
             document
         .querySelectorAll('video')
         .forEach(function (video) {
