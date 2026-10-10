@@ -214,7 +214,16 @@ if (
         safeUploadId +
         "/chunk-" +
         String(index).padStart(6, "0");
-
+    
+await videoStore.set(
+    chunkKey,
+    buffer,
+    {
+        metadata: {
+            contentType: contentType
+        }
+    }
+);
 /* ========================================
    마지막 청크 → 업로드 완료 처리
    ======================================== */
@@ -587,187 +596,6 @@ if (method === "GET") {
     };
 }
 
-    // ========================================
-    // Range 요청 확인
-    // ========================================
-
-    const rangeHeader =
-        event.headers?.range ||
-        event.headers?.Range;
-
-
-    // ========================================
-    // Range 없이 전체 동영상 요청
-    // ========================================
-
-    if (!rangeHeader) {
-
-        return {
-
-            statusCode: 200,
-
-            headers: {
-                "Content-Type": contentType,
-                "Content-Length":
-                    String(totalSize),
-
-                "Cache-Control":
-                    "public, max-age=31536000",
-
-                "Access-Control-Allow-Origin":
-                    "https://www.chunilho.com",
-
-                "Accept-Ranges":
-                    "bytes"
-            },
-
-            isBase64Encoded: true,
-
-            body:
-                buffer.toString("base64")
-        };
-    }
-
-
-    // ========================================
-    // Range 파싱
-    // ========================================
-
-    const match =
-        rangeHeader.match(
-            /bytes=(\d*)-(\d*)/
-        );
-
-
-    if (!match) {
-
-        return {
-
-            statusCode: 416,
-
-            headers: {
-                "Content-Range":
-                    `bytes */${totalSize}`,
-
-                "Access-Control-Allow-Origin":
-                    "https://www.chunilho.com"
-            },
-
-            body: ""
-        };
-    }
-
-
-    let start =
-        match[1] === ""
-            ? 0
-            : Number(match[1]);
-
-
-    let end =
-        match[2] === ""
-            ? totalSize - 1
-            : Number(match[2]);
-
-
-    // ========================================
-    // 끝에서부터 요청하는 Range
-    // 예: bytes=-500000
-    // ========================================
-
-    if (match[1] === "") {
-
-        const requestedLength =
-            Number(match[2]);
-
-        start =
-            Math.max(
-                totalSize - requestedLength,
-                0
-            );
-
-        end =
-            totalSize - 1;
-    }
-
-
-    // ========================================
-    // 잘못된 Range
-    // ========================================
-
-    if (
-        start < 0 ||
-        start >= totalSize ||
-        start > end
-    ) {
-
-        return {
-
-            statusCode: 416,
-
-            headers: {
-                "Content-Range":
-                    `bytes */${totalSize}`,
-
-                "Access-Control-Allow-Origin":
-                    "https://www.chunilho.com"
-            },
-
-            body: ""
-        };
-    }
-
-
-    end =
-        Math.min(
-            end,
-            totalSize - 1
-        );
-
-
-    const chunk =
-        buffer.subarray(
-            start,
-            end + 1
-        );
-
-
-    // ========================================
-    // 206 Partial Content
-    // ========================================
-
-    return {
-
-        statusCode: 206,
-
-        headers: {
-
-            "Content-Type":
-                contentType,
-
-            "Content-Length":
-                String(chunk.length),
-
-            "Content-Range":
-                `bytes ${start}-${end}/${totalSize}`,
-
-            "Accept-Ranges":
-                "bytes",
-
-            "Cache-Control":
-                "public, max-age=31536000",
-
-            "Access-Control-Allow-Origin":
-                "https://www.chunilho.com"
-        },
-
-        isBase64Encoded: true,
-
-        body:
-            chunk.toString("base64")
-    };
-}
-
         // ========================================
         // 지원하지 않는 요청
         // ========================================
@@ -776,7 +604,8 @@ if (method === "GET") {
         });
 
 
-} catch (error) {
+}
+catch (error) {
 
     console.error(
         "Board Video Error:",
