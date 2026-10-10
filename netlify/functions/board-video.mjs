@@ -88,6 +88,10 @@ if (method === "POST") {
         event.headers?.["x-total-chunks"] ||
         event.headers?.["X-Total-Chunks"];
 
+    const fileSize =
+    event.headers?.["x-file-size"] ||
+    event.headers?.["X-File-Size"];
+    
     const contentType =
         event.headers?.["content-type"] ||
         event.headers?.["Content-Type"] ||
@@ -107,7 +111,27 @@ if (method === "POST") {
             message: "동영상 청크 정보가 없습니다."
         });
     }
+const totalFileSize =
+    Number(fileSize);
 
+if (
+    !Number.isSafeInteger(totalFileSize) ||
+    totalFileSize <= 0
+) {
+    return corsJson(400, {
+        message: "동영상 파일 크기 정보가 없습니다."
+    });
+}
+
+if (
+    totalFileSize >
+    1 * 1024 * 1024 * 1024
+) {
+    return corsJson(413, {
+        message:
+            "동영상은 1GB 이하만 업로드할 수 있습니다."
+    });
+}
     if (!event.body) {
         return corsJson(400, {
             message: "동영상 데이터가 없습니다."
@@ -191,22 +215,78 @@ if (method === "POST") {
         "/chunk-" +
         String(index).padStart(6, "0");
 
-    await videoStore.set(
-        chunkKey,
-        buffer,
+/* ========================================
+   마지막 청크 → 업로드 완료 처리
+   ======================================== */
+
+if (index === count - 1) {
+
+    const { blobs } =
+        await videoStore.list({
+            prefix:
+                safeUploadId + "/chunk-"
+        });
+
+    if (blobs.length !== count) {
+
+        return corsJson(409, {
+            message:
+                "아직 모든 동영상 조각이 업로드되지 않았습니다."
+        });
+    }
+
+    const extension =
+        contentType === "video/mp4"
+            ? "mp4"
+            : contentType === "video/webm"
+                ? "webm"
+                : "mov";
+
+    const manifestKey =
+        safeUploadId +
+        "/manifest.json";
+
+    await videoStore.setJSON(
+        manifestKey,
+        {
+            uploadId: safeUploadId,
+            totalSize: totalFileSize,
+            totalChunks: count,
+            contentType: contentType,
+            extension: extension
+        },
         {
             metadata: {
-                contentType: contentType
+                contentType:
+                    "application/json"
             }
         }
     );
 
+    const videoUrl =
+        "/api/board-video?key=" +
+        encodeURIComponent(
+            safeUploadId
+        );
+
     return corsJson(200, {
         success: true,
-        uploadId: safeUploadId,
-        chunkIndex: index,
-        totalChunks: count
+        complete: true,
+        url: videoUrl,
+        key: safeUploadId
     });
+}
+
+
+/* 아직 업로드 중 */
+
+return corsJson(200, {
+    success: true,
+    complete: false,
+    uploadId: safeUploadId,
+    chunkIndex: index,
+    totalChunks: count
+});
 }
 
 
@@ -224,36 +304,288 @@ if (method === "GET") {
         });
     }
 
+    const safeKey =
+        key.replace(
+            /[^a-zA-Z0-9_-]/g,
+            ""
+        );
 
-    const result =
-        await videoStore.get(key, {
-            type: "arrayBuffer"
-        });
-
-
-    if (!result) {
-        return corsJson(404, {
-            message: "동영상을 찾을 수 없습니다."
+    if (!safeKey) {
+        return corsJson(400, {
+            message: "잘못된 동영상 키입니다."
         });
     }
 
+    // ========================================
+    // manifest 가져오기
+    // ========================================
 
-    const buffer =
-        Buffer.from(result);
+    const manifestKey =
+        safeKey + "/manifest.json";
+
+    const manifest =
+        await videoStore.get(
+            manifestKey,
+            {
+                type: "json"
+            }
+        );
+
+    if (!manifest) {
+        return corsJson(404, {
+            message:
+                "동영상 정보를 찾을 수 없습니다."
+        });
+    }
 
     const totalSize =
-        buffer.length;
+        Number(manifest.totalSize);
 
-
-    const metadata =
-        await videoStore.getMetadata(key);
-
+    const totalChunks =
+        Number(manifest.totalChunks);
 
     const contentType =
-        metadata?.metadata?.contentType ||
-        metadata?.contentType ||
+        manifest.contentType ||
         "video/mp4";
 
+    if (
+        !Number.isSafeInteger(totalSize) ||
+        !Number.isInteger(totalChunks) ||
+        totalSize <= 0 ||
+        totalChunks < 1
+    ) {
+        return corsJson(500, {
+            message:
+                "동영상 정보가 올바르지 않습니다."
+        });
+    }
+
+    // ========================================
+    // Range 확인
+    // ========================================
+
+    const rangeHeader =
+        event.headers?.range ||
+        event.headers?.Range;
+
+    let start = 0;
+    let end =
+        Math.min(
+            totalSize - 1,
+            (4 * 1024 * 1024) - 1
+        );
+
+    if (rangeHeader) {
+
+        const match =
+            rangeHeader.match(
+                /bytes=(\d*)-(\d*)/
+            );
+
+        if (!match) {
+            return {
+                statusCode: 416,
+                headers: {
+                    "Content-Range":
+                        "bytes */" +
+                        totalSize,
+                    ...CORS_HEADERS
+                },
+                body: ""
+            };
+        }
+
+        const rangeStart =
+            match[1] !== ""
+                ? Number(match[1])
+                : null;
+
+        const rangeEnd =
+            match[2] !== ""
+                ? Number(match[2])
+                : null;
+
+        // bytes=-500000
+        if (rangeStart === null) {
+
+            const suffixLength =
+                Math.min(
+                    Number(rangeEnd),
+                    4 * 1024 * 1024
+                );
+
+            start =
+                Math.max(
+                    0,
+                    totalSize - suffixLength
+                );
+
+            end =
+                totalSize - 1;
+
+        } else {
+
+            start =
+                rangeStart;
+
+            if (
+                rangeEnd !== null
+            ) {
+                end =
+                    Math.min(
+                        rangeEnd,
+                        start +
+                        (4 * 1024 * 1024) - 1
+                    );
+            } else {
+                end =
+                    Math.min(
+                        totalSize - 1,
+                        start +
+                        (4 * 1024 * 1024) - 1
+                    );
+            }
+        }
+    }
+
+    // ========================================
+    // 범위 확인
+    // ========================================
+
+    if (
+        start < 0 ||
+        start >= totalSize ||
+        end < start
+    ) {
+        return {
+            statusCode: 416,
+            headers: {
+                "Content-Range":
+                    "bytes */" +
+                    totalSize,
+                ...CORS_HEADERS
+            },
+            body: ""
+        };
+    }
+
+    end =
+        Math.min(
+            end,
+            totalSize - 1
+        );
+
+    const contentLength =
+        end - start + 1;
+
+    // ========================================
+    // 필요한 청크 계산
+    // ========================================
+
+    const CHUNK_SIZE =
+        4 * 1024 * 1024;
+
+    const firstChunk =
+        Math.floor(
+            start / CHUNK_SIZE
+        );
+
+    const lastChunk =
+        Math.floor(
+            end / CHUNK_SIZE
+        );
+
+    const buffers = [];
+
+    for (
+        let i = firstChunk;
+        i <= lastChunk;
+        i++
+    ) {
+
+        const chunkKey =
+            safeKey +
+            "/chunk-" +
+            String(i).padStart(6, "0");
+
+        const chunk =
+            await videoStore.get(
+                chunkKey,
+                {
+                    type: "arrayBuffer"
+                }
+            );
+
+        if (!chunk) {
+            return corsJson(404, {
+                message:
+                    "동영상 데이터가 손상되었거나 누락되었습니다."
+            });
+        }
+
+        buffers.push(
+            Buffer.from(chunk)
+        );
+    }
+
+    // ========================================
+    // 필요한 부분만 잘라내기
+    // ========================================
+
+    const combined =
+        Buffer.concat(buffers);
+
+    const offset =
+        start -
+        firstChunk * CHUNK_SIZE;
+
+    const bodyBuffer =
+        combined.slice(
+            offset,
+            offset + contentLength
+        );
+
+    // ========================================
+    // 동영상 응답
+    // ========================================
+
+    return {
+        statusCode:
+            rangeHeader ? 206 : 200,
+
+        headers: {
+            "Content-Type":
+                contentType,
+
+            "Content-Length":
+                String(bodyBuffer.length),
+
+            "Accept-Ranges":
+                "bytes",
+
+            "Content-Range":
+                "bytes " +
+                start +
+                "-" +
+                end +
+                "/" +
+                totalSize,
+
+            "Cache-Control":
+                "public, max-age=31536000",
+
+            ...CORS_HEADERS
+        },
+
+        isBase64Encoded:
+            true,
+
+        body:
+            bodyBuffer.toString(
+                "base64"
+            )
+    };
+}
 
     // ========================================
     // Range 요청 확인
