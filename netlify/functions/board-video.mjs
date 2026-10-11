@@ -559,8 +559,7 @@ if (method === "GET") {
     // ========================================
 
     return {
-        statusCode:
-            rangeHeader ? 206 : 200,
+        statusCode: 206,
 
         headers: {
             "Content-Type":
@@ -572,17 +571,13 @@ if (method === "GET") {
             "Accept-Ranges":
                 "bytes",
 
-...(rangeHeader
-    ? {
-        "Content-Range":
-            "bytes " +
-            start +
-            "-" +
-            end +
-            "/" +
-            totalSize
-    }
-    : {}),
+"Content-Range":
+    "bytes " +
+    start +
+    "-" +
+    end +
+    "/" +
+    totalSize,
 
             "Cache-Control":
                 "public, max-age=31536000",
