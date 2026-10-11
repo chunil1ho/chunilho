@@ -9172,7 +9172,9 @@ return `
      style="cursor:pointer;">
 
 <img
-    src="${image}${image.includes('?') ? '&' : '?'}v=${Date.now()}"
+    src="${image.startsWith('data:')
+        ? image
+        : image + (image.includes('?') ? '&' : '?') + 'v=' + Date.now()}"
     alt="${title}"
     onerror="this.src='image/logo.png'"
 >
