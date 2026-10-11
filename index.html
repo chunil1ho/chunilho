@@ -8795,10 +8795,8 @@ form.style.display = 'block';
         }
 
         // 기존 사진을 수정할 때 사용할 배열
-        window.editingBoardImages = Array.isArray(post.images)
-            ? [...post.images]
-            : [];
-
+       window.editingBoardImages = [];
+        
         // 기존 사진 표시
         if (preview && window.editingBoardImages.length > 0) {
 
@@ -9394,9 +9392,7 @@ const imageFiles = imageInput?.files
     ? Array.from(imageInput.files)
     : [];
 
-const existingImages = window.editingBoardPostId
-    ? [...(window.editingBoardImages || [])]
-    : [];
+const images = [];
         
 
     if (!title) {
