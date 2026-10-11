@@ -72,10 +72,16 @@ if (method === "GET") {
     });
   }
 
-  // 기존 조황게시판은 기존 데이터 그대로 사용
-  return json(200, {
-    posts: allPosts
-  });
+// 일반 조황게시판 목록에서는 필요한 정보만 전송
+const listPosts = allPosts.map(post => ({
+  id: post.id,
+  title: post.title,
+  createdAt: post.createdAt
+}));
+
+return json(200, {
+  posts: listPosts
+});
 }
 
     // ========================================
