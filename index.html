@@ -9146,21 +9146,19 @@ async function loadHomeBoardPosts() {
                 ? post.images
                 : [];
 
-            const image = images.length > 0
-                ? images[0]
-                : 'image/logo.png';
-
+const image = images.length > 0
+    ? images[0]
+    : 'image/logo.png';
             return `
                 <div class="gallery-card"
      onclick="switchCategory('cat-board', document.querySelector('#navBoard')); setTimeout(function(){ showBoardDetail('${post.id}'); }, 100);"
      style="cursor:pointer;">
 
-                    <img
-                        src="${image}"
-                        alt="${title}"
-                        onerror="this.src='image/logo.png'"
-                    >
-
+<img
+    src="${image}${image.includes('?') ? '&' : '?'}v=${Date.now()}"
+    alt="${title}"
+    onerror="this.src='image/logo.png'"
+>
                     <div class="card-caption">
                         ${title}
                         ${date ? `<small>${date}</small>` : ''}
@@ -9414,9 +9412,11 @@ const existingImages = window.editingBoardPostId
     }
 
     try {
-        const images = window.editingBoardPostId
-    ? [...(window.editingBoardImages || [])]
-    : [];
+const images = [];
+
+if (window.editingBoardPostId) {
+    images.push(...(window.editingBoardImages || []));
+}
 
         // 사진 용량을 줄여서 Base64로 변환
         for (const file of imageFiles) {
@@ -9476,7 +9476,7 @@ const existingImages = window.editingBoardPostId
                 reader.readAsDataURL(file);
             });
 
-            images.push(imageData);
+            images.unshift(imageData);
         }
         const button = document.getElementById('board-save-btn');
 
@@ -9892,7 +9892,11 @@ if (adminTouchTarget) {
             btnEl.classList.add('active');
         }
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (catId === 'cat-home' && typeof loadHomeBoardPosts === 'function') {
+    loadHomeBoardPosts();
+}
     }
+    
 window.switchCategory = switchCategory;
     
 function goToBooking(courseValue) {
