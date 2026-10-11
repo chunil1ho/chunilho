@@ -6474,8 +6474,18 @@ function stopBoardVideoResizeTouch() {
     syncBoardEditor();
 }
 
+/* =========================================
+   동영상 직접 드래그 이동
+   ========================================= */
+
+let boardVideoDrag = null;
+let boardVideoDragStartX = 0;
+let boardVideoDragStartY = 0;
+let boardVideoDragging = false;
+
+
 /* 동영상 드래그 시작 */
-editor.addEventListener('dragstart', function (e) {
+editor.addEventListener('pointerdown', function (e) {
 
     const target = e.target;
 
@@ -6494,100 +6504,164 @@ editor.addEventListener('dragstart', function (e) {
         return;
     }
 
-    draggedBoardVideo = target;
-
-    e.dataTransfer.effectAllowed = 'move';
-
-    e.dataTransfer.setData(
-        'text/plain',
-        'board-video'
-    );
-
-    target.style.opacity = '0.5';
-});
-    
-/* 동영상 위로 이동 */
-editor.addEventListener('dragover', function (e) {
-
-    if (!draggedBoardVideo) return;
-
-    const target = e.target;
-
+    /* 왼쪽 클릭/터치만 */
     if (
-        (
-            target.tagName !== 'VIDEO' &&
-            target.tagName !== 'IMG'
-        ) ||
-        target === draggedBoardVideo
+        e.pointerType === 'mouse' &&
+        e.button !== 0
     ) {
         return;
     }
 
-    e.preventDefault();
+    boardVideoDrag = target;
 
-    e.dataTransfer.dropEffect = 'move';
-});    
-    
+    boardVideoDragStartX =
+        e.clientX;
+
+    boardVideoDragStartY =
+        e.clientY;
+
+    boardVideoDragging = false;
+});
+
+
+/* 동영상 이동 중 */
+document.addEventListener('pointermove', function (e) {
+
+    if (!boardVideoDrag) {
+        return;
+    }
+
+    const moveX =
+        Math.abs(
+            e.clientX -
+            boardVideoDragStartX
+        );
+
+    const moveY =
+        Math.abs(
+            e.clientY -
+            boardVideoDragStartY
+        );
+
+    /* 약간 움직였을 때부터 드래그 시작 */
+    if (
+        !boardVideoDragging &&
+        (moveX > 8 || moveY > 8)
+    ) {
+
+        boardVideoDragging = true;
+
+        e.preventDefault();
+
+        boardVideoDrag.style.opacity =
+            '0.5';
+
+        boardVideoDrag.style.cursor =
+            'grabbing';
+
+        if (
+            typeof boardVideoDrag.setPointerCapture ===
+            'function'
+        ) {
+            try {
+                boardVideoDrag.setPointerCapture(
+                    e.pointerId
+                );
+            } catch (err) {}
+        }
+    }
+
+    if (!boardVideoDragging) {
+        return;
+    }
+
+    e.preventDefault();
+});
+
+
 /* 동영상 놓기 */
-editor.addEventListener('drop', function (e) {
+document.addEventListener('pointerup', function (e) {
 
-    if (!draggedBoardVideo) return;
-
-    const target = e.target;
-
-    if (
-        target.tagName !== 'VIDEO' &&
-        target.tagName !== 'IMG'
-    ) {
+    if (!boardVideoDrag) {
         return;
     }
 
-    if (target === draggedBoardVideo) {
-        return;
+    const video =
+        boardVideoDrag;
+
+    if (boardVideoDragging) {
+
+        e.preventDefault();
+
+        const target =
+            document.elementFromPoint(
+                e.clientX,
+                e.clientY
+            );
+
+        if (
+            target &&
+            target !== video &&
+            (
+                target.tagName === 'VIDEO' ||
+                target.tagName === 'IMG'
+            ) &&
+            editor.contains(target)
+        ) {
+
+            const rect =
+                target.getBoundingClientRect();
+
+            const mouseX =
+                e.clientX -
+                rect.left;
+
+            /* 왼쪽 절반 → 앞 */
+            if (
+                mouseX <
+                rect.width / 2
+            ) {
+
+                target.parentNode.insertBefore(
+                    video,
+                    target
+                );
+
+            }
+
+            /* 오른쪽 절반 → 뒤 */
+            else {
+
+                target.parentNode.insertBefore(
+                    video,
+                    target.nextSibling
+                );
+            }
+
+            syncBoardEditor();
+        }
     }
 
-    e.preventDefault();
+    video.style.opacity = '';
+    video.style.cursor = '';
 
-    const rect =
-        target.getBoundingClientRect();
-
-    const mouseX =
-        e.clientX - rect.left;
-
-    /* 왼쪽 절반 → 대상 앞 */
-    if (mouseX < rect.width / 2) {
-
-        target.parentNode.insertBefore(
-            draggedBoardVideo,
-            target
-        );
-
-    }
-
-    /* 오른쪽 절반 → 대상 뒤 */
-    else {
-
-        target.parentNode.insertBefore(
-            draggedBoardVideo,
-            target.nextSibling
-        );
-    }
-
-    draggedBoardVideo.style.opacity = '';
-
-    syncBoardEditor();
+    boardVideoDrag = null;
+    boardVideoDragging = false;
 });
-    
-/* 동영상 드래그 종료 */
-editor.addEventListener('dragend', function () {
 
-    if (draggedBoardVideo) {
-        draggedBoardVideo.style.opacity = '';
+
+/* 드래그 취소 */
+document.addEventListener('pointercancel', function () {
+
+    if (!boardVideoDrag) {
+        return;
     }
 
-    draggedBoardVideo = null;
+    boardVideoDrag.style.opacity = '';
+    boardVideoDrag.style.cursor = '';
 
-    syncBoardEditor();
+    boardVideoDrag = null;
+    boardVideoDragging = false;
 });
     
 /* 동영상 선택 해제 */
