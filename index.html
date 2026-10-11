@@ -8717,12 +8717,8 @@ async function editBoardPost(postId) {
     }
 
     try {
-        const data = await apiRequest('/board');
-        const posts = Array.isArray(data.posts) ? data.posts : [];
-
-        const post = posts.find(
-            item => String(item.id) === String(postId)
-        );
+const data = await apiRequest('/board?id=' + encodeURIComponent(postId));
+const post = data.post;
 
         if (!post) {
             alert('게시글을 찾을 수 없습니다.');
