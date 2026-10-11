@@ -572,13 +572,17 @@ if (method === "GET") {
             "Accept-Ranges":
                 "bytes",
 
-            "Content-Range":
-                "bytes " +
-                start +
-                "-" +
-                end +
-                "/" +
-                totalSize,
+...(rangeHeader
+    ? {
+        "Content-Range":
+            "bytes " +
+            start +
+            "-" +
+            end +
+            "/" +
+            totalSize
+    }
+    : {}),
 
             "Cache-Control":
                 "public, max-age=31536000",
