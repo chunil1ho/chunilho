@@ -73,7 +73,8 @@ if (method === "GET") {
   }
 // 특정 게시글 상세보기 요청
 const postId = event.queryStringParameters?.id;
-
+console.log("상세 요청 postId:", postId);
+  
 if (postId) {
 const post = allPosts.find(
   post => String(post.id || post.postId || post.no) === String(postId)
