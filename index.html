@@ -9136,13 +9136,12 @@ async function loadHomeBoardPosts() {
 
             const title = escapeHtml(post.title || '조황 게시글');
             
-const tempDiv = document.createElement('div');
-tempDiv.innerHTML = post.content || '';
+const images = Array.isArray(post.images)
+    ? post.images
+    : [];
 
-const contentImage = tempDiv.querySelector('img');
-
-const image = contentImage
-    ? contentImage.getAttribute('src')
+const image = images.length > 0
+    ? images[0]
     : 'image/logo.png';
             
             const date = post.createdAt
