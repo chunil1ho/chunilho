@@ -12193,7 +12193,16 @@ if (
 if (
     attr.value.startsWith(
         '/api/board-video?key='
-    ) ||
+    )
+) {
+    attr.value =
+        'https://chunilho.netlify.app' +
+        attr.value;
+
+    return;
+}
+
+if (
     attr.value.startsWith(
         'https://chunilho.netlify.app/api/board-video?key='
     )
