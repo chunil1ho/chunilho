@@ -8918,7 +8918,12 @@ function showBoardList() {
     if (list) list.style.display = 'block';
     if (detail) detail.style.display = 'none';
     if (form) form.style.display = 'none';
-
+    
+document.querySelectorAll('#board-detail video').forEach(video => {
+    video.pause();
+    video.currentTime = 0;
+});
+    
     const writeButton =
     document.getElementById('board-write-btn');
 
