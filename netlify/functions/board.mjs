@@ -2,22 +2,10 @@ import { getStore } from "@netlify/blobs";
 import { json, body } from "./_lib.mjs";
 import { verifyAdmin } from "./_auth.mjs";
 
-const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "https://chunilho.com",
-  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization"
-};
-
-function corsJson(statusCode, data) {
-  const response = json(statusCode, data);
-
-  return {
-    ...response,
-    headers: {
-      ...(response.headers || {}),
-      ...CORS_HEADERS
-    }
-  };
+if (method === "OPTIONS") {
+  return json(200, {
+    ok: true
+  });
 }
 
 const boardStore = getStore({
@@ -56,7 +44,7 @@ if (method === "OPTIONS") {
         type: "json"
       });
 
-      return corsJson(200, {
+      return json(200, {
         posts: Array.isArray(posts) ? posts : []
       });
     }
@@ -68,7 +56,7 @@ if (method === "OPTIONS") {
     if (method === "DELETE") {
 
       if (!verifyAdmin(event)) {
-        return corsJson(401, {
+        return json(401, {
           message: "관리자 로그인이 필요합니다."
         });
       }
@@ -77,7 +65,7 @@ if (method === "OPTIONS") {
       const postId = String(data?.id || "").trim();
 
       if (!postId) {
-        return corsJson(400, {
+        return json(400, {
           message: "삭제할 게시글 ID가 없습니다."
         });
       }
@@ -95,14 +83,14 @@ if (method === "OPTIONS") {
       );
 
       if (filteredPosts.length === posts.length) {
-        return corsJson(404, {
+        return json(404, {
           message: "삭제할 게시글을 찾을 수 없습니다."
         });
       }
 
       await boardStore.setJSON("posts", filteredPosts);
 
-      return corsJson(200, {
+      return json(200, {
         success: true,
         message: "게시글이 삭제되었습니다."
       });
@@ -115,7 +103,7 @@ if (method === "OPTIONS") {
     if (method === "PUT") {
 
       if (!verifyAdmin(event)) {
-       return corsJson(401, {
+       return json(401, {
           message: "관리자 로그인이 필요합니다."
         });
       }
@@ -127,19 +115,19 @@ if (method === "OPTIONS") {
       const content = String(data?.content || "").trim();
 
       if (!postId) {
-       return corsJson(400, {
+       return json(400, {
           message: "수정할 게시글 ID가 없습니다."
         });
       }
 
       if (!title) {
-        return corsJson(400, {
+        return json(400, {
           message: "제목을 입력해주세요."
         });
       }
 
       if (!content) {
-        return corsJson(400, {
+        return json(400, {
           message: "내용을 입력해주세요."
         });
       }
@@ -157,7 +145,7 @@ if (method === "OPTIONS") {
       );
 
       if (index === -1) {
-        return corsJson(404, {
+        return json(404, {
           message: "수정할 게시글을 찾을 수 없습니다."
         });
       }
@@ -174,7 +162,7 @@ if (method === "OPTIONS") {
 
       await boardStore.setJSON("posts", posts);
 
-      return corsJson(200, {
+      return json(200, {
         success: true,
         post: posts[index]
       });
@@ -188,7 +176,7 @@ if (method === "OPTIONS") {
 
       // 관리자 인증
       if (!verifyAdmin(event)) {
-        return corsJson(401, {
+        return json(401, {
           message: "관리자 로그인이 필요합니다."
         });
       }
@@ -201,14 +189,14 @@ if (method === "OPTIONS") {
 
       // 제목 확인
       if (!title) {
-        return corsJson(400, {
+        return json(400, {
           message: "제목을 입력해주세요."
         });
       }
 
       // 내용 확인
       if (!content) {
-        return corsJson(400, {
+        return json(400, {
           message: "내용을 입력해주세요."
         });
       }
@@ -243,7 +231,7 @@ if (method === "OPTIONS") {
       await boardStore.setJSON("posts", posts);
 
       // 성공 응답
-      return corsJson(200, {
+      return json(200, {
         success: true,
         post: post
       });
@@ -253,7 +241,7 @@ if (method === "OPTIONS") {
     // ========================================
     // 지원하지 않는 요청
     // ========================================
-    return corsJson(405, {
+    return json(405, {
       message: "Method Not Allowed"
     });
 
@@ -261,7 +249,7 @@ if (method === "OPTIONS") {
 
     console.error("Board API Error:", error);
 
-    return corsJson(500, {
+    return json(500, {
       message:
         error?.message ||
         "조황게시판 서버 오류가 발생했습니다."
