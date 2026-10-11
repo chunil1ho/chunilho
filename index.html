@@ -9115,7 +9115,7 @@ async function loadHomeBoardPosts() {
     if (!gallery) return;
 
     try {
-        const data = await apiRequest('/board');
+        const data = await apiRequest('/board?home=1');
         const posts = Array.isArray(data.posts) ? data.posts : [];
 
         // 최신 글 3개만 사용
@@ -9136,32 +9136,7 @@ async function loadHomeBoardPosts() {
 
             const title = escapeHtml(post.title || '조황 게시글');
             
-const images = Array.isArray(post.images)
-    ? post.images
-    : [];
-
-// 게시글 내용 안에 들어있는 첫 번째 이미지 찾기
-let contentImage = '';
-
-if (post.content) {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = post.content;
-
-    const contentImg = tempDiv.querySelector('img');
-
-    if (contentImg) {
-        contentImage = contentImg.getAttribute('src') || '';
-    }
-}
-
-// 우선순위
-// 1. 첨부사진
-// 2. 내용에 들어있는 사진
-// 3. 로고
-            
-const image = images.length > 0
-    ? images[0]
-    : contentImage || 'image/logo.png';
+const image = post.image || 'image/logo.png';
             
             const date = post.createdAt
                 ? new Date(post.createdAt).toLocaleDateString('ko-KR')
