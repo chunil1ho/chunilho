@@ -9401,7 +9401,9 @@ const imageFiles = imageInput?.files
     ? Array.from(imageInput.files)
     : [];
 
-const images = [];
+const images = window.editingBoardPostId
+    ? [...(window.editingBoardImages || [])]
+    : [];
         
 
     if (!title) {
@@ -9481,7 +9483,7 @@ if (window.editingBoardPostId) {
                 reader.readAsDataURL(file);
             });
 
-            images.unshift(imageData);
+            images.push(imageData);
         }
         const button = document.getElementById('board-save-btn');
 
