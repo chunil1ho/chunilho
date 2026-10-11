@@ -71,7 +71,24 @@ if (method === "GET") {
       posts: homePosts
     });
   }
+// 특정 게시글 상세보기 요청
+const postId = event.queryStringParameters?.id;
 
+if (postId) {
+  const post = allPosts.find(
+    post => String(post.id) === String(postId)
+  );
+
+  if (!post) {
+    return json(404, {
+      message: "게시글을 찾을 수 없습니다."
+    });
+  }
+
+  return json(200, {
+    post
+  });
+}
 // 일반 조황게시판 목록에서는 필요한 정보만 전송
 const listPosts = allPosts.map(post => ({
   id: post.id,
