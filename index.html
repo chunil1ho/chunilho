@@ -9148,7 +9148,7 @@ const image = contentImage
             const date = post.createdAt
                 ? new Date(post.createdAt).toLocaleDateString('ko-KR')
                 : '';
-
+return `
                 <div class="gallery-card"
      onclick="switchCategory('cat-board', document.querySelector('#navBoard')); setTimeout(function(){ showBoardDetail('${post.id}'); }, 100);"
      style="cursor:pointer;">
