@@ -2,6 +2,24 @@ import { getStore } from "@netlify/blobs";
 import { json, body } from "./_lib.mjs";
 import { verifyAdmin } from "./_auth.mjs";
 
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "https://chunilho.com",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization"
+};
+
+function corsJson(statusCode, data) {
+  const response = json(statusCode, data);
+
+  return {
+    ...response,
+    headers: {
+      ...(response.headers || {}),
+      ...CORS_HEADERS
+    }
+  };
+}
+
 const boardStore = getStore({
   name: "chunilho-board",
   siteID: process.env.NETLIFY_SITE_ID,
@@ -17,11 +35,16 @@ export async function handler(event) {
     // ========================================
     // OPTIONS : 브라우저 프리플라이트
     // ========================================
-    if (method === "OPTIONS") {
-      return json(200, {
-        ok: true
-      });
-    }
+if (method === "OPTIONS") {
+  return {
+    statusCode: 204,
+    headers: {
+      ...CORS_HEADERS,
+      "Access-Control-Max-Age": "86400"
+    },
+    body: ""
+  };
+}
 
 
     // ========================================
@@ -33,7 +56,7 @@ export async function handler(event) {
         type: "json"
       });
 
-      return json(200, {
+      return corsJson(200, {
         posts: Array.isArray(posts) ? posts : []
       });
     }
@@ -45,7 +68,7 @@ export async function handler(event) {
     if (method === "DELETE") {
 
       if (!verifyAdmin(event)) {
-        return json(401, {
+        return corsJson(401, {
           message: "관리자 로그인이 필요합니다."
         });
       }
@@ -54,7 +77,7 @@ export async function handler(event) {
       const postId = String(data?.id || "").trim();
 
       if (!postId) {
-        return json(400, {
+        return corsJson(400, {
           message: "삭제할 게시글 ID가 없습니다."
         });
       }
@@ -72,14 +95,14 @@ export async function handler(event) {
       );
 
       if (filteredPosts.length === posts.length) {
-        return json(404, {
+        return corsJson(404, {
           message: "삭제할 게시글을 찾을 수 없습니다."
         });
       }
 
       await boardStore.setJSON("posts", filteredPosts);
 
-      return json(200, {
+      return corsJson(200, {
         success: true,
         message: "게시글이 삭제되었습니다."
       });
@@ -92,7 +115,7 @@ export async function handler(event) {
     if (method === "PUT") {
 
       if (!verifyAdmin(event)) {
-        return json(401, {
+       return corsJson(401, {
           message: "관리자 로그인이 필요합니다."
         });
       }
@@ -104,19 +127,19 @@ export async function handler(event) {
       const content = String(data?.content || "").trim();
 
       if (!postId) {
-        return json(400, {
+       return corsJson(400, {
           message: "수정할 게시글 ID가 없습니다."
         });
       }
 
       if (!title) {
-        return json(400, {
+        return corsJson(400, {
           message: "제목을 입력해주세요."
         });
       }
 
       if (!content) {
-        return json(400, {
+        return corsJson(400, {
           message: "내용을 입력해주세요."
         });
       }
@@ -134,7 +157,7 @@ export async function handler(event) {
       );
 
       if (index === -1) {
-        return json(404, {
+        return corsJson(404, {
           message: "수정할 게시글을 찾을 수 없습니다."
         });
       }
@@ -151,7 +174,7 @@ export async function handler(event) {
 
       await boardStore.setJSON("posts", posts);
 
-      return json(200, {
+      return corsJson(200, {
         success: true,
         post: posts[index]
       });
@@ -165,7 +188,7 @@ export async function handler(event) {
 
       // 관리자 인증
       if (!verifyAdmin(event)) {
-        return json(401, {
+        return corsJson(401, {
           message: "관리자 로그인이 필요합니다."
         });
       }
@@ -178,14 +201,14 @@ export async function handler(event) {
 
       // 제목 확인
       if (!title) {
-        return json(400, {
+        return corsJson(400, {
           message: "제목을 입력해주세요."
         });
       }
 
       // 내용 확인
       if (!content) {
-        return json(400, {
+        return corsJson(400, {
           message: "내용을 입력해주세요."
         });
       }
@@ -220,7 +243,7 @@ export async function handler(event) {
       await boardStore.setJSON("posts", posts);
 
       // 성공 응답
-      return json(200, {
+      return corsJson(200, {
         success: true,
         post: post
       });
@@ -230,7 +253,7 @@ export async function handler(event) {
     // ========================================
     // 지원하지 않는 요청
     // ========================================
-    return json(405, {
+    return corsJson(405, {
       message: "Method Not Allowed"
     });
 
@@ -238,7 +261,7 @@ export async function handler(event) {
 
     console.error("Board API Error:", error);
 
-    return json(500, {
+    return corsJson(500, {
       message:
         error?.message ||
         "조황게시판 서버 오류가 발생했습니다."
