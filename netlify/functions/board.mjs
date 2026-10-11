@@ -2,12 +2,6 @@ import { getStore } from "@netlify/blobs";
 import { json, body } from "./_lib.mjs";
 import { verifyAdmin } from "./_auth.mjs";
 
-if (method === "OPTIONS") {
-  return json(200, {
-    ok: true
-  });
-}
-
 const boardStore = getStore({
   name: "chunilho-board",
   siteID: process.env.NETLIFY_SITE_ID,
@@ -23,16 +17,11 @@ export async function handler(event) {
     // ========================================
     // OPTIONS : 브라우저 프리플라이트
     // ========================================
-if (method === "OPTIONS") {
-  return {
-    statusCode: 204,
-    headers: {
-      ...CORS_HEADERS,
-      "Access-Control-Max-Age": "86400"
-    },
-    body: ""
-  };
-}
+    if (method === "OPTIONS") {
+      return json(200, {
+        ok: true
+      });
+    }
 
 
     // ========================================
@@ -103,7 +92,7 @@ if (method === "OPTIONS") {
     if (method === "PUT") {
 
       if (!verifyAdmin(event)) {
-       return json(401, {
+        return json(401, {
           message: "관리자 로그인이 필요합니다."
         });
       }
@@ -115,7 +104,7 @@ if (method === "OPTIONS") {
       const content = String(data?.content || "").trim();
 
       if (!postId) {
-       return json(400, {
+        return json(400, {
           message: "수정할 게시글 ID가 없습니다."
         });
       }
