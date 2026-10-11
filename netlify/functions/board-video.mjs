@@ -272,11 +272,11 @@ if (index === count - 1) {
         }
     );
 
-    const videoUrl =
-        "/api/board-video?key=" +
-        encodeURIComponent(
-            safeUploadId
-        );
+const videoUrl =
+    "https://chunilho.netlify.app/api/board-video?key=" +
+    encodeURIComponent(
+        safeUploadId
+    );
 
     return corsJson(200, {
         success: true,
