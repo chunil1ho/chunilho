@@ -10,7 +10,7 @@ const videoStore = getStore({
 });
 const CORS_HEADERS = {
     "Access-Control-Allow-Origin":
-        "https://www.chunilho.com",
+        "*",
 
     "Access-Control-Allow-Methods":
         "GET, POST, OPTIONS",
@@ -48,8 +48,8 @@ if (method === "OPTIONS") {
         statusCode: 204,
 
         headers: {
-            "Access-Control-Allow-Origin":
-                "https://www.chunilho.com",
+"Access-Control-Allow-Origin":
+    "*",
 
             "Access-Control-Allow-Methods":
                 "GET, POST, OPTIONS",
@@ -618,8 +618,8 @@ catch (error) {
             "Content-Type":
                 "application/json",
 
-            "Access-Control-Allow-Origin":
-                "https://www.chunilho.com",
+"Access-Control-Allow-Origin":
+    "*",
 
             "Access-Control-Allow-Methods":
                 "GET, POST, OPTIONS",
