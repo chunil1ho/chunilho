@@ -8748,12 +8748,20 @@ if (typeof initBoardEditor === 'function') {
     initBoardEditor();
 }
         
-        // 목록과 상세화면 숨기기
-        if (list) list.style.display = 'none';
-        if (detail) detail.style.display = 'none';
+// 목록과 상세화면 숨기기
+if (list) list.style.display = 'none';
+if (detail) detail.style.display = 'none';
 
-        // 수정 폼 표시
-        form.style.display = 'block';
+// 글쓰기 버튼 숨기기
+const writeButton =
+    document.getElementById('board-write-btn');
+
+if (writeButton) {
+    writeButton.style.display = 'none';
+}
+
+// 수정 폼 표시
+form.style.display = 'block';
         
         // 폼 제목 변경
         const formTitle = form.querySelector('.board-form-title h3');
@@ -8917,6 +8925,14 @@ function showBoardList() {
     if (detail) detail.style.display = 'none';
     if (form) form.style.display = 'none';
 
+    const writeButton =
+    document.getElementById('board-write-btn');
+
+if (writeButton) {
+    writeButton.style.display =
+        isAdminLoggedIn ? 'inline-block' : 'none';
+}
+    
     loadBoardPosts();
 }
     function escapeHtml(value) {
