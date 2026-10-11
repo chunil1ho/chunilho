@@ -9381,6 +9381,15 @@ const titleInput =
 const contentInput =
     document.getElementById('board-content');
 
+const editorContent =
+    document.getElementById('board-editor-content');
+
+/* 저장 직전에 에디터의 실제 내용을 textarea에 동기화 */
+if (editorContent && contentInput) {
+    contentInput.value =
+        editorContent.innerHTML;
+}
+
 const title =
     titleInput?.value.trim() || '';
 
