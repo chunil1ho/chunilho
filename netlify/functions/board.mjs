@@ -27,17 +27,56 @@ export async function handler(event) {
     // ========================================
     // GET : 조황게시판 목록
     // ========================================
-    if (method === "GET") {
+if (method === "GET") {
+  const posts = await boardStore.get("posts", { type: "json" });
 
-      const posts = await boardStore.get("posts", {
-        type: "json"
+  const allPosts = Array.isArray(posts) ? posts : [];
+
+  // 홈페이지에서는 최신 3개만, 필요한 정보만 전송
+  if (event.queryStringParameters?.home === "1") {
+    const homePosts = allPosts
+      .slice()
+      .sort((a, b) => {
+        return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+      })
+      .slice(0, 3)
+      .map(post => {
+        let firstImage = "";
+
+        // 본문에서 첫 번째 이미지 찾기
+        if (post.content) {
+          const match = post.content.match(
+            /<img[^>]+src=["']([^"']+)["']/i
+          );
+
+          if (match) {
+            firstImage = match[1];
+          }
+        }
+
+        // 본문에 이미지가 없으면 첨부 이미지 첫 번째 사용
+        if (!firstImage && Array.isArray(post.images) && post.images.length > 0) {
+          firstImage = post.images[0];
+        }
+
+        return {
+          id: post.id,
+          title: post.title,
+          createdAt: post.createdAt,
+          image: firstImage
+        };
       });
 
-      return json(200, {
-        posts: Array.isArray(posts) ? posts : []
-      });
-    }
+    return json(200, {
+      posts: homePosts
+    });
+  }
 
+  // 기존 조황게시판은 기존 데이터 그대로 사용
+  return json(200, {
+    posts: allPosts
+  });
+}
 
     // ========================================
     // DELETE : 조황게시글 삭제
