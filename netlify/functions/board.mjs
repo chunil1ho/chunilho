@@ -75,10 +75,9 @@ if (method === "GET") {
 const postId = event.queryStringParameters?.id;
 
 if (postId) {
-  const post = allPosts.find(
-    post => String(post.id) === String(postId)
-  );
-
+const post = allPosts.find(
+  post => String(post.id || post.postId || post.no) === String(postId)
+);
   if (!post) {
     return json(404, {
       message: "게시글을 찾을 수 없습니다."
