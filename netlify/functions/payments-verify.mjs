@@ -6,79 +6,38 @@ import {
 } from "./_lib.mjs";
 async function sendKakaoAdminMessage(booking) {
   try {
-    const apiKey = process.env.ALIGO_API_KEY;
-    const userId = process.env.ALIGO_USER_ID;
-    const senderKey = process.env.ALIGO_SENDER_KEY;
-    const templateCode = process.env.ALIGO_TEMPLATE_CODE;
+    const relayUrl = process.env.ALIGO_RELAY_URL;
+    const relaySecret = process.env.ALIGO_RELAY_SECRET;
 
-    if (!apiKey || !userId || !senderKey || !templateCode) {
-      console.error("알리고 환경변수가 없습니다.");
+    if (!relayUrl || !relaySecret) {
+      console.error("알리고 릴레이 환경변수가 없습니다.");
       return false;
     }
 
-    const formData = new URLSearchParams();
-
-    formData.append("apikey", apiKey);
-    formData.append("userid", userId);
-
-    // 카카오 비즈니스 채널 발신프로필 키
-    formData.append("senderkey", senderKey);
-
-    // 승인된 알림톡 템플릿
-    formData.append("tpl_code", templateCode);
-
-    // 알리고에 등록된 발신자 연락처
-    formData.append("sender", "01021040008");
-
-    // 알림을 받을 관리자 번호
-    formData.append("receiver_1", "01077685913");
-
-    formData.append("recvname_1", "천일호");
-
-    formData.append(
-      "subject_1",
-      "천일호 예약 결제 완료"
-    );
-
-    formData.append(
-      "message_1",
-      "🎣 천일호 예약 결제 완료\n" +
-      `예약번호: ${booking.orderNo}\n` +
-      `예약자: ${booking.name}\n` +
-      `전화번호: ${booking.tel}\n` +
-      `이용일: ${booking.date}\n` +
-      `상품: ${booking.course}\n` +
-      `시간: ${booking.time || "미정"}\n` +
-      `인원: ${booking.count}명\n` +
-      `결제금액: ${Number(booking.price).toLocaleString()}원\n` +
-      "결제가 완료되었습니다."
-    );
-    
-// Netlify Functions 실제 외부 IP 확인용
-const ipRes = await fetch("https://api.ipify.org?format=json");
-const ipData = await ipRes.json();
-
-console.log("===== NETLIFY OUTBOUND IP =====");
-console.log(ipData.ip);
-    
     const response = await fetch(
-      "https://kakaoapi.aligo.in/akv10/alimtalk/send/",
+      relayUrl.replace(/\/$/, "") + "/send-payment-kakao",
       {
         method: "POST",
         headers: {
-          "Content-Type":
-            "application/x-www-form-urlencoded;charset=UTF-8"
+          "Content-Type": "application/json",
+          "x-relay-secret": relaySecret
         },
-        body: formData
+        body: JSON.stringify({
+          orderNo: booking.orderNo,
+          name: booking.name,
+          tel: booking.tel,
+          date: booking.date,
+          course: booking.course,
+          time: booking.time,
+          count: booking.count,
+          price: booking.price
+        })
       }
     );
 
     const result = await response.json();
 
-    console.log(
-      "===== 알리고 알림톡 발송 결과 ====="
-    );
-
+    console.log("===== 디지털오션 알리고 릴레이 결과 =====");
     console.log(
       JSON.stringify({
         status: response.status,
@@ -86,21 +45,18 @@ console.log(ipData.ip);
       })
     );
 
-    if (Number(result.code) !== 0) {
-      console.error(
-        "알리고 알림톡 발송 실패:",
-        result
-      );
+    if (!response.ok || !result.ok) {
+      console.error("알리고 릴레이 발송 실패:", result);
       return false;
     }
 
-    console.log("✅ 알리고 알림톡 발송 성공");
+    console.log("✅ 관리자 카카오 알림톡 발송 성공");
 
     return true;
 
   } catch (error) {
     console.error(
-      "알리고 알림톡 오류:",
+      "알리고 릴레이 오류:",
       error
     );
 
