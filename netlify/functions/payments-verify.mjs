@@ -53,7 +53,14 @@ async function sendKakaoAdminMessage(booking) {
       `결제금액: ${Number(booking.price).toLocaleString()}원\n` +
       "결제가 완료되었습니다."
     );
+    
+// Netlify Functions 실제 외부 IP 확인용
+const ipRes = await fetch("https://api.ipify.org?format=json");
+const ipData = await ipRes.json();
 
+console.log("===== NETLIFY OUTBOUND IP =====");
+console.log(ipData.ip);
+    
     const response = await fetch(
       "https://kakaoapi.aligo.in/akv10/alimtalk/send/",
       {
