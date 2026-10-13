@@ -10237,7 +10237,8 @@ if (
 
                 const booking =
                     verifyResult.booking;
-
+console.log("📱 결제완료 → 고객 SMS 호출 시작");
+                
 await sendCustomerSMS(
     booking.tel,
     booking.name,
