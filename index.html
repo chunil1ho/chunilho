@@ -10565,7 +10565,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-async function sendCustomerSMS(custTel, custName, date, course, time, count, price) {
+async function sendCustomerSMS(custTel, custName, date, course, time, count, price, orderNo) {
 
         console.log("📱 고객 문자 함수 실행:", {
         tel: custTel,
@@ -10580,15 +10580,16 @@ async function sendCustomerSMS(custTel, custName, date, course, time, count, pri
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-                tel: custTel,
-                name: custName,
-                date: date,
-                course: course,
-                time: time,
-                count: count,
-                price: price
-            })
+body: JSON.stringify({
+    tel: custTel,
+    name: custName,
+    date: date,
+    course: course,
+    time: time,
+    count: count,
+    price: price,
+    orderNo: orderNo
+})
         });
 
         const result = await response.json();
