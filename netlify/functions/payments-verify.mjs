@@ -20,10 +20,20 @@ async function sendKakaoAdminMessage(booking) {
 
     formData.append("apikey", apiKey);
     formData.append("userid", userId);
+
+    // 카카오 비즈니스 채널 발신프로필 키
     formData.append("senderkey", senderKey);
+
+    // 승인된 알림톡 템플릿
     formData.append("tpl_code", templateCode);
-    formData.append("sender", booking.tel || "01000000000");
-    formData.append("receiver_1", booking.tel || "01077685913");
+
+    // 알리고에 등록된 발신자 연락처
+    formData.append("sender", "01021040008");
+
+    // 알림을 받을 관리자 번호
+    formData.append("receiver_1", "01077685913");
+
+    formData.append("recvname_1", "천일호");
 
     formData.append(
       "subject_1",
@@ -45,12 +55,12 @@ async function sendKakaoAdminMessage(booking) {
     );
 
     const response = await fetch(
-      "https://apis.aligo.in/send/",
+      "https://kakaoapi.aligo.in/akv10/alimtalk/send/",
       {
         method: "POST",
         headers: {
           "Content-Type":
-            "application/x-www-form-urlencoded"
+            "application/x-www-form-urlencoded;charset=UTF-8"
         },
         body: formData
       }
@@ -59,8 +69,9 @@ async function sendKakaoAdminMessage(booking) {
     const result = await response.json();
 
     console.log(
-      "===== 알리고 카카오 알림 결과 ====="
+      "===== 알리고 알림톡 발송 결과 ====="
     );
+
     console.log(
       JSON.stringify({
         status: response.status,
@@ -68,21 +79,24 @@ async function sendKakaoAdminMessage(booking) {
       })
     );
 
-    if (String(result.code) !== "0") {
+    if (Number(result.code) !== 0) {
       console.error(
-        "알리고 카카오 알림 발송 실패:",
+        "알리고 알림톡 발송 실패:",
         result
       );
       return false;
     }
 
+    console.log("✅ 알리고 알림톡 발송 성공");
+
     return true;
 
   } catch (error) {
     console.error(
-      "알리고 카카오 알림 오류:",
+      "알리고 알림톡 오류:",
       error
     );
+
     return false;
   }
 }
