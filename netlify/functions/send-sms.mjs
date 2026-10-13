@@ -17,7 +17,8 @@ export async function handler(event) {
       course,
       time,
       count,
-      price
+      price,
+      orderNo
     } = JSON.parse(event.body || "{}");
 
     if (!tel || !name) {
@@ -45,17 +46,18 @@ export async function handler(event) {
       };
     }
 
-    const message =
-      `[서귀포배낚시 천일호]\n` +
-      `${name}님, 예약 및 결제가 완료되었습니다.\n\n` +
-      `- 예약자명: ${name}\n` +
-      `- 전화번호: ${tel}\n` +
-      `- 예약날짜: ${date}\n` +
-      `- 출항시간: ${time || "미정"}\n` +
-      `- 선택코스: ${course} (${count}명)\n` +
-      `- 결제금액: ${Number(price).toLocaleString()}원\n\n` +
-      `- 오시는곳: 제주 서귀포시 남성중로 25\n` +
-      `즐거운 바다 여행 되시길 바랍니다!`;
+const message =
+  `🎣 천일호 예약 결제 완료\n` +
+  `예약번호: ${booking?.orderNo || ""}\n` +
+  `예약자: ${name}\n` +
+  `전화번호: ${tel}\n` +
+  `이용일: ${date}\n` +
+  `상품: ${course}\n` +
+  `시간: ${time || "미정"}\n` +
+  `인원: ${count}명\n` +
+  `결제금액: ${Number(price).toLocaleString()}원\n\n` +
+  `결제가 완료되었습니다.\n` +
+  `업체 연락 후 예약이 최종 확정됩니다.`;
 
     const formData = new URLSearchParams();
 
