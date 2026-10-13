@@ -11320,6 +11320,12 @@ if (b.status === '결제완료') {
                 onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}', ${Number(b.refundAmount || 0)})">
             추가 환불
         </button>
+
+        <button type="button"
+                style="padding:4px 8px; font-size:0.8rem; margin-top:0; background:#16a34a; color:white; border:none; border-radius:5px; cursor:pointer;"
+                onclick="adminCompleteBooking('${b.orderNo}')">
+            이용완료
+        </button>
     `;
 
 } else if (b.status === '취소완료') {
