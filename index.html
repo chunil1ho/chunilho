@@ -10566,6 +10566,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 async function sendCustomerSMS(custTel, custName, date, course, time, count, price) {
+
+        console.log("📱 고객 문자 함수 실행:", {
+        tel: custTel,
+        name: custName,
+        orderNo: arguments[7]
+    });
+
+
     try {
         const response = await fetch("/.netlify/functions/send-sms", {
             method: "POST",
