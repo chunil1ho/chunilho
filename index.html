@@ -10238,26 +10238,16 @@ if (
                 const booking =
                     verifyResult.booking;
 
-                sendCustomerSMS(
-                    booking.tel,
-                    booking.name,
-                    booking.date,
-                    booking.course,
-                    booking.time,
-                    booking.count,
-                    booking.price
-                );
-
-                sendAdminSMS(
-                    ADMIN_PHONE,
-                    booking.name,
-                    booking.tel,
-                    booking.date,
-                    booking.course,
-                    booking.time,
-                    booking.count,
-                    booking.price
-                );
+await sendCustomerSMS(
+    booking.tel,
+    booking.name,
+    booking.date,
+    booking.course,
+    booking.time,
+    booking.count,
+    booking.price,
+    booking.orderNo
+);
 
                 const popupMsg =
                     translations[currentLang]
@@ -10575,10 +10565,42 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function sendCustomerSMS(custTel, custName, date, course, time, count, price) {
-        const message = `[서귀포배낚시 천일호]\n${custName}님, 예약이 정상적으로 완료(확정)되었습니다.\n\n- 예약자명: ${custName}\n- 전화번호: ${custTel}\n- 예약날짜: ${date}\n- 출항시간: ${time}\n- 선택코с: ${course} (${count}명)\n- 결제금액: ${price.toLocaleString()}원\n\n- 오시는곳: 제주 서귀포시 남성중로 25\n즐거운 바다 여행 되시길 바랍니다!`;
-        console.log(`--- [손님 문자 발송 (${custTel})] ---\n${message}\n----------------------------------`);
+async function sendCustomerSMS(custTel, custName, date, course, time, count, price) {
+    try {
+        const response = await fetch("/.netlify/functions/send-sms", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                tel: custTel,
+                name: custName,
+                date: date,
+                course: course,
+                time: time,
+                count: count,
+                price: price
+            })
+        });
+
+        const result = await response.json();
+
+        console.log("===== 손님 문자 발송 결과 =====");
+        console.log(result);
+
+        if (!result.ok) {
+            console.error("손님 문자 발송 실패:", result);
+            return false;
+        }
+
+        console.log("✅ 손님 문자 발송 성공");
+        return true;
+
+    } catch (error) {
+        console.error("손님 문자 발송 오류:", error);
+        return false;
     }
+}
 
     function sendAdminSMS(adminTel, custName, custTel, date, course, time, count, price) {
         const message = `[천일호 관리자 알림] 새로운 예약(결제완료) 건이 접수되었습니다.\n\n- 예약자명: ${custName}\n- 전화번호: ${custTel}\n- 예약날짜: ${date}\n- 출항시간: ${time}\n- 선택코스: ${course} (${count}명)\n- 결제금액: ${price.toLocaleString()}원`;
