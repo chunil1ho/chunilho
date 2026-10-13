@@ -643,7 +643,55 @@ let kakaoNotified = false;
 
 kakaoNotified =
   await sendKakaoAdminMessage(result.booking);
-    
+    let customerSmsNotified = false;
+
+try {
+  const relayUrl = process.env.ALIGO_RELAY_URL;
+  const relaySecret = process.env.ALIGO_RELAY_SECRET;
+
+  if (!relayUrl || !relaySecret) {
+    console.error("고객 SMS 릴레이 환경변수가 없습니다.");
+  } else {
+    const smsResponse = await fetch(
+      relayUrl.replace(/\/$/, "") + "/send-sms",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-relay-secret": relaySecret
+        },
+        body: JSON.stringify({
+          tel: result.booking.tel,
+          name: result.booking.name,
+          date: result.booking.date,
+          course: result.booking.course,
+          time: result.booking.time,
+          count: result.booking.count,
+          price: result.booking.price,
+          orderNo: result.booking.orderNo
+        })
+      }
+    );
+
+    const smsResult = await smsResponse.json();
+
+    console.log("===== 고객 SMS 릴레이 결과 =====");
+    console.log(
+      JSON.stringify({
+        status: smsResponse.status,
+        result: smsResult
+      })
+    );
+
+    customerSmsNotified =
+      smsResponse.ok && smsResult.ok === true;
+  }
+} catch (smsError) {
+  console.error(
+    "고객 SMS 발송 오류:",
+    smsError
+  );
+}
     /*
      * ========================================
      * 11. 성공
@@ -654,6 +702,7 @@ return json(200, {
   verified: true,
   duplicate: result.duplicate,
   kakaoNotified,
+  customerSmsNotified,
   payment: {
     impUid: requestData.impUid,
     merchantUid: payment.merchant_uid,
