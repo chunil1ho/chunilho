@@ -31,73 +31,45 @@ export async function handler(event) {
       };
     }
 
-    const apiKey = process.env.ALIGO_API_KEY;
-    const userId = process.env.ALIGO_USER_ID;
+    const relayUrl = process.env.ALIGO_RELAY_URL;
+    const relaySecret = process.env.ALIGO_RELAY_SECRET;
 
-    if (!apiKey || !userId) {
-      console.error("알리고 문자 환경변수가 없습니다.");
+    if (!relayUrl || !relaySecret) {
+      console.error("알리고 릴레이 환경변수가 없습니다.");
 
       return {
         statusCode: 500,
         body: JSON.stringify({
           ok: false,
-          message: "알리고 환경변수가 없습니다."
+          message: "알리고 릴레이 환경변수가 없습니다."
         })
       };
     }
 
-const message =
-  `🎣 천일호 예약 결제 완료\n` +
-  `예약번호: ${booking?.orderNo || ""}\n` +
-  `예약자: ${name}\n` +
-  `전화번호: ${tel}\n` +
-  `이용일: ${date}\n` +
-  `상품: ${course}\n` +
-  `시간: ${time || "미정"}\n` +
-  `인원: ${count}명\n` +
-  `결제금액: ${Number(price).toLocaleString()}원\n\n` +
-  `결제가 완료되었습니다.\n` +
-  `업체 연락 후 예약이 최종 확정됩니다.`;
-
-    const formData = new URLSearchParams();
-
-    formData.append("key", apiKey);
-    formData.append("user_id", userId);
-
-    // 알리고에 등록된 발신번호
-    formData.append("sender", "01021040008");
-
-    // 손님 전화번호
-    formData.append(
-      "receiver",
-      String(tel).replace(/-/g, "")
-    );
-
-    formData.append("msg", message);
-
-    // 90byte 초과 가능성이 있으므로 LMS
-    formData.append("msg_type", "LMS");
-
-    formData.append(
-      "title",
-      "천일호 예약 및 결제 완료"
-    );
-
     const response = await fetch(
-      "https://apis.aligo.in/send/",
+      relayUrl.replace(/\/$/, "") + "/send-sms",
       {
         method: "POST",
         headers: {
-          "Content-Type":
-            "application/x-www-form-urlencoded;charset=UTF-8"
+          "Content-Type": "application/json",
+          "x-relay-secret": relaySecret
         },
-        body: formData
+        body: JSON.stringify({
+          tel,
+          name,
+          date,
+          course,
+          time,
+          count,
+          price,
+          orderNo
+        })
       }
     );
 
     const result = await response.json();
 
-    console.log("===== 알리고 문자 발송 결과 =====");
+    console.log("===== 디지털오션 알리고 문자 릴레이 결과 =====");
     console.log(
       JSON.stringify({
         status: response.status,
@@ -105,9 +77,9 @@ const message =
       })
     );
 
-    if (Number(result.result_code) < 0) {
+    if (!response.ok || !result.ok) {
       console.error(
-        "알리고 문자 발송 실패:",
+        "알리고 문자 릴레이 발송 실패:",
         result
       );
 
@@ -132,7 +104,7 @@ const message =
 
   } catch (error) {
     console.error(
-      "알리고 문자 오류:",
+      "알리고 문자 릴레이 오류:",
       error
     );
 
