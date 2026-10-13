@@ -678,10 +678,9 @@ console.log("booking:", JSON.stringify(result.booking));
     
 let kakaoNotified = false;
 
-if (!result.duplicate) {
-  kakaoNotified =
-    await sendKakaoAdminMessage(result.booking);
-}
+kakaoNotified =
+  await sendKakaoAdminMessage(result.booking);
+    
     /*
      * ========================================
      * 11. 성공
