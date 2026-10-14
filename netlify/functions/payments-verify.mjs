@@ -245,7 +245,9 @@ async function saveBooking(data, payment) {
    */
   const booking = {
     orderNo,
-
+    
+    createdAt: new Date().toISOString(),
+    
     date: String(data.date || ""),
 
     course: String(data.course || ""),
