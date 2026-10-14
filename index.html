@@ -14301,6 +14301,24 @@ async function loadMyPageBookings(tel) {
             '예약내역을 불러오지 못했습니다.' +
             '</div>';
     }
+}  
+function openMyPage() {
+    const modal = document.getElementById('memberMyPageModal');
+
+    if (!modal) {
+        alert('마이페이지 화면을 찾을 수 없습니다.');
+        return;
+    }
+
+    modal.style.display = 'flex';
+}
+
+function closeMyPage() {
+    const modal = document.getElementById('memberMyPageModal');
+
+    if (modal) {
+        modal.style.display = 'none';
+    }
 }    
 </script>
     <!-- =========================================
