@@ -13652,6 +13652,318 @@ document.addEventListener('click', function (event) {
         closeMemberModal();
     }
 });
+// =========================================
+// 회원 API 요청
+// =========================================
+
+const MEMBER_TOKEN_KEY = 'chunilho_member_token';
+
+async function memberApiRequest(options = {}) {
+    const headers = {
+        ...(options.headers || {})
+    };
+
+    if (options.body) {
+        headers['Content-Type'] = 'application/json';
+    }
+
+    const token = localStorage.getItem(MEMBER_TOKEN_KEY);
+
+    if (token) {
+        headers['Authorization'] = 'Bearer ' + token;
+    }
+
+    const response = await fetch(
+        API_BASE + '/member',
+        {
+            ...options,
+            headers: headers
+        }
+    );
+
+    let data = null;
+
+    try {
+        data = await response.json();
+    } catch (error) {
+        data = null;
+    }
+
+    if (!response.ok) {
+        throw new Error(
+            data?.message || '서버 요청에 실패했습니다.'
+        );
+    }
+
+    return data;
+}
+
+
+// =========================================
+// 회원가입
+// =========================================
+
+async function memberSignup() {
+
+    const memberId =
+        document.getElementById('memberSignupId')?.value
+        .trim()
+        .toLowerCase();
+
+    const password =
+        document.getElementById('memberSignupPassword')?.value
+        || '';
+
+    const password2 =
+        document.getElementById('memberSignupPassword2')?.value
+        || '';
+
+    const name =
+        document.getElementById('memberSignupName')?.value
+        .trim();
+
+    const tel =
+        document.getElementById('memberSignupTel')?.value
+        .trim();
+
+
+    if (!memberId) {
+        alert('아이디를 입력해주세요.');
+        return;
+    }
+
+    if (!password) {
+        alert('비밀번호를 입력해주세요.');
+        return;
+    }
+
+    if (password !== password2) {
+        alert('비밀번호가 서로 다릅니다.');
+        return;
+    }
+
+    if (!name) {
+        alert('이름을 입력해주세요.');
+        return;
+    }
+
+    if (!tel) {
+        alert('휴대폰 번호를 입력해주세요.');
+        return;
+    }
+
+
+    try {
+
+        const data = await memberApiRequest({
+            method: 'POST',
+            body: JSON.stringify({
+                memberId: memberId,
+                password: password,
+                name: name,
+                tel: tel
+            })
+        });
+
+        alert(
+            data.message || '회원가입이 완료되었습니다.'
+        );
+
+        // 로그인 화면으로 이동
+        openMemberLogin();
+
+        // 아이디 자동 입력
+        const loginId =
+            document.getElementById('memberLoginId');
+
+        if (loginId) {
+            loginId.value = memberId;
+        }
+
+        // 비밀번호 입력칸 초기화
+        const loginPassword =
+            document.getElementById('memberLoginPassword');
+
+        if (loginPassword) {
+            loginPassword.value = '';
+        }
+
+        // 회원가입 입력칸 초기화
+        document.getElementById('memberSignupPassword').value = '';
+        document.getElementById('memberSignupPassword2').value = '';
+        document.getElementById('memberSignupName').value = '';
+        document.getElementById('memberSignupTel').value = '';
+
+    } catch (error) {
+
+        console.error('회원가입 오류:', error);
+
+        alert(
+            error.message ||
+            '회원가입 중 오류가 발생했습니다.'
+        );
+    }
+}    
+// =========================================
+// 회원 로그인
+// =========================================
+
+async function memberLogin() {
+
+    const memberId =
+        document.getElementById('memberLoginId')?.value
+        .trim()
+        .toLowerCase();
+
+    const password =
+        document.getElementById('memberLoginPassword')?.value
+        || '';
+
+    if (!memberId) {
+        alert('아이디를 입력해주세요.');
+        return;
+    }
+
+    if (!password) {
+        alert('비밀번호를 입력해주세요.');
+        return;
+    }
+
+    try {
+
+        const data = await memberApiRequest({
+            method: 'POST',
+            body: JSON.stringify({
+                action: 'login',
+                memberId: memberId,
+                password: password
+            })
+        });
+
+        // 로그인 토큰 저장
+        localStorage.setItem(
+            MEMBER_TOKEN_KEY,
+            data.token
+        );
+
+        // 상단 회원 영역 변경
+        updateMemberUI(data.member);
+
+        // 모달 닫기
+        closeMemberModal();
+
+        alert(
+            data.message || '로그인되었습니다.'
+        );
+
+    } catch (error) {
+
+        console.error('로그인 오류:', error);
+
+        alert(
+            error.message ||
+            '로그인 중 오류가 발생했습니다.'
+        );
+    }
+}
+
+
+// =========================================
+// 로그인 상태에 따른 회원 영역 변경
+// =========================================
+
+function updateMemberUI(member) {
+
+    const guest =
+        document.getElementById('memberGuest');
+
+    const user =
+        document.getElementById('memberUser');
+
+    const userName =
+        document.getElementById('memberUserName');
+
+    if (!guest || !user) return;
+
+    if (member) {
+
+        guest.style.display = 'none';
+        user.style.display = 'flex';
+
+        if (userName) {
+            userName.textContent =
+                member.name || '회원';
+        }
+
+    } else {
+
+        guest.style.display = 'flex';
+        user.style.display = 'none';
+
+        if (userName) {
+            userName.textContent = '회원';
+        }
+    }
+}    
+    // =========================================
+// 로그인 상태 확인
+// =========================================
+
+async function loadMemberInfo() {
+
+    const token =
+        localStorage.getItem(MEMBER_TOKEN_KEY);
+
+    // 저장된 로그인 정보가 없으면 종료
+    if (!token) {
+        updateMemberUI(null);
+        return;
+    }
+
+    try {
+
+        const data = await memberApiRequest({
+            method: 'GET'
+        });
+
+        if (data && data.member) {
+            updateMemberUI(data.member);
+        } else {
+            localStorage.removeItem(MEMBER_TOKEN_KEY);
+            updateMemberUI(null);
+        }
+
+    } catch (error) {
+
+        console.log('회원 로그인 상태 확인:', error.message);
+
+        // 세션이 만료되었거나 잘못된 토큰이면 삭제
+        localStorage.removeItem(MEMBER_TOKEN_KEY);
+        updateMemberUI(null);
+    }
+}
+
+
+// =========================================
+// 페이지가 열릴 때 로그인 상태 확인
+// =========================================
+
+document.addEventListener('DOMContentLoaded', function () {
+    loadMemberInfo();
+});
+    // =========================================
+// 회원 로그아웃
+// =========================================
+
+function memberLogout() {
+
+    localStorage.removeItem(MEMBER_TOKEN_KEY);
+
+    updateMemberUI(null);
+
+    alert('로그아웃되었습니다.');
+}
+    
 </script>
     <!-- =========================================
      회원 로그인 / 회원가입 모달
