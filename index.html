@@ -14419,6 +14419,8 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 function openMemberEdit() {
     const modal = document.getElementById('memberEditModal');
+    
+    console.log('memberEditModal:', modal);
 
     if (!modal) {
         alert('회원정보 수정창을 찾을 수 없습니다.');
@@ -14434,28 +14436,6 @@ function openMemberEdit() {
     }
 
     modal.style.display = 'flex';
-    
-    modal.style.position = 'fixed';
-modal.style.top = '0';
-modal.style.left = '0';
-modal.style.right = '0';
-modal.style.bottom = '0';
-modal.style.zIndex = '999999';
-
-    const box = modal.querySelector('.member-modal-box');
-    
-if (box) {
-    box.style.display = 'block';
-    box.style.position = 'relative';
-    box.style.zIndex = '1000000';
-    box.style.background = '#fff';
-    box.style.width = 'min(420px, 90vw)';
-    box.style.padding = '30px';
-    box.style.borderRadius = '16px';
-    box.style.boxSizing = 'border-box';
-}
-    
-    alert('수정창 열기 실행');
 
     memberApiRequest({
         method: 'GET'
