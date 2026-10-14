@@ -14825,7 +14825,10 @@ function closeMyPage() {
         modal.style.display = 'none';
     }
 } 
- function openMemberLogin() {
+function openMemberLogin() {
+    const editModal = document.getElementById('memberEditModal');
+    if (editModal) editModal.style.display = 'none';
+
     const modal = document.getElementById('memberModal');
     const loginPanel = document.getElementById('memberLoginPanel');
     const signupPanel = document.getElementById('memberSignupPanel');
@@ -14836,7 +14839,7 @@ function closeMyPage() {
 
     if (loginPanel) loginPanel.style.display = 'block';
     if (signupPanel) signupPanel.style.display = 'none';
-}   
+}
 window.openMemberEdit = openMemberEdit;    
     
 </script>
