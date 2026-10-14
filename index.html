@@ -5126,144 +5126,27 @@ padding: 0 14px;
     font-weight: 700;
 }
 
-/* =========================================
-   마이페이지 예약내역 - 깔끔한 카드형
-   ========================================= */
-
-.member-booking-list {
-    margin-top: 18px;
-    max-height: none;
-    overflow: visible;
-}
-
-.member-booking-card {
-    position: relative;
-    padding: 22px 24px;
-    margin-bottom: 14px;
-    border: 1px solid #e5eaf0;
-    border-radius: 16px;
-    background: #fff;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.member-booking-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(30, 50, 80, 0.08);
-}
-
-/* 상단 - 상품명 / 상태 */
-.member-booking-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    padding-bottom: 16px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #edf0f4;
-}
-
-.member-booking-top strong {
-    font-size: 17px;
-    font-weight: 800;
-    color: #172033;
-}
-
-/* 상태 */
-.member-booking-status {
-    flex-shrink: 0;
-    padding: 6px 12px;
-    border-radius: 20px;
-    background: #eef5ff;
-    color: #2771c7;
-    font-size: 12px;
-    font-weight: 700;
-}
-
-/* 예약 정보 */
 .member-booking-row {
-    display: flex;
-    align-items: center;
-    min-height: 32px;
-    padding: 3px 0;
+    padding: 7px 0;
     font-size: 14px;
 }
 
 .member-booking-row span {
-    width: 70px;
-    flex-shrink: 0;
-    color: #929baa;
-    font-size: 13px;
+    color: #8a93a1;
 }
 
 .member-booking-row strong {
-    color: #252f3e;
-    font-size: 14px;
-    font-weight: 600;
+    color: #293343;
 }
 
-/* 결제금액 강조 */
-.member-booking-row:nth-of-type(5) strong {
-    font-weight: 800;
-}
-
-/* 주문번호 */
 .member-booking-order {
-    margin-top: 15px;
-    padding-top: 12px;
-    border-top: 1px dashed #dfe4ea;
-    color: #a0a8b4;
+    margin-top: 12px;
+    padding-top: 11px;
+    border-top: 1px dashed #e1e5ea;
+    color: #a0a7b2;
     font-size: 11px;
 }
 
-/* 빈 예약 */
-.member-booking-empty {
-    padding: 45px 20px;
-    border: 1px dashed #d9dee7;
-    border-radius: 14px;
-    background: #fafbfc;
-    text-align: center;
-    color: #929aa8;
-    font-size: 14px;
-}
-
-
-/* =========================================
-   모바일
-   ========================================= */
-
-@media (max-width: 600px) {
-
-    .member-booking-card {
-        padding: 18px;
-        border-radius: 14px;
-    }
-
-    .member-booking-top {
-        align-items: flex-start;
-    }
-
-    .member-booking-top strong {
-        font-size: 15px;
-    }
-
-    .member-booking-status {
-        padding: 5px 9px;
-        font-size: 11px;
-    }
-
-    .member-booking-row {
-        min-height: 30px;
-    }
-
-    .member-booking-row span {
-        width: 60px;
-        font-size: 12px;
-    }
-
-    .member-booking-row strong {
-        font-size: 13px;
-    }
-}
 .member-booking-empty {
     padding: 45px 20px;
     border: 1px dashed #d9dee7;
@@ -5331,86 +5214,6 @@ padding: 0 14px;
         font-size: 15px;
     }
 }    
-    /* 예약 상태별 색상 */
-
-.member-booking-status.status-confirmed {
-    background: #eef5ff;
-    color: #2771c7;
-}
-
-.member-booking-status.status-pending {
-    background: #fff6e8;
-    color: #d88916;
-}
-
-.member-booking-status.status-cancelled {
-    background: #f1f3f5;
-    color: #8b929c;
-}
-
-.member-booking-status.status-completed {
-    background: #edf8f1;
-    color: #2f8a52;
-}
-    function openMemberLogin() {
-    const modal = document.getElementById('memberModal');
-    const login = document.getElementById('memberLoginPanel');
-    const signup = document.getElementById('memberSignupPanel');
-
-    if (!modal) {
-        console.error('memberModal을 찾을 수 없습니다.');
-        return;
-    }
-
-    modal.style.display = 'flex';
-
-    if (login) {
-        login.style.display = 'block';
-    }
-
-    if (signup) {
-        signup.style.display = 'none';
-    }
-
-    setTimeout(function () {
-        const input = document.getElementById('memberLoginId');
-        if (input) input.focus();
-    }, 50);
-}
-
-function openMemberSignup() {
-    const modal = document.getElementById('memberModal');
-    const login = document.getElementById('memberLoginPanel');
-    const signup = document.getElementById('memberSignupPanel');
-
-    if (!modal) {
-        console.error('memberModal을 찾을 수 없습니다.');
-        return;
-    }
-
-    modal.style.display = 'flex';
-
-    if (login) {
-        login.style.display = 'none';
-    }
-
-    if (signup) {
-        signup.style.display = 'block';
-    }
-
-    setTimeout(function () {
-        const input = document.getElementById('memberSignupId');
-        if (input) input.focus();
-    }, 50);
-}
-
-function closeMemberModal() {
-    const modal = document.getElementById('memberModal');
-
-    if (modal) {
-        modal.style.display = 'none';
-    }
-}
     </style>
 </head>
 <body id="mainBody">
@@ -14731,10 +14534,8 @@ if (countEl) {
                 Number(booking.count || 0);
 
             const status =
-                booking.const status = booking.status || '-';
+                booking.status || '-';
 
-const status = booking.status || '-';
-            
             return `
                 <div class="member-booking-card">
 
@@ -14744,7 +14545,9 @@ const status = booking.status || '-';
                             ${course}
                         </strong>
 
-<span class="member-booking-status">${status}</span>
+                        <span class="member-booking-status">
+                            ${status}
+                        </span>
 
                     </div>
 
