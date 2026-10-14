@@ -5101,19 +5101,25 @@ padding: 0 14px;
     </div>
 
     <!-- 로그인 후 -->
-    <div id="memberUser" style="display:none;">
-        <button type="button"
-                class="member-btn"
-                onclick="openMyPage()">
-            👤 <span id="memberUserName">회원</span>님
-        </button>
+<div id="memberUser" style="display:none;">
 
-        <button type="button"
-                class="member-btn"
-                onclick="memberLogout()">
-            로그아웃
-        </button>
-    </div>
+    <span class="member-welcome">
+        👤 <span id="memberUserName">회원</span>님
+    </span>
+
+    <button type="button"
+            class="member-btn"
+            onclick="goToMyPage()">
+        마이페이지
+    </button>
+
+    <button type="button"
+            class="member-btn"
+            onclick="memberLogout()">
+        로그아웃
+    </button>
+
+</div>
 
 </div>
                 <!-- 모바일 메뉴 버튼 -->
@@ -6016,7 +6022,74 @@ padding: 0 14px;
     </div>
 
 </div>
+<!-- 회원 마이페이지 -->
+<div id="cat-mypage" class="category-sec">
 
+    <div class="mypage-container">
+
+        <div class="mypage-header">
+            <h2>👤 마이페이지</h2>
+            <p>회원님의 정보를 확인하고 예약내역을 관리할 수 있습니다.</p>
+        </div>
+
+        <!-- 회원정보 -->
+        <div class="mypage-card">
+
+            <h3>회원정보</h3>
+
+            <div class="mypage-info-grid">
+
+                <div class="mypage-info-item">
+                    <span>아이디</span>
+                    <strong id="myPageMemberId">-</strong>
+                </div>
+
+                <div class="mypage-info-item">
+                    <span>이름</span>
+                    <strong id="myPageMemberName">-</strong>
+                </div>
+
+                <div class="mypage-info-item">
+                    <span>휴대폰</span>
+                    <strong id="myPageMemberTel">-</strong>
+                </div>
+
+                <div class="mypage-info-item">
+                    <span>가입일</span>
+                    <strong id="myPageMemberCreatedAt">-</strong>
+                </div>
+
+                <div class="mypage-info-item">
+                    <span>예약 횟수</span>
+                    <strong id="myPageMemberReservationCount">0회</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- 내 예약내역 -->
+        <div class="mypage-card">
+
+            <div class="mypage-section-title">
+                <h3>🎣 내 예약내역</h3>
+            </div>
+
+            <div id="myPageBookingList"
+                 class="member-booking-list">
+
+                <div class="member-booking-empty">
+                    예약내역을 불러오는 중입니다.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
     <!-- 6. 관리자센터 카테고리 -->
     <div id="cat-admin" class="category-sec">
         <div class="admin-dashboard-layout">
@@ -14302,17 +14375,62 @@ async function loadMyPageBookings(tel) {
             '</div>';
     }
 }  
-function openMyPage() {
-    const modal = document.getElementById('memberMyPageModal');
+function goToMyPage() {
+    const token = localStorage.getItem(MEMBER_TOKEN_KEY);
 
-    if (!modal) {
-        alert('마이페이지 화면을 찾을 수 없습니다.');
+    if (!token) {
+        alert('로그인이 필요합니다.');
+        openMemberLogin();
         return;
     }
 
-    modal.style.display = 'flex';
+    switchCategory('cat-mypage', null);
+
+    loadMyPageInfo();
 }
 
+async function loadMyPageInfo() {
+    try {
+        const data = await memberApiRequest({
+            method: 'GET'
+        });
+
+        if (!data || !data.member) {
+            alert('로그인 정보가 없습니다.');
+            return;
+        }
+
+        const member = data.member;
+
+        const idEl = document.getElementById('myPageMemberId');
+        const nameEl = document.getElementById('myPageMemberName');
+        const telEl = document.getElementById('myPageMemberTel');
+        const createdEl = document.getElementById('myPageMemberCreatedAt');
+        const countEl = document.getElementById('myPageMemberReservationCount');
+
+        if (idEl) idEl.textContent = member.memberId || '-';
+        if (nameEl) nameEl.textContent = member.name || '-';
+        if (telEl) telEl.textContent = member.tel || '-';
+
+        if (createdEl) {
+            createdEl.textContent = member.createdAt
+                ? new Date(member.createdAt).toLocaleDateString('ko-KR')
+                : '-';
+        }
+
+        if (countEl) {
+            countEl.textContent =
+                (member.reservationCount || 0) + '회';
+        }
+
+        await loadMyPageBookings(member.tel);
+
+    } catch (error) {
+        console.error('마이페이지 불러오기 오류:', error);
+        alert(error.message || '회원 정보를 불러오지 못했습니다.');
+    }
+}    
+    
 function closeMyPage() {
     const modal = document.getElementById('memberMyPageModal');
 
