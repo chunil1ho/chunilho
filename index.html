@@ -12078,6 +12078,19 @@ async function adminCompleteBooking(orderNo) {
                         · <strong>${escapeCalendarText(b.status || '')}</strong>
                     </div>
 
+<div style="margin-bottom:8px; color:#64748b; font-size:0.82rem;">
+    💳 결제 신청:
+    ${b.createdAt
+        ? new Date(b.createdAt).toLocaleString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        })
+        : '확인 불가'}
+</div>
+
                     <div style="display:flex; flex-wrap:wrap; gap:5px;">
                         ${actionBtn}
                     </div>
