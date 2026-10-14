@@ -15056,22 +15056,64 @@ function closeMyPage() {
 
     </div>
 </div> 
-        <!-- 회원정보 수정 모달 -->
+<!-- 회원정보 수정 모달 -->
 <div id="memberEditModal"
-     class="member-modal"
-     style="display:none;">
+     style="
+        display:none;
+        position:fixed;
+        inset:0;
+        width:100vw;
+        height:100vh;
+        z-index:999999;
+        background:rgba(0,0,0,0.55);
+        align-items:center;
+        justify-content:center;
+        box-sizing:border-box;
+     ">
 
-    <div class="member-modal-box">
+    <div style="
+        position:relative;
+        width:420px;
+        max-width:calc(100vw - 32px);
+        min-height:300px;
+        padding:30px;
+        background:#fff;
+        border-radius:16px;
+        box-sizing:border-box;
+        box-shadow:0 10px 40px rgba(0,0,0,0.2);
+    ">
 
         <button type="button"
-                class="member-modal-close"
-                onclick="closeMemberEdit()">
+                onclick="closeMemberEdit()"
+                style="
+                    position:absolute;
+                    top:12px;
+                    right:14px;
+                    width:32px;
+                    height:32px;
+                    border:0;
+                    background:transparent;
+                    font-size:26px;
+                    line-height:32px;
+                    cursor:pointer;
+                    color:#555;
+                ">
             ×
         </button>
 
-        <h2>회원정보 수정</h2>
+        <h2 style="
+            margin:0 0 8px;
+            font-size:22px;
+            color:#222;
+        ">
+            회원정보 수정
+        </h2>
 
-        <p class="member-modal-subtitle">
+        <p style="
+            margin:0 0 22px;
+            color:#777;
+            font-size:14px;
+        ">
             회원님의 정보를 수정할 수 있습니다.
         </p>
 
@@ -15080,6 +15122,16 @@ function closeMyPage() {
             id="memberEditName"
             placeholder="이름"
             autocomplete="name"
+            style="
+                width:100%;
+                height:46px;
+                margin-bottom:12px;
+                padding:0 14px;
+                border:1px solid #ddd;
+                border-radius:8px;
+                box-sizing:border-box;
+                font-size:14px;
+            "
         >
 
         <input
@@ -15087,6 +15139,16 @@ function closeMyPage() {
             id="memberEditTel"
             placeholder="휴대폰 번호"
             autocomplete="tel"
+            style="
+                width:100%;
+                height:46px;
+                margin-bottom:12px;
+                padding:0 14px;
+                border:1px solid #ddd;
+                border-radius:8px;
+                box-sizing:border-box;
+                font-size:14px;
+            "
         >
 
         <input
@@ -15094,6 +15156,16 @@ function closeMyPage() {
             id="memberEditPassword"
             placeholder="새 비밀번호 (변경할 때만 입력)"
             autocomplete="new-password"
+            style="
+                width:100%;
+                height:46px;
+                margin-bottom:12px;
+                padding:0 14px;
+                border:1px solid #ddd;
+                border-radius:8px;
+                box-sizing:border-box;
+                font-size:14px;
+            "
         >
 
         <input
@@ -15101,22 +15173,52 @@ function closeMyPage() {
             id="memberEditPassword2"
             placeholder="새 비밀번호 확인"
             autocomplete="new-password"
+            style="
+                width:100%;
+                height:46px;
+                margin-bottom:18px;
+                padding:0 14px;
+                border:1px solid #ddd;
+                border-radius:8px;
+                box-sizing:border-box;
+                font-size:14px;
+            "
         >
 
         <button type="button"
-                class="member-submit-btn"
-                onclick="saveMemberEdit()">
+                onclick="saveMemberEdit()"
+                style="
+                    width:100%;
+                    height:46px;
+                    border:0;
+                    border-radius:8px;
+                    background:#222;
+                    color:#fff;
+                    font-size:15px;
+                    font-weight:700;
+                    cursor:pointer;
+                ">
             수정 저장
         </button>
 
-        <div class="member-links">
-            <button type="button"
-                    onclick="closeMemberEdit()">
-                취소
-            </button>
-        </div>
+        <button type="button"
+                onclick="closeMemberEdit()"
+                style="
+                    width:100%;
+                    height:42px;
+                    margin-top:8px;
+                    border:1px solid #ddd;
+                    border-radius:8px;
+                    background:#fff;
+                    color:#555;
+                    font-size:14px;
+                    cursor:pointer;
+                ">
+            취소
+        </button>
 
     </div>
+</div>
 </div>
 </body>
 </html>
