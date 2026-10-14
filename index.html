@@ -14439,6 +14439,14 @@ function openMemberEdit() {
 
     const box = modal.querySelector('.member-modal-box');
 
+    box.style.width = '420px';
+box.style.minHeight = '300px';
+box.style.padding = '30px';
+box.style.background = '#fff';
+box.style.borderRadius = '16px';
+box.style.boxSizing = 'border-box';
+box.style.position = 'relative';
+
 console.log('memberEditModal box:', box);
     
     console.log('box computed display:', getComputedStyle(box).display);
