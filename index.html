@@ -14637,7 +14637,11 @@ const statusClass = statusClassMap[status] || '';
                     <div class="member-booking-order">
                         주문번호 : ${booking.orderNo || '-'}
                     </div>
-                    
+const showContactButtons =
+    status === '예약확정' ||
+    status === '예약대기';
+    
+${showContactButtons ? `
 <div class="member-booking-actions">
     <a href="tel:01077685913" class="member-booking-call-btn">
         📞 예약 문의
@@ -14655,6 +14659,7 @@ const statusClass = statusClassMap[status] || '';
         💬 위챗 문의
     </button>
 </div>
+` : ''}
                 </div>
             `;
 
