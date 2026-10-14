@@ -14419,8 +14419,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 function openMemberEdit() {
     const modal = document.getElementById('memberEditModal');
-    
-    console.log('memberEditModal:', modal);
 
     if (!modal) {
         alert('회원정보 수정창을 찾을 수 없습니다.');
@@ -14437,35 +14435,6 @@ function openMemberEdit() {
 
     modal.style.display = 'flex';
 
-    const box = modal.querySelector('.member-modal-box');
-
-    console.log(
-    'box transform:',
-    getComputedStyle(box).transform
-);
-    
-    box.style.width = '420px';
-box.style.minHeight = '300px';
-box.style.padding = '30px';
-box.style.background = '#fff';
-box.style.borderRadius = '16px';
-box.style.boxSizing = 'border-box';
-box.style.position = 'relative';
-
-console.log('memberEditModal box:', box);
-    
-    console.log('box computed display:', getComputedStyle(box).display);
-console.log('box computed visibility:', getComputedStyle(box).visibility);
-console.log('box computed opacity:', getComputedStyle(box).opacity);
-
-    const rect = box.getBoundingClientRect();
-
-console.log('box 위치:', rect);
-console.log('box width:', rect.width);
-console.log('box height:', rect.height);
-console.log('box top:', rect.top);
-console.log('box left:', rect.left);
-    
     memberApiRequest({
         method: 'GET'
     })
@@ -14508,10 +14477,7 @@ console.log('box left:', rect.left);
     })
     .catch(function (error) {
 
-        console.error(
-            '회원정보 불러오기 오류:',
-            error
-        );
+        console.error('회원정보 불러오기 오류:', error);
 
         alert(
             error.message ||
