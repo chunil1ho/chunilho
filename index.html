@@ -14554,7 +14554,15 @@ if (countEl) {
 
             const status =
                 booking.status || '-';
+            
+const statusClassMap = {
+    '예약확정': 'status-confirmed',
+    '예약대기': 'status-pending',
+    '취소완료': 'status-cancelled',
+    '이용완료': 'status-completed'
+};
 
+const statusClass = statusClassMap[status] || '';
             return `
                 <div class="member-booking-card">
 
@@ -14564,7 +14572,7 @@ if (countEl) {
                             ${course}
                         </strong>
 
-                        <span class="member-booking-status status-${status}">
+<span class="member-booking-status ${statusClass}">
     ${status}
 </span>
 
