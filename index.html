@@ -14498,7 +14498,13 @@ async function loadMyPageBookings(tel) {
             Array.isArray(data?.bookings)
                 ? data.bookings
                 : [];
+        
+const countEl = document.getElementById('myPageMemberReservationCount');
 
+if (countEl) {
+    countEl.textContent = bookings.length + '회';
+}
+        
         if (bookings.length === 0) {
 
             list.innerHTML =
@@ -14638,12 +14644,7 @@ async function loadMyPageInfo() {
                 : '-';
         }
 
-        if (countEl) {
-            countEl.textContent =
-                (member.reservationCount || 0) + '회';
-        }
-
-        await loadMyPageBookings(member.tel);
+await loadMyPageBookings(member.tel);
 
     } catch (error) {
         console.error('마이페이지 불러오기 오류:', error);
