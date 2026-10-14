@@ -5352,6 +5352,65 @@ padding: 0 14px;
     background: #edf8f1;
     color: #2f8a52;
 }
+    function openMemberLogin() {
+    const modal = document.getElementById('memberModal');
+    const login = document.getElementById('memberLoginPanel');
+    const signup = document.getElementById('memberSignupPanel');
+
+    if (!modal) {
+        console.error('memberModal을 찾을 수 없습니다.');
+        return;
+    }
+
+    modal.style.display = 'flex';
+
+    if (login) {
+        login.style.display = 'block';
+    }
+
+    if (signup) {
+        signup.style.display = 'none';
+    }
+
+    setTimeout(function () {
+        const input = document.getElementById('memberLoginId');
+        if (input) input.focus();
+    }, 50);
+}
+
+function openMemberSignup() {
+    const modal = document.getElementById('memberModal');
+    const login = document.getElementById('memberLoginPanel');
+    const signup = document.getElementById('memberSignupPanel');
+
+    if (!modal) {
+        console.error('memberModal을 찾을 수 없습니다.');
+        return;
+    }
+
+    modal.style.display = 'flex';
+
+    if (login) {
+        login.style.display = 'none';
+    }
+
+    if (signup) {
+        signup.style.display = 'block';
+    }
+
+    setTimeout(function () {
+        const input = document.getElementById('memberSignupId');
+        if (input) input.focus();
+    }, 50);
+}
+
+function closeMemberModal() {
+    const modal = document.getElementById('memberModal');
+
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
     </style>
 </head>
 <body id="mainBody">
