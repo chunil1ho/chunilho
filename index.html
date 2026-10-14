@@ -14434,6 +14434,14 @@ function openMemberEdit() {
     }
 
     modal.style.display = 'flex';
+    
+    modal.style.position = 'fixed';
+modal.style.top = '0';
+modal.style.left = '0';
+modal.style.right = '0';
+modal.style.bottom = '0';
+modal.style.zIndex = '999999';
+    
     alert('수정창 열기 실행');
 
     memberApiRequest({
