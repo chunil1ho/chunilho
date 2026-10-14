@@ -4547,6 +4547,163 @@ padding: 0 14px;
         font-size: 0.85rem;
     }
 }
+    /* =========================================
+   관리자 예약 달력 - 디자인 개선
+   ========================================= */
+
+.admin-calendar {
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+/* 달력 상단 */
+.admin-calendar-header {
+    padding: 16px 18px;
+}
+
+.admin-calendar-title {
+    font-size: 1.15rem;
+}
+
+/* 오늘 버튼 */
+.admin-calendar-nav button:nth-child(2) {
+    width: auto;
+    padding: 0 12px;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+/* 요일 */
+.admin-calendar-weekday {
+    padding: 11px 5px;
+    font-size: 0.8rem;
+    background: #f8fafc;
+}
+
+/* 날짜 */
+.admin-calendar-day {
+    min-height: 118px;
+    padding: 9px;
+}
+
+.admin-calendar-day.today {
+    background: #eff6ff;
+    box-shadow: inset 0 0 0 2px #bfdbfe;
+}
+
+.admin-calendar-date {
+    margin-bottom: 7px;
+    font-size: 0.9rem;
+}
+
+/* 예약 표시 */
+.admin-calendar-booking {
+    padding: 5px 7px;
+    margin-top: 5px;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: default;
+}
+
+/* 상태별 조금 더 선명하게 */
+.admin-calendar-booking.payment {
+    background: #fef3c7;
+    color: #92400e;
+    border-left: 3px solid #f59e0b;
+}
+
+.admin-calendar-booking.confirmed {
+    background: #dcfce7;
+    color: #166534;
+    border-left: 3px solid #22c55e;
+}
+
+.admin-calendar-booking.completed {
+    background: #f1f5f9;
+    color: #475569;
+    border-left: 3px solid #94a3b8;
+}
+
+.admin-calendar-booking.cancelled {
+    background: #fee2e2;
+    color: #991b1b;
+    border-left: 3px solid #ef4444;
+}
+
+.admin-calendar-more {
+    margin-top: 5px;
+    padding-left: 3px;
+    font-size: 0.7rem;
+    color: #64748b;
+}
+
+/* =========================================
+   날짜 클릭 후 예약 상세
+   ========================================= */
+
+.admin-calendar-detail {
+    margin-top: 18px;
+    padding: 18px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.admin-calendar-detail-title {
+    padding-bottom: 12px;
+    margin-bottom: 2px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 1.05rem;
+}
+
+/* 예약 하나하나를 카드처럼 */
+.admin-calendar-detail-item {
+    margin-top: 12px;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+}
+
+/* 마지막 카드 */
+.admin-calendar-detail-item:last-child {
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* 모바일 */
+@media (max-width: 700px) {
+
+    .admin-calendar-header {
+        padding: 13px;
+    }
+
+    .admin-calendar-title {
+        font-size: 1rem;
+    }
+
+    .admin-calendar-day {
+        min-height: 82px;
+        padding: 5px;
+    }
+
+    .admin-calendar-date {
+        font-size: 0.8rem;
+    }
+
+    .admin-calendar-booking {
+        padding: 3px 4px;
+        font-size: 0.62rem;
+    }
+
+    .admin-calendar-detail {
+        padding: 12px;
+    }
+
+    .admin-calendar-detail-item {
+        padding: 12px;
+    }
+}
     </style>
 </head>
 <body id="mainBody">
