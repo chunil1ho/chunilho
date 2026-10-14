@@ -14444,6 +14444,14 @@ console.log('memberEditModal box:', box);
     console.log('box computed display:', getComputedStyle(box).display);
 console.log('box computed visibility:', getComputedStyle(box).visibility);
 console.log('box computed opacity:', getComputedStyle(box).opacity);
+
+    const rect = box.getBoundingClientRect();
+
+console.log('box 위치:', rect);
+console.log('box width:', rect.width);
+console.log('box height:', rect.height);
+console.log('box top:', rect.top);
+console.log('box left:', rect.left);
     
     memberApiRequest({
         method: 'GET'
