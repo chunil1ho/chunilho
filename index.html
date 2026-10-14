@@ -14437,6 +14437,10 @@ function openMemberEdit() {
 
     modal.style.display = 'flex';
 
+    const box = modal.querySelector('.member-modal-box');
+
+console.log('memberEditModal box:', box);
+    
     memberApiRequest({
         method: 'GET'
     })
