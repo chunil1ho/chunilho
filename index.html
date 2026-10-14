@@ -4367,7 +4367,186 @@ padding: 0 14px;
         margin: 0 !important;
     }
 }
+/* 관리자 예약 달력 */
+.admin-calendar {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+}
 
+.admin-calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.admin-calendar-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--primary-color);
+}
+
+.admin-calendar-nav {
+    display: flex;
+    gap: 6px;
+}
+
+.admin-calendar-nav button {
+    width: 34px;
+    height: 34px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.admin-calendar-nav button:hover {
+    background: #f1f5f9;
+}
+
+.admin-calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.admin-calendar-weekday {
+    padding: 10px 5px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: #64748b;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.admin-calendar-day {
+    min-height: 105px;
+    padding: 8px;
+    border-right: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    background: #fff;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.admin-calendar-day:hover {
+    background: #f8fafc;
+}
+
+.admin-calendar-day:nth-child(7n) {
+    border-right: none;
+}
+
+.admin-calendar-day.empty {
+    background: #f8fafc;
+    cursor: default;
+}
+
+.admin-calendar-day.today {
+    background: #eff6ff;
+}
+
+.admin-calendar-date {
+    font-size: 0.88rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+.admin-calendar-day.today .admin-calendar-date {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 26px;
+    height: 26px;
+    padding: 0 6px;
+    background: var(--primary-color);
+    color: #fff;
+    border-radius: 50%;
+}
+
+.admin-calendar-booking {
+    margin-top: 4px;
+    padding: 4px 5px;
+    border-radius: 5px;
+    font-size: 0.72rem;
+    line-height: 1.35;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.admin-calendar-booking.payment {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.admin-calendar-booking.confirmed {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.admin-calendar-booking.completed {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.admin-calendar-booking.cancelled {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.admin-calendar-more {
+    margin-top: 3px;
+    font-size: 0.7rem;
+    color: #64748b;
+    font-weight: 700;
+}
+
+/* 날짜를 클릭했을 때 나오는 상세 예약 */
+.admin-calendar-detail {
+    margin-top: 15px;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+}
+
+.admin-calendar-detail-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 12px;
+}
+
+.admin-calendar-detail-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.admin-calendar-detail-item:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 700px) {
+    .admin-calendar-day {
+        min-height: 75px;
+        padding: 5px;
+    }
+
+    .admin-calendar-booking {
+        font-size: 0.65rem;
+    }
+
+    .admin-calendar-detail {
+        font-size: 0.85rem;
+    }
+}
     </style>
 </head>
 <body id="mainBody">
@@ -5379,7 +5558,7 @@ padding: 0 14px;
                     <p style="color: var(--text-sub); margin-bottom: 1.5rem; font-size: 0.92rem;" data-i18n="adminDashDesc">손님이 예약을 완료하면 실시간으로 반영되는 내역입니다.</p>
                     <div style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color);">
                         <h4 style="color: var(--primary-color); margin-bottom: 10px; font-size: 1.05rem;" data-i18n="adminDashSub">📋 최근 실시간 결제 및 예약 내역</h4>
-                        <div id="adminBookingListContainer" style="max-height: 300px; overflow-y: auto; font-size: 0.9rem; color: var(--text-main);">
+                        <div id="adminBookingListContainer">
                             <p style="color: var(--text-sub); text-align: center; padding: 20px 0;" data-i18n="adminNoData">등록된 내역이 없습니다.</p>
                         </div>
                     </div>
@@ -11212,149 +11391,606 @@ async function adminCompleteBooking(orderNo) {
         btnEl.classList.add('active');
     }
 
-    async function updateAdminDashboard() {
-        if (!isAdminLoggedIn || !adminToken) return;
-        await loadBookingsFromServer();
-        const container = document.getElementById('adminBookingListContainer');
-        const pgTable = document.getElementById('adminPgTableBody');
-        if (!container) return;
+  async function updateAdminDashboard() {
+    if (!isAdminLoggedIn || !adminToken) return;
 
-        if (bookings.length === 0) {
-            container.innerHTML = '<p style="color: var(--text-sub); text-align: center; padding: 20px 0;">등록된 내역이 없습니다.</p>';
-            if(pgTable) pgTable.innerHTML = '<tr><td colspan="5" class="center" style="color:var(--text-sub);">조회된 결제 내역이 없습니다.</td></tr>';
+    await loadBookingsFromServer();
+
+    const container = document.getElementById('adminBookingListContainer');
+    const pgTable = document.getElementById('adminPgTableBody');
+
+    if (!container) return;
+
+    if (bookings.length === 0) {
+        container.innerHTML = `
+            <p style="color: var(--text-sub); text-align:center; padding:20px 0;">
+                등록된 내역이 없습니다.
+            </p>
+        `;
+
+        if (pgTable) {
+            pgTable.innerHTML = `
+                <tr>
+                    <td colspan="5" class="center" style="color:var(--text-sub);">
+                        조회된 결제 내역이 없습니다.
+                    </td>
+                </tr>
+            `;
+        }
+
+        return;
+    }
+
+    /* =========================================================
+       결제내역 테이블
+       ========================================================= */
+
+    let pgHtml = '';
+
+    [...bookings].reverse().forEach(b => {
+
+        let actionBtn = '';
+
+        if (b.status === '결제완료') {
+
+            actionBtn = `
+                <button type="button"
+                        class="btn-cancel-req"
+                        style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
+                        onclick="adminConfirmBooking('${b.orderNo}')">
+                    예약확정
+                </button>
+
+                <button type="button"
+                        class="btn-cancel-req"
+                        style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
+                        onclick="openDateTimeChange('${b.orderNo}', '${b.date}', '${b.time || ''}'); return false;">
+                    예약 날짜/시간 변경
+                </button>
+
+                <button type="button"
+                        class="btn-cancel-req"
+                        style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
+                        onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}', ${Number(b.refundAmount || 0)}); return false;">
+                    취소/환불
+                </button>
+            `;
+
+        } else if (b.status === '예약확정') {
+
+            actionBtn = `
+                <span style="color:#16a34a; font-weight:600;">
+                    예약완료
+                </span>
+
+                <button type="button"
+                        class="btn-cancel-req"
+                        style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
+                        onclick="adminCancelConfirmBooking('${b.orderNo}')">
+                    예약확정취소
+                </button>
+
+                <button type="button"
+                        class="btn-cancel-req"
+                        style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
+                        onclick="openDateTimeChange('${b.orderNo}', '${b.date}', '${b.time || ''}'); return false;">
+                    예약 날짜/시간 변경
+                </button>
+
+                <button type="button"
+                        class="btn-cancel-req"
+                        style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
+                        onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}', ${Number(b.refundAmount || 0)})">
+                    취소/환불
+                </button>
+
+                <button type="button"
+                        style="padding:4px 8px; font-size:0.8rem; margin-top:0; background:#16a34a; color:white; border:none; border-radius:5px; cursor:pointer;"
+                        onclick="adminCompleteBooking('${b.orderNo}')">
+                    이용완료
+                </button>
+            `;
+
+        } else if (b.status === '이용완료') {
+
+            actionBtn =
+                '<span style="color:#6b7280; font-weight:600;">이용완료</span>';
+
+        } else if (b.status === '부분환불') {
+
+            actionBtn = `
+                <span style="color:#f59e0b; font-weight:600;">
+                    부분환불
+                </span>
+
+                <button type="button"
+                        class="btn-cancel-req"
+                        style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
+                        onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}', ${Number(b.refundAmount || 0)})">
+                    추가 환불
+                </button>
+
+                <button type="button"
+                        style="padding:4px 8px; font-size:0.8rem; margin-top:0; background:#16a34a; color:white; border:none; border-radius:5px; cursor:pointer;"
+                        onclick="adminCompleteBooking('${b.orderNo}')">
+                    이용완료
+                </button>
+            `;
+
+        } else if (b.status === '취소완료') {
+
+            actionBtn =
+                '<span style="color:#ef4444; font-weight:600;">취소완료</span>';
+
+        } else {
+
+            actionBtn =
+                `<span style="font-weight:600;">${b.status}</span>`;
+        }
+
+        pgHtml += `
+            <tr>
+                <td>${b.orderNo}</td>
+                <td>${b.name}</td>
+                <td>${Number(b.price || 0).toLocaleString()}원</td>
+                <td>${b.status}</td>
+                <td>${actionBtn}</td>
+            </tr>
+        `;
+    });
+
+
+    /* =========================================================
+       예약 달력
+       ========================================================= */
+
+    let currentCalendarDate = window.adminCalendarDate
+        ? new Date(window.adminCalendarDate)
+        : new Date();
+
+    currentCalendarDate.setDate(1);
+
+    window.adminCalendarDate = currentCalendarDate;
+
+
+    function formatDate(year, month, day) {
+
+        return year + '-' +
+            String(month + 1).padStart(2, '0') + '-' +
+            String(day).padStart(2, '0');
+    }
+
+
+    function escapeCalendarText(value) {
+
+        return String(value ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+
+    function getBookingClass(status) {
+
+        if (status === '예약확정') return 'confirmed';
+        if (status === '이용완료') return 'completed';
+        if (status === '취소완료') return 'cancelled';
+
+        return 'payment';
+    }
+
+
+    function renderCalendar(year, month) {
+
+        const today = new Date();
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const lastDate = new Date(year, month + 1, 0).getDate();
+
+        let calendarHtml = `
+            <div class="admin-calendar">
+
+                <div class="admin-calendar-header">
+
+                    <div class="admin-calendar-title">
+                        📅 ${year}년 ${month + 1}월
+                    </div>
+
+                    <div class="admin-calendar-nav">
+
+                        <button type="button"
+                                onclick="changeAdminCalendarMonth(-1)">
+                            ‹
+                        </button>
+
+                        <button type="button"
+                                onclick="goAdminCalendarToday()">
+                            오늘
+                        </button>
+
+                        <button type="button"
+                                onclick="changeAdminCalendarMonth(1)">
+                            ›
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="admin-calendar-grid">
+
+                    <div class="admin-calendar-weekday">일</div>
+                    <div class="admin-calendar-weekday">월</div>
+                    <div class="admin-calendar-weekday">화</div>
+                    <div class="admin-calendar-weekday">수</div>
+                    <div class="admin-calendar-weekday">목</div>
+                    <div class="admin-calendar-weekday">금</div>
+                    <div class="admin-calendar-weekday">토</div>
+        `;
+
+
+        /* 앞쪽 빈칸 */
+
+        for (let i = 0; i < firstDay; i++) {
+
+            calendarHtml += `
+                <div class="admin-calendar-day empty"></div>
+            `;
+        }
+
+
+        /* 날짜 */
+
+        for (let day = 1; day <= lastDate; day++) {
+
+            const dateString = formatDate(year, month, day);
+
+            const dayBookings = bookings.filter(b => {
+
+                return String(b.date || '').substring(0, 10) === dateString;
+
+            });
+
+
+            const isToday =
+                today.getFullYear() === year &&
+                today.getMonth() === month &&
+                today.getDate() === day;
+
+
+            let bookingHtml = '';
+
+            dayBookings.slice(0, 3).forEach(b => {
+
+                const statusClass = getBookingClass(b.status);
+
+                const timeText = b.time
+                    ? escapeCalendarText(b.time)
+                    : '';
+
+                const nameText =
+                    escapeCalendarText(b.name || '');
+
+                const countText =
+                    escapeCalendarText(b.count || 0);
+
+
+                bookingHtml += `
+                    <div class="admin-calendar-booking ${statusClass}"
+                         title="${nameText} / ${countText}명">
+
+                        ${timeText ? timeText + ' ' : ''}
+                        ${nameText}
+                        ${countText}명
+
+                    </div>
+                `;
+            });
+
+
+            if (dayBookings.length > 3) {
+
+                bookingHtml += `
+                    <div class="admin-calendar-more">
+                        + ${dayBookings.length - 3}건 더보기
+                    </div>
+                `;
+            }
+
+
+            calendarHtml += `
+                <div class="admin-calendar-day ${isToday ? 'today' : ''}"
+                     onclick="showAdminCalendarDate('${dateString}')">
+
+                    <div class="admin-calendar-date">
+                        ${day}
+                    </div>
+
+                    ${bookingHtml}
+
+                </div>
+            `;
+        }
+
+
+        /* 뒤쪽 빈칸 */
+
+        const totalCells = firstDay + lastDate;
+        const remainingCells = (7 - (totalCells % 7)) % 7;
+
+        for (let i = 0; i < remainingCells; i++) {
+
+            calendarHtml += `
+                <div class="admin-calendar-day empty"></div>
+            `;
+        }
+
+
+        calendarHtml += `
+                </div>
+            </div>
+
+            <div id="adminCalendarDetail"></div>
+        `;
+
+
+        container.innerHTML = calendarHtml;
+    }
+
+
+    renderCalendar(
+        currentCalendarDate.getFullYear(),
+        currentCalendarDate.getMonth()
+    );
+
+
+    /* =========================================================
+       날짜 클릭
+       ========================================================= */
+
+    window.showAdminCalendarDate = function(dateString) {
+
+        const detail = document.getElementById('adminCalendarDetail');
+
+        if (!detail) return;
+
+
+        const dayBookings = bookings.filter(b => {
+
+            return String(b.date || '').substring(0, 10) === dateString;
+
+        });
+
+
+        const parts = dateString.split('-');
+
+        const displayDate =
+            `${parts[0]}년 ${Number(parts[1])}월 ${Number(parts[2])}일`;
+
+
+        if (dayBookings.length === 0) {
+
+            detail.innerHTML = `
+                <div class="admin-calendar-detail">
+
+                    <div class="admin-calendar-detail-title">
+                        📅 ${displayDate}
+                    </div>
+
+                    <div style="color:var(--text-sub);">
+                        해당 날짜에는 예약이 없습니다.
+                    </div>
+
+                </div>
+            `;
+
             return;
         }
 
-        let html = '';
-        let pgHtml = '';
-        [...bookings].reverse().forEach(b => {
-html += `
-<div style="padding:8px 0; border-bottom:1px solid #e2e8f0;">
-    [${b.status}]
-    ${b.date} ${b.time ? '| ' + b.time : ''}
-    | ${b.course}
-    | ${b.name} (${b.tel})
-    | ${b.count}명
-    (${Number(b.price || 0).toLocaleString()}원)
 
-    ${
-        b.dateTimeChanged
-            ? '<span style="color:#dc2626; font-weight:600; margin-left:6px;">🔄 예약일/시간 변경됨</span>'
-            : ''
+        let detailHtml = `
+            <div class="admin-calendar-detail">
+
+                <div class="admin-calendar-detail-title">
+                    📅 ${displayDate} 예약
+                </div>
+        `;
+
+
+        dayBookings.forEach(b => {
+
+            let actionBtn = '';
+
+
+            if (b.status === '결제완료') {
+
+                actionBtn = `
+                    <button type="button"
+                            class="btn-cancel-req"
+                            style="padding:5px 9px; font-size:0.8rem;"
+                            onclick="adminConfirmBooking('${b.orderNo}')">
+                        예약확정
+                    </button>
+
+                    <button type="button"
+                            class="btn-cancel-req"
+                            style="padding:5px 9px; font-size:0.8rem;"
+                            onclick="openDateTimeChange('${b.orderNo}', '${b.date}', '${b.time || ''}'); return false;">
+                        날짜/시간 변경
+                    </button>
+
+                    <button type="button"
+                            class="btn-cancel-req"
+                            style="padding:5px 9px; font-size:0.8rem;"
+                            onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}', ${Number(b.refundAmount || 0)}); return false;">
+                        취소/환불
+                    </button>
+                `;
+
+            } else if (b.status === '예약확정') {
+
+                actionBtn = `
+                    <span style="color:#16a34a; font-weight:600;">
+                        예약완료
+                    </span>
+
+                    <button type="button"
+                            class="btn-cancel-req"
+                            style="padding:5px 9px; font-size:0.8rem;"
+                            onclick="adminCancelConfirmBooking('${b.orderNo}')">
+                        예약확정취소
+                    </button>
+
+                    <button type="button"
+                            class="btn-cancel-req"
+                            style="padding:5px 9px; font-size:0.8rem;"
+                            onclick="openDateTimeChange('${b.orderNo}', '${b.date}', '${b.time || ''}'); return false;">
+                        날짜/시간 변경
+                    </button>
+
+                    <button type="button"
+                            class="btn-cancel-req"
+                            style="padding:5px 9px; font-size:0.8rem;"
+                            onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}', ${Number(b.refundAmount || 0)})">
+                        취소/환불
+                    </button>
+
+                    <button type="button"
+                            style="padding:5px 9px; font-size:0.8rem; background:#16a34a; color:white; border:none; border-radius:5px; cursor:pointer;"
+                            onclick="adminCompleteBooking('${b.orderNo}')">
+                        이용완료
+                    </button>
+                `;
+
+            } else if (b.status === '부분환불') {
+
+                actionBtn = `
+                    <span style="color:#f59e0b; font-weight:600;">
+                        부분환불
+                    </span>
+
+                    <button type="button"
+                            class="btn-cancel-req"
+                            style="padding:5px 9px; font-size:0.8rem;"
+                            onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}', ${Number(b.refundAmount || 0)})">
+                        추가 환불
+                    </button>
+
+                    <button type="button"
+                            style="padding:5px 9px; font-size:0.8rem; background:#16a34a; color:white; border:none; border-radius:5px; cursor:pointer;"
+                            onclick="adminCompleteBooking('${b.orderNo}')">
+                        이용완료
+                    </button>
+                `;
+
+            } else if (b.status === '이용완료') {
+
+                actionBtn =
+                    `<span style="color:#6b7280; font-weight:600;">이용완료</span>`;
+
+            } else if (b.status === '취소완료') {
+
+                actionBtn =
+                    `<span style="color:#ef4444; font-weight:600;">취소완료</span>`;
+
+            } else {
+
+                actionBtn =
+                    `<span style="font-weight:600;">${escapeCalendarText(b.status)}</span>`;
+            }
+
+
+            detailHtml += `
+                <div class="admin-calendar-detail-item">
+
+                    <div style="font-weight:800; margin-bottom:5px;">
+                        ${escapeCalendarText(b.time || '시간 미정')}
+                        · ${escapeCalendarText(b.course || '')}
+                    </div>
+
+                    <div style="margin-bottom:5px;">
+                        👤 ${escapeCalendarText(b.name || '')}
+                        · ${escapeCalendarText(b.tel || '')}
+                        · ${escapeCalendarText(b.count || 0)}명
+                    </div>
+
+                    <div style="margin-bottom:8px;">
+                        💰 ${Number(b.price || 0).toLocaleString()}원
+                        · <strong>${escapeCalendarText(b.status || '')}</strong>
+                    </div>
+
+                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                        ${actionBtn}
+                    </div>
+
+                </div>
+            `;
+        });
+
+
+        detailHtml += `
+            </div>
+        `;
+
+
+        detail.innerHTML = detailHtml;
+
+        detail.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest'
+        });
+    };
+
+
+    /* =========================================================
+       이전 / 다음 달
+       ========================================================= */
+
+    window.changeAdminCalendarMonth = function(amount) {
+
+        window.adminCalendarDate.setMonth(
+            window.adminCalendarDate.getMonth() + amount
+        );
+
+        renderCalendar(
+            window.adminCalendarDate.getFullYear(),
+            window.adminCalendarDate.getMonth()
+        );
+    };
+
+
+    /* =========================================================
+       오늘
+       ========================================================= */
+
+    window.goAdminCalendarToday = function() {
+
+        const today = new Date();
+
+        window.adminCalendarDate =
+            new Date(
+                today.getFullYear(),
+                today.getMonth(),
+                1
+            );
+
+        renderCalendar(
+            window.adminCalendarDate.getFullYear(),
+            window.adminCalendarDate.getMonth()
+        );
+    };
+
+
+    /* =========================================================
+       결제내역 테이블
+       ========================================================= */
+
+    if (pgTable) {
+        pgTable.innerHTML = pgHtml;
     }
-</div>`;
-
-if (b.status === '결제완료') {
-    actionBtn = `
-        <button type="button"
-                class="btn-cancel-req"
-                style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
-                onclick="adminConfirmBooking('${b.orderNo}')">
-            예약확정
-        </button>
-
-        <button type="button"
-                class="btn-cancel-req"
-                style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
-                onclick="openDateTimeChange('${b.orderNo}', '${b.date}', '${b.time || ''}'); return false;">
-            예약 날짜/시간 변경
-        </button>
-
-        <button type="button"
-                class="btn-cancel-req"
-                style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
-                onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}', ${Number(b.refundAmount || 0)}); return false;">
-            취소/환불
-        </button>
-    `;
-
-} else if (b.status === '예약확정') {
-    actionBtn = `
-        <span style="color:#16a34a; font-weight:600;">
-            예약완료
-        </span>
-
-        <button type="button"
-                class="btn-cancel-req"
-                style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
-                onclick="adminCancelConfirmBooking('${b.orderNo}')">
-            예약확정취소
-        </button>
-
-        <button type="button"
-                class="btn-cancel-req"
-                style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
-                onclick="openDateTimeChange('${b.orderNo}', '${b.date}', '${b.time || ''}'); return false;">
-            예약 날짜/시간 변경
-        </button>
-
-        <button type="button"
-                class="btn-cancel-req"
-                style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
-                onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}', ${Number(b.refundAmount || 0)})">
-            취소/환불
-        </button>
-
-        <!-- 이용완료 버튼 -->
-        <button type="button"
-                style="padding:4px 8px; font-size:0.8rem; margin-top:0; background:#16a34a; color:white; border:none; border-radius:5px; cursor:pointer;"
-                onclick="adminCompleteBooking('${b.orderNo}')">
-            이용완료
-        </button>
-    `;
-
-} else if (b.status === '이용완료') {
-
-    actionBtn =
-        '<span style="color:#6b7280; font-weight:600;">이용완료</span>';
-
-} else if (b.status === '부분환불') {
-    actionBtn = `
-        <span style="color:#f59e0b; font-weight:600;">
-            부분환불
-        </span>
-
-        <button type="button"
-                class="btn-cancel-req"
-                style="padding:4px 8px; font-size:0.8rem; margin-top:0;"
-                onclick="openRefundModal('${b.orderNo}', ${Number(b.price || 0)}, '${b.date}', ${Number(b.refundAmount || 0)})">
-            추가 환불
-        </button>
-
-        <button type="button"
-                style="padding:4px 8px; font-size:0.8rem; margin-top:0; background:#16a34a; color:white; border:none; border-radius:5px; cursor:pointer;"
-                onclick="adminCompleteBooking('${b.orderNo}')">
-            이용완료
-        </button>
-    `;
-
-} else if (b.status === '취소완료') {
-
-    actionBtn =
-        '<span style="color:#ef4444; font-weight:600;">취소완료</span>';
-
-} else {
-
-    actionBtn =
-        `<span style="font-weight:600;">${b.status}</span>`;
 }
-            
-pgHtml += `
-    <tr>
-        <td>${b.orderNo}</td>
-        <td>${b.name}</td>
-        <td>${Number(b.price || 0).toLocaleString()}원</td>
-        <td>${b.status}</td>
-        <td>${actionBtn}</td>
-    </tr>`;
-                    });
-
-        container.innerHTML = html;
-
-        if (pgTable) {
-            pgTable.innerHTML = pgHtml;
-        }
-    }
     async function processCheckin() {
         const rawTel = document.getElementById('checkinTel').value.trim();
         const tel = normalizeTel(rawTel);
