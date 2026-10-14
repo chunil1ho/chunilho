@@ -4704,6 +4704,187 @@ padding: 0 14px;
         padding: 12px;
     }
 }
+    /* =========================================
+   회원 영역
+   ========================================= */
+
+.member-area {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+#memberGuest,
+#memberUser {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.member-btn {
+    border: 1px solid #dbe3ee;
+    background: #fff;
+    color: #334155;
+    border-radius: 7px;
+    padding: 5px 9px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+
+.member-btn:hover {
+    background: #f1f5f9;
+}
+
+.member-signup-btn {
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}
+
+.member-signup-btn:hover {
+    background: var(--primary-light);
+}
+
+/* 모바일 */
+@media (max-width: 768px) {
+
+    .member-area {
+        margin-left: 2px;
+    }
+
+    .member-btn {
+        padding: 4px 6px;
+        font-size: 10px;
+        border-radius: 6px;
+    }
+
+    #memberGuest,
+    #memberUser {
+        gap: 2px;
+    }
+}
+    /* =========================================
+   회원 모달
+   ========================================= */
+
+.member-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.55);
+}
+
+.member-modal-box {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    padding: 32px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+}
+
+.member-modal-box h2 {
+    margin: 0 0 8px;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.member-modal-subtitle {
+    margin: 0 0 22px;
+    text-align: center;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.member-modal-box input {
+    width: 100%;
+    height: 48px;
+    margin-bottom: 10px;
+    padding: 0 14px;
+    box-sizing: border-box;
+    border: 1px solid #dbe3ee;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.member-modal-box input:focus {
+    border-color: var(--primary-color);
+}
+
+.member-submit-btn {
+    width: 100%;
+    height: 48px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 8px;
+    background: var(--primary-color);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.member-submit-btn:hover {
+    background: var(--primary-light);
+}
+
+.member-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.member-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    font-size: 0.78rem;
+    color: #94a3b8;
+}
+
+.member-links button {
+    padding: 0;
+    border: none;
+    background: none;
+    color: #64748b;
+    cursor: pointer;
+}
+
+.member-links button:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .member-modal {
+        padding: 12px;
+    }
+
+    .member-modal-box {
+        padding: 26px 20px;
+    }
+}
     </style>
 </head>
 <body id="mainBody">
@@ -4791,6 +4972,40 @@ padding: 0 14px;
     <span class="lang-divider">|</span>
 
     <button type="button" class="lang-btn" onclick="setLanguage('zh', this)">ZH</button>
+</div>
+        <!-- 회원 영역 -->
+<div class="member-area" id="memberArea">
+
+    <!-- 로그인 전 -->
+    <div id="memberGuest">
+        <button type="button"
+                class="member-btn"
+                onclick="openMemberLogin()">
+            👤 로그인
+        </button>
+
+        <button type="button"
+                class="member-btn member-signup-btn"
+                onclick="openMemberSignup()">
+            회원가입
+        </button>
+    </div>
+
+    <!-- 로그인 후 -->
+    <div id="memberUser" style="display:none;">
+        <button type="button"
+                class="member-btn"
+                onclick="openMyPage()">
+            👤 <span id="memberUserName">회원</span>님
+        </button>
+
+        <button type="button"
+                class="member-btn"
+                onclick="memberLogout()">
+            로그아웃
+        </button>
+    </div>
+
 </div>
                 <!-- 모바일 메뉴 버튼 -->
         <button type="button"
@@ -5706,6 +5921,14 @@ padding: 0 14px;
                     <li><button type="button" class="admin-menu-btn" onclick="switchAdminTab('pane-schedule', this)" data-i18n="adminMenu3">⏰ 회차(스케줄) 관리</button></li>
                     <li><button type="button" class="admin-menu-btn" onclick="switchAdminTab('pane-pg', this)" data-i18n="adminMenu4">💳 복수 PG 예약 승인 및 환불</button></li>
                     <li><button type="button" class="admin-menu-btn" onclick="switchAdminTab('pane-checkin', this)" data-i18n="adminMenu5">📱 현장 체크인 (주문/전화번호)</button></li>
+                    <li>
+    <button type="button"
+            class="admin-menu-btn"
+            onclick="switchAdminTab('pane-members', this)"
+            data-i18n="adminMenu6">
+        👥 회원 관리
+    </button>
+</li>
                 </ul>
             </div>
 
@@ -5763,6 +5986,165 @@ padding: 0 14px;
                         <button type="button" class="btn-check" onclick="processCheckin()" data-i18n="btnCheckin">체크인</button>
                     </div>
                 </div>
+                <!-- 회원관리 -->
+<div id="pane-members" class="admin-content-pane">
+
+    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 800;">
+        👥 회원 관리
+    </h3>
+
+    <p style="color: var(--text-sub); margin-bottom: 1.5rem; font-size: 0.92rem;">
+        가입한 고객의 회원정보와 예약 내역을 관리합니다.
+    </p>
+
+    <!-- 회원 통계 -->
+    <div style="
+        display:grid;
+        grid-template-columns:repeat(3, 1fr);
+        gap:12px;
+        margin-bottom:20px;
+    ">
+
+        <div style="
+            background:#eff6ff;
+            border:1px solid #bfdbfe;
+            border-radius:12px;
+            padding:18px;
+        ">
+            <div style="font-size:0.85rem; color:#64748b;">전체 회원</div>
+            <div id="memberTotalCount"
+                 style="font-size:1.6rem; font-weight:800; color:#2563eb; margin-top:5px;">
+                0명
+            </div>
+        </div>
+
+        <div style="
+            background:#f0fdf4;
+            border:1px solid #bbf7d0;
+            border-radius:12px;
+            padding:18px;
+        ">
+            <div style="font-size:0.85rem; color:#64748b;">정상 회원</div>
+            <div id="memberActiveCount"
+                 style="font-size:1.6rem; font-weight:800; color:#16a34a; margin-top:5px;">
+                0명
+            </div>
+        </div>
+
+        <div style="
+            background:#f8fafc;
+            border:1px solid #e2e8f0;
+            border-radius:12px;
+            padding:18px;
+        ">
+            <div style="font-size:0.85rem; color:#64748b;">이번 달 가입</div>
+            <div id="memberMonthCount"
+                 style="font-size:1.6rem; font-weight:800; color:#475569; margin-top:5px;">
+                0명
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 회원 검색 -->
+    <div style="
+        background:#f8fafc;
+        border:1px solid var(--border-color);
+        border-radius:12px;
+        padding:16px;
+        margin-bottom:20px;
+    ">
+
+        <div style="
+            display:flex;
+            gap:10px;
+            align-items:center;
+            flex-wrap:wrap;
+        ">
+
+            <select id="memberSearchType"
+                    style="
+                        padding:10px 12px;
+                        border:1px solid #cbd5e1;
+                        border-radius:8px;
+                        background:#fff;
+                    ">
+                <option value="all">전체</option>
+                <option value="id">아이디</option>
+                <option value="name">이름</option>
+                <option value="tel">휴대폰번호</option>
+            </select>
+
+            <input type="text"
+                   id="memberSearchInput"
+                   placeholder="회원 검색"
+                   style="
+                       flex:1;
+                       min-width:180px;
+                       padding:10px 12px;
+                       border:1px solid #cbd5e1;
+                       border-radius:8px;
+                   ">
+
+            <button type="button"
+                    class="btn-submit"
+                    style="float:none;"
+                    onclick="searchMembers()">
+                🔍 검색
+            </button>
+
+            <button type="button"
+                    class="btn-submit"
+                    style="float:none; background:#64748b;"
+                    onclick="loadMembers()">
+                🔄 전체보기
+            </button>
+
+        </div>
+    </div>
+
+    <!-- 회원 목록 -->
+    <div style="
+        border:1px solid var(--border-color);
+        border-radius:12px;
+        overflow:hidden;
+        background:#fff;
+    ">
+
+        <table class="board-table" style="margin-top:0;">
+
+            <thead>
+                <tr>
+                    <th>아이디</th>
+                    <th>이름</th>
+                    <th>휴대폰</th>
+                    <th>가입일</th>
+                    <th>예약</th>
+                    <th>상태</th>
+                    <th>관리</th>
+                </tr>
+            </thead>
+
+            <tbody id="adminMemberTableBody">
+
+                <tr>
+                    <td colspan="7"
+                        class="center"
+                        style="
+                            color:var(--text-sub);
+                            padding:40px 10px;
+                        ">
+                        회원 정보를 불러오는 중입니다.
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
             </div>
         </div>
     </div>
@@ -13218,6 +13600,180 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+    // =========================================
+// 회원 모달 열기 / 닫기
+// =========================================
+
+function openMemberLogin() {
+    const modal = document.getElementById('memberModal');
+    const login = document.getElementById('memberLoginPanel');
+    const signup = document.getElementById('memberSignupPanel');
+
+    if (!modal) return;
+
+    modal.style.display = 'flex';
+    login.style.display = 'block';
+    signup.style.display = 'none';
+
+    setTimeout(() => {
+        document.getElementById('memberLoginId')?.focus();
+    }, 50);
+}
+
+function openMemberSignup() {
+    const modal = document.getElementById('memberModal');
+    const login = document.getElementById('memberLoginPanel');
+    const signup = document.getElementById('memberSignupPanel');
+
+    if (!modal) return;
+
+    modal.style.display = 'flex';
+    login.style.display = 'none';
+    signup.style.display = 'block';
+
+    setTimeout(() => {
+        document.getElementById('memberSignupId')?.focus();
+    }, 50);
+}
+
+function closeMemberModal() {
+    const modal = document.getElementById('memberModal');
+
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// 모달 바깥쪽 클릭하면 닫기
+document.addEventListener('click', function (event) {
+    const modal = document.getElementById('memberModal');
+
+    if (modal && event.target === modal) {
+        closeMemberModal();
+    }
+});
 </script>
+    <!-- =========================================
+     회원 로그인 / 회원가입 모달
+     ========================================= -->
+
+<div id="memberModal" class="member-modal" style="display:none;">
+
+    <div class="member-modal-box">
+
+        <button type="button"
+                class="member-modal-close"
+                onclick="closeMemberModal()">
+            ×
+        </button>
+
+        <!-- 로그인 -->
+        <div id="memberLoginPanel">
+
+            <h2>로그인</h2>
+            <p class="member-modal-subtitle">
+                천일호 회원으로 로그인해주세요.
+            </p>
+
+            <input
+                type="text"
+                id="memberLoginId"
+                placeholder="아이디"
+                autocomplete="username"
+            >
+
+            <input
+                type="password"
+                id="memberLoginPassword"
+                placeholder="비밀번호"
+                autocomplete="current-password"
+            >
+
+            <button type="button"
+                    class="member-submit-btn"
+                    onclick="memberLogin()">
+                로그인
+            </button>
+
+            <div class="member-links">
+                <button type="button" onclick="openMemberSignup()">
+                    회원가입
+                </button>
+
+                <span>|</span>
+
+                <button type="button">
+                    아이디 찾기
+                </button>
+
+                <span>|</span>
+
+                <button type="button">
+                    비밀번호 찾기
+                </button>
+            </div>
+
+        </div>
+
+
+        <!-- 회원가입 -->
+        <div id="memberSignupPanel" style="display:none;">
+
+            <h2>회원가입</h2>
+            <p class="member-modal-subtitle">
+                천일호 회원으로 가입해주세요.
+            </p>
+
+            <input
+                type="text"
+                id="memberSignupId"
+                placeholder="아이디 (4~20자)"
+                autocomplete="username"
+            >
+
+            <input
+                type="password"
+                id="memberSignupPassword"
+                placeholder="비밀번호 (8자 이상)"
+                autocomplete="new-password"
+            >
+
+            <input
+                type="password"
+                id="memberSignupPassword2"
+                placeholder="비밀번호 확인"
+                autocomplete="new-password"
+            >
+
+            <input
+                type="text"
+                id="memberSignupName"
+                placeholder="이름"
+                autocomplete="name"
+            >
+
+            <input
+                type="tel"
+                id="memberSignupTel"
+                placeholder="휴대폰 번호"
+                autocomplete="tel"
+            >
+
+            <button type="button"
+                    class="member-submit-btn"
+                    onclick="memberSignup()">
+                회원가입
+            </button>
+
+            <div class="member-links">
+                <button type="button" onclick="openMemberLogin()">
+                    이미 회원이신가요? 로그인
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
 </body>
 </html>
