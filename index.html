@@ -4862,7 +4862,115 @@ padding: 0 14px;
     font-size: 0.78rem;
     color: #94a3b8;
 }
+/* =========================================
+   마이페이지 예약내역
+   ========================================= */
 
+.member-booking-section {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.member-booking-section h3 {
+    margin: 0 0 14px;
+    font-size: 18px;
+    color: #222;
+}
+
+.member-booking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 360px;
+    overflow-y: auto;
+    padding-right: 3px;
+}
+
+.member-booking-card {
+    padding: 16px;
+    border: 1px solid #e3e3e3;
+    border-radius: 12px;
+    background: #fafafa;
+}
+
+.member-booking-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.member-booking-top strong {
+    font-size: 16px;
+    color: #222;
+}
+
+.member-booking-status {
+    flex-shrink: 0;
+    padding: 5px 9px;
+    border-radius: 20px;
+    background: #eef5ff;
+    color: #2874d0;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.member-booking-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 6px 0;
+    font-size: 14px;
+}
+
+.member-booking-row span {
+    color: #777;
+}
+
+.member-booking-row strong {
+    color: #222;
+    text-align: right;
+}
+
+.member-booking-order {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #ddd;
+    color: #999;
+    font-size: 11px;
+}
+
+/* 예약내역이 없을 때 */
+.member-booking-empty {
+    padding: 25px 10px;
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+}
+
+/* 모바일 */
+@media (max-width: 600px) {
+
+    .member-booking-section {
+        margin-top: 20px;
+        padding-top: 16px;
+    }
+
+    .member-booking-card {
+        padding: 14px;
+    }
+
+    .member-booking-row {
+        font-size: 13px;
+    }
+
+    .member-booking-list {
+        max-height: 320px;
+    }
+}
 .member-links button {
     padding: 0;
     border: none;
@@ -4885,6 +4993,7 @@ padding: 0 14px;
         padding: 26px 20px;
     }
 }
+    
     </style>
 </head>
 <body id="mainBody">
@@ -13963,7 +14072,236 @@ function memberLogout() {
 
     alert('로그아웃되었습니다.');
 }
-    
+// =========================================
+// 마이페이지 열기
+// =========================================
+
+async function openMyPage() {
+
+    const modal =
+        document.getElementById('memberMyPageModal');
+
+    if (!modal) return;
+
+    try {
+
+        const data = await memberApiRequest({
+            method: 'GET'
+        });
+
+        if (!data || !data.member) {
+            alert('로그인이 필요합니다.');
+            return;
+        }
+
+        const member = data.member;
+
+        document.getElementById('myPageMemberId').textContent =
+            member.memberId || '-';
+
+        document.getElementById('myPageMemberName').textContent =
+            member.name || '-';
+
+        document.getElementById('myPageMemberTel').textContent =
+            member.tel || '-';
+
+        document.getElementById('myPageMemberCreatedAt').textContent =
+            member.createdAt
+                ? new Date(member.createdAt).toLocaleDateString('ko-KR')
+                : '-';
+
+        document.getElementById('myPageMemberReservationCount').textContent =
+            (member.reservationCount || 0) + '회';
+        
+await loadMyPageBookings(member.tel);
+        
+        modal.style.display = 'flex';
+
+    } catch (error) {
+
+        console.error('마이페이지 오류:', error);
+
+        alert(
+            error.message ||
+            '회원 정보를 불러오지 못했습니다.'
+        );
+    }
+}
+
+
+// =========================================
+// 마이페이지 닫기
+// =========================================
+
+function closeMyPage() {
+
+    const modal =
+        document.getElementById('memberMyPageModal');
+
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+
+// 마이페이지 바깥쪽 클릭하면 닫기
+document.addEventListener('click', function (event) {
+
+    const modal =
+        document.getElementById('memberMyPageModal');
+
+    if (modal && event.target === modal) {
+        closeMyPage();
+    }
+
+});    
+// =========================================
+// 마이페이지 - 내 예약내역 불러오기
+// =========================================
+
+async function loadMyPageBookings(tel) {
+
+    const list =
+        document.getElementById('myPageBookingList');
+
+    if (!list) return;
+
+    list.innerHTML =
+        '<div class="member-booking-empty">예약내역을 불러오는 중입니다.</div>';
+
+    try {
+
+        const cleanTel =
+            String(tel || '').replace(/\D/g, '');
+
+        if (!cleanTel) {
+            list.innerHTML =
+                '<div class="member-booking-empty">등록된 휴대폰 번호가 없습니다.</div>';
+            return;
+        }
+
+        const response = await fetch(
+            API_BASE +
+            '/bookings?tel=' +
+            encodeURIComponent(cleanTel)
+        );
+
+        let data = null;
+
+        try {
+            data = await response.json();
+        } catch (error) {
+            data = null;
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                data?.message ||
+                '예약내역을 불러오지 못했습니다.'
+            );
+        }
+
+        const bookings =
+            Array.isArray(data?.bookings)
+                ? data.bookings
+                : [];
+
+        if (bookings.length === 0) {
+
+            list.innerHTML =
+                '<div class="member-booking-empty">' +
+                '예약내역이 없습니다.' +
+                '</div>';
+
+            return;
+        }
+
+        list.innerHTML = bookings.map(function (booking) {
+
+            const price =
+                Number(booking.price || 0)
+                .toLocaleString('ko-KR');
+
+            const date =
+                booking.date || '-';
+
+            const time =
+                booking.time || '';
+
+            const course =
+                booking.course || '-';
+
+            const count =
+                Number(booking.count || 0);
+
+            const status =
+                booking.status || '-';
+
+            return `
+                <div class="member-booking-card">
+
+                    <div class="member-booking-top">
+
+                        <strong>
+                            ${course}
+                        </strong>
+
+                        <span class="member-booking-status">
+                            ${status}
+                        </span>
+
+                    </div>
+
+                    <div class="member-booking-row">
+                        <span>예약일</span>
+                        <strong>
+                            ${date}${time ? ' ' + time : ''}
+                        </strong>
+                    </div>
+
+                    <div class="member-booking-row">
+                        <span>예약자</span>
+                        <strong>
+                            ${booking.name || '-'}
+                        </strong>
+                    </div>
+
+                    <div class="member-booking-row">
+                        <span>인원</span>
+                        <strong>
+                            ${count}명
+                        </strong>
+                    </div>
+
+                    <div class="member-booking-row">
+                        <span>결제금액</span>
+                        <strong>
+                            ${price}원
+                        </strong>
+                    </div>
+
+                    <div class="member-booking-order">
+                        주문번호 : ${booking.orderNo || '-'}
+                    </div>
+
+                </div>
+            `;
+
+        }).join('');
+
+    } catch (error) {
+
+        console.error(
+            '내 예약내역 오류:',
+            error
+        );
+
+        list.innerHTML =
+            '<div class="member-booking-empty">' +
+            '예약내역을 불러오지 못했습니다.' +
+            '</div>';
+    }
+}    
 </script>
     <!-- =========================================
      회원 로그인 / 회원가입 모달
@@ -14087,5 +14425,81 @@ function memberLogout() {
 
     </div>
 </div>
+   <!-- =========================================
+     회원 마이페이지
+     ========================================= -->
+
+<div id="memberMyPageModal"
+     class="member-modal"
+     style="display:none;">
+
+    <div class="member-modal-box">
+
+        <button type="button"
+                class="member-modal-close"
+                onclick="closeMyPage()">×</button>
+
+        <h2>마이페이지</h2>
+
+        <p class="member-modal-subtitle">
+            회원님의 정보를 확인할 수 있습니다.
+        </p>
+
+        <div class="member-info-box">
+
+            <div class="member-info-row">
+                <span>아이디</span>
+                <strong id="myPageMemberId">-</strong>
+            </div>
+
+            <div class="member-info-row">
+                <span>이름</span>
+                <strong id="myPageMemberName">-</strong>
+            </div>
+
+            <div class="member-info-row">
+                <span>휴대폰</span>
+                <strong id="myPageMemberTel">-</strong>
+            </div>
+
+            <div class="member-info-row">
+                <span>가입일</span>
+                <strong id="myPageMemberCreatedAt">-</strong>
+            </div>
+
+            <div class="member-info-row">
+                <span>예약 횟수</span>
+                <strong id="myPageMemberReservationCount">0회</strong>
+
+                <!-- =========================================
+     내 예약내역
+     ========================================= -->
+
+<div class="member-booking-section">
+
+    <h3>🎣 내 예약내역</h3>
+
+    <div id="myPageBookingList"
+         class="member-booking-list">
+
+        <div class="member-booking-empty">
+            예약내역을 불러오는 중입니다.
+        </div>
+
+    </div>
+
+</div>
+            </div>
+
+        </div>
+
+        <button type="button"
+                class="member-submit-btn"
+                onclick="closeMyPage()">
+            닫기
+        </button>
+
+    </div>
+</div> 
 </body>
 </html>
