@@ -5233,6 +5233,34 @@ padding: 0 14px;
         font-size: 15px;
     }
 }    
+    .member-booking-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.member-booking-actions a,
+.member-booking-actions button {
+    flex: 1;
+    height: 38px;
+    border: 1px solid #e1e5ea;
+    border-radius: 8px;
+    background: #fff;
+    color: #374151;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.member-booking-actions a:hover,
+.member-booking-actions button:hover {
+    background: #f7f9fc;
+}
     </style>
 </head>
 <body id="mainBody">
@@ -14609,7 +14637,18 @@ const statusClass = statusClassMap[status] || '';
                     <div class="member-booking-order">
                         주문번호 : ${booking.orderNo || '-'}
                     </div>
+                    
+<div class="member-booking-actions">
+    <a href="tel:01077685913" class="member-booking-call-btn">
+        📞 예약 문의
+    </a>
 
+    <button type="button"
+            class="member-booking-kakao-btn"
+            onclick="alert('카카오톡 ID : chunil1ho')">
+        💬 카카오톡 문의
+    </button>
+</div>
                 </div>
             `;
 
