@@ -5125,7 +5125,26 @@ padding: 0 14px;
     font-size: 12px;
     font-weight: 700;
 }
+    
+.member-booking-status.status-confirmed {
+    background: #edf8f1;
+    color: #2f8a52;
+}
 
+.member-booking-status.status-pending {
+    background: #fff6e8;
+    color: #d88916;
+}
+
+.member-booking-status.status-cancelled {
+    background: #f1f3f5;
+    color: #8b929c;
+}
+
+.member-booking-status.status-completed {
+    background: #eef5ff;
+    color: #2771c7;
+}
 .member-booking-row {
     padding: 7px 0;
     font-size: 14px;
@@ -14545,9 +14564,9 @@ if (countEl) {
                             ${course}
                         </strong>
 
-                        <span class="member-booking-status">
-                            ${status}
-                        </span>
+                        <span class="member-booking-status status-${status}">
+    ${status}
+</span>
 
                     </div>
 
