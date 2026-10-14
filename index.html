@@ -14441,6 +14441,10 @@ function openMemberEdit() {
 
 console.log('memberEditModal box:', box);
     
+    console.log('box computed display:', getComputedStyle(box).display);
+console.log('box computed visibility:', getComputedStyle(box).visibility);
+console.log('box computed opacity:', getComputedStyle(box).opacity);
+    
     memberApiRequest({
         method: 'GET'
     })
