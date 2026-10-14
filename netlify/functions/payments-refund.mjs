@@ -575,6 +575,107 @@ booking.refundAmount =
       booking
     );
 
+    /*
+ * =====================================
+ * 14-1. 환불 알림 발송
+ * 전액환불 / 부분환불 모두 발송
+ * =====================================
+ */
+try {
+    const relayUrl = process.env.ALIGO_RELAY_URL;
+    const relaySecret = process.env.ALIGO_RELAY_SECRET;
+
+    if (!relayUrl || !relaySecret) {
+        console.error("알리고 릴레이 환경변수가 없습니다.");
+    } else {
+
+        const notificationBooking = {
+            orderNo: booking.orderNo || orderNo,
+            name: booking.name || "",
+            tel: booking.tel || "",
+            date: booking.date || "",
+            course: booking.course || "",
+            time: booking.time || "미정",
+            count: booking.count || 0,
+
+            // 이번에 실제 환불된 금액
+            price: refundedAmount
+        };
+
+        /*
+         * 관리자 취소 알림톡
+         */
+        try {
+            const kakaoResponse = await fetch(
+                relayUrl.replace(/\/$/, "") + "/send-cancel-kakao",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-relay-secret": relaySecret
+                    },
+                    body: JSON.stringify(notificationBooking)
+                }
+            );
+
+            const kakaoResult = await kakaoResponse.json();
+
+            console.log("===== 관리자 취소 알림톡 결과 =====");
+            console.log(
+                JSON.stringify({
+                    status: kakaoResponse.status,
+                    result: kakaoResult
+                })
+            );
+
+        } catch (kakaoError) {
+            console.error(
+                "관리자 취소 알림톡 발송 오류:",
+                kakaoError
+            );
+        }
+
+
+        /*
+         * 고객 취소 문자
+         */
+        try {
+            const smsResponse = await fetch(
+                relayUrl.replace(/\/$/, "") + "/send-cancel-sms",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-relay-secret": relaySecret
+                    },
+                    body: JSON.stringify(notificationBooking)
+                }
+            );
+
+            const smsResult = await smsResponse.json();
+
+            console.log("===== 고객 취소 문자 결과 =====");
+            console.log(
+                JSON.stringify({
+                    status: smsResponse.status,
+                    result: smsResult
+                })
+            );
+
+        } catch (smsError) {
+            console.error(
+                "고객 취소 문자 발송 오류:",
+                smsError
+            );
+        }
+    }
+
+} catch (notificationError) {
+    console.error(
+        "환불 알림 발송 오류:",
+        notificationError
+    );
+}
 
     /*
      * =====================================
