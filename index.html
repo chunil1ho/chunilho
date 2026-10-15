@@ -5190,9 +5190,17 @@ padding: 0 14px;
                 <form id="bookingForm" onsubmit="return false;">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label data-i18n="bookStep1">1. 예약 희망 날짜</label>
-                            <input type="date" id="custDate" onchange="updateOptions();" required>
-                            <div id="seasonNotice" class="season-info"></div>
+<label data-i18n="bookStep1">1. 예약 희망 날짜</label>
+
+<div class="date-select-group">
+    <select id="custYear" onchange="updateCustomDate();"></select>
+    <select id="custMonth" onchange="updateCustomDate();"></select>
+    <select id="custDay" onchange="updateCustomDate();"></select>
+</div>
+
+<input type="hidden" id="custDate" required>
+
+<div id="seasonNotice" class="season-info"></div>
                         </div>
 
                         <div class="form-group">
@@ -10347,14 +10355,95 @@ function setLanguage(lang, btnEl) {
 
     updateProductPrices(lang);
     updatePassengerCountOptions(lang);
-    updateDateInputLanguage(lang);
-}
-function updateDateInputLanguage(lang) {
-    const dateInput = document.getElementById('custDate');
-    if (!dateInput) return;
 
-    dateInput.setAttribute('lang', lang);
-}    
+}
+function initDateSelects() {
+    const yearSelect = document.getElementById('custYear');
+    const monthSelect = document.getElementById('custMonth');
+    const daySelect = document.getElementById('custDay');
+
+    if (!yearSelect || !monthSelect || !daySelect) return;
+
+    const today = new Date();
+    const currentYear = today.getFullYear();
+
+    // 연도
+    yearSelect.innerHTML = '';
+    for (let year = currentYear; year <= currentYear + 3; year++) {
+        yearSelect.innerHTML += `<option value="${year}">${year}</option>`;
+    }
+
+    // 월
+    monthSelect.innerHTML = '';
+    for (let month = 1; month <= 12; month++) {
+        monthSelect.innerHTML += `<option value="${month}">${month}</option>`;
+    }
+
+    // 일
+    updateDayOptions();
+}
+
+function updateDayOptions() {
+    const yearSelect = document.getElementById('custYear');
+    const monthSelect = document.getElementById('custMonth');
+    const daySelect = document.getElementById('custDay');
+
+    if (!yearSelect || !monthSelect || !daySelect) return;
+
+    const year = parseInt(yearSelect.value);
+    const month = parseInt(monthSelect.value);
+
+    const daysInMonth = new Date(year, month, 0).getDate();
+
+    daySelect.innerHTML = '';
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        daySelect.innerHTML += `<option value="${day}">${day}</option>`;
+    }
+
+    updateCustomDate();
+}
+
+function updateCustomDate() {
+    const yearSelect = document.getElementById('custYear');
+    const monthSelect = document.getElementById('custMonth');
+    const daySelect = document.getElementById('custDay');
+    const dateInput = document.getElementById('custDate');
+
+    if (!yearSelect || !monthSelect || !daySelect || !dateInput) return;
+
+    updateDayOptionsOnly();
+
+    const year = yearSelect.value;
+    const month = String(monthSelect.value).padStart(2, '0');
+    const day = String(daySelect.value).padStart(2, '0');
+
+    dateInput.value = `${year}-${month}-${day}`;
+
+    updateOptions();
+}
+
+function updateDayOptionsOnly() {
+    const yearSelect = document.getElementById('custYear');
+    const monthSelect = document.getElementById('custMonth');
+    const daySelect = document.getElementById('custDay');
+
+    if (!yearSelect || !monthSelect || !daySelect) return;
+
+    const year = parseInt(yearSelect.value);
+    const month = parseInt(monthSelect.value);
+    const currentDay = parseInt(daySelect.value) || 1;
+
+    const daysInMonth = new Date(year, month, 0).getDate();
+
+    daySelect.innerHTML = '';
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        daySelect.innerHTML += `<option value="${day}">${day}</option>`;
+    }
+
+    daySelect.value = Math.min(currentDay, daysInMonth);
+}  
 function updatePassengerCountOptions(lang) {
     const select = document.getElementById('custCount');
     if (!select) return;
@@ -10437,6 +10526,8 @@ function updateProductPrices(lang) {
         }
     });
 }
+    
+initDateSelects();    
     
     function updateOptions() {
         const dateElement = document.getElementById('custDate');
