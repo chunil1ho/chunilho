@@ -10367,19 +10367,16 @@ function initDateSelects() {
     const today = new Date();
     const currentYear = today.getFullYear();
 
-    // 연도
     yearSelect.innerHTML = '';
     for (let year = currentYear; year <= currentYear + 3; year++) {
         yearSelect.innerHTML += `<option value="${year}">${year}</option>`;
     }
 
-    // 월
     monthSelect.innerHTML = '';
     for (let month = 1; month <= 12; month++) {
         monthSelect.innerHTML += `<option value="${month}">${month}</option>`;
     }
 
-    // 일
     updateDayOptions();
 }
 
@@ -10412,8 +10409,6 @@ function updateCustomDate() {
 
     if (!yearSelect || !monthSelect || !daySelect || !dateInput) return;
 
-    updateDayOptionsOnly();
-
     const year = yearSelect.value;
     const month = String(monthSelect.value).padStart(2, '0');
     const day = String(daySelect.value).padStart(2, '0');
@@ -10443,7 +10438,7 @@ function updateDayOptionsOnly() {
     }
 
     daySelect.value = Math.min(currentDay, daysInMonth);
-}  
+}
 function updatePassengerCountOptions(lang) {
     const select = document.getElementById('custCount');
     if (!select) return;
