@@ -10347,7 +10347,14 @@ function setLanguage(lang, btnEl) {
 
     updateProductPrices(lang);
     updatePassengerCountOptions(lang);
+    updateDateInputLanguage(lang);
 }
+function updateDateInputLanguage(lang) {
+    const dateInput = document.getElementById('custDate');
+    if (!dateInput) return;
+
+    dateInput.setAttribute('lang', lang);
+}    
 function updatePassengerCountOptions(lang) {
     const select = document.getElementById('custCount');
     if (!select) return;
