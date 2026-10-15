@@ -4704,6 +4704,42 @@ padding: 0 14px;
         padding: 12px;
     }
 }
+    #bookingAlertModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+}
+
+.booking-alert-box {
+    width: min(90%, 380px);
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 24px 22px;
+    text-align: center;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+}
+
+.booking-alert-message {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 22px;
+    color: #222;
+}
+
+.booking-alert-box button {
+    min-width: 90px;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    background: #333;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+}
     </style>
 </head>
 <body id="mainBody">
@@ -10624,7 +10660,16 @@ const timeSelect = document.getElementById('timeSelect').value;
 const count = parseInt(document.getElementById('custCount').value);
 
 if (!dateVal || !nameVal || !telVal) {
-    alert('예약 날짜, 성함, 연락처를 모두 입력해주세요.');
+    const message =
+        currentLang === 'en'
+            ? 'Please enter the reservation date, name, and contact information.'
+            : currentLang === 'ja'
+            ? '予約日、氏名、連絡先をすべて入力してください。'
+            : currentLang === 'zh'
+            ? '请填写预约日期、姓名和联系方式。'
+            : '예약 날짜, 성함, 연락처를 모두 입력해주세요.';
+
+    showBookingAlert(message);
     return;
 }
 
@@ -13370,7 +13415,24 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
-    
+function showBookingAlert(message) {
+    const existing = document.getElementById('bookingAlertModal');
+    if (existing) existing.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'bookingAlertModal';
+
+    modal.innerHTML = `
+        <div class="booking-alert-box">
+            <div class="booking-alert-message">${message}</div>
+            <button type="button" onclick="document.getElementById('bookingAlertModal').remove()">
+                확인
+            </button>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+}   
 </script>
 </body>
 </html>
