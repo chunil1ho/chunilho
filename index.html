@@ -5233,7 +5233,7 @@ padding: 0 14px;
 
                         <div class="form-group">
                             <label data-i18n="bookStep2">2. 낚시 코스 선택</label>
-                            <select id="courseSelect" onchange="updateOptions()">
+                            <select id="courseSelect" onchange="updateOptions(); updateCourseDetail()">
                                 <option value="30000_주간 체험 2시간" data-i18n="optCourse1">주간 체험 2시간 - 30,000원 (연중)</option>
                                 <option value="40000_주간 체험 3시간" data-i18n="optCourse2">주간 체험 3시간 - 40,000원 (연중)</option>
                                 <option value="90000_야간 갈치낚시" data-i18n="optCourse3" id="optGalchi">야간 갈치낚시 - 90,000원 (시즌: 8월~11월중순)</option>
@@ -5241,7 +5241,12 @@ padding: 0 14px;
                                 <option value="90000_지깅체험 4시간" data-i18n="optCourse5" id="optJigging">지깅체험 4시간 - 90,000원 (연중)</option>
 </select>
                         </div>
-
+                        
+<div id="courseDetail" class="course-detail" style="display:none;">
+    <div class="course-detail-title">2-1. 코스 상세 안내</div>
+    <div id="courseDetailContent"></div>
+</div>
+                        
                         <div class="form-group">
                             <label data-i18n="bookStep3">3. 출항 시간 선택</label>
                             <select id="timeSelect" onchange="updateSummary()"></select>
@@ -13433,6 +13438,73 @@ function showBookingAlert(message) {
 
     document.body.appendChild(modal);
 }   
+
+function updateCourseDetail() {
+
+    const courseSelect = document.getElementById('courseSelect');
+    const detailBox = document.getElementById('courseDetail');
+    const detailContent = document.getElementById('courseDetailContent');
+
+    if (!courseSelect || !detailBox || !detailContent) return;
+
+    const course = courseSelect.value;
+
+    let content = '';
+
+    if (course.includes('주간 체험 2시간')) {
+
+        content = `
+            <p>서귀포 앞바다에서 초보자와 가족 누구나 즐길 수 있는 체험낚시입니다.</p>
+            <p><strong>이용시간:</strong> 2시간</p>
+            <p><strong>요금:</strong> 30,000원</p>
+            <p><strong>제공:</strong> 낚시대·채비·미끼</p>
+            <p><strong>구명조끼:</strong> 무료 대여</p>
+        `;
+
+    } else if (course.includes('주간 체험 3시간')) {
+
+        content = `
+            <p>서귀포 앞바다에서 초보자와 가족 누구나 즐길 수 있는 체험낚시입니다.</p>
+            <p><strong>이용시간:</strong> 3시간</p>
+            <p><strong>요금:</strong> 40,000원</p>
+            <p><strong>제공:</strong> 낚시대·채비·미끼</p>
+            <p><strong>구명조끼:</strong> 무료 대여</p>
+        `;
+
+    } else if (course.includes('야간 갈치낚시')) {
+
+        content = `
+            <p>제주 밤바다에서 즐기는 대표적인 갈치 낚시입니다.</p>
+            <p><strong>요금:</strong> 90,000원~</p>
+            <p><strong>시즌:</strong> 8월~11월</p>
+            <p><strong>대상 어종:</strong> 갈치·고등어</p>
+        `;
+
+    } else if (course.includes('야간 한치 체험낚시')) {
+
+        content = `
+            <p>제주 밤바다에서 즐기는 짜릿한 한치 체험낚시입니다.</p>
+            <p><strong>요금:</strong> 60,000원~</p>
+            <p><strong>시즌:</strong> 6월 중순~9월 초</p>
+            <p><strong>제공:</strong> 농심 육개장사발면</p>
+            <p><strong>장비대여료:</strong> 10,000원 현장결제</p>
+        `;
+
+    } else if (course.includes('지깅체험 4시간')) {
+
+        content = `
+            <p>제주 앞바다에서 즐기는 짜릿한 지깅 체험입니다.</p>
+            <p><strong>이용시간:</strong> 4시간</p>
+            <p><strong>요금:</strong> 90,000원</p>
+            <p><strong>출항시간:</strong> 오전 / 오후 타임</p>
+            <p><strong>안내:</strong> 정확한 출항 시간은 구매 후 전화·문자·카카오톡·위챗으로 확인합니다.</p>
+        `;
+    }
+
+    detailContent.innerHTML = content;
+    detailBox.style.display = 'block';
+}
+    
 </script>
 </body>
 </html>
