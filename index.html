@@ -10565,7 +10565,21 @@ if (countSelect) {
         document.getElementById('sumDate').innerText = dateVal || '-';
         document.getElementById('sumCourse').innerText = courseSelect.selectedOptions[0] ? courseSelect.selectedOptions[0].innerText.split(' - ')[0] : '-';
         document.getElementById('sumTime').innerText = timeSelect.value || '-';
-        document.getElementById('sumCount').innerText = countSelect.value + '명';
+        const count = countSelect.value;
+
+let countText = '';
+
+if (currentLang === 'en') {
+    countText = count + ' people';
+} else if (currentLang === 'ja') {
+    countText = count + '名';
+} else if (currentLang === 'zh') {
+    countText = count + '人';
+} else {
+    countText = count + '명';
+}
+
+document.getElementById('sumCount').innerText = countText;
 
         const coursePrice = parseInt(courseSelect.value.split('_')[0]) || 0;
         const count = parseInt(countSelect.value) || 1;
@@ -12636,7 +12650,7 @@ tDJigging: "Fishing rods, tackle, and life jackets provided",
 tDJigging1: "Number of passengers: 1~8",
 tDJigging2: "The actual departure time will be decided after consultation",
             bookStep3: "3. Select Departure Time",
-            bookStep4: "4. Number of Passengers",
+            bookStep4: "4. Passengers",
             bookStep5: "5. Booker Name",
             phName: "Enter name",
             bookStep6: "6. Contact Number (For lookup)",
@@ -12826,7 +12840,7 @@ tDJigging2: "実際の出航時間は相談後に決定します",
             sumDateLabel: "予約日",
             sumCourseLabel: "選択コース",
             sumTimeLabel: "出港時間",
-            sumCountLabel: "乗船人員",
+            sumCountLabel: "乗船人数",
             sumTotalLabel: "合計決済金額",
             btnPayText: "非会員安全決済および予約確定",
             myBookingTitle: "🔍 非会員予約照会",
