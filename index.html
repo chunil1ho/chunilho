@@ -5243,7 +5243,9 @@ padding: 0 14px;
                         </div>
                         
 <div id="courseDetail" class="course-detail" style="display:none;">
-    <div class="course-detail-title">2-1. 코스 상세 안내</div>
+<div class="course-detail-title" data-i18n="courseDetailTitle">
+    2-1. 코스 상세 안내
+</div>
     <div id="courseDetailContent"></div>
 </div>
                         
@@ -10389,6 +10391,7 @@ function setLanguage(lang, btnEl) {
     updateProductPrices(lang);
     updatePassengerCountOptions(lang);
     updateDateInputLanguage(lang);
+updateCourseDetail();
 }
 function updateDateInputLanguage(lang) {
     const dateInput = document.getElementById('custDate');
@@ -12525,6 +12528,7 @@ productJiggingDesc: "제주 앞바다에서 즐기는 짜릿한 지깅 체험",
             optCourse3: "야간 갈치낚시 - 90,000원 (시즌: 8월~11월중순)",
             optCourse4: "야간 한치 체험낚시 - 60,000원 (시즌: 6월중순~9월초)",
             optCourse5: "지깅체험 4시간 - 90,000원 (연중)",
+courseDetailTitle: "2-1. 코스 상세 안내",
 jiggingMorning: "오전타임 (06:00~08:00) 구매후 전화or문자or카톡으로 출항시간 확인할것",
 jiggingAfternoon: "오후타임 (13:00~14:00) 구매후 전화or문자or카톡으로 출항시간 확인할것",
             tCJigging: "지깅체험 4시간",
@@ -12707,6 +12711,19 @@ productJiggingDesc: "Enjoy an exciting jigging experience in the waters of Jeju.
             optCourse3: "Night Cutlassfish Fishing - 90,000 KRW (Season: Aug - Mid-Nov)",
             optCourse4: "Night Squid Experience Fishing - 60,000 KRW (Season: Mid-Jun - Early Sep)",
             optCourse5: "Jigging Fishing Experience 4 Hours - 90,000 KRW (Year-round)",
+courseDetailTitle: "2-1. Course Details",
+courseDetailTime: "Duration",
+courseDetailPrice: "Price",
+courseDetailProvided: "Provided",
+courseDetailLifeJacket: "Life jacket rental",
+courseDetailSeason: "Season",
+courseDetailFish: "Target species",
+courseDetailEquipment: "Equipment rental fee",
+courseDetailSeason: "Season",
+courseDetailFish: "Target species",
+courseDetailDeparture: "Departure time",
+courseDetailNotice: "Notice",
+courseDetailFishJigging: "Amberjack · Greater amberjack, etc.",
 jiggingMorning: "Morning Time (06:00~08:00) Please confirm the departure time by phone, text message, or KakaoTalk after purchase",
 jiggingAfternoon: "Afternoon Time (13:00~14:00) Please confirm the departure time by phone, text message, or KakaoTalk after purchase",
             tCJigging: "Jigging Fishing Experience 4 Hours",
@@ -12889,6 +12906,19 @@ productJiggingDesc: "済州沖で楽しむスリル満点のジギング体験",
             optCourse3: "夜タチウオ釣り - 90,000ウォン（シーズン：8月〜11月中旬）",
             optCourse4: "夜イカ体験釣り - 60,000ウォン（シーズン：6月中旬〜9月初旬）",
             optCourse5: "ジギング体験 4時間 - 90,000ウォン（通年）",
+courseDetailTitle: "2-1. コース詳細案内",
+courseDetailTime: "利用時間",
+courseDetailPrice: "料金",
+courseDetailProvided: "提供",
+courseDetailLifeJacket: "ライフジャケット",
+courseDetailSeason: "シーズン",
+courseDetailFish: "対象魚種",
+courseDetailEquipment: "レンタル料金",
+courseDetailDeparture: "出航時間",
+courseDetailNotice: "ご案内",
+courseDetailFishJigging: "ブリ・カンパチなど",
+courseDetailRamen: "農心ユッケジャンカップ麺",
+courseDetailJiggingNotice: "正確な出航時間は、購入後に電話・SMS・カカオトーク・WeChatでご確認ください。",
 jiggingMorning: "午前の時間帯（06:00～08:00）購入後、電話・SMS・カカオトークで出航時間をご確認ください",
 jiggingAfternoon: "午後の時間帯（13:00～14:00）購入後、電話・SMS・カカオトークで出航時間をご確認ください",
             tCJigging: "ジギング体験 4時間",
@@ -13070,6 +13100,19 @@ productJiggingDesc: "在济州近海享受刺激的铁板钓鱼体验",
             optCourse3: "夜间带鱼海钓 - 90,000韩元（季节：8月~11月中旬）",
             optCourse4: "夜间小鱿鱼体验海钓 - 60,000韩元（季节：6月中旬~9月初）",
             optCourse5: "铁板钓鱼体验 4小时 - 90,000韩元（全年）",
+courseDetailTitle: "2-1. 课程详细说明",
+courseDetailTime: "使用时间",
+courseDetailPrice: "费用",
+courseDetailProvided: "提供",
+courseDetailLifeJacket: "救生衣",
+courseDetailSeason: "季节",
+courseDetailFish: "目标鱼种",
+courseDetailEquipment: "装备租赁费",
+courseDetailDeparture: "出航时间",
+courseDetailNotice: "说明",
+courseDetailFishJigging: "青甘・勾头鱼等",
+courseDetailRamen: "农心辣牛肉汤杯面",
+courseDetailJiggingNotice: "准确的出航时间将在购买后通过电话、短信、KakaoTalk或微信确认。",
 jiggingMorning: "上午时段（06:00~08:00）购买后请通过电话、短信或KakaoTalk确认出航时间",
 jiggingAfternoon: "下午时段（13:00~14:00）购买后请通过电话、短信或KakaoTalk确认出航时间",
             tCJigging: "铁板钓鱼体验 4小时",
@@ -13450,58 +13493,300 @@ function updateCourseDetail() {
     const course = courseSelect.value;
 
     let content = '';
+if (course.includes('주간 체험 2시간')) {
 
-    if (course.includes('주간 체험 2시간')) {
+    const t = translations[currentLang] || translations.ko;
 
-        content = `
-            <p><strong>이용시간:</strong> 2시간</p>
-            <p><strong>요금:</strong> 30,000원</p>
-            <p><strong>제공:</strong> 낚시대·채비·미끼</p>
-            <p><strong>구명조끼:</strong> 무료 대여</p>
-        `;
+    content = `
+        <p><strong>${currentLang === 'ko' ? '이용시간' : t.courseDetailTime}:</strong> 
+        ${currentLang === 'ko'
+            ? '2시간'
+            : currentLang === 'ja'
+            ? '2時間'
+            : currentLang === 'zh'
+            ? '2小时'
+            : '2 hours'
+        }</p>
 
-    } else if (course.includes('주간 체험 3시간')) {
+        <p><strong>${currentLang === 'ko' ? '요금' : t.courseDetailPrice}:</strong> 
+        ${currentLang === 'ko'
+            ? '30,000원'
+            : currentLang === 'ja'
+            ? '30,000ウォン'
+            : currentLang === 'zh'
+            ? '30,000韩元'
+            : 'KRW 30,000'
+        }</p>
 
-        content = `
-            <p><strong>이용시간:</strong> 3시간</p>
-            <p><strong>요금:</strong> 40,000원</p>
-            <p><strong>제공:</strong> 낚시대·채비·미끼</p>
-            <p><strong>구명조끼:</strong> 무료 대여</p>
-        `;
+        <p><strong>${currentLang === 'ko' ? '제공' : t.courseDetailProvided}:</strong> 
+        ${currentLang === 'ko'
+            ? '낚시대·채비·미끼'
+            : currentLang === 'ja'
+            ? '釣り竿・仕掛け・餌'
+            : currentLang === 'zh'
+            ? '鱼竿・钓组・鱼饵'
+            : 'Fishing rod · tackle · bait'
+        }</p>
 
-    } else if (course.includes('야간 갈치낚시')) {
+        <p><strong>${currentLang === 'ko' ? '구명조끼' : t.courseDetailLifeJacket}:</strong> 
+        ${currentLang === 'ko'
+            ? '무료 대여'
+            : currentLang === 'ja'
+            ? '無料レンタル'
+            : currentLang === 'zh'
+            ? '免费租借'
+            : 'Free rental'
+        }</p>
+    `;
+} else if (course.includes('주간 체험 3시간')) {
 
-        content = `
-            <p><strong>요금:</strong> 90,000원~</p>
-            <p><strong>시즌:</strong> 8월~11월</p>
-            <p><strong>제공:</strong> 농심 육개장사발면</p>
-            <p><strong>구명조끼:</strong> 무료 대여</p>
-            <p><strong>대상 어종:</strong> 갈치·고등어·삼치 등</p>
-            <p><strong>장비대여료:</strong> 20,000원 현장결제</p>
-        `;
+    const t = translations[currentLang] || translations.ko;
 
-    } else if (course.includes('야간 한치 체험낚시')) {
+    content = `
+        <p><strong>${currentLang === 'ko' ? '이용시간' : t.courseDetailTime}:</strong> 
+        ${currentLang === 'ko'
+            ? '3시간'
+            : currentLang === 'ja'
+            ? '3時間'
+            : currentLang === 'zh'
+            ? '3小时'
+            : '3 hours'
+        }</p>
 
-        content = `
-            <p><strong>요금:</strong> 60,000원~</p>
-            <p><strong>시즌:</strong> 6월 중순~9월 초</p>
-            <p><strong>제공:</strong> 농심 육개장사발면</p>
-            <p><strong>구명조끼:</strong> 무료 대여</p>
-            <p><strong>대상 어종:</strong> 한치</p>
-            <p><strong>장비대여료:</strong> 10,000원 현장결제</p>
-        `;
+        <p><strong>${currentLang === 'ko' ? '요금' : t.courseDetailPrice}:</strong> 
+        ${currentLang === 'ko'
+            ? '40,000원'
+            : currentLang === 'ja'
+            ? '40,000ウォン'
+            : currentLang === 'zh'
+            ? '40,000韩元'
+            : 'KRW 40,000'
+        }</p>
 
-    } else if (course.includes('지깅체험 4시간')) {
+        <p><strong>${currentLang === 'ko' ? '제공' : t.courseDetailProvided}:</strong> 
+        ${currentLang === 'ko'
+            ? '낚시대·채비·미끼'
+            : currentLang === 'ja'
+            ? '釣り竿・仕掛け・餌'
+            : currentLang === 'zh'
+            ? '鱼竿・钓组・鱼饵'
+            : 'Fishing rod · tackle · bait'
+        }</p>
 
-        content = `
-            <p><strong>이용시간:</strong> 4시간</p>
-            <p><strong>요금:</strong> 90,000원</p>
-            <p><strong>대상 어종:</strong> 부시리·잿방어 등</p>
-            <p><strong>제공:</strong> 낚시대·채비·미끼·구명조끼</p>
-            <p><strong>출항시간:</strong> 오전 / 오후 타임</p>
-            <p><strong>안내:</strong> 정확한 출항 시간은 구매 후 전화·문자·카카오톡·위챗으로 확인합니다.</p>
-        `;
-    }
+        <p><strong>${currentLang === 'ko' ? '구명조끼' : t.courseDetailLifeJacket}:</strong> 
+        ${currentLang === 'ko'
+            ? '무료 대여'
+            : currentLang === 'ja'
+            ? '無料レンタル'
+            : currentLang === 'zh'
+            ? '免费租借'
+            : 'Free rental'
+        }</p>
+    `;
+
+
+} else if (course.includes('야간 갈치낚시')) {
+
+    const t = translations[currentLang] || translations.ko;
+
+    content = `
+        <p><strong>${currentLang === 'ko' ? '요금' : t.courseDetailPrice}:</strong> 
+        ${currentLang === 'ko'
+            ? '90,000원~'
+            : currentLang === 'ja'
+            ? '90,000ウォン〜'
+            : currentLang === 'zh'
+            ? '90,000韩元起'
+            : 'KRW 90,000~'
+        }</p>
+
+        <p><strong>${currentLang === 'ko' ? '시즌' : t.courseDetailSeason}:</strong> 
+        ${currentLang === 'ko'
+            ? '8월~11월'
+            : currentLang === 'ja'
+            ? '8月〜11月'
+            : currentLang === 'zh'
+            ? '8月～11月'
+            : 'August - November'
+        }</p>
+
+        <p><strong>${currentLang === 'ko' ? '제공' : t.courseDetailProvided}:</strong> 
+        ${currentLang === 'ko'
+            ? '농심 육개장사발면'
+            : currentLang === 'ja'
+            ? '農心ユッケジャンカップ麺'
+            : currentLang === 'zh'
+            ? '农心辣牛肉汤杯面'
+            : 'Nongshim Yukgaejang Cup Noodles'
+        }</p>
+
+        <p><strong>${currentLang === 'ko' ? '구명조끼' : t.courseDetailLifeJacket}:</strong> 
+        ${currentLang === 'ko'
+            ? '무료 대여'
+            : currentLang === 'ja'
+            ? '無料レンタル'
+            : currentLang === 'zh'
+            ? '免费租借'
+            : 'Free rental'
+        }</p>
+
+        <p><strong>${currentLang === 'ko' ? '대상 어종' : t.courseDetailFish}:</strong> 
+        ${currentLang === 'ko'
+            ? '갈치·고등어·삼치 등'
+            : currentLang === 'ja'
+            ? 'タチウオ・サバ・サワラなど'
+            : currentLang === 'zh'
+            ? '带鱼・鲐鱼・马鲛鱼等'
+            : 'Cutlassfish · Mackerel · Spanish mackerel, etc.'
+        }</p>
+
+        <p><strong>${currentLang === 'ko' ? '장비대여료' : t.courseDetailEquipment}:</strong> 
+        ${currentLang === 'ko'
+            ? '20,000원 현장결제'
+            : currentLang === 'ja'
+            ? '20,000ウォン 現地払い'
+            : currentLang === 'zh'
+            ? '20,000韩元，现场支付'
+            : 'KRW 20,000 paid on-site'
+        }</p>
+    `;
+
+
+} else if (course.includes('야간 한치 체험낚시')) {
+
+    const t = translations[currentLang] || translations.ko;
+
+    content = `
+        <p><strong>${currentLang === 'ko' ? '요금' : t.courseDetailPrice}:</strong> 
+        ${currentLang === 'ko'
+            ? '60,000원~'
+            : currentLang === 'ja'
+            ? '60,000ウォン〜'
+            : currentLang === 'zh'
+            ? '60,000韩元起'
+            : 'KRW 60,000~'
+        }</p>
+
+        <p><strong>${currentLang === 'ko' ? '시즌' : t.courseDetailSeason}:</strong> 
+        ${currentLang === 'ko'
+            ? '6월 중순~9월 초'
+            : currentLang === 'ja'
+            ? '6月中旬〜9月初旬'
+            : currentLang === 'zh'
+            ? '6月中旬～9月初'
+            : 'Mid-June - Early September'
+        }</p>
+
+        <p><strong>${currentLang === 'ko' ? '제공' : t.courseDetailProvided}:</strong> 
+        ${currentLang === 'ko'
+            ? '농심 육개장사발면'
+            : currentLang === 'ja'
+            ? '農心ユッケジャンカップ麺'
+            : currentLang === 'zh'
+            ? '农心辣牛肉汤杯面'
+            : 'Nongshim Yukgaejang Cup Noodles'
+        }</p>
+
+        <p><strong>${currentLang === 'ko' ? '구명조끼' : t.courseDetailLifeJacket}:</strong> 
+        ${currentLang === 'ko'
+            ? '무료 대여'
+            : currentLang === 'ja'
+            ? '無料レンタル'
+            : currentLang === 'zh'
+            ? '免费租借'
+            : 'Free rental'
+        }</p>
+
+        <p><strong>${currentLang === 'ko' ? '대상 어종' : t.courseDetailFish}:</strong> 
+        ${currentLang === 'ko'
+            ? '한치'
+            : currentLang === 'ja'
+            ? 'ヤリイカ'
+            : currentLang === 'zh'
+            ? '枪乌贼'
+            : 'Spear squid'
+        }</p>
+
+        <p><strong>${currentLang === 'ko' ? '장비대여료' : t.courseDetailEquipment}:</strong> 
+        ${currentLang === 'ko'
+            ? '10,000원 현장결제'
+            : currentLang === 'ja'
+            ? '10,000ウォン 現地払い'
+            : currentLang === 'zh'
+            ? '10,000韩元，现场支付'
+            : 'KRW 10,000 paid on-site'
+        }</p>
+    `;
+
+
+} else if (course.includes('지깅체험 4시간')) {
+
+    const t = translations[currentLang] || translations.ko;
+
+    content = `
+        <p><strong>${currentLang === 'ko' ? '이용시간' : t.courseDetailTime}:</strong> 
+        ${currentLang === 'ko'
+            ? '4시간'
+            : currentLang === 'ja'
+            ? '4時間'
+            : currentLang === 'zh'
+            ? '4小时'
+            : '4 hours'
+        }</p>
+
+        <p><strong>${currentLang === 'ko' ? '요금' : t.courseDetailPrice}:</strong> 
+        ${currentLang === 'ko'
+            ? '90,000원'
+            : currentLang === 'ja'
+            ? '90,000ウォン'
+            : currentLang === 'zh'
+            ? '90,000韩元'
+            : 'KRW 90,000'
+        }</p>
+
+        <p><strong>${currentLang === 'ko' ? '대상 어종' : t.courseDetailFish}:</strong> 
+        ${currentLang === 'ko'
+            ? '부시리·잿방어 등'
+            : currentLang === 'ja'
+            ? 'ヒラマサ・カンパチなど'
+            : currentLang === 'zh'
+            ? '青甘・勾头鱼等'
+            : t.courseDetailFishJigging
+        }</p>
+
+        <p><strong>${currentLang === 'ko' ? '제공' : t.courseDetailProvided}:</strong> 
+        ${currentLang === 'ko'
+            ? '낚시대·채비·메탈지그·구명조끼'
+            : currentLang === 'ja'
+            ? '釣り竿・仕掛け・メタルジグ・ライフジャケット'
+            : currentLang === 'zh'
+            ? '鱼竿・钓组・金属铁板・救生衣'
+            : 'Fishing rod · tackle · metal jig · life jacket'
+        }</p>
+
+        <p><strong>${currentLang === 'ko' ? '출항시간' : t.courseDetailDeparture}:</strong> 
+        ${currentLang === 'ko'
+            ? '오전 / 오후 타임'
+            : currentLang === 'ja'
+            ? '午前 / 午後'
+            : currentLang === 'zh'
+            ? '上午 / 下午'
+            : 'Morning / Afternoon time'
+        }</p>
+
+        <p><strong>${currentLang === 'ko' ? '안내' : t.courseDetailNotice}:</strong> 
+        ${currentLang === 'ko'
+            ? '정확한 출항 시간은 구매 후 전화·문자·카카오톡·위챗으로 확인합니다.'
+            : currentLang === 'ja'
+            ? '正確な出航時間は、購入後に電話・SMS・カカオトーク・WeChatでご確認ください。'
+            : currentLang === 'zh'
+            ? '准确的出航时间将在购买后通过电话、短信、KakaoTalk或微信确认。'
+            : 'The exact departure time will be confirmed by phone, text message, KakaoTalk, or WeChat after purchase.'
+        }</p>
+    `;
+
+
+}
 
     detailContent.innerHTML = content;
     detailBox.style.display = 'block';
