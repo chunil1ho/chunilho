@@ -10567,7 +10567,11 @@ if (countSelect) {
         document.getElementById('sumTime').innerText = timeSelect.value || '-';
         
 
-document.getElementById('sumCount').innerText = countSelect.value + '명';
+document.getElementById('sumCount').innerText =
+    currentLang === 'en' ? countSelect.value + ' people' :
+    currentLang === 'ja' ? countSelect.value + '名' :
+    currentLang === 'zh' ? countSelect.value + '人' :
+    countSelect.value + '명';
 
         const coursePrice = parseInt(courseSelect.value.split('_')[0]) || 0;
         const count = parseInt(countSelect.value) || 1;
