@@ -4866,8 +4866,11 @@ padding: 0 14px;
                 <h3 data-i18n="productDayTitle">주간 체험낚시</h3>
                 <p data-i18n="productDayDesc">초보자와 가족 누구나 즐길 수 있는 서귀포 앞바다 체험낚시</p>
 <div class="home-product-price home-day-prices">
-                    <span>2시간 <strong>30,000원</strong></span>
-    <span>3시간 <strong>40,000원</strong></span>
+    <span data-i18n="day2Hours">2시간</span>
+    <strong data-price="30000">30,000원</strong>
+
+    <span data-i18n="day3Hours">3시간</span>
+    <strong data-price="40000">40,000원</strong>
 </div>
                 <button type="button" onclick="goToBooking('30000_주간 체험 2시간')">→</button>
             </div>
@@ -4881,7 +4884,9 @@ padding: 0 14px;
             <div class="home-product-body">
                 <h3 data-i18n="productSquidTitle">한치낚시</h3>
                 <p data-i18n="productSquidDesc">제주 밤바다에서 즐기는 짜릿한 한치 손맛</p>
-                <div class="home-product-price">60,000원~</div>
+                <div class="home-product-price">
+    <span data-price="60000" data-price-approx="true">60,000원~</span>
+</div>
                 <button type="button" onclick="goToBooking('60000_야간 한치 체험낚시')">→</button>
             </div>
         </div>
@@ -4894,7 +4899,9 @@ padding: 0 14px;
             <div class="home-product-body">
                 <h3 data-i18n="productHairtailTitle">갈치낚시</h3>
                 <p data-i18n="productHairtailDesc">제주 밤바다의 대표 낚시, 갈치와 고등어를 함께 즐겨보세요.</p>
-                <div class="home-product-price">90,000원~</div>
+                <div class="home-product-price">
+    <span data-price="90000" data-price-approx="true">90,000원~</span>
+</div>
                 <button type="button" onclick="goToBooking('90000_야간 갈치낚시')">→</button>
             </div>
         </div>
@@ -4909,7 +4916,9 @@ padding: 0 14px;
                 <h3 data-i18n="productJiggingTitle">지깅낚시</h3>
                 <p data-i18n="productJiggingDesc">제주 앞바다에서 즐기는 짜릿한 지깅 체험</p>
 
-                <div class="home-product-price">90,000원</div>
+                <div class="home-product-price">
+    <span data-price="90000">90,000원</span>
+</div>
 
                 <button type="button" onclick="goToBooking('90000_지깅체험 4시간')">→</button>
             </div>
@@ -10272,34 +10281,138 @@ function goToBooking(courseValue) {
     }
 }
 
-    function setLanguage(lang, btnEl) {
-        currentLang = lang;
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        if (btnEl) {
-            btnEl.classList.add('active');
-        }
+function setLanguage(lang, btnEl) {
+    currentLang = lang;
 
-        const t = translations[lang];
-        if (!t) return;
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
 
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if (t[key]) {
-                el.innerHTML = t[key];
-            }
-        });
-
-        document.querySelectorAll('[data-i18n-ph]').forEach(el => {
-            const key = el.getAttribute('data-i18n-ph');
-            if (t[key]) {
-                el.placeholder = t[key];
-            }
-        });
-        updateTimeSelect();
+    if (btnEl) {
+        btnEl.classList.add('active');
     }
 
+    const t = translations[lang];
+    if (!t) return;
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) {
+            el.innerHTML = t[key];
+        }
+    });
+
+    document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const key = el.getAttribute('data-i18n-ph');
+        if (t[key]) {
+            el.placeholder = t[key];
+        }
+    });
+
+    updateTimeSelect();
+
+    // 💰 상품 가격도 선택한 언어에 맞게 변경
+    updateProductPrices(lang);
+}
+function setLanguage(lang, btnEl) {
+    currentLang = lang;
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    if (btnEl) {
+        btnEl.classList.add('active');
+    }
+
+    const t = translations[lang];
+    if (!t) return;
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) {
+            el.innerHTML = t[key];
+        }
+    });
+
+    document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const key = el.getAttribute('data-i18n-ph');
+        if (t[key]) {
+            el.placeholder = t[key];
+        }
+    });
+
+    updateTimeSelect();
+
+    updateProductPrices(lang);
+}
+
+
+// ========================================
+// 상품 가격 다국어 통화 표시
+// ========================================
+function updateProductPrices(lang) {
+
+    const rates = {
+        ko: {
+            symbol: '원',
+            rate: 1,
+            decimals: 0
+        },
+        en: {
+            symbol: '$',
+            rate: 1 / 1500,
+            decimals: 0
+        },
+        ja: {
+            symbol: '¥',
+            rate: 1 / 10,
+            decimals: 0
+        },
+        zh: {
+            symbol: '¥',
+            rate: 1 / 200,
+            decimals: 0
+        }
+    };
+
+    const currency = rates[lang] || rates.ko;
+
+    document.querySelectorAll('[data-price]').forEach(el => {
+
+        const krw = Number(el.dataset.price);
+
+        if (!krw) return;
+
+        let price = krw * currency.rate;
+
+        if (lang === 'en') {
+            price = Math.round(price);
+        } else if (lang === 'ja') {
+            price = Math.round(price / 100) * 100;
+        } else if (lang === 'zh') {
+            price = Math.round(price);
+        } else {
+            price = Math.round(price);
+        }
+
+        const formatted = price.toLocaleString(
+            lang === 'ko' ? 'ko-KR' :
+            lang === 'ja' ? 'ja-JP' :
+            lang === 'zh' ? 'zh-CN' :
+            'en-US'
+        );
+
+        const approx = el.dataset.priceApprox === 'true';
+
+        if (lang === 'ko') {
+            el.textContent = formatted + '원' + (approx ? '~' : '');
+        } else {
+            el.textContent = currency.symbol + formatted + (approx ? '~' : '');
+        }
+    });
+}
+    
     function updateOptions() {
         const dateElement = document.getElementById('custDate');
 const dateVal = dateElement.value;
@@ -13218,6 +13331,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+    
 </script>
 </body>
 </html>
