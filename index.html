@@ -10499,7 +10499,16 @@ if (
     selectedReservationDate < reservationToday ||
     selectedReservationDate > reservationMaxDate
 ) {
-    alert('예약은 오늘부터 3개월까지만 가능합니다.');
+   const message =
+    currentLang === 'en'
+        ? 'Reservations can only be made up to 3 months from today.'
+        : currentLang === 'ja'
+        ? '予約は本日から3か月先まで可能です。'
+        : currentLang === 'zh'
+        ? '预约仅可提前3个月。'
+        : '예약은 오늘부터 3개월까지만 가능합니다.';
+
+showBookingAlert(message);
     dateElement.focus();
     return;ㅋ
 }
@@ -13473,9 +13482,17 @@ function showBookingAlert(message) {
     modal.innerHTML = `
         <div class="booking-alert-box">
             <div class="booking-alert-message">${message}</div>
-            <button type="button" onclick="document.getElementById('bookingAlertModal').remove()">
-                확인
-            </button>
+<button type="button" onclick="document.getElementById('bookingAlertModal').remove()">
+    ${
+        currentLang === 'en'
+            ? 'OK'
+            : currentLang === 'ja'
+            ? '確認'
+            : currentLang === 'zh'
+            ? '确定'
+            : '확인'
+    }
+</button>
         </div>
     `;
 
