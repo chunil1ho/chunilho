@@ -10567,19 +10567,7 @@ if (countSelect) {
         document.getElementById('sumTime').innerText = timeSelect.value || '-';
         const count = countSelect.value;
 
-let countText = '';
-
-if (currentLang === 'en') {
-    countText = count + ' people';
-} else if (currentLang === 'ja') {
-    countText = count + '名';
-} else if (currentLang === 'zh') {
-    countText = count + '人';
-} else {
-    countText = count + '명';
-}
-
-document.getElementById('sumCount').innerText = countText;
+document.getElementById('sumCount').innerText = countSelect.value + '명';
 
         const coursePrice = parseInt(courseSelect.value.split('_')[0]) || 0;
         const count = parseInt(countSelect.value) || 1;
