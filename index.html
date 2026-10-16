@@ -4750,7 +4750,58 @@ padding: 0 14px;
     user-select: none !important;
     -webkit-user-drag: none !important;
     pointer-events: none !important;
-}    
+}  
+  /* 카카오 QR 팝업 */
+.qr-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+}
+
+.qr-modal-box {
+    width: min(90%, 360px);
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px 24px 22px;
+    text-align: center;
+    box-sizing: border-box;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.qr-modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.qr-modal img {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    margin: 0 auto 14px;
+    display: block;
+}
+
+.qr-modal-id {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.qr-modal-btn {
+    width: 100%;
+    height: 48px;
+    border: 0;
+    border-radius: 10px;
+    background: #333;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}  
     </style>
 </head>
 <body id="mainBody">
@@ -4875,7 +4926,7 @@ padding: 0 14px;
 
     <button type="button"
             class="hero-contact-item kakao"
-            onclick="alert('카카오톡 ID : chunil1ho')">
+            onclick="openKakaoQR()"
         <span class="contact-icon">💬</span>
         <span>
             <small data-i18n="kakaoInquiry">카카오톡문의</small>
@@ -14070,7 +14121,49 @@ document.addEventListener('dragstart', function (event) {
     if (event.target.closest('#cat-board #board-detail-content')) {
         event.preventDefault();
     }
-});   
+});  
+    function openKakaoQR() {
+    const modal = document.getElementById('kakaoQRModal');
+
+    if (modal) {
+        modal.style.display = 'flex';
+    }
+}
+
+function closeKakaoQR() {
+    const modal = document.getElementById('kakaoQRModal');
+
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
 </script>
+    });
+</script>
+
+<div id="kakaoQRModal" class="qr-modal">
+    <div class="qr-modal-box">
+
+        <div class="qr-modal-title">
+            카카오톡 문의
+        </div>
+
+        <img src="image/kakaoqr.jpg" alt="카카오톡 QR">
+
+        <div class="qr-modal-id">
+            카카오톡 ID : <strong>chunil1ho</strong>
+        </div>
+
+        <button type="button"
+                class="qr-modal-btn"
+                onclick="closeKakaoQR()">
+            확인
+        </button>
+
+    </div>
+</div>
+
+</body>
+</html>
 </body>
 </html>
