@@ -4935,7 +4935,7 @@ padding: 0 14px;
     </button>
 <button type="button"
         class="hero-contact-item wechat"
-        onclick="alert('위챗 ID : chunilho')">
+        onclick="openWechatQR()"
     <span class="contact-icon">💬</span>
     <span>
         <small data-i18n="wechatInquiry">위챗문의</small>
@@ -14137,6 +14137,21 @@ function closeKakaoQR() {
         modal.style.display = 'none';
     }
 }
+    function openWechatQR() {
+    const modal = document.getElementById('wechatQRModal');
+
+    if (modal) {
+        modal.style.display = 'flex';
+    }
+}
+
+function closeWechatQR() {
+    const modal = document.getElementById('wechatQRModal');
+
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
 </script>
     });
 </script>
@@ -14162,7 +14177,27 @@ function closeKakaoQR() {
 
     </div>
 </div>
+<div id="wechatQRModal" class="qr-modal">
+    <div class="qr-modal-box">
 
+        <div class="qr-modal-title">
+            위챗 문의
+        </div>
+
+        <img src="image/wechatqr.jpg" alt="위챗 QR">
+
+        <div class="qr-modal-id">
+            위챗 ID : <strong>chunilho</strong>
+        </div>
+
+        <button type="button"
+                class="qr-modal-btn"
+                onclick="closeWechatQR()">
+            확인
+        </button>
+
+    </div>
+</div>
 </body>
 </html>
 </body>
