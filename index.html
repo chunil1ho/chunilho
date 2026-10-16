@@ -12,6 +12,7 @@
             --accent-hover: #fa6820;
             --bg-color: #f8fafc;<tr>
     <td class="center">
+
         <span class="badge badge-day" data-i18n="bDay">주간</span>
     </td>
 
@@ -5233,7 +5234,7 @@ padding: 0 14px;
 
                         <div class="form-group">
                             <label data-i18n="bookStep2">2. 낚시 코스 선택</label>
-                            <select id="courseSelect" onchange="updateOptions(); updateCourseDetail()">
+                            <select id="courseSelect" onchange="updateOptions(); updateCourseDetail(); updateTimeSelect()">
                                 <option value="30000_주간 체험 2시간" data-i18n="optCourse1">주간 체험 2시간 - 30,000원 (연중)</option>
                                 <option value="40000_주간 체험 3시간" data-i18n="optCourse2">주간 체험 3시간 - 40,000원 (연중)</option>
                                 <option value="90000_야간 갈치낚시" data-i18n="optCourse3" id="optGalchi">야간 갈치낚시 - 90,000원 (시즌: 8월~11월중순)</option>
@@ -10607,6 +10608,7 @@ if (countSelect) {
 
         let times = [];
         const courseVal = courseSelect.value;
+console.log('현재 선택 코스:', courseVal);
 
         if (courseVal.includes('갈치')) {
             times = ['18:00 (야간)'];
@@ -13816,9 +13818,170 @@ if (course.includes('주간 체험 2시간')) {
 
 
 }
+    const damageContent = document.getElementById('damageCompensationContent');
+
+if (damageContent) {
+
+    if (currentLang === 'en') {
+
+        if (
+            course.includes('주간 체험 2시간') ||
+            course.includes('주간 체험 3시간') ||
+            course.includes('야간 한치 체험낚시')
+        ) {
+
+            damageContent.innerHTML = `
+                <p><strong>※ Equipment Damage & Loss Compensation ※</strong></p>
+                <p>1. Reel damage: KRW 40,000</p>
+                <p>2. Fishing rod damage: KRW 20,000</p>
+                <p>3. If the fishing rod and reel are dropped into the sea: KRW 60,000</p>
+                <p>4. Even if a reel dropped into the sea is recovered, compensation is required because exposure to seawater and salt can cause the reel to seize and become unusable. You may keep the recovered reel.</p>
+            `;
+
+        } else if (course.includes('야간 갈치낚시')) {
+
+            damageContent.innerHTML = `
+                <p><strong>※ Cutlassfish Fishing Equipment Damage & Loss Compensation ※</strong></p>
+                <p>1. Reel damage: KRW 500,000</p>
+                <p>2. Fishing rod damage: KRW 90,000</p>
+                <p>3. If the fishing rod and reel are dropped into the sea: KRW 200,000</p>
+                <p>4. Even if a reel dropped into the sea is recovered, compensation is required because exposure to seawater and salt can cause the reel to seize and become unusable.</p>
+            `;
+
+        } else if (course.includes('지깅체험 4시간')) {
+
+            damageContent.innerHTML = `
+                <p><strong>※ Jigging Equipment Damage & Loss Compensation ※</strong></p>
+                <p>1. Reel damage: KRW 500,000</p>
+                <p>2. Fishing rod damage: KRW 90,000</p>
+                <p>3. If the fishing rod and reel are dropped into the sea: KRW 200,000</p>
+                <p>4. Even if a reel dropped into the sea is recovered, compensation is required because exposure to seawater and salt can cause the reel to seize and become unusable.</p>
+                <p>5. The first metal jig is included in the rental fee. From the second one, KRW 20,000 per lost jig.</p>
+            `;
+
+        }
+
+    } else if (currentLang === 'ja') {
+
+        if (
+            course.includes('주간 체험 2시간') ||
+            course.includes('주간 체험 3시간') ||
+            course.includes('야간 한치 체험낚시')
+        ) {
+
+            damageContent.innerHTML = `
+                <p><strong>※ 釣り具の破損・紛失に関する補償基準 ※</strong></p>
+                <p>1. リール破損：40,000ウォン</p>
+                <p>2. 釣り竿破損：20,000ウォン</p>
+                <p>3. 釣り竿・リールを海に落とした場合：60,000ウォン</p>
+                <p>4. 海に落としたリールを回収した場合でも、補償が必要です。海水の塩分によりリールが固着し、使用できなくなる可能性があるためです。落としたリールはお持ち帰りいただいても構いません。</p>
+            `;
+
+        } else if (course.includes('야간 갈치낚시')) {
+
+            damageContent.innerHTML = `
+                <p><strong>※ タチウオ釣りの釣り具破損・紛失に関する補償基準 ※</strong></p>
+                <p>1. リール破損：500,000ウォン</p>
+                <p>2. 釣り竿破損：90,000ウォン</p>
+                <p>3. 釣り竿・リールを海に落とした場合：200,000ウォン</p>
+                <p>4. 海に落としたリールを回収した場合でも、補償が必要です。海水にさらされることで、塩分によりリールが固着し、使用できなくなる可能性があるためです。</p>
+            `;
+
+        } else if (course.includes('지깅체험 4시간')) {
+
+            damageContent.innerHTML = `
+                <p><strong>※ ジギング体験の釣り具破損・紛失に関する補償基準 ※</strong></p>
+                <p>1. リール破損：500,000ウォン</p>
+                <p>2. 釣り竿破損：90,000ウォン</p>
+                <p>3. 釣り竿・リールを海に落とした場合：200,000ウォン</p>
+                <p>4. 海に落としたリールを回収した場合でも、補償が必要です。海水にさらされることで、塩分によりリールが固着し、使用できなくなる可能性があるためです。</p>
+                <p>5. メタルジグは最初の1個がレンタル料金に含まれています。2個目以降、紛失した場合は1個につき20,000ウォンです。</p>
+            `;
+
+        }
+    } else if (currentLang === 'zh') {
+
+        if (
+            course.includes('주간 체험 2시간') ||
+            course.includes('주간 체험 3시간') ||
+            course.includes('야간 한치 체험낚시')
+        ) {
+
+            damageContent.innerHTML = `
+                <p><strong>※ 钓具损坏及遗失赔偿标准 ※</strong></p>
+                <p>1. 渔轮损坏：40,000韩元</p>
+                <p>2. 钓竿损坏：20,000韩元</p>
+                <p>3. 钓竿及渔轮掉入海中：60,000韩元</p>
+                <p>4. 即使将掉入海中的渔轮打捞上来，也需要进行赔偿。因为海水中的盐分可能导致渔轮卡死，无法正常使用。打捞上来的渔轮可以带走。</p>
+            `;
+
+        } else if (course.includes('야간 갈치낚시')) {
+
+            damageContent.innerHTML = `
+                <p><strong>※ 带鱼钓具损坏及遗失赔偿标准 ※</strong></p>
+                <p>1. 渔轮损坏：500,000韩元</p>
+                <p>2. 钓竿损坏：90,000韩元</p>
+                <p>3. 钓竿及渔轮掉入海中：200,000韩元</p>
+                <p>4. 即使将掉入海中的渔轮打捞上来，也需要进行赔偿。因为海水中的盐分可能导致渔轮卡死，无法正常使用。</p>
+            `;
+
+        } else if (course.includes('지깅체험 4시간')) {
+
+            damageContent.innerHTML = `
+                <p><strong>※ 铁板路亚体验钓具损坏及遗失赔偿标准 ※</strong></p>
+                <p>1. 渔轮损坏：500,000韩元</p>
+                <p>2. 钓竿损坏：90,000韩元</p>
+                <p>3. 钓竿及渔轮掉入海中：200,000韩元</p>
+                <p>4. 即使将掉入海中的渔轮打捞上来，也需要进行赔偿。因为海水中的盐分可能导致渔轮卡死，无法正常使用。</p>
+                <p>5. 第一个铁板拟饵包含在租赁费用中。从第二个开始，如有遗失，每个需赔偿20,000韩元。</p>
+            `;
+
+        }
+
+    } else {
+
+        if (
+            course.includes('주간 체험 2시간') ||
+            course.includes('주간 체험 3시간') ||
+            course.includes('야간 한치 체험낚시')
+        ) {
+
+            damageContent.innerHTML = `
+                <p><strong>※ 장비 파손 및 분실 보상 기준 ※</strong></p>
+                <p>1. 릴 파손 시: 40,000원</p>
+                <p>2. 낚싯대 파손 시: 20,000원</p>
+                <p>3. 낚싯대 및 릴을 바다에 빠뜨릴 경우: 60,000원</p>
+                <p>4. 바다에 빠진 릴을 건져 올리더라도 변상하셔야 합니다. 바닷물의 염분으로 인해 릴이 굳어 사용이 불가능해질 수 있기 때문입니다. 빠뜨린 릴은 가지고 가셔도 됩니다.</p>
+            `;
+
+        } else if (course.includes('야간 갈치낚시')) {
+
+            damageContent.innerHTML = `
+                <p><strong>※ 갈치 체험 시 장비 파손 및 분실 보상 기준 ※</strong></p>
+                <p>1. 릴 파손 시: 500,000원</p>
+                <p>2. 낚싯대 파손 시: 90,000원</p>
+                <p>3. 낚싯대 및 릴을 바다에 빠뜨릴 경우: 200,000원</p>
+                <p>4. 바다에 빠진 릴을 건져 올리더라도 변상하셔야 합니다. 바닷물에 노출되면 염분으로 인해 릴이 굳어져 사용이 불가능해질 수 있기 때문입니다.</p>
+            `;
+
+        } else if (course.includes('지깅체험 4시간')) {
+
+            damageContent.innerHTML = `
+                <p><strong>※ 지깅 체험 시 장비 파손 및 분실 보상 기준 ※</strong></p>
+                <p>1. 릴 파손 시: 500,000원</p>
+                <p>2. 낚싯대 파손 시: 90,000원</p>
+                <p>3. 낚싯대 및 릴을 바다에 빠뜨릴 경우: 200,000원</p>
+                <p>4. 바다에 빠진 릴을 건져 올리더라도 변상하셔야 합니다. 바닷물에 노출되면 염분으로 인해 릴이 굳어져 사용이 불가능해질 수 있기 때문입니다.</p>
+                <p>5. 메탈지그는 첫 1개는 대여비에 포함되며, 2번째부터 분실 시 1개당 20,000원입니다.</p>
+            `;
+
+        }
+    }
+}
 
     detailContent.innerHTML = content;
     detailBox.style.display = 'block';
+
 }
 
 document.addEventListener('DOMContentLoaded', function () {
