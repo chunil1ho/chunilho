@@ -12130,6 +12130,9 @@ async function adminCompleteBooking(orderNo) {
 
     window.showAdminCalendarDate = function(dateString) {
 
+         window.selectedAdminCalendarDate = dateString;
+
+
         const detail = document.getElementById('adminCalendarDetail');
 
         if (!detail) return;
@@ -12334,7 +12337,9 @@ async function adminCompleteBooking(orderNo) {
         });
     };
 
-
+if (window.selectedAdminCalendarDate) {
+    showAdminCalendarDate(window.selectedAdminCalendarDate);
+}
     /* =========================================================
        이전 / 다음 달
        ========================================================= */
