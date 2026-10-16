@@ -12397,20 +12397,29 @@ async function adminCompleteBooking(orderNo) {
         }
     }
 
-    window.addEventListener('DOMContentLoaded', async () => {
-        if (adminToken) {
-            try {
-                await apiRequest('/admin-session');
-                isAdminLoggedIn = true;
-                document.getElementById('nav-admin-li').style.display = 'inline-block';
-                await updateAdminDashboard();
-            } catch (_) {
+window.addEventListener('DOMContentLoaded', async () => {
+    if (adminToken) {
+        try {
+            await apiRequest('/admin-session');
+
+            isAdminLoggedIn = true;
+
+            document.getElementById('nav-admin-li').style.display = 'inline-block';
+
+            await updateAdminDashboard();
+
+        } catch (error) {
+            console.warn('관리자 세션 확인 실패:', error);
+
+            // 실제 인증 만료(401)인 경우에만 로그아웃 처리
+            if (error?.message === '관리자 세션이 만료되었습니다.') {
                 adminToken = '';
                 sessionStorage.removeItem('chunilho_admin_token');
+                isAdminLoggedIn = false;
             }
         }
-    });
-
+    }
+});
     const translations = {
         ko: {
             topBarAddress: "🌊 제주 서귀포시 남성중로 25 (천일호)",
