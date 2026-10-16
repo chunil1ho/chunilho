@@ -14059,7 +14059,18 @@ document.addEventListener('contextmenu', function (event) {
     if (event.target.closest('#cat-board #board-detail-content')) {
         event.preventDefault();
     }
-});    
+}); 
+ document.addEventListener('selectstart', function (event) {
+    if (event.target.closest('#cat-board #board-detail-content')) {
+        event.preventDefault();
+    }
+});
+
+document.addEventListener('dragstart', function (event) {
+    if (event.target.closest('#cat-board #board-detail-content')) {
+        event.preventDefault();
+    }
+});   
 </script>
 </body>
 </html>
