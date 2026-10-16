@@ -11746,6 +11746,7 @@ async function adminCompleteBooking(orderNo) {
             await loadBookingsFromServer();
             switchCategory('cat-admin', document.getElementById('nav-admin'));
             updateAdminDashboard();
+            startAdminAutoRefresh();
         } catch (error) {
             alert(error.message || '아이디 또는 비밀번호가 올바르지 않습니다.');
         }
@@ -12381,6 +12382,25 @@ async function adminCompleteBooking(orderNo) {
         pgTable.innerHTML = pgHtml;
     }
 }
+    // 관리자 화면 예약 자동 갱신
+let adminRefreshTimer = null;
+
+function startAdminAutoRefresh() {
+    if (adminRefreshTimer) {
+        clearInterval(adminRefreshTimer);
+    }
+
+    adminRefreshTimer = setInterval(async () => {
+        if (!isAdminLoggedIn || !adminToken) return;
+
+        try {
+            await updateAdminDashboard();
+            console.log('관리자 예약 내역 자동 갱신');
+        } catch (error) {
+            console.warn('관리자 자동 갱신 실패:', error);
+        }
+    }, 10000);
+}
     async function processCheckin() {
         const rawTel = document.getElementById('checkinTel').value.trim();
         const tel = normalizeTel(rawTel);
@@ -12406,11 +12426,13 @@ window.addEventListener('DOMContentLoaded', async () => {
         try {
             await apiRequest('/admin-session');
 
-            isAdminLoggedIn = true;
+isAdminLoggedIn = true;
 
-            document.getElementById('nav-admin-li').style.display = 'inline-block';
+document.getElementById('nav-admin-li').style.display = 'inline-block';
 
-            await updateAdminDashboard();
+await updateAdminDashboard();
+
+startAdminAutoRefresh();
 
 } catch (error) {
     console.warn('관리자 세션 확인 실패:', error);
