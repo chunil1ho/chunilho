@@ -4741,6 +4741,16 @@ padding: 0 14px;
     font-size: 15px;
     cursor: pointer;
 }
+#cat-board #board-detail-content {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+}
+
+#cat-board #board-detail-content img {
+    user-select: none !important;
+    -webkit-user-drag: none !important;
+    pointer-events: none !important;
+}    
     </style>
 </head>
 <body id="mainBody">
@@ -14045,7 +14055,11 @@ if (damageContent) {
 document.addEventListener('DOMContentLoaded', function () {
     updateCourseDetail();
 });
-    
+document.addEventListener('contextmenu', function (event) {
+    if (event.target.closest('#cat-board #board-detail-content')) {
+        event.preventDefault();
+    }
+});    
 </script>
 </body>
 </html>
