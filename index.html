@@ -11746,7 +11746,6 @@ async function adminCompleteBooking(orderNo) {
             await loadBookingsFromServer();
             switchCategory('cat-admin', document.getElementById('nav-admin'));
             updateAdminDashboard();
-            startAdminAutoRefresh();
         } catch (error) {
             alert(error.message || '아이디 또는 비밀번호가 올바르지 않습니다.');
         }
