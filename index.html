@@ -580,11 +580,13 @@ padding: 0 14px;
         position: relative;
     }
 
-    .home-product-price {
-        display: inline-block;
-        margin-bottom: 0;
-    }
-
+.home-product-price {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding-top: 30px;
+    margin-bottom: 0;
+}
     .home-product-body > button {
         position: absolute;
         right: 1.1rem;
@@ -4356,8 +4358,7 @@ padding: 0 14px;
     #cat-home .home-product-card:nth-child(4) .home-product-price {
         position: absolute !important;
         left: 0.5rem !important;
-        bottom: 0.5rem !important;
-
+        top: 80px !important;
         margin: 0 !important;
         display: block !important;
     }
@@ -4808,6 +4809,52 @@ padding: 0 14px;
     font-size: 12px;
     color: #777;
 }
+.product-season {
+    display: block;
+    width: fit-content;
+    padding: 4px 9px;
+    margin-bottom: 8px;
+    border-radius: 7px;
+    background: #dff3e7;
+    color: #087a3e;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+.home-product-price {
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #f8fafc;
+}
+@media (max-width: 768px) {
+    #cat-home .home-product-card:nth-child(4) .home-product-price {
+        min-height: 90px !important;
+        box-sizing: border-box !important;
+    }
+}
+.personal-prep {
+    margin: 25px auto 35px;
+    padding: 18px 22px;
+    border: 1px solid #d9e6df;
+    border-radius: 12px;
+    background: #f7fbf9;
+    box-sizing: border-box;
+}
+
+.personal-prep-title {
+    margin-bottom: 10px;
+    color: #087a3e;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.personal-prep-list {
+    color: #475569;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.7;
+}
     </style>
 </head>
 <body id="mainBody">
@@ -4970,6 +5017,7 @@ padding: 0 14px;
                 <h3 data-i18n="productDayTitle">주간 체험낚시</h3>
                 <p data-i18n="productDayDesc">초보자와 가족 누구나 즐길 수 있는 서귀포 앞바다 체험낚시</p>
 <div class="home-product-price home-day-prices">
+<div class="product-season" data-i18n="seasonYearRound">연중</div>
     <span data-i18n="day2Hours">2시간</span>
     <strong data-price="30000">30,000원</strong>
 
@@ -4989,6 +5037,9 @@ padding: 0 14px;
                 <h3 data-i18n="productSquidTitle">한치낚시</h3>
                 <p data-i18n="productSquidDesc">제주 밤바다에서 즐기는 짜릿한 한치 손맛</p>
                 <div class="home-product-price">
+<br>
+<br>
+<div class="product-season" data-i18n="seasonHanChi">6월 중순 ~ 9월 초</div>
     <span data-price="60000" data-price-approx="true">60,000원~</span>
 </div>
                 <button type="button" onclick="goToBooking('60000_야간 한치 체험낚시')">→</button>
@@ -5004,6 +5055,9 @@ padding: 0 14px;
                 <h3 data-i18n="productHairtailTitle">갈치낚시</h3>
                 <p data-i18n="productHairtailDesc">제주 밤바다의 대표 낚시, 갈치와 고등어를 함께 즐겨보세요.</p>
                 <div class="home-product-price">
+<br>
+<br>
+<div class="product-season" data-i18n="seasonGalchi">8월 ~ 11월 중순</div>
     <span data-price="90000" data-price-approx="true">90,000원~</span>
 </div>
                 <button type="button" onclick="goToBooking('90000_야간 갈치낚시')">→</button>
@@ -5021,6 +5075,9 @@ padding: 0 14px;
                 <p data-i18n="productJiggingDesc">제주 앞바다에서 즐기는 짜릿한 지깅 체험</p>
 
                 <div class="home-product-price">
+<br>
+<br>
+<div class="product-season" data-i18n="seasonYearRound">연중</div>
     <span data-price="90000">90,000원</span>
 </div>
 
@@ -5030,6 +5087,12 @@ padding: 0 14px;
 
     </div>
 </section>
+<div class="personal-prep">
+    <div class="personal-prep-title">🎒 <span data-i18n="personalPrepTitle">개인 준비물</span></div>
+    <div class="personal-prep-list" data-i18n="personalPrepList">
+        신분증 · 어두운 복장 · 장갑 · 물 · 개인 음료 · 간식 · 멀미약 · 땀을 닦기 위한 손수건
+    </div>
+</div>
               <div class="features-grid">
             <div class="feature-card">
                 <div class="icon-wrap">🎣</div>
@@ -12599,6 +12662,11 @@ productHairtailDesc: "제주 밤바다의 대표 낚시, 갈치와 고등어를 
 productJiggingAlt: "지깅낚시",
 productJiggingTitle: "지깅낚시",
 productJiggingDesc: "제주 앞바다에서 즐기는 짜릿한 지깅 체험",
+seasonYearRound: "연중",
+seasonHanChi: "6월 중순 ~ 9월 초",
+seasonGalchi: "8월 ~ 11월 중순",
+personalPrepTitle: "개인 준비물",
+personalPrepList: "신분증 · 어두운 복장 · 장갑 · 물 · 개인 음료 · 간식 · 멀미약 · 땀 식힐 수 있는 손수건",
             hLeftTitle: "👤 예약 안내",
             hLeftTelT: "예약 및 고객 센터",
             hLeftDesc: "상품 구매 후 반드시 전화 또는 카카오톡(ID: chunil1ho)으로 연락하여 예약 확정을 받으셔야 합니다.",
@@ -12784,6 +12852,11 @@ productHairtailDesc: "A signature Jeju night fishing experience with hairtail an
 productJiggingAlt: "Jigging Fishing",
 productJiggingTitle: "Jigging Fishing",
 productJiggingDesc: "Enjoy an exciting jigging experience in the waters of Jeju.",
+seasonYearRound: "Year-round",
+seasonHanChi: "Mid-June ~ Early September",
+seasonGalchi: "August ~ Mid-November",
+personalPrepTitle: "Personal Items",
+personalPrepList: "Passport · Dark-colored clothing · Gloves · Water · Personal drinks · Snacks · Motion sickness medicine · Handkerchief to wipe away sweat",
             hLeftTitle: "👤 Booking Guide",
             hLeftTelT: "Reservation & Customer Center",
             hLeftDesc: "After purchasing the product, you must contact us via phone or KakaoTalk (ID: chunil1ho) to confirm your reservation.",
@@ -12981,6 +13054,11 @@ productHairtailDesc: "済州の代表的な夜釣り。タチウオとサバ釣�
 productJiggingAlt: "ジギング釣り",
 productJiggingTitle: "ジギング釣り",
 productJiggingDesc: "済州沖で楽しむスリル満点のジギング体験",
+seasonYearRound: "通年",
+seasonHanChi: "6月中旬 ～ 9月上旬",
+seasonGalchi: "8月 ～ 11月中旬",
+personalPrepTitle: "個人で準備するもの",
+personalPrepList: "パスポート · 暗めの服装 · 手袋 · 水 · 個人用の飲み物 · おやつ · 酔い止め · 汗を拭くためのハンカチ",
             hLeftTitle: "👤 予約案内",
             hLeftTelT: "予約およびカスタマーセンター",
             hLeftDesc: "商品購入後、必ずお電話またはカカオトーク（ID：chunil1ho）にてご連絡いただき、予約確定を受けてください。",
@@ -13177,6 +13255,11 @@ productHairtailDesc: "济州代表性的夜间钓鱼，同时享受带鱼和鲭�
 productJiggingAlt: "铁板钓鱼",
 productJiggingTitle: "铁板钓鱼",
 productJiggingDesc: "在济州近海享受刺激的铁板钓鱼体验",
+seasonYearRound: "全年",
+seasonHanChi: "6月中旬 ～ 9月初",
+seasonGalchi: "8月 ～ 11月中旬",
+personalPrepTitle: "个人准备物品",
+personalPrepList: "护照 · 深色服装 · 手套 · 饮用水 · 个人饮料 · 零食 · 晕船药 · 擦汗用的手帕",
             hLeftTitle: "👤 预约指南",
             hLeftTelT: "预约及客户中心",
             hLeftDesc: "购买商品后，必须通过电话或KakaoTalk（ID：chunil1ho）联系我们以确认预约。",
