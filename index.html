@@ -12537,23 +12537,43 @@ if (window.selectedAdminCalendarDate) {
     }
 }
     // 관리자 화면 예약 자동 갱신
-let adminRefreshTimer = null;
+let adminAutoRefreshTimer = null;
 
 function startAdminAutoRefresh() {
-    if (adminRefreshTimer) {
-        clearInterval(adminRefreshTimer);
+
+    // 기존 타이머가 있으면 제거
+    if (adminAutoRefreshTimer) {
+        clearInterval(adminAutoRefreshTimer);
+        adminAutoRefreshTimer = null;
     }
 
-    adminRefreshTimer = setInterval(async () => {
-        if (!isAdminLoggedIn || !adminToken) return;
+    console.log('관리자 예약 자동갱신 시작');
+
+    adminAutoRefreshTimer = setInterval(async () => {
+
+        if (!isAdminLoggedIn) {
+            return;
+        }
+
+        console.log('관리자 예약 내역 자동 갱신');
 
         try {
-            await updateAdminDashboard();
-            console.log('관리자 예약 내역 자동 갱신');
+            await loadBookingsFromServer();
+            updateAdminDashboard();
         } catch (error) {
-            console.warn('관리자 자동 갱신 실패:', error);
+            console.error('관리자 예약 자동갱신 실패:', error);
         }
+
     }, 10000);
+}
+    function stopAdminAutoRefresh() {
+
+    if (adminAutoRefreshTimer) {
+        clearInterval(adminAutoRefreshTimer);
+        adminAutoRefreshTimer = null;
+    }
+
+    console.log('관리자 예약 자동갱신 중지');
 }
     async function processCheckin() {
         const rawTel = document.getElementById('checkinTel').value.trim();
