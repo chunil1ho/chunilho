@@ -9732,7 +9732,10 @@ return `
 }
 document.addEventListener('click', function (event) {
 
-    const boardCancelBtn = event.target.closest('#board-cancel-btn');
+   const boardCancelBtn =
+    event.target instanceof Element
+        ? event.target.closest('#board-cancel-btn')
+        : null;
 
     if (!boardCancelBtn) return;
 
