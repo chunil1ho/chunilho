@@ -14229,21 +14229,31 @@ document.addEventListener('DOMContentLoaded', function () {
     updateCourseDetail();
 });
 document.addEventListener('contextmenu', function (event) {
-    if (event.target.closest('#cat-board #board-detail-content')) {
+    if (
+        event.target instanceof Element &&
+        event.target.closest('#cat-board #board-detail-content')
+    ) {
         event.preventDefault();
     }
-}); 
- document.addEventListener('selectstart', function (event) {
-    if (event.target.closest('#cat-board #board-detail-content')) {
+});
+
+document.addEventListener('selectstart', function (event) {
+    if (
+        event.target instanceof Element &&
+        event.target.closest('#cat-board #board-detail-content')
+    ) {
         event.preventDefault();
     }
 });
 
 document.addEventListener('dragstart', function (event) {
-    if (event.target.closest('#cat-board #board-detail-content')) {
+    if (
+        event.target instanceof Element &&
+        event.target.closest('#cat-board #board-detail-content')
+    ) {
         event.preventDefault();
     }
-});  
+});
     function openKakaoQR() {
     const modal = document.getElementById('kakaoQRModal');
 
