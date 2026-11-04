@@ -637,62 +637,51 @@ console.log(
         payment
       );
     
-console.log("===== 카카오 알림 호출 시작 =====");
-console.log("duplicate:", result.duplicate);
-console.log("booking:", JSON.stringify(result.booking));
-    
 let kakaoNotified = false;
+let customerSmsNotified = false;
 
-kakaoNotified =
-  await sendKakaoAdminMessage(result.booking);
-    let customerSmsNotified = false;
+if (!result.duplicate) {
 
-try {
-  const relayUrl = process.env.ALIGO_RELAY_URL;
-  const relaySecret = process.env.ALIGO_RELAY_SECRET;
+  kakaoNotified =
+    await sendKakaoAdminMessage(result.booking);
 
-  if (!relayUrl || !relaySecret) {
-    console.error("고객 SMS 릴레이 환경변수가 없습니다.");
-  } else {
-    const smsResponse = await fetch(
-      relayUrl.replace(/\/$/, "") + "/send-sms",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-relay-secret": relaySecret
-        },
-        body: JSON.stringify({
-          tel: result.booking.tel,
-          name: result.booking.name,
-          date: result.booking.date,
-          course: result.booking.course,
-          time: result.booking.time,
-          count: result.booking.count,
-          price: result.booking.price,
-          orderNo: result.booking.orderNo
-        })
-      }
-    );
+  try {
+    const relayUrl = process.env.ALIGO_RELAY_URL;
+    const relaySecret = process.env.ALIGO_RELAY_SECRET;
 
-    const smsResult = await smsResponse.json();
+    if (relayUrl && relaySecret) {
+      const smsResponse = await fetch(
+        relayUrl.replace(/\/$/, "") + "/send-sms",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-relay-secret": relaySecret
+          },
+          body: JSON.stringify({
+            tel: result.booking.tel,
+            name: result.booking.name,
+            date: result.booking.date,
+            course: result.booking.course,
+            time: result.booking.time,
+            count: result.booking.count,
+            price: result.booking.price,
+            orderNo: result.booking.orderNo
+          })
+        }
+      );
 
-    console.log("===== 고객 SMS 릴레이 결과 =====");
-    console.log(
-      JSON.stringify({
-        status: smsResponse.status,
-        result: smsResult
-      })
-    );
+      const smsResult = await smsResponse.json();
 
-    customerSmsNotified =
-      smsResponse.ok && smsResult.ok === true;
+      customerSmsNotified =
+        smsResponse.ok && smsResult.ok === true;
+    }
+  } catch (smsError) {
+    console.error("고객 SMS 발송 오류:", smsError);
   }
-} catch (smsError) {
-  console.error(
-    "고객 SMS 발송 오류:",
-    smsError
-  );
+
+} else {
+  console.log("중복 결제 알림 생략");
 }
     /*
      * ========================================
