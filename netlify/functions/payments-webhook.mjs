@@ -52,7 +52,7 @@ export async function handler(event) {
     // 실제 결제 여부와 금액은 기존 함수가
     // PortOne API를 통해 다시 확인합니다.
     const verifyResponse = await fetch(
-      "https://chunilho.com/.netlify/functions/payments-verify",
+      "https://chunilho.netlify.app/.netlify/functions/payments-verify",
       {
         method: "POST",
         headers: {
