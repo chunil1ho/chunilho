@@ -5518,6 +5518,19 @@ color: #087a3e;
                     <span data-i18n="sumTotalLabel">총 결제 금액</span>
                     <span class="total-price" id="sumTotalPrice">0원</span>
                 </div>
+                
+<div id="paymentMethodWrap" style="display:none; margin: 0 0 15px; text-align:left;">
+    <label for="paymentMethod" style="display:block; margin-bottom:8px; font-weight:700;">
+        支付方式 / 결제수단
+    </label>
+
+    <select id="paymentMethod"
+        style="width:100%; padding:14px; border:1px solid #cbd5e1; border-radius:10px; font-size:16px;">
+        <option value="alipay">支付宝（Alipay）</option>
+        <option value="wechat">微信支付（WeChat Pay）</option>
+    </select>
+</div>
+
                 <button type="button" id="btnPay" class="btn-pay" onclick="startPayment()" data-i18n="btnPayText">비회원 안전 결제 및 예약 확정</button>
             </div>
         </div>
