@@ -651,6 +651,59 @@ padding: 0 14px;
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(15,44,89,0.1); }
         .season-info { font-size: 0.82rem; color: #e11d48; margin-top: 0.4rem; font-weight: 600; }
 
+.payment-options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.payment-option {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 0;
+    min-height: 82px;
+    padding: 10px 4px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #fff;
+    color: #1e293b;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+}
+
+.payment-option input {
+    position: absolute;
+    opacity: 0;
+}
+
+.payment-option:has(input:checked) {
+    border: 2px solid #ff7f3f;
+    background: #fff5ef;
+    color: #e9692c;
+}
+
+.payment-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.payment-option:has(input:checked) .payment-number {
+    background: #ff7f3f;
+    color: #fff;
+}
+    
         .btn-pay { width: 100%; background: var(--accent-color); color: #fff; font-size: 1.1rem; font-weight: 700; padding: 1.05rem; border: none; border-radius: 8px; cursor: pointer; transition: all 0.25s; margin-top: 1.5rem; box-shadow: 0 6px 20px rgba(255,127,63,0.3); }
         .btn-pay:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255,127,63,0.4); }
         .btn-pay:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; transform: none; }
@@ -4856,6 +4909,8 @@ color: #087a3e;
         box-sizing: border-box !important;
     }
 }
+
+    
     </style>
 </head>
 <body id="mainBody">
@@ -5519,17 +5574,32 @@ color: #087a3e;
                     <span class="total-price" id="sumTotalPrice">0원</span>
                 </div>
                 
-<div id="paymentMethodWrap" style="display:block; margin: 0 0 15px; text-align:left;">
-    <label for="paymentMethod" style="display:block; margin-bottom:8px; font-weight:700;">
+<div id="paymentMethodWrap" style="display:block; margin:0 0 15px; text-align:left;">
+    <label style="display:block; margin-bottom:10px; font-weight:700;">
         支付方式 / 결제수단
     </label>
 
-    <select id="paymentMethod"
-        style="width:100%; padding:14px; border:1px solid #cbd5e1; border-radius:10px; font-size:16px;">
-<option value="card">신용카드 / Credit Card</option>
-<option value="alipay">支付宝（Alipay）</option>
-<option value="wechat">微信支付（WeChat Pay）</option>
-    </select>
+    <div class="payment-options">
+
+        <label class="payment-option">
+            <input type="radio" name="paymentMethod" value="card" checked>
+            <span class="payment-number">1</span>
+            <span>신용카드</span>
+        </label>
+
+        <label class="payment-option">
+            <input type="radio" name="paymentMethod" value="alipay">
+            <span class="payment-number">2</span>
+            <span>Alipay</span>
+        </label>
+
+        <label class="payment-option">
+            <input type="radio" name="paymentMethod" value="wechat">
+            <span class="payment-number">3</span>
+            <span>WeChat Pay</span>
+        </label>
+
+    </div>
 </div>
 
                 <button type="button" id="btnPay" class="btn-pay" onclick="startPayment()" data-i18n="btnPayText">비회원 안전 결제 및 예약 확정</button>
@@ -10859,7 +10929,7 @@ const telVal = document.getElementById('custTel').value.trim();
 const courseSelect = document.getElementById('courseSelect');
 const timeSelect = document.getElementById('timeSelect').value;
 const count = parseInt(document.getElementById('custCount').value);
-const selectedMethod = document.getElementById('paymentMethod').value;    
+const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked').value; 
 
 let selectedChannelKey = '';
 let selectedPayMethod = '';
