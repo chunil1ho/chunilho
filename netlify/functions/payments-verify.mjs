@@ -337,21 +337,35 @@ async function saveBooking(data, payment) {
    * Netlify Blobs 저장
    * ------------------------------------------
    */
-  try {
-    await store.setJSON(
+try {
+  const { modified } = await store.setJSON(
+    key,
+    booking,
+    { onlyIfNew: true }
+  );
+
+  if (!modified) {
+    const existingBooking = await store.get(
       key,
-      booking
-    );
-  } catch (error) {
-    console.error(
-      "예약 저장 오류:",
-      error
+      { type: "json" }
     );
 
-    throw new Error(
-      "결제 검증은 완료되었지만 예약 저장에 실패했습니다."
-    );
+    return {
+      booking: existingBooking,
+      duplicate: true
+    };
   }
+
+} catch (error) {
+  console.error(
+    "예약 저장 오류:",
+    error
+  );
+
+  throw new Error(
+    "결제 검증은 완료되었지만 예약 저장에 실패했습니다."
+  );
+}
 
 
   return {
