@@ -10949,18 +10949,7 @@ if (
 
                 const booking =
                     verifyResult.booking;
-console.log("📱 결제완료 → 고객 SMS 호출 시작");
-                
-await sendCustomerSMS(
-    booking.tel,
-    booking.name,
-    booking.date,
-    booking.course,
-    booking.time,
-    booking.count,
-    booking.price,
-    booking.orderNo
-);
+
 
                 const popupMsg =
                     translations[currentLang]
@@ -11128,18 +11117,7 @@ try {
     /*
      * 예약정보를 받은 뒤에만 SMS 발송
      */
-console.log("📱 모바일 결제완료 → 고객 SMS 호출 시작");
 
-await sendCustomerSMS(
-    booking.tel,
-    booking.name,
-    booking.date,
-    booking.course,
-    booking.time,
-    booking.count,
-    booking.price,
-    booking.orderNo
-);
 
     sendAdminSMS(
         ADMIN_PHONE,
