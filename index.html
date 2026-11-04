@@ -10861,6 +10861,22 @@ const timeSelect = document.getElementById('timeSelect').value;
 const count = parseInt(document.getElementById('custCount').value);
 const selectedMethod = document.getElementById('paymentMethod').value;    
 
+let selectedChannelKey = '';
+let selectedPayMethod = '';
+
+if (selectedMethod === 'card') {
+    selectedChannelKey = 'channel-key-b98315a4-c3fc-4e34-bd6f-f354d021b1b8';
+    selectedPayMethod = 'card';
+
+} else if (selectedMethod === 'alipay') {
+    selectedChannelKey = 'channel-key-15964467-d7dd-4412-a3e5-13075e9356aa';
+    selectedPayMethod = 'alipay_plus';
+
+} else if (selectedMethod === 'wechat') {
+    selectedChannelKey = 'channel-key-1647b49e-a380-4c76-8190-e300813810fc';
+    selectedPayMethod = 'wechat';
+}
+    
 if (!dateVal || !nameVal || !telVal) {
     const message =
         currentLang === 'en'
@@ -10904,13 +10920,12 @@ if (
     IMP.init('imp01457787');
 
     IMP.request_pay({
-        channelKey:
-            'channel-key-b98315a4-c3fc-4e34-bd6f-f354d021b1b8',
+channelKey: selectedChannelKey,
 
         m_redirect_url:
             'https://chunilho.com/?payment_redirect=1',
 
-        pay_method: 'card',
+        pay_method: selectedPayMethod,
 
         merchant_uid: orderNo,
 
