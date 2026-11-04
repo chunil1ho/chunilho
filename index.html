@@ -4856,17 +4856,6 @@ color: #087a3e;
         box-sizing: border-box !important;
     }
 }
-/* 홈페이지 콘텐츠 관리자 */
-.site-admin-section{border:1px solid var(--border-color);border-radius:12px;padding:16px;margin:16px 0;background:var(--card-bg)}
-.site-admin-section h4{color:var(--primary-color);font-size:1.05rem;margin:0 0 14px;font-weight:800}
-.site-admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.site-admin-section label{display:flex;flex-direction:column;gap:6px;margin:10px 0;color:var(--text-main);font-size:.9rem;font-weight:700}
-.site-admin-section input,.site-admin-section textarea{width:100%;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:8px;padding:10px;font:inherit;background:#fff;color:#1e293b}
-.site-admin-section small{font-size:.76rem;color:#64748b;font-weight:400}
-.site-product-editor{border:1px solid var(--border-color);border-radius:10px;padding:14px;margin:12px 0;background:#f8fafc}
-.site-product-editor h5{margin:0 0 10px;color:var(--primary-color);font-size:1rem}
-.site-product-editor .site-admin-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-@media(max-width:700px){.site-admin-grid,.site-product-editor .site-admin-grid{grid-template-columns:1fr}.site-admin-section{padding:12px}}
     </style>
 </head>
 <body id="mainBody">
@@ -5021,7 +5010,7 @@ color: #087a3e;
     <div class="home-product-grid">
 
         <!-- 주간 체험낚시 -->
-        <div class="home-product-card" data-site-product="day">
+        <div class="home-product-card">
             <div class="home-product-image">
                 <img src="image/pic1.jpg" alt="주간 체험낚시" data-i18n="productDayAlt">
             </div>
@@ -5041,7 +5030,7 @@ color: #087a3e;
         </div>
 
         <!-- 한치낚시 -->
-        <div class="home-product-card" data-site-product="squid">
+        <div class="home-product-card">
             <div class="home-product-image">
                 <img src="image/pic3.jpg" alt="한치낚시" data-i18n="productSquidAlt">
             </div>
@@ -5059,7 +5048,7 @@ color: #087a3e;
         </div>
 
         <!-- 갈치낚시 -->
-        <div class="home-product-card" data-site-product="hairtail">
+        <div class="home-product-card">
             <div class="home-product-image">
                 <img src="image/pic2.jpg" alt="갈치낚시" data-i18n="productHairtailAlt">
             </div>
@@ -5077,7 +5066,7 @@ color: #087a3e;
         </div>
 
         <!-- 지깅낚시 -->
-        <div class="home-product-card" data-site-product="jigging">
+        <div class="home-product-card">
             <div class="home-product-image">
                 <img src="image/pic6.jpg" alt="지깅낚시" data-i18n="productJiggingAlt">
             </div>
@@ -5931,7 +5920,6 @@ color: #087a3e;
                     <li><button type="button" class="admin-menu-btn" onclick="switchAdminTab('pane-schedule', this)" data-i18n="adminMenu3">⏰ 회차(스케줄) 관리</button></li>
                     <li><button type="button" class="admin-menu-btn" onclick="switchAdminTab('pane-pg', this)" data-i18n="adminMenu4">💳 복수 PG 예약 승인 및 환불</button></li>
                     <li><button type="button" class="admin-menu-btn" onclick="switchAdminTab('pane-checkin', this)" data-i18n="adminMenu5">📱 현장 체크인 (주문/전화번호)</button></li>
-                    <li><button type="button" class="admin-menu-btn" onclick="switchAdminTab('pane-site-content', this)">🖼️ 홈페이지 콘텐츠 관리</button></li>
                 </ul>
             </div>
 
@@ -5981,26 +5969,6 @@ color: #087a3e;
                     </table>
                 </div>
 
-                <div id="pane-site-content" class="admin-content-pane">
-                    <h3 style="color:var(--primary-color);margin-bottom:.5rem;font-size:1.25rem;font-weight:800;">🖼️ 홈페이지 콘텐츠 관리</h3>
-                    <p style="color:var(--text-sub);margin-bottom:1.2rem;font-size:.92rem;">메인 사진·문구와 낚시 상품의 사진·이름·설명·시즌·가격을 변경할 수 있습니다.</p>
-                    <div id="site-content-admin-status" style="margin-bottom:1rem;color:#64748b;font-size:.9rem;">설정 불러오는 중...</div>
-                    <div class="site-admin-section"><h4>메인 첫 화면</h4>
-                      <div class="site-admin-grid">
-                        <label>왼쪽 메인 사진<input id="site-hero-left-file" type="file" accept="image/jpeg,image/png,image/webp,image/avif"><small>이미지 4MB 이하</small></label>
-                        <label>오른쪽 메인 사진<input id="site-hero-right-file" type="file" accept="image/jpeg,image/png,image/webp,image/avif"><small>이미지 4MB 이하</small></label>
-                        <label>메인 배지 문구<input id="site-hero-badge" maxlength="80"></label>
-                        <label>메인 제목<input id="site-hero-title" maxlength="120"></label>
-                      </div>
-                      <label>메인 설명<textarea id="site-hero-subtitle" rows="2" maxlength="300"></textarea></label>
-                    </div>
-                    <div class="site-admin-section"><h4>낚시 상품 관리</h4><div id="site-product-admin-list"></div></div>
-                    <div style="display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:1.2rem;">
-                      <button type="button" class="secondary-btn" onclick="loadSiteContentAdmin()">다시 불러오기</button>
-                      <button type="button" class="btn-submit" style="float:none;" onclick="saveSiteContentAdmin()">변경사항 저장</button>
-                    </div>
-                    <p style="margin-top:1rem;color:#64748b;font-size:.82rem;">관리자 로그인 후 저장할 수 있습니다.</p>
-                </div>
                 <div id="pane-checkin" class="admin-content-pane">
                     <h3 style="color: var(--primary-color); margin-bottom: 1rem; font-size: 1.2rem; font-weight: 800;" data-i18n="adminCheckinTitle">📱 현장 체크인 (주문/전화번호)</h3>
                     <p style="color: var(--text-sub); margin-bottom: 1.5rem; font-size: 0.92rem;" data-i18n="adminCheckinDesc">승선 당일 방문한 고객의 전화번호나 예약번호로 현장 승선 체크인을 처리합니다.</p>
@@ -10479,7 +10447,6 @@ if (adminTouchTarget) {
         if (btnEl) {
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             btnEl.classList.add('active');
-        if (paneId === 'pane-site-content' && typeof loadSiteContentAdmin === 'function') loadSiteContentAdmin();
         }
         window.scrollTo({ top: 0, behavior: 'smooth' });
         if (catId === 'cat-home' && typeof loadHomeBoardPosts === 'function') {
@@ -14319,47 +14286,6 @@ function closeWechatQR() {
 }
 </script>
     });
-
-/* 천일호 홈페이지 콘텐츠 관리 */
-const SITE_CONTENT_DEFAULTS = {
- hero:{badge:'제주 서귀포 필수 여행 코스',title:'바다 위에서 맞이하는 가장 찬란한 순간',subtitle:'초보자도, 아이도 누구나 손쉽게 손맛을 즐기는\\n서귀포 앞바다 힐링 배낚시',leftImage:'image/hero.jpg',rightImage:'image/hero2.jpg'},
- products:[
- {id:'day',title:'주간 체험낚시',description:'초보자와 가족 누구나 즐길 수 있는 서귀포 앞바다 체험낚시',image:'image/pic1.jpg',season:'연중',price:30000,secondPrice:40000,course:'주간 체험 2시간',visible:true},
- {id:'squid',title:'한치낚시',description:'제주 밤바다에서 즐기는 짜릿한 한치 손맛',image:'image/pic3.jpg',season:'6월 중순 ~ 9월 초',price:60000,secondPrice:0,course:'야간 한치 체험낚시',visible:true},
- {id:'hairtail',title:'갈치낚시',description:'제주 밤바다의 대표 낚시, 갈치와 고등어를 함께 즐겨보세요.',image:'image/pic2.jpg',season:'8월 ~ 11월 중순',price:90000,secondPrice:0,course:'야간 갈치낚시',visible:true},
- {id:'jigging',title:'지깅낚시',description:'제주 앞바다에서 즐기는 짜릿한 지깅 체험',image:'image/pic6.jpg',season:'연중',price:90000,secondPrice:0,course:'지깅체험 4시간',visible:true}
- ]};
-let currentSiteContent=JSON.parse(JSON.stringify(SITE_CONTENT_DEFAULTS));
-function siteContentEscape(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function siteContentWon(v){return Number(v||0).toLocaleString('ko-KR')+'원';}
-async function fetchSiteContent(){const r=await fetch('/api/site-content',{cache:'no-store'});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.message||'설정을 불러오지 못했습니다.');return d.content||SITE_CONTENT_DEFAULTS;}
-function normalizeSiteContent(c){c=c||{};c.hero={...SITE_CONTENT_DEFAULTS.hero,...(c.hero||{})};c.products=SITE_CONTENT_DEFAULTS.products.map(d=>({...d,...((c.products||[]).find(p=>p.id===d.id)||{})}));return c;}
-function applySiteContentToPage(){
- const c=currentSiteContent,hc=c.hero||{};const left=document.querySelector('.hero-bg1'),right=document.querySelector('.hero-bg2');
- if(left&&hc.leftImage)left.style.backgroundImage='url("'+hc.leftImage+'")';if(right&&hc.rightImage)right.style.backgroundImage='url("'+hc.rightImage+'")';
- const b=document.getElementById('hero-badge-text'),t=document.getElementById('hero-title'),sub=document.getElementById('hero-sub');
- if(b)b.textContent=hc.badge||'';if(t)t.textContent=hc.title||'';if(sub)sub.innerHTML=siteContentEscape(hc.subtitle||'').replace(/\\n/g,'<br>');
- (c.products||[]).forEach(p=>{const card=document.querySelector('.home-product-card[data-site-product="'+p.id+'"]');if(!card)return;card.style.display=p.visible===false?'none':'';
- const img=card.querySelector('.home-product-image img'),title=card.querySelector('.home-product-body h3'),desc=card.querySelector('.home-product-body p'),season=card.querySelector('.product-season');
- if(img&&p.image){img.src=p.image;img.alt=p.title||'';}if(title)title.textContent=p.title||'';if(desc)desc.textContent=p.description||'';if(season)season.textContent=p.season||'';
- const prices=card.querySelectorAll('[data-price]');if(p.id==='day'){if(prices[0]){prices[0].dataset.price=p.price;prices[0].textContent=siteContentWon(p.price);}if(prices[1]){prices[1].dataset.price=p.secondPrice;prices[1].textContent=siteContentWon(p.secondPrice);}}
- else if(prices[0]){prices[0].dataset.price=p.price;prices[0].textContent=siteContentWon(p.price)+(prices[0].dataset.priceApprox==='true'?'~':'');}
- const btn=card.querySelector('.home-product-body > button');if(btn&&p.course)btn.onclick=()=>goToBooking(Number(p.price)+'_'+p.course);
- });
-}
-function renderSiteProductEditors(){const root=document.getElementById('site-product-admin-list');if(!root)return;root.innerHTML=currentSiteContent.products.map(p=>'<div class="site-product-editor" data-editor-product="'+p.id+'"><h5>'+siteContentEscape(p.title)+'</h5><label><input type="checkbox" data-field="visible" '+(p.visible===false?'':'checked')+' style="width:auto;align-self:flex-start"> 홈페이지에 상품 표시</label><div class="site-admin-grid"><label>상품명<input data-field="title" maxlength="80" value="'+siteContentEscape(p.title)+'"></label><label>운영 시즌<input data-field="season" maxlength="80" value="'+siteContentEscape(p.season)+'"></label></div><label>상품 설명<textarea data-field="description" rows="2" maxlength="240">'+siteContentEscape(p.description)+'</textarea></label><div class="site-admin-grid"><label>판매 가격(원)<input data-field="price" type="number" min="0" step="1000" value="'+Number(p.price||0)+'"></label>'+(p.id==='day'?'<label>3시간 가격(원)<input data-field="secondPrice" type="number" min="0" step="1000" value="'+Number(p.secondPrice||0)+'"></label>':'<label>예약 코스명<input data-field="course" maxlength="80" value="'+siteContentEscape(p.course)+'"></label>')+'</div>'+(p.id==='day'?'<label>예약 코스명(2시간)<input data-field="course" maxlength="80" value="'+siteContentEscape(p.course)+'"></label>':'')+'<label>상품 사진<input type="file" accept="image/jpeg,image/png,image/webp,image/avif" data-file-product="'+p.id+'"><small>이미지 4MB 이하</small></label></div>').join('');}
-function fillSiteContentForm(){const h=currentSiteContent.hero;document.getElementById('site-hero-badge').value=h.badge||'';document.getElementById('site-hero-title').value=h.title||'';document.getElementById('site-hero-subtitle').value=h.subtitle||'';renderSiteProductEditors();}
-async function loadSiteContentAdmin(){const status=document.getElementById('site-content-admin-status');if(!status)return;if(!isAdminLoggedIn||!adminToken){status.textContent='관리자 로그인이 필요합니다.';return;}status.textContent='설정을 불러오는 중...';try{currentSiteContent=normalizeSiteContent(await fetchSiteContent());fillSiteContentForm();applySiteContentToPage();status.textContent='현재 홈페이지 설정을 불러왔습니다.';}catch(e){status.textContent='불러오기 실패: '+e.message;}}
-async function uploadSiteImage(file,key){if(!file)return '';if(!['image/jpeg','image/png','image/webp','image/avif'].includes(file.type))throw new Error('JPG, PNG, WebP, AVIF 사진만 가능합니다.');if(file.size>4*1024*1024)throw new Error('사진은 4MB 이하만 업로드해주세요.');const r=await fetch('/api/site-content?asset='+encodeURIComponent(key),{method:'POST',headers:{'Content-Type':file.type,'Authorization':'Bearer '+adminToken},body:file});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.message||'사진 업로드 실패');return d.url;}
-async function saveSiteContentAdmin(){if(!isAdminLoggedIn||!adminToken){alert('관리자 로그인이 필요합니다.');return;}const status=document.getElementById('site-content-admin-status'),btn=document.querySelector('#pane-site-content .btn-submit');if(btn){btn.disabled=true;btn.textContent='저장 중...';}try{
- currentSiteContent.hero.badge=document.getElementById('site-hero-badge').value.trim();currentSiteContent.hero.title=document.getElementById('site-hero-title').value.trim();currentSiteContent.hero.subtitle=document.getElementById('site-hero-subtitle').value.trim();
- const lf=document.getElementById('site-hero-left-file').files[0],rf=document.getElementById('site-hero-right-file').files[0];if(lf)currentSiteContent.hero.leftImage=await uploadSiteImage(lf,'hero-left');if(rf)currentSiteContent.hero.rightImage=await uploadSiteImage(rf,'hero-right');
- document.querySelectorAll('.site-product-editor').forEach(el=>{const p=currentSiteContent.products.find(x=>x.id===el.dataset.editorProduct);if(!p)return;el.querySelectorAll('[data-field]').forEach(f=>{const k=f.dataset.field;if(k==='visible')p.visible=f.checked;else if(k==='price'||k==='secondPrice')p[k]=Math.max(0,Number(f.value||0));else p[k]=f.value.trim();});});
- for(const f of document.querySelectorAll('[data-file-product]'))if(f.files[0]){const p=currentSiteContent.products.find(x=>x.id===f.dataset.fileProduct);if(p)p.image=await uploadSiteImage(f.files[0],'product-'+p.id);}
- const r=await fetch('/api/site-content',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+adminToken},body:JSON.stringify({content:currentSiteContent})});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.message||'저장 실패');currentSiteContent=normalizeSiteContent(d.content);applySiteContentToPage();document.querySelectorAll('#pane-site-content input[type=file]').forEach(x=>x.value='');status.textContent='저장 완료! 홈페이지에 변경사항이 반영되었습니다.';alert('홈페이지 콘텐츠가 저장되었습니다.');
- }catch(e){status.textContent='저장 실패: '+e.message;alert('저장에 실패했습니다.\\n'+e.message);}finally{if(btn){btn.disabled=false;btn.textContent='변경사항 저장';}}}
-document.addEventListener('DOMContentLoaded',async()=>{try{currentSiteContent=normalizeSiteContent(await fetchSiteContent());applySiteContentToPage();}catch(e){console.warn('홈페이지 콘텐츠 설정 불러오기 실패',e);}});
-
 </script>
 
 <div id="kakaoQRModal" class="qr-modal">
