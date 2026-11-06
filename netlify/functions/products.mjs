@@ -144,7 +144,7 @@ function validateProducts(products) {
   });
 }
 
-async function getProducts() {
+export async function getProducts() {
   const saved = await productStore.get(PRODUCT_KEY, { type: "json" });
   return Array.isArray(saved) ? saved : DEFAULT_PRODUCTS;
 }
