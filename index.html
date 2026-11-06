@@ -6000,6 +6000,7 @@ color: #087a3e;
                     <li><button type="button" class="admin-menu-btn" onclick="switchAdminTab('pane-info', this)" data-i18n="adminMenu2">🏢 업체 정보 및 연동 관리</button></li>
                     <li><button type="button" class="admin-menu-btn" onclick="switchAdminTab('pane-schedule', this)" data-i18n="adminMenu3">⏰ 회차(스케줄) 관리</button></li>
                     <li><button type="button" class="admin-menu-btn" onclick="switchAdminTab('pane-pg', this)" data-i18n="adminMenu4">💳 복수 PG 예약 승인 및 환불</button></li>
+                    <li><button type="button" class="admin-menu-btn" onclick="switchAdminTab('pane-products', this); loadAdminProducts();" >🛍️ 상품 관리</button></li>
                     <li><button type="button" class="admin-menu-btn" onclick="switchAdminTab('pane-checkin', this)" data-i18n="adminMenu5">📱 현장 체크인 (주문/전화번호)</button></li>
                 </ul>
             </div>
@@ -6048,6 +6049,23 @@ color: #087a3e;
                         <thead><tr><th data-i18n="thOrderNo">주문번호</th><th data-i18n="thBooker">예약자</th><th data-i18n="thAmount">금액</th><th data-i18n="thPayStatus">결제상태</th><th data-i18n="thManage">관리(취소/환불)</th></tr></thead>
                         <tbody id="adminPgTableBody"><tr><td colspan="5" class="center" style="color:var(--text-sub);" data-i18n="adminNoPayData">조회된 결제 내역이 없습니다.</td></tr></tbody>
                     </table>
+                </div>
+
+                <div id="pane-products" class="admin-content-pane">
+                    <h3 style="color:var(--primary-color);margin-bottom:8px;font-size:1.2rem;font-weight:800;">🛍️ 상품 관리</h3>
+                    <p style="color:var(--text-sub);margin-bottom:18px;">상품명, 가격, 판매 여부와 예약 화면에 표시할 코스 안내 및 파손 보상 내용을 관리합니다.</p>
+                    <div style="display:grid;grid-template-columns:minmax(180px,0.8fr) minmax(280px,2fr);gap:18px;">
+                        <div>
+                            <button type="button" class="btn-submit" style="float:none;width:100%;margin-bottom:12px;" onclick="addAdminProduct()">＋ 새 상품 추가</button>
+                            <div id="adminProductList" style="display:flex;flex-direction:column;gap:8px;">
+                                <p>상품 정보를 불러오는 중입니다.</p>
+                            </div>
+                        </div>
+                        <div id="adminProductEditor" style="border:1px solid var(--border-color);border-radius:10px;padding:16px;">
+                            <p style="color:var(--text-sub);">왼쪽에서 상품을 선택하거나 새 상품을 추가하세요.</p>
+                        </div>
+                    </div>
+                    <div id="adminProductMessage" style="margin-top:12px;font-weight:700;"></div>
                 </div>
 
                 <div id="pane-checkin" class="admin-content-pane">
@@ -11999,6 +12017,137 @@ async function adminCompleteBooking(orderNo) {
         document.getElementById('nav-admin-li').style.display = 'none';
         switchCategory('cat-home', document.querySelectorAll('.nav-btn')[0]);
         alert('관리자 로그아웃 되었습니다.');
+    }
+
+    let adminProducts = [];
+    let editingAdminProductId = null;
+
+    async function loadAdminProducts() {
+        if (!isAdminLoggedIn || !adminToken) return;
+        const list = document.getElementById('adminProductList');
+        if (list) list.textContent = '상품 정보를 불러오는 중입니다.';
+        try {
+            const result = await apiRequest('/products');
+            adminProducts = Array.isArray(result.products) ? result.products : [];
+            renderAdminProductList();
+            if (adminProducts.length) selectAdminProduct(adminProducts[0].id);
+            else document.getElementById('adminProductEditor').textContent = '등록된 상품이 없습니다. 새 상품을 추가하세요.';
+        } catch (error) {
+            if (list) list.textContent = '상품 조회 실패: ' + error.message;
+        }
+    }
+
+    function renderAdminProductList() {
+        const list = document.getElementById('adminProductList');
+        if (!list) return;
+        list.replaceChildren();
+        adminProducts.forEach(product => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.textContent = (product.active ? '🟢 ' : '⚪ ') + product.name + ' · ' + Number(product.price || 0).toLocaleString() + '원';
+            button.style.cssText = 'text-align:left;padding:12px;border:1px solid var(--border-color);border-radius:8px;background:#fff;cursor:pointer;font-weight:700;';
+            button.addEventListener('click', () => selectAdminProduct(product.id));
+            list.appendChild(button);
+        });
+    }
+
+    function selectAdminProduct(id) {
+        const product = adminProducts.find(item => item.id === id);
+        if (!product) return;
+        editingAdminProductId = id;
+        const d = product.detail || {};
+        const damage = product.damage || {};
+        const editor = document.getElementById('adminProductEditor');
+        editor.innerHTML = `
+            <h4 style="margin:0 0 14px;color:var(--primary-color);">${product.name ? '상품 수정' : '상품 등록'}</h4>
+            <div class="form-grid">
+                <div class="form-group"><label>상품명</label><input id="apName" type="text"></div>
+                <div class="form-group"><label>판매 가격 (원)</label><input id="apPrice" type="number" min="0"></div>
+                <div class="form-group"><label>시즌 안내</label><input id="apSeason" type="text"></div>
+                <div class="form-group"><label>상품 이미지 경로</label><input id="apImage" type="text"></div>
+                <div class="form-group"><label>상품 설명</label><textarea id="apDescription" rows="2"></textarea></div>
+                <div class="form-group"><label>예약 시간 유형</label><select id="apSchedule"><option value="day-2h">주간 2시간</option><option value="day-3h">주간 3시간</option><option value="galchi">갈치</option><option value="hanchi">한치</option><option value="jigging">지깅</option><option value="custom">기타</option></select></div>
+                <div class="form-group"><label><input id="apActive" type="checkbox" style="width:auto;"> 판매 중</label></div>
+            </div>
+            <h4 style="margin:18px 0 10px;">2-1. 코스 상세 안내</h4>
+            <div class="form-grid">
+                <div class="form-group"><label>이용시간</label><input id="apDuration"></div>
+                <div class="form-group"><label>제공 장비 및 서비스</label><input id="apProvided"></div>
+                <div class="form-group"><label>구명조끼</label><input id="apLifeJacket"></div>
+                <div class="form-group"><label>대상 어종</label><input id="apFish"></div>
+                <div class="form-group"><label>장비 대여료</label><input id="apEquipmentFee"></div>
+                <div class="form-group"><label>출항 시간</label><input id="apDeparture"></div>
+                <div class="form-group"><label>안내사항</label><textarea id="apNotice" rows="2"></textarea></div>
+            </div>
+            <h4 style="margin:18px 0 10px;">2-2. 파손 보상 안내</h4>
+            <div class="form-group"><label>안내 제목</label><input id="apDamageTitle"></div>
+            <div class="form-group"><label>보상 내용</label><textarea id="apDamageContent" rows="5"></textarea></div>
+            <button type="button" class="btn-submit" style="float:none;margin-top:12px;" onclick="saveAdminProduct()">상품 저장</button>
+        `;
+        const values = {
+            apName:product.name, apPrice:product.price, apSeason:product.season,
+            apImage:product.image, apDescription:product.description, apSchedule:product.scheduleType || 'custom',
+            apActive:product.active !== false, apDuration:d.duration, apProvided:d.provided,
+            apLifeJacket:d.lifeJacket, apFish:d.targetFish, apEquipmentFee:d.equipmentFee,
+            apDeparture:d.departure, apNotice:d.notice, apDamageTitle:damage.title,
+            apDamageContent:damage.content
+        };
+        Object.entries(values).forEach(([key,value]) => {
+            const el = document.getElementById(key);
+            if (!el) return;
+            if (el.type === 'checkbox') el.checked = Boolean(value);
+            else el.value = value == null ? '' : value;
+        });
+    }
+
+    function addAdminProduct() {
+        const id = 'product-' + Date.now();
+        adminProducts.push({
+            id, name:'새 상품', description:'', price:0, active:false, season:'연중',
+            scheduleType:'custom', image:'',
+            detail:{duration:'',provided:'',lifeJacket:'',targetFish:'',equipmentFee:'',departure:'',notice:''},
+            damage:{title:'장비 파손 및 분실 보상 기준',content:''}
+        });
+        renderAdminProductList();
+        selectAdminProduct(id);
+    }
+
+    async function saveAdminProduct() {
+        const product = adminProducts.find(item => item.id === editingAdminProductId);
+        if (!product) return;
+        const val = id => document.getElementById(id)?.value || '';
+        product.name = val('apName').trim();
+        product.price = Number(val('apPrice'));
+        product.season = val('apSeason');
+        product.image = val('apImage');
+        product.description = val('apDescription');
+        product.scheduleType = val('apSchedule');
+        product.active = document.getElementById('apActive').checked;
+        product.detail = {
+            duration:val('apDuration'), provided:val('apProvided'), lifeJacket:val('apLifeJacket'),
+            targetFish:val('apFish'), equipmentFee:val('apEquipmentFee'),
+            departure:val('apDeparture'), notice:val('apNotice')
+        };
+        product.damage = {title:val('apDamageTitle'),content:val('apDamageContent')};
+        if (!product.name || !Number.isSafeInteger(product.price) || product.price < 0) {
+            alert('상품명과 올바른 가격을 입력해 주세요.');
+            return;
+        }
+        const message = document.getElementById('adminProductMessage');
+        try {
+            const result = await apiRequest('/products', {
+                method:'PUT',
+                body:JSON.stringify({products:adminProducts})
+            });
+            adminProducts = result.products;
+            renderAdminProductList();
+            message.style.color = '#15803d';
+            message.textContent = '상품 정보가 저장되었습니다.';
+            selectAdminProduct(product.id);
+        } catch (error) {
+            message.style.color = '#dc2626';
+            message.textContent = '저장 실패: ' + error.message;
+        }
     }
 
     function switchAdminTab(paneId, btnEl) {
