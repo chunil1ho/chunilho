@@ -10881,7 +10881,7 @@ showBookingAlert(message);
                 ? (isSummer ? ['10:00','12:00','13:00','14:00','16:00'] : ['10:00','12:00','13:00','15:00'])
                 : (isSummer ? ['10:00','12:00','13:00','15:00'] : ['10:00','12:00','14:00']);
         } else if (product?.detail?.departure) {
-            times = String(product.detail.departure).split(/[,\\n/]+/).map(value => value.trim()).filter(Boolean);
+            times = String(product.detail.departure).split(/[,\n/]+/).map(value => value.trim()).filter(Boolean);
         }
         times.forEach(value => {
             const option = document.createElement('option');
