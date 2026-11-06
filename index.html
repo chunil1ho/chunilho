@@ -10624,6 +10624,7 @@ function setLanguage(lang, btnEl) {
 
     // 💰 상품 가격도 선택한 언어에 맞게 변경
     updateProductPrices(lang);
+    if (siteProducts.length) renderPublicProducts();
     
 }
 function setLanguage(lang, btnEl) {
@@ -14194,7 +14195,6 @@ function closeWechatQR() {
             });
             const keep = Array.from(select.options).find(option => option.dataset.productId === previousId);
             if (keep) select.value = keep.value;
-            updateOptions();
             updateCourseDetail();
             updateTimeSelect();
         }
