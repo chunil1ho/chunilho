@@ -4,7 +4,6 @@ import {
   store,
   normalizeTel
 } from "./_lib.mjs";
-import { getProducts } from "./products.mjs";
 async function sendKakaoAdminMessage(booking) {
   try {
     const relayUrl = process.env.ALIGO_RELAY_URL;
@@ -262,8 +261,6 @@ async function saveBooking(data, payment) {
     tel: normalizeTel(data.tel),
 
     price: Number(data.expectedAmount),
-
-    productId: String(data.productId || ""),
 
     status: "결제완료",
 
@@ -558,28 +555,6 @@ console.log(
      * 기존 요청값이 있다면 그대로 사용
      * ========================================
      */
-    const productId = String(customData.productId || "").trim();
-    let selectedProduct = null;
-    let authoritativeAmount = null;
-
-    if (productId) {
-      const products = await getProducts();
-      selectedProduct = products.find(product => product.id === productId);
-
-      if (!selectedProduct || selectedProduct.active === false) {
-        throw new Error("선택한 상품이 현재 판매 중이 아닙니다.");
-      }
-
-      const paidCount = Number(requestData.count ?? customData.count);
-      if (!Number.isSafeInteger(paidCount) || paidCount < 1) {
-        throw new Error("예약 인원이 올바르지 않습니다.");
-      }
-      authoritativeAmount = Number(selectedProduct.price) * paidCount;
-      if (!Number.isSafeInteger(authoritativeAmount) || authoritativeAmount < 1) {
-        throw new Error("상품 결제금액을 확인할 수 없습니다.");
-      }
-    }
-
     const data = {
 
       impUid:
@@ -593,7 +568,6 @@ console.log(
         customData.date,
 
       course:
-        selectedProduct?.name ||
         requestData.course ||
         customData.course,
 
@@ -613,11 +587,9 @@ console.log(
         requestData.tel ||
         customData.tel,
 
-      productId,
-
       expectedAmount:
-        authoritativeAmount ??
-        (requestData.expectedAmount ?? customData.expectedAmount)
+        requestData.expectedAmount ??
+        customData.expectedAmount
     };
 
     console.log(
