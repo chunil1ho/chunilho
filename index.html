@@ -10871,18 +10871,17 @@ showBookingAlert(message);
         else if (schedule === 'jigging') {
             const t = translations[currentLang] || translations.ko;
             times = [t.jiggingMorning, t.jiggingAfternoon];
-        } else if (product?.detail?.departure) {
-            times = String(product.detail.departure).split(/[,\n/]+/).map(value => value.trim()).filter(Boolean);
-        } else {
+        } else if (schedule === 'day-2h' || schedule === 'day-3h') {
             let isSummer = true;
             if (dateVal) {
                 const month = new Date(dateVal).getMonth() + 1;
                 if (month >= 9 || month <= 2) isSummer = false;
             }
-            const isTwoHours = schedule === 'day-2h' || product?.detail?.duration === '2시간';
-            times = isTwoHours
+            times = schedule === 'day-2h'
                 ? (isSummer ? ['10:00','12:00','13:00','14:00','16:00'] : ['10:00','12:00','13:00','15:00'])
                 : (isSummer ? ['10:00','12:00','13:00','15:00'] : ['10:00','12:00','14:00']);
+        } else if (product?.detail?.departure) {
+            times = String(product.detail.departure).split(/[,\\n/]+/).map(value => value.trim()).filter(Boolean);
         }
         times.forEach(value => {
             const option = document.createElement('option');
