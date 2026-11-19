@@ -4920,7 +4920,11 @@ color: #087a3e;
         transform: translate(-50%, -50%);
         width: calc(100% - 28px);
         max-width: 480px;
-        padding: 12px 44px 12px 14px;
+        max-height: calc(100vh - 32px);
+        box-sizing: border-box;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 14px 44px 14px 14px;
         background: #fff8eb;
         border: 1px solid #f2c078;
         border-radius: 12px;
@@ -4928,16 +4932,31 @@ color: #087a3e;
         color: #713f12;
         z-index: 3000;
         line-height: 1.45;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
     }
     .wechat-browser-guide strong {
         display: block;
-        margin-bottom: 4px;
+        margin-bottom: 6px;
         font-size: 0.9rem;
         font-weight: 800;
+        overflow-wrap: anywhere;
     }
     .wechat-browser-guide p {
         margin: 0;
-        font-size: 0.8rem;
+        font-size: 0.82rem;
+        overflow-wrap: anywhere;
+        word-break: normal;
+    }
+    @media (max-width: 480px) {
+        .wechat-browser-guide {
+            width: calc(100% - 24px);
+            max-height: calc(100vh - 24px);
+            padding: 14px 42px 14px 14px;
+        }
+        .wechat-browser-guide p {
+            font-size: 0.8rem;
+        }
     }
     .wechat-browser-guide-close {
         position: absolute;
