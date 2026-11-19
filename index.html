@@ -4914,10 +4914,10 @@ color: #087a3e;
     .wechat-browser-guide {
         display: none;
         position: fixed;
-        top: auto;
-        bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+        top: 50%;
+        bottom: auto;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translate(-50%, -50%);
         width: calc(100% - 28px);
         max-width: 480px;
         padding: 12px 44px 12px 14px;
@@ -12923,7 +12923,7 @@ tDJigging2: "실제 출항시간은 상담 후 결정",
             paymentMethodTitle: "결제수단",
             paymentCard: "신용카드",
             wechatBrowserTitle: "위챗 앱 내 브라우저에서 접속했습니다.",
-            wechatBrowserMessage: "알리페이 결제는 위챗 안에서 앱 전환이 제한될 수 있습니다. 알리페이를 선택한 경우 오른쪽 위 메뉴(···)에서 '브라우저에서 열기'를 선택해 주세요. 위챗페이는 이 화면에서 계속 진행하세요.",
+            wechatBrowserMessage: "위챗 내부 브라우저에서는 알리페이·위챗페이 결제가 제한될 수 있습니다. 두 결제수단을 이용하려면 오른쪽 위 메뉴(···)에서 '브라우저에서 열기'를 선택해 주세요.",
             wechatBrowserClose: "닫기",
 bookStep7: "구매 후 전화 또는 문자로 확정 연락을 받으셔야 이용이 가능합니다!<br>📞 010-7768-5913<br>💬 Kakao ID : chunil1ho<br>💬 WeChat : chunilho<br>※ 결제 후 미연락 시 이용에 제한이 있을 수 있습니다.",
             sumTitle: "📋 선택하신 예약 내역",
@@ -13130,7 +13130,7 @@ tDJigging2: "The actual departure time will be decided after consultation",
             paymentMethodTitle: "Payment Method",
             paymentCard: "Credit Card",
             wechatBrowserTitle: "You opened Chunilho in WeChat's in-app browser.",
-            wechatBrowserMessage: "Alipay may not switch to its app from inside WeChat. If you select Alipay, tap the upper-right menu (···) and choose 'Open in Browser'. You can continue with WeChat Pay here in WeChat.",
+            wechatBrowserMessage: "Alipay and WeChat Pay may be restricted in WeChat's in-app browser. To use either payment method, tap the upper-right menu (···) and choose 'Open in Browser'.",
             wechatBrowserClose: "Close",
 bookStep7: "After purchase, you must receive a confirmation by phone or text message to use the service!<br>📞 010-7768-5913<br>💬 Kakao ID: chunil1ho<br>※ If you do not contact us after payment, your use of the service may be restricted.",
             sumTitle: "📋 Selected Booking Details",
@@ -13337,7 +13337,7 @@ tDJigging2: "実際の出航時間は相談後に決定します",
             paymentMethodTitle: "お支払い方法",
             paymentCard: "クレジットカード",
             wechatBrowserTitle: "WeChatアプリ内ブラウザで開いています。",
-            wechatBrowserMessage: "WeChat内ではAlipayアプリへ切り替えられない場合があります。Alipayを選択した場合は、右上のメニュー（···）から「ブラウザで開く」を選択してください。WeChat Payはこの画面のままご利用ください。",
+            wechatBrowserMessage: "WeChatアプリ内ブラウザでは、Alipay・WeChat Payの決済が制限される場合があります。どちらかを利用するには、右上のメニュー（···）から「ブラウザで開く」を選択してください。",
             wechatBrowserClose: "閉じる",
           bookStep7: "ご購入後、電話またはSMSで確定のご連絡を受けていただく必要があります！<br>📞 010-7768-5913<br>💬 Kakao ID：chunil1ho<br>💬 WeChat：chunilho<br>※ お支払い後にご連絡がない場合、ご利用を制限することがあります。",
             sumDateLabel: "予約日",
@@ -13543,7 +13543,7 @@ tDJigging2: "实际出航时间将在咨询后确定",
             paymentMethodTitle: "支付方式",
             paymentCard: "信用卡",
             wechatBrowserTitle: "您正在使用微信内置浏览器访问。",
-            wechatBrowserMessage: "在微信内可能无法跳转到支付宝应用。选择支付宝时，请点击右上角菜单（···），选择“在浏览器中打开”。微信支付可继续在当前微信页面中使用。",
+            wechatBrowserMessage: "在微信内置浏览器中，支付宝和微信支付可能受到限制。如需使用这两种支付方式，请点击右上角菜单（···），选择“在浏览器中打开”。",
             wechatBrowserClose: "关闭",
            bookStep7: "购买后，必须通过电话或短信收到确认通知后才能使用服务！<br>📞 010-7768-5913<br>💬 Kakao ID：chunil1ho<br>💬 WeChat：chunilho<br>※ 付款后如未联系我们，可能会限制使用。",
             sumTitle: "📋 您选择的预约明细",
@@ -14490,27 +14490,12 @@ function closeWeChatBrowserGuide() {
     if (guide) guide.style.display = 'none';
 }
 
-function updateWeChatBrowserGuide() {
+function showWeChatBrowserGuide() {
     const guide = document.getElementById('wechat-browser-guide');
     if (!guide) return;
 
     const isWeChatBrowser = /MicroMessenger/i.test(navigator.userAgent || '');
-    const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value;
-
-    // Only Alipay needs the external-browser notice.
-    // WeChat Pay remains available in the WeChat in-app browser.
-    guide.style.display =
-        isWeChatBrowser && selectedMethod === 'alipay'
-            ? 'block'
-            : 'none';
-}
-
-function showWeChatBrowserGuide() {
-    document.querySelectorAll('input[name="paymentMethod"]').forEach(input => {
-        input.addEventListener('change', updateWeChatBrowserGuide);
-    });
-
-    updateWeChatBrowserGuide();
+    guide.style.display = isWeChatBrowser ? 'block' : 'none';
 }
 
 if (document.readyState === 'loading') {
