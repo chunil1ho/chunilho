@@ -4914,29 +4914,30 @@ color: #087a3e;
     .wechat-browser-guide {
         display: none;
         position: fixed;
-        top: 14px;
+        top: auto;
+        bottom: calc(14px + env(safe-area-inset-bottom, 0px));
         left: 50%;
         transform: translateX(-50%);
         width: calc(100% - 28px);
-        max-width: 560px;
-        padding: 16px 48px 16px 16px;
+        max-width: 480px;
+        padding: 12px 44px 12px 14px;
         background: #fff8eb;
         border: 1px solid #f2c078;
-        border-radius: 14px;
-        box-shadow: 0 8px 28px rgba(15, 44, 89, 0.18);
+        border-radius: 12px;
+        box-shadow: 0 6px 22px rgba(15, 44, 89, 0.16);
         color: #713f12;
         z-index: 3000;
-        line-height: 1.55;
+        line-height: 1.45;
     }
     .wechat-browser-guide strong {
         display: block;
-        margin-bottom: 5px;
-        font-size: 0.98rem;
+        margin-bottom: 4px;
+        font-size: 0.9rem;
         font-weight: 800;
     }
     .wechat-browser-guide p {
         margin: 0;
-        font-size: 0.88rem;
+        font-size: 0.8rem;
     }
     .wechat-browser-guide-close {
         position: absolute;
