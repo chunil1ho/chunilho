@@ -4911,9 +4911,61 @@ color: #087a3e;
 }
 
     
+    .wechat-browser-guide {
+        display: none;
+        position: fixed;
+        top: 14px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 28px);
+        max-width: 560px;
+        padding: 16px 48px 16px 16px;
+        background: #fff8eb;
+        border: 1px solid #f2c078;
+        border-radius: 14px;
+        box-shadow: 0 8px 28px rgba(15, 44, 89, 0.18);
+        color: #713f12;
+        z-index: 3000;
+        line-height: 1.55;
+    }
+    .wechat-browser-guide strong {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 0.98rem;
+        font-weight: 800;
+    }
+    .wechat-browser-guide p {
+        margin: 0;
+        font-size: 0.88rem;
+    }
+    .wechat-browser-guide-close {
+        position: absolute;
+        top: 8px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        border: 0;
+        border-radius: 50%;
+        background: transparent;
+        color: #713f12;
+        font-size: 1.35rem;
+        line-height: 1;
+        cursor: pointer;
+    }
+    .wechat-browser-guide-close:hover {
+        background: rgba(113, 63, 18, 0.08);
+    }
+
     </style>
 </head>
 <body id="mainBody">
+
+<div id="wechat-browser-guide" class="wechat-browser-guide" role="alert" aria-live="polite">
+    <button type="button" class="wechat-browser-guide-close"
+            onclick="closeWeChatBrowserGuide()" aria-label="Close">×</button>
+    <strong data-i18n="wechatBrowserTitle">위챗 앱 내 브라우저에서 접속했습니다.</strong>
+    <p data-i18n="wechatBrowserMessage">알리페이 등 외부 결제 앱을 이용하려면 오른쪽 위 메뉴(···)를 누르고 '브라우저에서 열기'를 선택해 주세요.</p>
+</div>
 
 <header>
     <div class="header-inner">
@@ -12869,6 +12921,9 @@ tDJigging2: "실제 출항시간은 상담 후 결정",
             bookStep6: "6. 연락처 (조회용)",
             paymentMethodTitle: "결제수단",
             paymentCard: "신용카드",
+            wechatBrowserTitle: "위챗 앱 내 브라우저에서 접속했습니다.",
+            wechatBrowserMessage: "알리페이 등 외부 결제 앱을 이용하려면 오른쪽 위 메뉴(···)를 누르고 '브라우저에서 열기'를 선택해 주세요.",
+            wechatBrowserClose: "닫기",
 bookStep7: "구매 후 전화 또는 문자로 확정 연락을 받으셔야 이용이 가능합니다!<br>📞 010-7768-5913<br>💬 Kakao ID : chunil1ho<br>💬 WeChat : chunilho<br>※ 결제 후 미연락 시 이용에 제한이 있을 수 있습니다.",
             sumTitle: "📋 선택하신 예약 내역",
             sumDateLabel: "예약 날짜",
@@ -13073,6 +13128,9 @@ tDJigging2: "The actual departure time will be decided after consultation",
             bookStep6: "6. Contact Number (For lookup)",
             paymentMethodTitle: "Payment Method",
             paymentCard: "Credit Card",
+            wechatBrowserTitle: "You opened Chunilho in WeChat's in-app browser.",
+            wechatBrowserMessage: "To use Alipay and other external payment apps, tap the menu (···) in the upper-right corner and choose 'Open in Browser'.",
+            wechatBrowserClose: "Close",
 bookStep7: "After purchase, you must receive a confirmation by phone or text message to use the service!<br>📞 010-7768-5913<br>💬 Kakao ID: chunil1ho<br>※ If you do not contact us after payment, your use of the service may be restricted.",
             sumTitle: "📋 Selected Booking Details",
             sumDateLabel: "Booking Date",
@@ -13277,6 +13335,9 @@ tDJigging2: "実際の出航時間は相談後に決定します",
             bookStep6: "6. 連絡先（照会用）",
             paymentMethodTitle: "お支払い方法",
             paymentCard: "クレジットカード",
+            wechatBrowserTitle: "WeChatアプリ内ブラウザで開いています。",
+            wechatBrowserMessage: "Alipayなどの外部決済アプリを利用するには、右上のメニュー（···）をタップし、「ブラウザで開く」を選択してください。",
+            wechatBrowserClose: "閉じる",
           bookStep7: "ご購入後、電話またはSMSで確定のご連絡を受けていただく必要があります！<br>📞 010-7768-5913<br>💬 Kakao ID：chunil1ho<br>💬 WeChat：chunilho<br>※ お支払い後にご連絡がない場合、ご利用を制限することがあります。",
             sumDateLabel: "予約日",
             sumCourseLabel: "選択コース",
@@ -13480,6 +13541,9 @@ tDJigging2: "实际出航时间将在咨询后确定",
             bookStep6: "6. 联系方式（用于查询）",
             paymentMethodTitle: "支付方式",
             paymentCard: "信用卡",
+            wechatBrowserTitle: "您正在使用微信内置浏览器访问。",
+            wechatBrowserMessage: "如需使用支付宝等外部支付应用，请点击右上角菜单（···），选择“在浏览器中打开”。",
+            wechatBrowserClose: "关闭",
            bookStep7: "购买后，必须通过电话或短信收到确认通知后才能使用服务！<br>📞 010-7768-5913<br>💬 Kakao ID：chunil1ho<br>💬 WeChat：chunilho<br>※ 付款后如未联系我们，可能会限制使用。",
             sumTitle: "📋 您选择的预约明细",
             sumDateLabel: "预约日期",
@@ -14419,6 +14483,26 @@ function closeWechatQR() {
 
     </div>
 </div>
+<script>
+function closeWeChatBrowserGuide() {
+    const guide = document.getElementById('wechat-browser-guide');
+    if (guide) guide.style.display = 'none';
+}
+
+function showWeChatBrowserGuide() {
+    const userAgent = navigator.userAgent || '';
+    if (!/MicroMessenger/i.test(userAgent)) return;
+
+    const guide = document.getElementById('wechat-browser-guide');
+    if (guide) guide.style.display = 'block';
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', showWeChatBrowserGuide, { once: true });
+} else {
+    showWeChatBrowserGuide();
+}
+</script>
 </body>
 </html>
 </body>
